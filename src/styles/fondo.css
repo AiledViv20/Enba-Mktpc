@@ -1,0 +1,8 @@
+.fondo-md {
+    width: 100%;
+    height: 73.5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-size: cover;
+}

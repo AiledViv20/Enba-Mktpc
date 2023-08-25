@@ -1,0 +1,30 @@
+.footer-copyright-top {
+    text-align: center !important;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.footer-copyright-bottom {
+    display: none !important;
+}
+
+@media (max-width: 1024px) {
+    
+    .footer-copyright-top {
+        display: none !important;
+    }
+
+    .footer-copyright-bottom {
+        display: flex !important;
+    }
+
+    .footer-logos {
+        width: 50% !important;
+    }
+
+    .footer-iconos {
+        width: 50% !important;
+    }
+
+}

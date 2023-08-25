@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+    .container-list1 {
+        flex-direction: column;
+    }
+
+    .container-list1-images{
+        width: 80% !important;
+    }
+}

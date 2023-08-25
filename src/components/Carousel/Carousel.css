@@ -1,0 +1,35 @@
+.react-swipeable-carousel {
+  position: relative;
+  overflow: hidden;
+}
+
+.react-swipeable-carousel__wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.react-swipeable-carousel__item {
+  width: 100%;
+}
+
+/* Selector para controlar el menu de puntos del carusel y no se desborde */
+
+.css-teossa > div:nth-child(2) > div {
+  padding: 0 0 0 2rem;
+  box-sizing: content-box;
+}
+
+@media screen and (max-width: 600px)  {
+  .css-teossa > div:nth-child(2) > div {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 425px)  {
+  .css-teossa > div:nth-child(2) > div {
+    margin-right: -0.9rem;
+  }
+}
