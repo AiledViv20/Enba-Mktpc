@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
     Flex, 
-    Text,  
-    useMediaQuery, 
-    useTheme,
+    Text,
     Image,
     Box
 } from '@chakra-ui/react';
@@ -27,9 +25,7 @@ import SearchBar from './SearchBar';
 const Presentacion = (props) => {
     const [current, setCurrent] = useState(0);
     const [dotClicked, setDotClicked] = useState(false);
-    //Elementos para responsive
-    const { breakpoints } = useTheme();
-    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+
     const [screenSize, getDimension] = useState({
         winWidth: window.innerWidth,
         winHeight: window.innerHeight,

@@ -18,7 +18,6 @@ import img1 from '../../assets/images/fondo/img-fd1.png';
 import img2 from '../../assets/images/fondo/img-fd2.png';
 
 const Home = () => {
-  //Elementos para responsive
   const { breakpoints } = useTheme();
   const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 

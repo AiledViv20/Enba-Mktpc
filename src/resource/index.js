@@ -14,6 +14,10 @@ import ctg4 from '../assets/images/categoriesT/oficina.svg';
 import img5 from '../assets/images/productsT/cuaderno.png';
 import img6 from '../assets/images/productsT/notas.png';
 
+import img7 from '../assets/images/productsT/mochila.png';
+import img8 from '../assets/images/productsT/cilindro.png';
+import img9 from '../assets/images/productsT/audifonos.png';
+
 export const handleDownload = (url, filename) => {
     axios.get(url, {
       responseType: 'blob',
@@ -123,3 +127,119 @@ export const kitsTemplate = [
         bg: '#FF9900'
     }
 ];
+
+export const listSearchCategories = [
+    {
+        id: 1,
+        url: img2,
+        title: 'Mochilas',
+        description: 'Mouse Tecno Soccer',
+        price: '152.25',
+        promotion: '-25%',
+        bg: '#FF9900'
+    },
+    {
+        id: 2,
+        url: img3,
+        title: 'CARPETAS',
+        description: 'Carpeta con luz Tawang',
+        price: '152.25',
+        promotion: '-14%',
+        bg: '#FF9900'
+    },
+    {
+        id: 3,
+        url: img4,
+        title: 'ACCESORIOS SMARTPHONE Y TABLET',
+        description: 'Cargador inalámbrico namu',
+        price: '152.25',
+        promotion: 'Oferta',
+        bg: '#4FB42C'
+    },
+];
+
+/*
+    {
+        id: 4,
+        url: img1,
+        title: 'Termos',
+        description: 'Termo Barrow',
+        price: '152.25',
+        promotion: 'Nuevo',
+        bg: '#1E91D7'
+    },
+    ,
+    {
+        id: 5,
+        url: img7,
+        title: 'Mochilas',
+        description: 'Mochila Lift Verde',
+        price: '152.25',
+        promotion: 'Nuevo',
+        bg: '#1E91D7'
+    },
+    ,
+    {
+        id: 6,
+        url: img8,
+        title: 'Mochilas',
+        description: 'Cilindro de vidrio idara amarillo',
+        price: '152.25',
+        promotion: 'Oferta',
+        bg: '#4FB42C'
+    },
+    {
+        id: 7,
+        url: img9,
+        title: 'Mochilas',
+        description: 'Audifonos Sound Gris',
+        price: '152.25',
+        promotion: '-14%',
+        bg: '#FF9900'
+    },
+    {
+        id: 8,
+        url: img8,
+        title: 'Mochilas',
+        description: 'Cilindro de vidrio idara amarillo',
+        price: '152.25',
+        promotion: 'Oferta',
+        bg: '#4FB42C'
+    },
+    {
+        id: 9,
+        url: img2,
+        title: 'Mochilas',
+        description: 'Mouse Tecno Soccer',
+        price: '152.25',
+        promotion: '-25%',
+        bg: '#FF9900'
+    },
+    {
+        id: 10,
+        url: img2,
+        title: 'Mochilas',
+        description: 'Mouse Tecno Soccer',
+        price: '152.25',
+        promotion: '-25%',
+        bg: '#FF9900'
+    },
+    {
+        id: 11,
+        url: img3,
+        title: 'CARPETAS',
+        description: 'Carpeta con luz Tawang',
+        price: '152.25',
+        promotion: '-25%',
+        bg: '#FF9900'
+    },
+    {
+        id: 12,
+        url: img4,
+        title: 'ACCESORIOS SMARTPHONE Y TABLET',
+        description: 'Cargador inalámbrico namu',
+        price: '152.25',
+        promotion: 'Oferta',
+        bg: '#4FB42C'
+    },
+*/
