@@ -4,6 +4,7 @@ import { Flex, Spinner } from "@chakra-ui/react";
 import Home from "./pages/EnbaMk/Home";
 import Categories from "./pages/Categories";
 import Product from "./pages/Product";
+import QuoteProduct from "./pages/QuoteProduct";
 
 const SwitchRouter = () => {
     return (
@@ -22,6 +23,7 @@ const SwitchRouter = () => {
                 <Route path='/' element={<Home/>} />
                 <Route path='/categoria/:category' element={<Categories/>} />
                 <Route path='/producto/:product' element={<Product/>} />
+                <Route path='/productos/cotizar' element={<QuoteProduct/>} />
             </Routes>
         </Suspense>    
     );

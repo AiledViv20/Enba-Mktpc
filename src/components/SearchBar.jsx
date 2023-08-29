@@ -22,6 +22,7 @@ const SearchBar = () => {
                     onChange={e => setSelectedCategory(e.target.value)}
                     icon={<ChevronDownIcon />}>
                     <option value='bebidas'>Bebidas</option>
+                    <option value='bienestar'>Bienestar</option>
                     <option value='hogar-herramientas'>Hogar y herramientas</option>
                     <option value='oficina-tecnologia'>Oficina y tecnología</option>
                     <option value='textiles'>Textiles</option>

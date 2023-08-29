@@ -14,6 +14,7 @@ const ButtonShoppingCart = () => {
                 isRound={true}
                 border={"transparent"}
                 variant='outline'
+                onClick={() => window.location.href = '/productos/cotizar'}
                 fontSize='20px'
                 icon={<FaShoppingCart />}
             />
