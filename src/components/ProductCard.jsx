@@ -21,6 +21,7 @@ const ProductCard = ({ product }) => {
                 borderRadius={"20px"}
                 overflow="hidden"
                 cursor="pointer"
+                onClick={() => window.location.href = `/producto/${product ? product.name : ""}`}
                 aria-label={product.title}
             >
                 <Tag

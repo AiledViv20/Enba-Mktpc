@@ -56,9 +56,9 @@ const Footer = () => {
                 </Flex>
                 <Flex w={"50%"} justifyContent={"end"} alignItems={"center"}>
                     <Text fontWeight={500} fontSize={"14px"}>
-                        <Link textDecoration={"revert"} href='https://www.facebook.com'>TÉRMINOS Y CONDICIONES</Link>
+                        <Link textDecoration={"revert"} href='#'>TÉRMINOS Y CONDICIONES</Link>
                         {" "}|{" "}
-                        <Link textDecoration={"revert"} href='https://www.facebook.com'>AVISO DE PRIVACIDAD</Link>
+                        <Link textDecoration={"revert"} href='#'>AVISO DE PRIVACIDAD</Link>
                     </Text>
                 </Flex>
             </Flex>

@@ -18,7 +18,6 @@ const CategoryCard = ({ category }) => {
                 border={"1px solid #A4A4A4"}
                 borderRadius={"20px"}
                 overflow="hidden"
-                cursor="pointer"
                 aria-label={category.title}
             >
                 <Flex h={"100%"} flexDirection={"column"} justifyContent={"center"}>

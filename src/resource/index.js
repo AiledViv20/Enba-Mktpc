@@ -27,11 +27,55 @@ export const handleDownload = (url, filename) => {
     })
 }
 
+export const colors = [
+    {
+        id: 1,
+        hex: "#D9D9D9",
+        color: "gris"
+    },
+    {
+        id: 2,
+        hex: "#000000",
+        color: "negro"
+    },
+    {
+        id: 3,
+        hex: "#1A6EA0",
+        color: "azul"
+    },
+    {
+        id: 4,
+        hex: "#064A73",
+        color: "azul-marino"
+    },
+    {
+        id: 5,
+        hex: "#6ACC47",
+        color: "verde"
+    },
+    {
+        id: 6,
+        hex: "#E40000",
+        color: "rojo"
+    },
+    {
+        id: 7,
+        hex: "#FE5F5E",
+        color: "rosa"
+    },
+    {
+        id: 8,
+        hex: "#FE983D",
+        color: "naranja"
+    }
+];
+
 export const productsTemplate = [
     {
         id: 1,
         url: img1,
         title: 'Termos',
+        name: "termo-barrow",
         description: 'Termo Barrow',
         price: '152.25',
         promotion: 'Nuevo',
@@ -41,6 +85,7 @@ export const productsTemplate = [
         id: 2,
         url: img2,
         title: 'Mochilas',
+        name: "mouse-tecno-soccer",
         description: 'Mouse Tecno Soccer',
         price: '152.25',
         promotion: '-25%',
@@ -50,6 +95,7 @@ export const productsTemplate = [
         id: 3,
         url: img3,
         title: 'CARPETAS',
+        name: "carpeta-luz-tawang",
         description: 'Carpeta con luz Tawang',
         price: '152.25',
         promotion: '-14%',
@@ -59,6 +105,7 @@ export const productsTemplate = [
         id: 4,
         url: img4,
         title: 'ACCESORIOS SMARTPHONE Y TABLET',
+        name: "cargador-inalambrico-namu",
         description: 'Cargador Inalámbrico namu',
         price: '152.25',
         promotion: 'Oferta',
@@ -94,6 +141,7 @@ export const kitsTemplate = [
         id: 1,
         url: img5,
         title: 'Casa',
+        name: "pinta-numero-crea",
         description: 'PINTA POR NÚMERO CREA',
         price: '152.25',
         promotion: '-5% en la compra del kit',
@@ -103,6 +151,7 @@ export const kitsTemplate = [
         id: 2,
         url: img6,
         title: 'Casa',
+        name: "porta-notas-dokka",
         description: 'Porta Notas Dokka',
         price: '152.25',
         promotion: '-5% en la compra del kit',
@@ -112,6 +161,7 @@ export const kitsTemplate = [
         id: 3,
         url: img5,
         title: 'Casa',
+        name: "pinta-numero-crea",
         description: 'PINTA POR NÚMERO CREA',
         price: '152.25',
         promotion: '-5% en la compra del kit',
@@ -121,6 +171,7 @@ export const kitsTemplate = [
         id: 4,
         url: img6,
         title: 'Casa',
+        name: "porta-notas-dokka",
         description: 'Porta Notas Dokka',
         price: '152.25',
         promotion: '-5% en la compra del kit',
@@ -133,6 +184,7 @@ export const listSearchCategories = [
         id: 1,
         url: img2,
         title: 'Mochilas',
+        name: "mouse-tecno-soccer",
         description: 'Mouse Tecno Soccer',
         price: '152.25',
         promotion: '-25%',
@@ -142,6 +194,7 @@ export const listSearchCategories = [
         id: 2,
         url: img3,
         title: 'CARPETAS',
+        name: "carpeta-luz-tawang",
         description: 'Carpeta con luz Tawang',
         price: '152.25',
         promotion: '-14%',
@@ -151,11 +204,12 @@ export const listSearchCategories = [
         id: 3,
         url: img4,
         title: 'ACCESORIOS SMARTPHONE Y TABLET',
+        name: "cargador-inalambrico-namu",
         description: 'Cargador inalámbrico namu',
         price: '152.25',
         promotion: 'Oferta',
         bg: '#4FB42C'
-    },
+    }
 ];
 
 /*
