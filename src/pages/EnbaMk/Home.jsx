@@ -4,11 +4,7 @@ import Presentacion from '../../components/Presentacion';
 import RecommendedProducts from '../../components/RecommendedProducts';
 import Fondo from '../../components/Fondo';
 import FeaturedCategories from '../../components/FeaturedCategories';
-/* 
-import Contacto from '../../components/Contacto';
-import Footer from '../../components/Footer'; 
-import ContactoMobile from '../../components/Contacto/Mobile';
-*/
+import Footer from '../../components/Footer';
 
 import { productsTemplate, kitsTemplate } from '../../resource';
 
@@ -46,21 +42,9 @@ const Home = () => {
           titleSection={"Kits"}
           productsTemplate={kitsTemplate} />
       </Flex>
+      <Footer />
     </>
   );
 };
  
 export default Home;
-
-/*
-
-return (
-    <>
-      {isGreaterThanMd ?
-        <Contacto /> : <ContactoMobile />
-      }
-      <Footer />
-    </>
-  );
-
-*/

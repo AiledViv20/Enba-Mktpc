@@ -1,35 +1,37 @@
 import {
-  Box,
-  Flex,
-  Text,
-  IconButton,
-  Stack,
-  Collapse,
-  Icon,
-  Link,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  useColorModeValue,
-  useDisclosure,
-  Image,
-  Button
-} from '@chakra-ui/react';
-import {
-  HamburgerIcon,
-  CloseIcon,
-  ChevronDownIcon,
-  ChevronRightIcon,
-} from '@chakra-ui/icons';
-
-import "../styles/styled.css";
-import '../styles/nav.css';
-
-import logo from '../assets/icons/logo.svg';
-
+    Box,
+    Flex,
+    Text,
+    IconButton,
+    Stack,
+    Collapse,
+    Icon,
+    Link,
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    useColorModeValue,
+    useDisclosure,
+    Image,
+    Button
+  } from '@chakra-ui/react';
+  import {
+    HamburgerIcon,
+    CloseIcon,
+    ChevronDownIcon,
+    ChevronRightIcon,
+  } from '@chakra-ui/icons';
+import ButtonCategories from './ButtonCategories';
+  
+import "../../styles/styled.css";
+import '../../styles/nav.css';
+  
+import logo from '../../assets/icons/logo.svg';
+import ButtonShoppingCart from './ButtonShoppingCart';
+  
 export default function Nav() {
   const { isOpen, onToggle } = useDisclosure();
-
+  
   return (
     <Box>
       <Flex
@@ -39,9 +41,9 @@ export default function Nav() {
         py={{ base: 2 }}
         px={{ base: 10 }}
         align={'center'}>
+        <Image zIndex={1} _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} src={logo} boxSize='80px' alt="logo" />
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Image src={logo} boxSize='80px' alt="logo" />
-          <Flex display={{ base: 'none', md: 'none', lg: 'flex' }} ml={20}>
+          <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }} ml={20}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -50,7 +52,9 @@ export default function Nav() {
           justify={'center'}
           padding={"0px 1rem"}
           direction={'row'}>
+          <ButtonShoppingCart />
           <Button
+            zIndex={1}
             width={"104px"}
             height={"37px"}
             fontSize={'md'}
@@ -73,6 +77,7 @@ export default function Nav() {
           display={{ base: 'flex', lg: 'none' }}>
           <IconButton
             onClick={onToggle}
+            zIndex={1}
             icon={
               isOpen ? <CloseIcon w={3} h={3} color='#6F6F6F'/> : <HamburgerIcon w={5} h={5} color='#6F6F6F' />
             }
@@ -87,14 +92,15 @@ export default function Nav() {
     </Box>
   );
 }
-
+  
 const DesktopNav = () => {
   const linkColor = useColorModeValue('#424242', '#424242');
   const linkHoverColor = useColorModeValue('#424242', '#424242');
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-
+  
   return (
-    <Stack direction={'row'} spacing={4}  alignItems='center'>
+    <Stack direction={'row'} spacing={4} alignItems='center'>
+      <ButtonCategories />
       {NAV_ITEMS.map((navItem) => (
         <Box key={navItem.label} alignItems='center'>
           <Popover trigger={'hover'} placement={'bottom-start'}>
@@ -134,7 +140,7 @@ const DesktopNav = () => {
     </Stack>
   );
 };
-
+  
 const DesktopSubNav = ({ label, href, subLabel }) => {
   return (
     <Link
@@ -168,7 +174,7 @@ const DesktopSubNav = ({ label, href, subLabel }) => {
     </Link>
   );
 };
-
+  
 const MobileNav = () => {
   return (
     <Stack
@@ -181,7 +187,7 @@ const MobileNav = () => {
     </Stack>
   );
 };
-
+  
 const MobileNavItem = ({ label, children, href }) => {
   const { isOpen, onToggle } = useDisclosure();
 
@@ -231,7 +237,7 @@ const MobileNavItem = ({ label, children, href }) => {
     </Stack>
   );
 };
-
+  
 const NAV_ITEMS = [
   {
     label: 'Proyectos especiales',

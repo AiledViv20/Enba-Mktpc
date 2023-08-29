@@ -13,8 +13,7 @@ import {
 import CategoryCard from './CategoryCard';
 import { categoriesTemplate } from '../resource';
 
-import ArrowLeftIcon from '../assets/svgs/ArrowLeftSVG';
-import ArrowRightIcon from '../assets/svgs/ArrowRightSVG';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
 const CardsRenderer = (categories, status) => {
@@ -107,7 +106,7 @@ const FeaturedCategories = ({ titleSection, props }) => {
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
                         <IconButton
-                            icon={<ArrowLeftIcon color={"brand.500"} />}
+                            icon={<ChevronLeftIcon color={"#888888"} />}
                             rounded="full"
                             border="0"
                             colorScheme="brand"
@@ -118,13 +117,13 @@ const FeaturedCategories = ({ titleSection, props }) => {
                             onClick={() => setPage(page - 1)}
                             position="relative"
                             right={{ base: "-6", md: 0 }}
-                            bg="white"
+                            bg="#E2E2E2"
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page - 1}`}
                         />
                         {CardsRenderer(categoriesTemplate, status)}
                         <IconButton
-                            icon={<ArrowRightIcon color={"brand.500"} />}
+                            icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"
                             border="0"
                             colorScheme="brand"
@@ -134,7 +133,7 @@ const FeaturedCategories = ({ titleSection, props }) => {
                             onClick={() => setPage(page + 1)}
                             position="relative"
                             left={{ base: "-6", md: 0 }}
-                            bg="white"
+                            bg="#E2E2E2"
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page + 1}`}
                         />

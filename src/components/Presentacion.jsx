@@ -3,7 +3,8 @@ import {
     Flex, 
     Text,
     Image,
-    Box
+    Box,
+    IconButton
 } from '@chakra-ui/react';
 
 import "../styles/styled.css";
@@ -12,6 +13,7 @@ import "../styles/presentacion.css";
 import Nav from './Nav';
 
 import { Carousel } from './Carousel/Carousel';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import bg1 from '../assets/images/banner/banner1.png';
 import bg2 from '../assets/images/banner/banner2.png';
@@ -75,6 +77,17 @@ const Presentacion = (props) => {
         };
     }, [screenSize]);
 
+    const changeBanner = (num) => {
+        if (num > 2) {
+            setCurrent(0);
+        } else if (num < 0) {
+            setCurrent(2);
+        }
+         else {
+            setCurrent(num);
+        }
+    }
+
     return ( 
         <>
             <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
@@ -124,6 +137,56 @@ const Presentacion = (props) => {
                     right="0"
                 >
                     <SearchBar />
+                </Flex>
+                <Flex
+                    justifyContent="flex-start"
+                    alignItems="center"
+                    position="absolute"
+                    pl={"6%"}
+                    top={"50%"}
+                    w="100%"
+                    left="0"
+                    right="0"
+                >
+                    <IconButton
+                        icon={<ChevronLeftIcon color={"#919292"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        onClick={() => changeBanner(current - 1)}
+                        position="relative"
+                        right={{ base: "-6", md: 0 }}
+                        bg="#FFF"
+                        zIndex="2"
+                    />
+                </Flex>
+                <Flex
+                    justifyContent="flex-end"
+                    alignItems="center"
+                    position="absolute"
+                    pr={"6%"}
+                    top={"50%"}
+                    w="100%"
+                    left="0"
+                    right="0"
+                >
+                    <IconButton
+                        icon={<ChevronRightIcon color={"#919292"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        onClick={() => changeBanner(current + 1)}
+                        position="relative"
+                        right={{ base: "-6", md: 0 }}
+                        bg="#FFF"
+                        zIndex="2"
+                    />
                 </Flex>
                 <Flex
                     justifyContent="center"
