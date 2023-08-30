@@ -1,22 +1,57 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex, 
     Box, 
     Text,
     InputGroup,
     Input,
-    InputRightElement
+    InputRightElement,
+    Grid,
+    GridItem,
+    Spinner,
 } from '@chakra-ui/react';
 import Nav from '../../components/Nav';
 import { SearchIcon } from '@chakra-ui/icons';
-import { listSearchCategories, colors } from '../../resource';
+import { colors_complement, colors } from '../../resource';
 import ProductCard from '../../components/ProductCard';
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
 import Footer from '../../components/Footer';
+import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useParams } from 'react-router-dom';
 
 const Categories = (props) => {
     const [urlCategory, setUrlCategory] = useState(window.location.pathname);
+    const [products, setProducts] = useState(null);
+    const [colorSelected, setColorSelected] = useState("");
+    const [inputSearch, setInputSearch] = useState("");
+    const params_url = useParams();
+    const [params, setParams] = useState({
+        "take": 25,
+        "page": 0,
+        "color": colorSelected,
+        "category": params_url.category,
+        "name": ""
+    })
+    const {data, isLoading, error} = useGetSearchQuery(params);
+
+    useEffect(() => {
+        if(data){
+            console.log(data);
+            setProducts(data);
+        }
+    },[data])
+
+    useEffect(() => {
+        setParams({
+            "take": 25,
+            "page": 0,
+            "color": colorSelected,
+            "category": params_url.category,
+            "name": inputSearch
+        })
+    },[colorSelected])
+
 
     const toTextTransform = (txt) => {
         let listUrl = txt.split("/");
@@ -31,7 +66,7 @@ const Categories = (props) => {
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
                 <Flex>
                     <Text fontSize={"16px"} fontWeight={400}>
-                        {`Home / ${toTextTransform(urlCategory)}`}
+                        {`Home / ${params_url.category}`}
                     </Text>
                 </Flex>
                 <Flex width={"100%"} mt={10}>
@@ -44,9 +79,11 @@ const Categories = (props) => {
                                 placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
                                 _placeholder={{
                                     color: "#383838"
-                                }} />
+                                }} 
+                                onChange={(e) => setInputSearch(e.target.value)}
+                            />
                             <InputRightElement h={"100%"} mr={2}>
-                                <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"}>
+                                <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} onClick={(e) => {e.preventDefault(); setParams({ ...params, "name": inputSearch })}}>
                                     <SearchIcon color='#FFF' />
                                 </Flex>
                             </InputRightElement>
@@ -58,12 +95,14 @@ const Categories = (props) => {
                             <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
                                 <Flex flexDirection={"column"} pl={"15px"}>
                                     <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5}>Accesorios de computo</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5}>Accesorios para smartphone y tablet</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5}>Audifonos</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5}>Carpetas</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5}>Sets para escritorio y organizadores</Text>
-                                    <Text fontSize={"14px"} fontWeight={600} mt={2}>Color</Text>
+                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Computo".toUpperCase() })}}>
+                                        Accesorios de computo
+                                    </Text>
+                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Accesorios smartphone y tablet".toUpperCase() })}}>Accesorios para smartphone y tablet</Text>
+                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Audífonos".toUpperCase() })}}>Audífonos</Text>
+                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Carpetas".toUpperCase() })}}>Carpetas</Text>
+                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Escritorio".toUpperCase() })}}>Sets para escritorio y organizadores</Text>
+                                    <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                                 </Flex>
                                 <Flex
                                     justifyContent="center"
@@ -75,6 +114,27 @@ const Categories = (props) => {
                                         cursor="pointer"
                                         fontSize={"55px"}
                                         color={item.hex}
+                                        onClick={() => {
+                                            setColorSelected(item.color);
+                                        }}
+                                    >
+                                        &#9679;
+                                    </Text>
+                                    ))}
+                                </Flex>
+                                <Flex
+                                    justifyContent="center"
+                                    w="100%">
+                                    {colors_complement.map((item, index) => (
+                                    <Text
+                                        key={`color-${index}`}
+                                        marginRight={"2px"}
+                                        cursor="pointer"
+                                        fontSize={"55px"}
+                                        color={item.hex}
+                                        onClick={() => {
+                                            setColorSelected(item.color);
+                                        }}
                                     >
                                         &#9679;
                                     </Text>
@@ -89,15 +149,22 @@ const Categories = (props) => {
                             <OrderBy />
                         </Flex>
                         <Flex justifyContent={"center"}>
-                            {listSearchCategories ? listSearchCategories.map((item, idx) => {
-                                return(
-                                    <Flex key={idx}>
-                                        <ProductCard product={item} />
-                                    </Flex>
-                                )
-                            })
-                            : null}
+                            
                         </Flex>
+                        <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} gap={10} alignSelf={"center"}>
+                            {products && !isLoading ? products.map((item, idx) => {
+                                if(item.items.length > 0 && (item.images.product_images.length > 0 || item.images.vector_images.length > 0)) {
+                                    return(
+                                        <Flex key={idx}>
+                                            <ProductCard product={item} />
+                                        </Flex>
+                                    )
+                                }
+                            })
+                            : 
+                            <Spinner mt={20}/>
+                            }
+                        </Grid>
                     </Flex>
                 </Flex>
             </Box>

@@ -10,7 +10,7 @@ import {
     useTheme,
     useMediaQuery,
 } from "@chakra-ui/react";
-import ProductCard from './ProductCard';
+import KitCard from './KitCard';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
@@ -36,10 +36,10 @@ const CardsRenderer = (products, status) => {
         );
     } else if (products.length > 0 && status === "loaded") {
         if (!isGreaterThanMd) {
-            return <ProductCard product={products[0]} />;
+            return <KitCard product={products[0]} />;
         }
         return products.map((element) => (
-            <ProductCard key={element.id} product={element} />
+            <KitCard key={element.id} product={element} />
         ));
     } else {
         return isGreaterThanMd ? (
@@ -76,7 +76,7 @@ const CardsRenderer = (products, status) => {
     }
 }
 
-export const RecommendedProducts = ({ titleSection, data, props }) => {
+export const KitsProduct = ({ titleSection, data, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
@@ -159,4 +159,4 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
     );
 }
  
-export default RecommendedProducts;
+export default KitsProduct;

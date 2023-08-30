@@ -19,6 +19,8 @@ const CategoryCard = ({ category }) => {
                 borderRadius={"20px"}
                 overflow="hidden"
                 aria-label={category.title}
+                onClick={() => window.location.href = `/categoria/${category.url_reditect}`}
+                cursor="pointer"
             >
                 <Flex h={"100%"} flexDirection={"column"} justifyContent={"center"}>
                     <Flex justifyContent={"center"} pt={5}>
