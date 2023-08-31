@@ -11,6 +11,8 @@ import {
 } from "@chakra-ui/react";
 
 const ProductCard = ({ product }) => {
+    const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "")
+    const price = product?.price || product?.items[0]?.price
     return ( 
         <Container key={product.id} margin="0" gap="0" padding="0">
             <Box
@@ -21,7 +23,7 @@ const ProductCard = ({ product }) => {
                 borderRadius={"20px"}
                 overflow="hidden"
                 cursor="pointer"
-                onClick={() => window.location.href = `/producto/${product ? product.name : ""}`}
+                onClick={() => window.location.href = `/producto/${product ? product.product_sku ? product.product_sku : product.sku : ""}`}
                 aria-label={product.name}
             >
                 <Tag
@@ -36,7 +38,7 @@ const ProductCard = ({ product }) => {
                     {product.promotion}
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
-                    <Image width={"192px"} height={"192px"} src={product.images.product_images[0]? product.images.product_images[0] : product.images.vector_images[0]} alt={product.title} />
+                    <Image width={"192px"} height={"192px"} src={image} />
                 </Flex>
                 <Flex direction="column" px="4" pt="10" pb="1">
                     <Box
@@ -59,7 +61,7 @@ const ProductCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${product.items[0].price}
+                                    <br />${price}
                                 </Text>
                         </Text>
                     </HStack>

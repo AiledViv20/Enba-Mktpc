@@ -21,24 +21,13 @@ const Home = () => {
   const [productsData, setProductsData] = useState(null);
   const [kitsData, setKitsData] = useState(null);
   const { data: products, isLoading: isProductsLoading, error: productsError } = useGetFavoritesQuery();
-  const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({
-    "take": 100,
-    "page": 0,
-    "category": "",
-    "name": ""
-  });
+  
 
   useEffect(() => {
       if(products){
           setProductsData(products);
       }
   },[products])
-
-  useEffect(() => {
-      if(kits){
-        setKitsData(kits);
-      }
-  },[kits])
 
 
   return (

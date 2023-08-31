@@ -14,6 +14,7 @@ import KitCard from './KitCard';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
+import { useGetKitsQuery } from '../hooks/enbaapi';
 
 const CardsRenderer = (products, status) => {
     const { breakpoints } = useTheme();
@@ -83,7 +84,21 @@ export const KitsProduct = ({ titleSection, data, props }) => {
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
 
+    const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({
+        "take": 4,
+        "page": page,
+        "category": "",
+        "name": ""
+      });
+
     useEffect(() => {
+        if(kits){
+            setProducts(kits);
+            setStatus('loaded');
+        }
+    },[kits])
+
+    /*useEffect(() => {
         if (data) {
             setProducts(data.slice(page * 4, (page + 1) * 4));
             setStatus('loaded');
@@ -94,7 +109,7 @@ export const KitsProduct = ({ titleSection, data, props }) => {
         if(data){
             setProducts(data.slice(page * 4, (page + 1) * 4));   
         }
-    },[page])
+    },[page])*/
 
 
 

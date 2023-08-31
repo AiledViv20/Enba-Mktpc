@@ -25,32 +25,36 @@ const Categories = (props) => {
     const [products, setProducts] = useState(null);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState("");
+    const [order, setOrder] = useState('ASC');
+    const [artPerPage, setArtPerPage] = useState(25);
     const params_url = useParams();
+    const [page, setPage] = useState(0);
     const [params, setParams] = useState({
-        "take": 25,
-        "page": 0,
-        "color": colorSelected,
-        "category": params_url.category,
-        "name": ""
-    })
+        take: artPerPage,
+        page: page,
+        color: colorSelected,
+        category: params_url.category,
+        name: inputSearch,
+        order: order
+    });
     const {data, isLoading, error} = useGetSearchQuery(params);
 
     useEffect(() => {
         if(data){
-            console.log(data);
             setProducts(data);
         }
     },[data])
 
     useEffect(() => {
         setParams({
-            "take": 25,
-            "page": 0,
-            "color": colorSelected,
-            "category": params_url.category,
-            "name": inputSearch
+            take: artPerPage,
+            page: page,
+            color: colorSelected,
+            category: params_url.category,
+            name: inputSearch,
+            order: order
         })
-    },[colorSelected])
+    },[colorSelected, order, artPerPage])
 
 
     const toTextTransform = (txt) => {
@@ -145,15 +149,15 @@ const Categories = (props) => {
                     </Flex>
                     <Flex width={"75%"} flexDirection={"column"}>
                         <Flex pl={10} pb={10}>
-                            <ArticlesPerPage />
-                            <OrderBy />
+                            <ArticlesPerPage setArtPerPage={setArtPerPage} artPerPage={artPerPage}/>
+                            <OrderBy setOrder={setOrder}/>
                         </Flex>
                         <Flex justifyContent={"center"}>
                             
                         </Flex>
                         <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} gap={10} alignSelf={"center"}>
                             {products && !isLoading ? products.map((item, idx) => {
-                                if(item.items.length > 0 && (item.images.product_images.length > 0 || item.images.vector_images.length > 0)) {
+                                if((item?.items?.length > 0 && (item.images.product_images.length > 0 || item.images.vector_images.length > 0)) || item.price ) {
                                     return(
                                         <Flex key={idx}>
                                             <ProductCard product={item} />
