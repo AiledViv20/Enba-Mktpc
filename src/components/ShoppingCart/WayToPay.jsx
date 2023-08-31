@@ -48,7 +48,7 @@ const WayToPay = ({ step2 }) => {
                                 </Flex>
                                 <Flex mb={3}>
                                     <Input fontSize={"14px"} height={"48px"} placeholder='Fecha de caducidad' mr={3}/>
-                                    <Input fontSize={"14px"} height={"48px"} placeholder='CVC' />
+                                    <Input fontSize={"14px"} height={"48px"} placeholder='CVV' />
                                 </Flex>
                                 <Flex justifyContent={"end"}>
                                     <Button width={"208px"} _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"}>Pagar</Button>

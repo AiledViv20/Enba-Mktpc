@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
-    Flex, 
-    Box, 
+    Flex,
+    Box,
     Text,
-    InputGroup,
     Input,
+    InputGroup,
     InputRightElement
 } from '@chakra-ui/react';
 import Nav from '../../components/Nav';
@@ -15,24 +15,43 @@ import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
 import Footer from '../../components/Footer';
 
-const Categories = (props) => {
-    const [urlCategory, setUrlCategory] = useState(window.location.pathname);
+import banner from '../../assets/images/banner/categoriaspop/img1.png';
 
-    const toTextTransform = (txt) => {
-        let listUrl = txt.split("/");
-        return listUrl[2];
-    }
-
+const PopularCategories = ({ props }) => {
     return ( 
         <>
             <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
                 <Nav />
             </Flex>
-            <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 5%"} pb={20} position="relative">
-                <Flex>
-                    <Text fontSize={"16px"} fontWeight={400}>
-                        {`Home / ${toTextTransform(urlCategory)}`}
-                    </Text>
+            <Flex pt={10} color={"#424242"} fontWeight={400} flexDirection={"column"} padding={"2rem 5%"}>
+                <Text mb={20} fontSize={"16px"}>Home / Categoría popular / Promoción regreso a clases</Text>
+                <Text fontSize={"18px"} as={"b"}>PROMOCIÓN REGRESO A CLASES</Text>
+            </Flex>
+            <Box w="full" mx="auto" maxW="3x1" {...props} padding={"0px 5%"} pb={20} position="relative">
+                <Flex
+                    w="100%"
+                    h="354px"
+                    backgroundImage={`url(${banner})`}
+                    backgroundSize="cover"
+                    backgroundPosition="center center"
+                    backgroundRepeat="no-repeat"
+                    backgroundColor="gray.100"
+                    position="relative"
+                    p="0"
+                    borderRadius="20px">
+                    <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000002e"}></Flex>
+                    <Flex
+                        height="100vh"
+                        width={"100%"}
+                        top={"40"}
+                        justifyContent={"center"}
+                        position="absolute">
+                        <Flex flexDirection="column" alignItems={"center"} color={"transparent"}>
+                            <Text textAlign={"center"} fontWeight={700} fontSize={'39px'}>
+                                Contáctanos
+                            </Text>
+                        </Flex>
+                    </Flex>
                 </Flex>
                 <Flex width={"100%"} mt={10}>
                     <Flex width={"25%"} flexDirection={"column"}>
@@ -88,7 +107,7 @@ const Categories = (props) => {
                             <ArticlesPerPage />
                             <OrderBy />
                         </Flex>
-                        <Flex justifyContent={"center"} mb={10}>
+                        <Flex justifyContent={"center"} pb={10}>
                             {listSearchCategories ? listSearchCategories.map((item, idx) => {
                                 return(
                                     <Flex key={idx}>
@@ -110,4 +129,4 @@ const Categories = (props) => {
     );
 }
  
-export default Categories;
+export default PopularCategories;
