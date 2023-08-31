@@ -5,6 +5,10 @@ import Home from "./pages/EnbaMk/Home";
 import Categories from "./pages/Categories";
 import Product from "./pages/Product";
 import QuoteProduct from "./pages/QuoteProduct";
+import Contacto from "./pages/Contacto";
+import Nosotros from "./pages/Nosotros";
+import ProyectosEspeciales from "./pages/ProyectosEspeciales";
+import PopularCategories from "./pages/PopularCategories";
 
 const SwitchRouter = () => {
     return (
@@ -24,6 +28,10 @@ const SwitchRouter = () => {
                 <Route path='/categoria/:category' element={<Categories/>} />
                 <Route path='/producto/:product' element={<Product/>} />
                 <Route path='/productos/cotizar' element={<QuoteProduct/>} />
+                <Route path='/contacto' element={<Contacto/>} />
+                <Route path='/nosotros' element={<Nosotros />} />
+                <Route path='/proyectos-especiales' element={<ProyectosEspeciales />} />
+                <Route path='/categorias-populares' element={<PopularCategories />} />
             </Routes>
         </Suspense>    
     );

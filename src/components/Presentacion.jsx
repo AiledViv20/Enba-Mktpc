@@ -110,7 +110,7 @@ const Presentacion = (props) => {
                             p="0"
                             color={"#FFFFFF"}
                             borderRadius="20px">
-                            <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000002e"}></Flex>
+                            <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000004e"}></Flex>
                             <Flex
                                 height="100vh"
                                 width={"100%"}
