@@ -104,6 +104,31 @@ export const enbaApi = createApi({
             providesTags: (result, error, arg) =>
                 result ? [{ type: "kit" }] : [],
         }),
+        postLead: build.mutation({
+          query: (body) => {
+              return {
+                  url: `leads/create`,
+                  method: 'POST',
+                  body: JSON.stringify(body),
+                  headers:{
+                      'Content-Type': 'application/json'
+                  }
+              };
+          },
+        }),
+        postQuotation: build.mutation({
+          query: (body) => {
+              return {
+                  url: `quotation/create`,
+                  method: 'POST',
+                  body: JSON.stringify(body),
+                  headers:{
+                      'Content-Type': 'application/json'
+                  }
+              };
+          },
+        }),
+        
     }),
 })
 
@@ -115,5 +140,6 @@ export const {
     useGetFavoritesQuery,
     useGetKitsQuery,
     useGetKitQuery,
+    usePostLeadMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi
