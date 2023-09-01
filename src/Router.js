@@ -9,6 +9,7 @@ import Contacto from "./pages/Contacto";
 import Nosotros from "./pages/Nosotros";
 import ProyectosEspeciales from "./pages/ProyectosEspeciales";
 import PopularCategories from "./pages/PopularCategories";
+import Cotizar from "./pages/Cotizar";
 
 const SwitchRouter = () => {
     return (
@@ -32,6 +33,7 @@ const SwitchRouter = () => {
                 <Route path='/nosotros' element={<Nosotros />} />
                 <Route path='/proyectos-especiales' element={<ProyectosEspeciales />} />
                 <Route path='/categorias-populares' element={<PopularCategories />} />
+                <Route path='/cotizar' element={<Cotizar />} />
             </Routes>
         </Suspense>    
     );
