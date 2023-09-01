@@ -64,6 +64,7 @@ export default function Nav() {
             color={"#000"}
             border={"1px solid #064A73"}
             as='a'
+            onClick={() => window.location.href = '/cotizar'}
             borderRadius='5px'
             _hover={{
                 cursor: 'pointer'
