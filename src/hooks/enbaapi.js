@@ -4,10 +4,6 @@ export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
         baseUrl: 'http://localhost:4005/',
-        prepareHeaders: async (headers) => {
-            headers.set("Content-Type", "application/json");
-            return headers;
-        },
     }),
     tagTypes: [
         "search",
@@ -117,18 +113,14 @@ export const enbaApi = createApi({
           },
         }),
         postQuotation: build.mutation({
-          query: (body) => {
+          query: ({body}) => {
               return {
                   url: `quotation/create`,
                   method: 'POST',
-                  body: JSON.stringify(body),
-                  headers:{
-                      'Content-Type': 'application/json'
-                  }
+                  body: body
               };
           },
         }),
-        
     }),
 })
 
@@ -141,5 +133,6 @@ export const {
     useGetKitsQuery,
     useGetKitQuery,
     usePostLeadMutation,
+    usePostQuotationMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi
