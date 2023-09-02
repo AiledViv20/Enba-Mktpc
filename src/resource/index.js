@@ -324,3 +324,54 @@ export const listSearchCategories = [
         bg: '#4FB42C'
     },
 */
+
+export const colors_dict = [
+    {
+        color: 'AZUL MARINO',
+        hex: "#064A73",
+    },
+    {
+        color: 'VERDE',
+        hex: "#6ACC47",
+    },
+    {
+        color: 'AMARILLO',
+        hex: "#FFD200",
+    },
+    {
+        color: 'NARANJA',
+        hex: "#FE983D",
+    },
+    {
+        color: 'ROSA',
+        hex: "#FE5F5E",
+    },
+    {
+        color:'ROJO',
+        hex: "#E40000",
+    },
+    {
+        color: 'MORADO', 
+        hex: "#800080",
+    },
+    {
+        color: 'CAFE',
+        hex: "#C19A6B",
+    },
+    {
+        color: 'BLANCO',
+        hex: "#FFFFFF",
+    },
+    {
+        color: 'NEGRO',
+        hex: "#000000",
+    },
+    {
+        color: 'GRIS',
+        hex: "#A4A4A4",
+    },
+    {
+        color: 'AZUL',
+        hex: "#1A6EA0",
+    },
+]

@@ -1,28 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Text,
     Button,
     IconButton,
-    Image
+    Image,
+    Tooltip
 } from '@chakra-ui/react';
-import { colors } from '../../resource';
+import { colors_dict } from '../../resource';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
+import { color } from 'framer-motion';
 
-const Description = ({data}) => {
+const Description = ({data, colors}) => {
     const [numProducts, setNumProducts] = useState(0);
-
+    const [colorsProduct, setColorsProduct] = useState([]);
+    const [itemSelected, setItemSelected] = useState(data.items[0]);
+    const [price, setPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(0);
     const changeNumProducts = (num) => {
         setNumProducts(num < 0 ? 0 : num) 
+    }
+
+    useEffect(() => {
+        const colors_ar = []
+        colors.map((item)=>{
+            let color_ = ''
+            colors_dict.filter((color)=>{
+                if(item.color.includes(color.color)){
+                    color_ = [{
+                        sku: item.sku,
+                        color: item.color,
+                        hex: color.hex
+                    }]
+                }
+            })
+            if(!color_[0]){
+                color_ = [{
+                        sku: item.sku,
+                        color: item.color,
+                        hex: '#444444'
+                }]
+            }
+            colors_ar.push(color_[0])
+        })
+        const prices = []
+        data.items.map((item)=>{
+            prices.push(item.retail_price)
+        })
+        setPrice(Math.min(...prices))
+        setMaxPrice(Math.max(...prices))
+        setColorsProduct(colors_ar)
+    },[colors])
+
+    const handleChangeSelected = (sku) => {
+        const item = data.items.filter((item)=>item.sku === sku)[0]
+        setItemSelected(item)
+        setPrice(item.retail_price)
     }
 
     return ( 
         <Flex flexDirection={"column"}>
             <Flex>
-                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data.name}</Text>
+                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data.name.toUpperCase()}</Text>
             </Flex>
             <Flex mt={10} fontSize={"14px"} fontWeight={400} color={"#424242"}>
                 <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{data.sku}</Text>
@@ -33,16 +75,21 @@ const Description = ({data}) => {
                 <Flex
                     w="100%"
                     pl={2}>
-                    {colors.map((item, index) => (
-                    <Text
-                        key={`color-${index}`}
-                        marginRight={"1px"}
-                        cursor="pointer"
-                        fontSize={"50px"}
-                        color={item.hex}
-                    >
-                        &#9679;
-                    </Text>
+                    {colorsProduct.map((item, index) => (
+                        <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
+                            <Text
+                                key={`color-${index}`}
+                                marginRight={"1px"}
+                                cursor="pointer"
+                                fontSize={"50px"}
+                                color={item.hex}
+                                onClick={() => {
+                                    handleChangeSelected(item.sku)
+                                }}
+                            >
+                                &#9679;
+                            </Text>
+                        </Tooltip>
                     ))}
                 </Flex>
             </Flex>
@@ -51,9 +98,9 @@ const Description = ({data}) => {
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
-                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>$19.00</Text>
-                    <Text fontSize={"18px"} fontWeight={400} color={"#A7A7A7"} as='del'>$99.00</Text>
-                    <Text ml={5} fontSize={"18px"} fontWeight={500} color={"#31508C"}>Descuento 50%</Text>
+                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>${price}</Text>
+                    {/*<Text fontSize={"18px"} fontWeight={400} color={"#A7A7A7"} as='del'>${maxPrice}</Text>
+                    <Text ml={5} fontSize={"18px"} fontWeight={500} color={"#31508C"}>Descuento 50%</Text>*/}
                 </Flex>
             </Flex>
             <Flex mt={10}>
@@ -94,7 +141,7 @@ const Description = ({data}) => {
                 </Flex>
                 <Flex  alignItems={"center"}>
                     <Image src={icon2} width={"32px"} height={"32px"} alt='icon'/>
-                    <Text ml={2}>5412 en stock</Text>
+                    <Text ml={2}>{itemSelected.stock} en stock</Text>
                 </Flex>
             </Flex>
             <Flex mt={5}>
