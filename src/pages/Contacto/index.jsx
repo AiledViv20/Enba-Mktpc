@@ -9,19 +9,21 @@ import {
 } from '@chakra-ui/react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
-
 import banner from '../../assets/images/banner/banner-contactanos.png';
+import { usePostLeadMutation } from '../../hooks/enbaapi';
 
 import { toast } from 'react-toastify';
 
 const Contacto = ({ props }) => {
     const [values, setValues] = useState({
-        firstname: "",
-        lastname: "",
+        name: "",
+        last_name: "",
         email: "",
         phone: "",
-        message: ""
+        message: "",
+        chanel: "Formulario de contacto"
     });
+    const [postLead] = usePostLeadMutation();
 
     const handleChange = (e) => {
         setValues({
@@ -31,9 +33,24 @@ const Contacto = ({ props }) => {
     }
 
     const handleSubmit = () => {
-        toast.success("¡Tus datos fueron eviados correctamente!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
+        postLead(values).then(res => {
+            toast.success("¡Tus datos fueron eviados correctamente!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            setValues({
+                name: "",
+                last_name: "",
+                email: "",
+                phone: "",
+                message: "",
+                channel: "Formulario de contacto"
+            })
+        }).catch(err => {
+            console.log(err);
+            toast.error("¡Algo salió mal!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+        })
     }
 
     return ( 
@@ -77,8 +94,8 @@ const Contacto = ({ props }) => {
                         }}>
                         <Flex w={"100%"} flexDirection={"column"}>
                             <Flex mb={3} justifyContent={"center"}>
-                                <Input name='firstname' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Nombre(s)' mr={5} />
-                                <Input name='lastname' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Apellido' />
+                                <Input name='name' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Nombre(s)' mr={5} />
+                                <Input name='last_name' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Apellido' />
                             </Flex>
                             <Flex mb={3} justifyContent={"center"}>
                                 <Input name='email' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Email' mr={5} />
@@ -88,7 +105,11 @@ const Contacto = ({ props }) => {
                                 <Textarea name='message' onChange={handleChange} w={"756px"} height={"180px"} fontSize={"14px"} placeholder='Mensaje' />
                             </Flex>
                             <Flex justifyContent={"center"}>
-                                <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}>Enviar mensaje</Button>
+                                <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}
+                                    isDisabled = {values.name === "" || values.last_name === "" || values.email === "" || values.phone === ""}
+                                >
+                                    Enviar mensaje
+                                </Button>
                             </Flex>
                         </Flex>
                     </form>

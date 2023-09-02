@@ -13,7 +13,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const Characteristics = () => {
+const Characteristics = ({data}) => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     const handleSwitchChange = () => {
@@ -25,10 +25,7 @@ const Characteristics = () => {
             <Flex flexDirection={"column"}>
                 <Text as={"b"} mb={4}>DESCRIPCIÓN Y CARACTERÍSTICAS</Text>
                 <Text lineHeight={1.2}>
-                    Audífonos bluetooth con batería recargable, diadema ajustable 
-                    de 4 posiciones. Tiempo de reproducción de 10 horas 
-                    aproximadamente.<br />Incluye cable auxiliar de 3.5 mm y 
-                    cable cargador USB.
+                    {data.description}
                 </Text>
             </Flex>
             <Flex mt={10}>
@@ -36,8 +33,8 @@ const Characteristics = () => {
                     <TabList>
                         <Tab fontWeight={500}>Cotizar</Tab>
                         <Tab fontWeight={500}>Información básica</Tab>
-                        <Tab fontWeight={500} isDisabled>Impresión</Tab>
-                        <Tab fontWeight={500} isDisabled>Empaque</Tab>
+                        <Tab fontWeight={500}>Impresión</Tab>
+                        <Tab fontWeight={500}>Empaque</Tab>
                     </TabList>
                     <TabIndicator
                         mt="-1.5px"
@@ -76,12 +73,25 @@ const Characteristics = () => {
                         </TabPanel>
                         <TabPanel>
                             <Flex flexDirection={"column"}>
-                                <Text mt={5}><Text as={"b"} mr={5}>Material</Text>Plástico</Text>
-                                <Text mt={5}><Text as={"b"} mr={5}>Medida</Text>17 x 19 x 7.3 cm</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Material</Text>{data.material}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Medida</Text>{data.measurements}</Text>
                             </Flex>
                         </TabPanel>
-                        <TabPanel></TabPanel>
-                        <TabPanel></TabPanel>
+                        <TabPanel>
+                            <Flex flexDirection={"column"}>
+                                <Text mt={5}><Text as={"b"} mr={5}>Aréa de impresión</Text>{data.printing.printing_area}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Técnica de impresión</Text>{data.printing.printing_technique}</Text>
+                            </Flex>
+                        </TabPanel>
+                        <TabPanel>
+                            <Flex flexDirection={"column"}>
+                                <Text mt={5}><Text as={"b"} mr={5}>Peso neto</Text>{data.package.net_weight} {data.package.weight_unit}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Peso bruto</Text>{data.package.gross_weight} {data.package.weight_unit}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Alto</Text>{data.package.height}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Largo</Text>{data.package.length}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Ancho</Text>{data.package.width}</Text>
+                            </Flex>
+                        </TabPanel>
                     </TabPanels>
                 </Tabs>
             </Flex>

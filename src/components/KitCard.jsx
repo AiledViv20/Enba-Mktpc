@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     HStack,
@@ -10,9 +10,26 @@ import {
     Container,
 } from "@chakra-ui/react";
 
-const ProductCard = ({ product }) => {
-    const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "")
-    const price = product?.price || product?.items[0]?.price
+const KitCard = ({ product }) => {
+    const [price, setPrice] = useState(0);
+    useEffect(() => {
+        const min_prices = []
+        product.products.forEach(element => {
+            let min_price = 9999999
+            element.prices.map((e) => {
+                if (e.price < min_price) {
+                    min_price = e.price
+                }
+            })
+            if(min_price !== 9999999)
+                min_prices.push(min_price)
+        })
+        let total = 0
+        min_prices.map((e) => {
+            total += parseFloat(e)
+        })
+        setPrice(total.toFixed(2))
+    },[product])
     return ( 
         <Container key={product.id} margin="0" gap="0" padding="0">
             <Box
@@ -23,11 +40,11 @@ const ProductCard = ({ product }) => {
                 borderRadius={"20px"}
                 overflow="hidden"
                 cursor="pointer"
-                onClick={() => window.location.href = `/producto/${product ? product.product_sku ? product.product_sku : product.sku : ""}`}
+                onClick={() => window.location.href = `/producto/${product ? product.name : ""}`}
                 aria-label={product.name}
             >
                 <Tag
-                    bg={product.bg}
+                    bg={'#FF9900'}
                     color="white"
                     fontSize={"12px"}
                     fontWeight={500}
@@ -35,10 +52,10 @@ const ProductCard = ({ product }) => {
                     py="2"
                     rounded="20px 0px 20px 0px"
                 >
-                    {product.promotion}
+                    -5% en la compra del kit
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
-                    <Image width={"192px"} height={"192px"} src={image} />
+                    <Image width={"192px"} height={"192px"} src={product.products[0].images[0].images.images_item[0]} alt={product.title} />
                 </Flex>
                 <Flex direction="column" px="4" pt="10" pb="1">
                     <Box
@@ -71,4 +88,4 @@ const ProductCard = ({ product }) => {
     );
 }
  
-export default ProductCard;
+export default KitCard;

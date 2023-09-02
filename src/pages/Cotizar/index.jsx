@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
+import { usePostQuotationMutation } from '../../hooks/enbaapi';
 
 import { toast } from 'react-toastify';
 
@@ -23,6 +24,9 @@ const Cotizar = ({ props }) => {
         titleImg: "",
     });
     const [img, setImg] = useState();
+    const [isLoading, setIsLoading] = useState(false);
+
+    const [postQuotation] = usePostQuotationMutation();
 
     const handleChangeFile = (e) => {
         setImg(e.target.files[0]);
@@ -40,9 +44,36 @@ const Cotizar = ({ props }) => {
     }
 
     const handleSubmit = () => {
-        toast.success("¡Tus datos fueron eviados correctamente!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
+        setIsLoading(true);
+        const formData = new FormData();
+        formData.append("quantity", values.numberOfPieces);
+        formData.append("comments", values.message);
+        formData.append("name", values.firstname);
+        formData.append("email", values.email);
+        formData.append("phone", values.phone);
+        formData.append("postal_code", values.cp);
+        formData.append("files", img);
+        postQuotation({body: formData}).then(res => {
+            toast.success("¡Tus datos fueron eviados correctamente!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            setValues({
+                firstname: "",
+                email: "",
+                phone: "",
+                cp: "",
+                numberOfPieces: "",
+                message: "",
+                titleImg: "",
+            })
+            setIsLoading(false);
+        }).catch(err => {
+            console.log(err);
+            toast.error("¡Algo salió mal!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            })
+            setIsLoading(false);
+        })
     }
 
     return (
@@ -87,7 +118,12 @@ const Cotizar = ({ props }) => {
                                 <Textarea name='message' onChange={handleChange} w={"756px"} height={"180px"} fontSize={"14px"} placeholder='Indicaciones o dudas' />
                             </Flex>
                             <Flex justifyContent={"center"}>
-                                <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}>Enviar</Button>
+                                <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}
+                                    isDisabled = {values.firstname === "" || values.email === "" || values.phone === "" || values.cp === "" || values.numberOfPieces === ""}
+                                    isLoading={isLoading}
+                                >
+                                    Enviar
+                                </Button>
                             </Flex>
                         </Flex>
                     </form>

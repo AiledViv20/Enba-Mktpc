@@ -12,7 +12,7 @@ import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 
-const Description = () => {
+const Description = ({data}) => {
     const [numProducts, setNumProducts] = useState(0);
 
     const changeNumProducts = (num) => {
@@ -22,11 +22,11 @@ const Description = () => {
     return ( 
         <Flex flexDirection={"column"}>
             <Flex>
-                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>AUDÍFONOS SOUND</Text>
+                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data.name}</Text>
             </Flex>
             <Flex mt={10} fontSize={"14px"} fontWeight={400} color={"#424242"}>
-                <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}HL-2900</Text>
-                <Text><Text as={"b"}>Categoría:</Text>{" "}Tecnología</Text>
+                <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{data.sku}</Text>
+                <Text><Text as={"b"}>Categoría:</Text>{" "}{data.category.toUpperCase()}</Text>
             </Flex>
             <Flex fontSize={"14px"} fontWeight={400} color={"#424242"} alignItems={"center"}>
                 <Text as={"b"}>Colores:</Text>
