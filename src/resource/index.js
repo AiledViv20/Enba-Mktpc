@@ -29,45 +29,68 @@ export const handleDownload = (url, filename) => {
 
 export const colors = [
     {
+        id: 10,
+        hex: "#FFFFFF",
+        color: "BLANCO"
+    },
+    {
         id: 1,
         hex: "#D9D9D9",
-        color: "gris"
+        color: "GRIS"
     },
     {
         id: 2,
         hex: "#000000",
-        color: "negro"
+        color: "NEGRO"
     },
     {
         id: 3,
         hex: "#1A6EA0",
-        color: "azul"
+        color: "AZUL"
     },
     {
         id: 4,
         hex: "#064A73",
-        color: "azul-marino"
+        color: "AZUL MARINO"
     },
     {
         id: 5,
         hex: "#6ACC47",
-        color: "verde"
+        color: "VERDE"
     },
+];
+
+export const colors_complement = [
     {
-        id: 6,
-        hex: "#E40000",
-        color: "rojo"
-    },
-    {
-        id: 7,
-        hex: "#FE5F5E",
-        color: "rosa"
+        id: 9,
+        hex: "#FFD200",
+        color: "AMARILLO"
     },
     {
         id: 8,
         hex: "#FE983D",
-        color: "naranja"
-    }
+        color: "NARANJA"
+    },
+    {
+        id: 7,
+        hex: "#FE5F5E",
+        color: "ROSA"
+    },
+    {
+        id: 6,
+        hex: "#E40000",
+        color: "ROJO"
+    },
+    {
+        id: 12,
+        hex: "#800080",
+        color: "MORADO"
+    },
+    {
+        id: 11,
+        hex: "#C19A6B",
+        color: "CAFE"
+    },
 ];
 
 export const productsTemplate = [
@@ -117,21 +140,25 @@ export const categoriesTemplate = [
     {
         id: 1,
         url: ctg1,
+        url_reditect: "CILINDRO",
         title: "Bebidas"
     },
     {
         id: 2,
         url: ctg2,
+        url_reditect: "BELLEZA",
         title: "Bienestar"
     },
     {
         id: 3,
         url: ctg3,
+        url_reditect: "HERRAMIENTAS",
         title: "Hogar y herramientas"
     },
     {
         id: 4,
         url: ctg4,
+        url_reditect: "ESCRITORIO",
         title: "Oficina y tecnología"
     },
 ];

@@ -23,8 +23,8 @@ const ProductCard = ({ product }) => {
                 borderRadius={"20px"}
                 overflow="hidden"
                 cursor="pointer"
-                onClick={() => window.location.href = `/producto/${product ? product.name : ""}`}
-                aria-label={product.title}
+                onClick={() => window.location.href = `/producto/${product ? product.product_sku ? product.product_sku : product.sku : ""}`}
+                aria-label={product.name}
             >
                 <Tag
                     bg={product.bg}
@@ -38,17 +38,17 @@ const ProductCard = ({ product }) => {
                     {product.promotion}
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
-                    <Image width={"192px"} height={"192px"} src={product.url} alt={product.title} />
+                    <Image width={"192px"} height={"192px"} src={image} />
                 </Flex>
                 <Flex direction="column" px="4" pt="10" pb="1">
                     <Box
-                        title={product.title} textAlign={"center"}
+                        title={product.name.toLowerCase()} textAlign={"center"}
                     >
-                        <Text fontSize="14px" fontWeight={500} color="#A4A4A4" lineHeight={"10px"}>
-                            {product.title}
+                        <Text fontSize="14px" fontWeight={500} color="#A4A4A4" lineHeight={"10px"} textTransform={"capitalize"}>
+                            {product.category.toLowerCase()}
                         </Text>
-                        <Text fontSize="16px" fontWeight={500} color="#424242" lineHeight={"46px"}>
-                            {product.description}
+                        <Text fontSize="16px" fontWeight={500} color="#424242" lineHeight={"46px"} textTransform={"capitalize"}>
+                            {product.name.toLowerCase()}
                         </Text>
                     </Box>
                     <HStack justifyContent={"center"}>
@@ -61,7 +61,7 @@ const ProductCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${product.price}
+                                    <br />${price}
                                 </Text>
                         </Text>
                     </HStack>
