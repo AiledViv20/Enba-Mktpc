@@ -108,14 +108,14 @@ const PopularCategories = ({ props }) => {
                             <OrderBy />
                         </Flex>
                         <Flex justifyContent={"center"} pb={10}>
-                            {listSearchCategories ? listSearchCategories.map((item, idx) => {
+                            {/*listSearchCategories ? listSearchCategories.map((item, idx) => {
                                 return(
                                     <Flex key={idx}>
                                         <ProductCard product={item} />
                                     </Flex>
                                 )
                             })
-                            : null}
+                            : null*/}
                         </Flex>
                         <Flex pl={10}>
                             <ArticlesPerPage />

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { 
     Flex, 
     IconButton,
@@ -7,7 +8,7 @@ import {
 import undefinedImage from '../../assets/images/productsT/none-product.png';
 import { ChevronUpIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
-const Miniature = () => {
+const Miniature = ({images, setImg, setIdx, idx}) => {
     return ( 
         <Flex flexDirection={"column"} alignItems={"center"}>
             <IconButton
@@ -17,11 +18,13 @@ const Miniature = () => {
                 color={"#31508C"}
                 fontSize={"20px"}
                 icon={<ChevronUpIcon />}
+                isDisabled={idx === 0}
+                onClick={() => setIdx(idx - 1)}
             />
             <Flex flexDirection={"column"}>
-                <Image src={undefinedImage} width={"100"} height={"100"} mb={3} />
-                <Image src={undefinedImage} width={"100"} height={"100"} mb={3} />
-                <Image src={undefinedImage} width={"100"} height={"100"} />
+                <Image src={images[idx]} width={"100"} height={"100"} mb={3} onClick={() => setImg(images[idx])} cursor={"pointer"}/>
+                <Image src={images[idx+1]} width={"100"} height={"100"} mb={3} onClick={() => setImg(images[idx+1])} cursor={"pointer"}/>
+                <Image src={images[idx+2]} width={"100"} height={"100"} onClick={() => setImg(images[idx+2])} cursor={"pointer"}/>
             </Flex>
             <IconButton
                 w={"48px"} h={"48px"}
@@ -30,6 +33,8 @@ const Miniature = () => {
                 color={"#31508C"}
                 fontSize={"20px"}
                 icon={<ChevronDownIcon />}
+                isDisabled={idx === images.length - 3}
+                onClick={() => setIdx(idx + 1)}
             />
         </Flex>
     );

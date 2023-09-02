@@ -17,6 +17,39 @@ import Characteristics from '../../components/ProductSelect/Characteristics';
 
 const Product = ({ props }) => {
     const [urlCategory, setUrlCategory] = useState(window.location.pathname);
+    const [images, setImages] = useState(null);
+    const [idx, setIdx] = useState(0);
+    const [img, setImg] = useState(null);
+    const [product, setProduct] = useState(null);
+    const params = {
+        sku: params_url.product
+    }
+    const {data, isLoading, error} = useGetProductQuery(params);
+
+    useEffect(() => {
+        if(data){
+            //console.log(data);
+            setProduct(data);
+            setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
+            const images_ = [];
+            if(data?.images?.product_images[0])
+                images_.push(data?.images?.product_images[0]);
+            if(data?.images?.vector_images[0])
+                images_.push(data?.images?.vector_images[0]);
+            data.items.map((item)=>{
+                images_.push(...item.images.images_item)
+            })
+            console.log(images_)
+            setImages(images_);
+        }
+    },[data])
+
+
+    useEffect(() => {
+        setImg(images[idx]);
+    },[idx])
+
+
 
     const toTextTransform = (txt) => {
         let listUrl = txt.split("/");
@@ -34,14 +67,22 @@ const Product = ({ props }) => {
                         {`Home / ${toTextTransform(urlCategory)}`}
                     </Text>
                 </Flex>
-                <Flex p={10}>
-                    <Miniature />
-                    <Flex pl={10}>
-                        <Image src={imgT} width={"442"} height={"442"} alt='image product'/>
-                    </Flex>
-                    <Description />
-                </Flex>
-                <Characteristics />
+                {
+                    product && (
+                        <Flex p={10}>
+                            <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                            <Flex pl={10}>
+                                <Image src={img} width={"442"} height={"442"} alt='image product'/>
+                            </Flex>
+                            <Description data={product}/>
+                        </Flex>
+                    )
+                }
+                {
+                    product && (
+                        <Characteristics data={product}/>
+                    )
+                }
             </Box>
             <RecommendedProducts 
                 titleSection={"Productos relacionados"}

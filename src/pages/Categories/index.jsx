@@ -88,16 +88,18 @@ const Categories = (props) => {
                             <ArticlesPerPage />
                             <OrderBy />
                         </Flex>
-                        <Flex justifyContent={"center"} mb={10}>
-                            {listSearchCategories ? listSearchCategories.map((item, idx) => {
-                                return(
-                                    <Flex key={idx}>
-                                        <ProductCard product={item} />
-                                    </Flex>
-                                )
+                        <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} gap={10} alignSelf={"center"}>
+                            {products && !isLoading ? products.map((item, idx) => {
+                                if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                                    return(
+                                        <Flex key={idx}>
+                                            <ProductCard product={item} />
+                                        </Flex>
+                                    )
+                                }
                             })
                             : null}
-                        </Flex>
+                        </Grid>
                         <Flex pl={10}>
                             <ArticlesPerPage />
                             <OrderBy />

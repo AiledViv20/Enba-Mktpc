@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     HStack,
@@ -10,9 +10,26 @@ import {
     Container,
 } from "@chakra-ui/react";
 
-const ProductCard = ({ product }) => {
-    const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "")
-    const price = product?.retail_price || product?.items[0]?.retail_price
+const KitCard = ({ product }) => {
+    const [price, setPrice] = useState(0);
+    useEffect(() => {
+        const min_prices = []
+        product.products.forEach(element => {
+            let min_price = 9999999
+            element.prices.map((e) => {
+                if (e.retail_price < min_price) {
+                    min_price = e.retail_price
+                }
+            })
+            if(min_price !== 9999999)
+                min_prices.push(min_price)
+        })
+        let total = 0
+        min_prices.map((e) => {
+            total += parseFloat(e)
+        })
+        setPrice(total.toFixed(2))
+    },[product])
     return ( 
         <Container key={product.id} margin="0" gap="0" padding="0">
             <Box
@@ -24,10 +41,10 @@ const ProductCard = ({ product }) => {
                 overflow="hidden"
                 cursor="pointer"
                 onClick={() => window.location.href = `/producto/${product ? product.name : ""}`}
-                aria-label={product.title}
+                aria-label={product.name}
             >
                 <Tag
-                    bg={product.bg}
+                    bg={'#FF9900'}
                     color="white"
                     fontSize={"12px"}
                     fontWeight={500}
@@ -35,20 +52,20 @@ const ProductCard = ({ product }) => {
                     py="2"
                     rounded="20px 0px 20px 0px"
                 >
-                    {product.promotion}
+                    -5% en la compra del kit
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
-                    <Image width={"192px"} height={"192px"} src={product.url} alt={product.title} />
+                    <Image width={"192px"} height={"192px"} src={product.products[0].images[0].images.images_item[0]} alt={product.title} />
                 </Flex>
                 <Flex direction="column" px="4" pt="10" pb="1">
                     <Box
-                        title={product.title} textAlign={"center"}
+                        title={product.name.toLowerCase()} textAlign={"center"}
                     >
-                        <Text fontSize="14px" fontWeight={500} color="#A4A4A4" lineHeight={"10px"}>
-                            {product.title}
+                        <Text fontSize="14px" fontWeight={500} color="#A4A4A4" lineHeight={"10px"} textTransform={"capitalize"}>
+                            {product.category.toLowerCase()}
                         </Text>
-                        <Text fontSize="16px" fontWeight={500} color="#424242" lineHeight={"46px"}>
-                            {product.description}
+                        <Text fontSize="16px" fontWeight={500} color="#424242" lineHeight={"46px"} textTransform={"capitalize"}>
+                            {product.name.toLowerCase()}
                         </Text>
                     </Box>
                     <HStack justifyContent={"center"}>
@@ -61,7 +78,7 @@ const ProductCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${product.price}
+                                    <br />${price}
                                 </Text>
                         </Text>
                     </HStack>
@@ -71,4 +88,4 @@ const ProductCard = ({ product }) => {
     );
 }
  
-export default ProductCard;
+export default KitCard;
