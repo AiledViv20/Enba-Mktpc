@@ -13,7 +13,7 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const Characteristics = ({data}) => {
+const Characteristics = ({ kit = false, data }) => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
 
     const handleSwitchChange = () => {
@@ -22,7 +22,7 @@ const Characteristics = ({data}) => {
 
     return ( 
         <Flex color={"#424242"} fontSize={"16px"} mt={10} flexDirection={"column"} pl={10} pr={20}>
-            <Flex flexDirection={"column"}>
+            <Flex flexDirection={"column"} display={kit ? "none" : "flex"}>
                 <Text as={"b"} mb={4}>DESCRIPCIÓN Y CARACTERÍSTICAS</Text>
                 <Text lineHeight={1.2}>
                     {data.description}
