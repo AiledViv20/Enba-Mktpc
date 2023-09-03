@@ -5,7 +5,8 @@ import {
     Button,
     IconButton,
     Image,
-    Tooltip
+    Tooltip,
+    useDisclosure
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
 import { MinusIcon } from '@chakra-ui/icons';
@@ -13,8 +14,10 @@ import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import { color } from 'framer-motion';
+import ModalPrintImage from '../ModalPrintImage';
 
 const Description = ({data, colors}) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [numProducts, setNumProducts] = useState(0);
     const [colorsProduct, setColorsProduct] = useState([]);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
@@ -145,8 +148,14 @@ const Description = ({data, colors}) => {
                 </Flex>
             </Flex>
             <Flex mt={5}>
-                <Button w={"430px"} fontSize={"14px"} fontWeight={500} color={"accent.500"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
+                <Button onClick={onOpen} type='button' w={"430px"} fontSize={"14px"} fontWeight={500} color={"accent.500"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
             </Flex>
+            {isOpen ?
+                    <ModalPrintImage 
+                        isOpen={isOpen}
+                        onClose={onClose} />
+                : null
+            }
         </Flex>
     );
 }

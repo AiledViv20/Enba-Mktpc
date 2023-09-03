@@ -39,17 +39,13 @@ const Home = () => {
           data={productsData} />
         <Fondo 
           bg={"#31689C"} fontColor={"#FFF"} icon={logoW}
-          title={"Desarrollamos productos para ti"}
-          txt1={"Nos especializamos en innovación y desarrollo de nuevos"}
-          txt2={"productos para facilitar tu día a día."}
+          title={"“Hecho por ti y para ti.”"}
           img={img1} />
         <FeaturedCategories 
           titleSection={"Categorias destacadas"} />
         <Fondo 
           bg={"#DFD8D1"} fontColor={"#064A73"} icon={logo}
-          title={"Lorem Ipsum is simply dummy"}
-          txt1={"Lorem Ipsum is simply dummy text of the printing and"}
-          txt2={"typesetting industry. Lorem Ipsum has"}
+          title={"“Hecho por ti y para ti.”"}
           img={img2} />
         <KitsProduct 
           titleSection={"Kits"}

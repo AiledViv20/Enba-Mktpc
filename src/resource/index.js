@@ -374,4 +374,47 @@ export const colors_dict = [
         color: 'AZUL',
         hex: "#1A6EA0",
     },
-]
+];
+
+export const colors_print_product = [
+    {
+        id: 1,
+        hex: "#D9D9D9",
+        color: "GRIS"
+    },
+    {
+        id: 2,
+        hex: "#000000",
+        color: "NEGRO"
+    },
+    {
+        id: 3,
+        hex: "#1A6EA0",
+        color: "AZUL"
+    },
+    {
+        id: 4,
+        hex: "#064A73",
+        color: "AZUL MARINO"
+    },
+    {
+        id: 5,
+        hex: "#6ACC47",
+        color: "VERDE"
+    },
+    {
+        id: 6,
+        hex: "#E40000",
+        color: "ROJO"
+    },
+    {
+        id: 7,
+        hex: "#FE5F5E",
+        color: "ROSA"
+    },
+    {
+        id: 8,
+        hex: "#FE983D",
+        color: "NARANJA"
+    }
+];

@@ -7,7 +7,6 @@ import {
     Input,
     InputRightElement,
     Grid,
-    GridItem,
     Spinner,
 } from '@chakra-ui/react';
 import Nav from '../../components/Nav';
@@ -58,12 +57,6 @@ const Categories = (props) => {
             order: order
         })
     },[colorSelected, order, artPerPage])
-
-
-    const toTextTransform = (txt) => {
-        let listUrl = txt.split("/");
-        return listUrl[2];
-    }
 
     return ( 
         <>
@@ -169,10 +162,12 @@ const Categories = (props) => {
                             <Spinner mt={20}/>
                             }
                         </Grid>
-                        <Flex pl={10}>
-                            <ArticlesPerPage />
-                            <OrderBy />
-                        </Flex>
+                        {products && !isLoading ? 
+                            <Flex pl={10}>
+                                <ArticlesPerPage />
+                                <OrderBy />
+                            </Flex>
+                        : null}
                     </Flex>
                 </Flex>
             </Box>

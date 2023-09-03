@@ -40,9 +40,9 @@ const ButtonCategories = () => {
             <Flex flexDirection={"column"} fontSize={"16px"} fontWeight={400} color={"#000"}>
               {
                 categories && (
-                    categories.map((e) => {
+                    categories.map((e, idx) => {
                         return (
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3}>
+                            <Flex key={idx} borderBottom={"1px solid #AFAFAF"} pl={5} pb={3}>
                               <Link href={`/categoria/${e.category}`}>{e.category.toUpperCase()}</Link>
                             </Flex>
                         )
