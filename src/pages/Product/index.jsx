@@ -12,7 +12,7 @@ import Miniature from '../../components/ProductSelect/Miniature';
 import Description from '../../components/ProductSelect/Description';
 import imgT from '../../assets/images/productsT/img-select.png';
 import { useParams } from 'react-router-dom';
-import { useGetProductQuery } from '../../hooks/enbaapi';
+import { useGetProductQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 
 import { productsTemplate } from '../../resource';
 import Characteristics from '../../components/ProductSelect/Characteristics';
@@ -25,16 +25,39 @@ const Product = ({ props }) => {
     const [idx, setIdx] = useState(0);
     const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
+    const [productRecommended, setProductRecommended] = useState(null);
     const params = {
         sku: params_url.product
     }
     const {data, isLoading, error} = useGetProductQuery(params);
-    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetProductQuery(product ? product.category : []);
-    console.log(dataRecommended)
+    const [paaramsRecommended, setParamsRecommended] = useState({
+        take: 12,
+        page: 0,
+        color: "",
+        category: "",
+        name: "",
+        order: 'DESC'
+    });
+    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetSearchQuery(paaramsRecommended);
+    
+    useEffect(() => {
+        if(dataRecommended){
+            let products_ = dataRecommended.filter((item)=>item.product_sku !== params_url.product)
+            setProductRecommended(products_);
+        }
+    },[dataRecommended])
 
     useEffect(() => {
         if(data){
             setProduct(data);
+            setParamsRecommended({
+                    take: 12,
+                    page: 0,
+                    color: "",
+                    category: data.category,
+                    name: "",
+                    order: 'DESC'
+            })
             setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];
@@ -86,9 +109,14 @@ const Product = ({ props }) => {
                     )
                 }
             </Box>
-            <RecommendedProducts 
-                titleSection={"Productos relacionados"}
-                productsTemplate={productsTemplate} />
+            {
+                productRecommended && (
+                    <RecommendedProducts 
+                        titleSection={"Productos relacionados"}
+                        data={productRecommended} 
+                    />       
+                )
+            }
             <Footer />
         </>
     );
