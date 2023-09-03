@@ -30,6 +30,7 @@ const KitCard = ({ product }) => {
         })
         setPrice(total.toFixed(2))
     },[product])
+    
     return ( 
         <Container key={product.id} margin="0" gap="0" padding="0">
             <Box
@@ -40,7 +41,7 @@ const KitCard = ({ product }) => {
                 borderRadius={"20px"}
                 overflow="hidden"
                 cursor="pointer"
-                onClick={() => window.location.href = `/producto/${product ? product.name : ""}`}
+                onClick={() => window.location.href = `/kit/${product ? product.name : ""}`}
                 aria-label={product.name}
             >
                 <Tag

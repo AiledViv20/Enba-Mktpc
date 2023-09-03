@@ -13,9 +13,10 @@ import Description from '../../components/ProductSelect/Description';
 import { useParams } from 'react-router-dom';
 import { useGetProductQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 
+import DescriptionKit from '../../components/Kit/DescriptionKit';
 import Characteristics from '../../components/ProductSelect/Characteristics';
 
-const Product = ({ props }) => {
+const Kit = ({ props }) => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
@@ -102,7 +103,15 @@ const Product = ({ props }) => {
                 }
                 {
                     product && (
-                        <Characteristics data={product}/>
+                        <DescriptionKit data={product}/>
+                    )
+                }
+            </Box>
+            <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
+                {
+                    product && (
+                        <Characteristics 
+                            kit={true} data={product} />
                     )
                 }
             </Box>
@@ -119,4 +128,4 @@ const Product = ({ props }) => {
     );
 }
  
-export default Product;
+export default Kit;

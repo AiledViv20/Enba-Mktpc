@@ -10,6 +10,7 @@ import Nosotros from "./pages/Nosotros";
 import ProyectosEspeciales from "./pages/ProyectosEspeciales";
 import PopularCategories from "./pages/PopularCategories";
 import Cotizar from "./pages/Cotizar";
+import Kit from "./pages/Kit";
 
 const SwitchRouter = () => {
     return (
@@ -34,6 +35,7 @@ const SwitchRouter = () => {
                 <Route path='/proyectos-especiales' element={<ProyectosEspeciales />} />
                 <Route path='/categorias-populares' element={<PopularCategories />} />
                 <Route path='/cotizar' element={<Cotizar />} />
+                <Route path='/kit/:product' element={<Kit/>} />
             </Routes>
         </Suspense>    
     );
