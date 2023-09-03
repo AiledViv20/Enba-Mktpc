@@ -21,22 +21,25 @@ import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 const Categories = (props) => {
-    const [urlCategory, setUrlCategory] = useState(window.location.pathname);
+    const params_url = useParams();
+    console.log(params_url.category === 'Todas' ? "" : params_url.category)
+    //const [urlCategory, setUrlCategory] = useState(window.location.pathname);
     const [products, setProducts] = useState(null);
     const [colorSelected, setColorSelected] = useState("");
-    const [inputSearch, setInputSearch] = useState("");
+    const [inputSearch, setInputSearch] = useState(params_url.product_name);
+    const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
     const [order, setOrder] = useState('ASC');
     const [artPerPage, setArtPerPage] = useState(25);
-    const params_url = useParams();
     const [page, setPage] = useState(0);
     const [params, setParams] = useState({
         take: artPerPage,
         page: page,
         color: colorSelected,
-        category: params_url.category,
+        category: param_category,
         name: inputSearch,
         order: order
     });
+    console.log(params)
     const {data, isLoading, error} = useGetSearchQuery(params);
 
     useEffect(() => {
@@ -50,7 +53,7 @@ const Categories = (props) => {
             take: artPerPage,
             page: page,
             color: colorSelected,
-            category: params_url.category,
+            category: params_url.category === 'Todas' ? "" : params_url.category,
             name: inputSearch,
             order: order
         })

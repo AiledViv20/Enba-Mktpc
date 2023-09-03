@@ -9,7 +9,7 @@ import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
 import { useGetCategoriesQuery } from '../hooks/enbaapi';
 
 const SearchBar = () => {
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('Todas');
     const [keySearch, setKeySearch] = useState('');
     const [categories, setCategories] = useState(null);
     const {data, isLoading, error} = useGetCategoriesQuery();
@@ -59,7 +59,11 @@ const SearchBar = () => {
                     _hover={{
                         bg: "#063D5F"
                     }}
-                    aria-label='Search category' icon={<SearchIcon />} />
+                    aria-label='Search category' icon={<SearchIcon />} 
+                    onClick={(e) => {
+                        window.location.href = `/categoria/${selectedCategory}/${keySearch}`
+                    }}
+                />
             </Flex>
         </Flex>
     );
