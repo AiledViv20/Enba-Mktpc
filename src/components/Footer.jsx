@@ -41,10 +41,10 @@ const Footer = () => {
                 </Flex>
                 <Flex display={isGreaterThanMd ? "flex" : "none"} width={"33%"} height={"fit-content"} justifyContent={"end"} flexDirection={"column"}>
                     <Stack justifyContent={"end"} direction='row'>
-                        <Link href='https://www.linkedin.com' isExternal>
-                            <img style={{ marginRight: "0.5rem" }} src={iconLk} width='40px' height='40px' alt='Facebook'/>
+                        <Link href='https://www.linkedin.com/company/grupo-enba/about/' isExternal>
+                            <img style={{ marginRight: "0.5rem" }} src={iconLk} width='40px' height='40px' alt='Linkedin'/>
                         </Link>
-                        <Link href='https://www.instagram.com' isExternal>
+                        <Link href='https://www.instagram.com/grupoenbamx/?igshid=MzRlODBiNWFlZA%3D%3D' isExternal>
                             <img style={{ marginRight: "0.5rem" }} src={iconIg} width='40px' height='40px' alt='Instagram'/>
                         </Link>
                     </Stack>
