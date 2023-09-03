@@ -29,7 +29,7 @@ const Product = ({ props }) => {
         sku: params_url.product
     }
     const {data, isLoading, error} = useGetProductQuery(params);
-    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetProductQuery(product.category);
+    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetProductQuery(product ? product.category : []);
     console.log(dataRecommended)
 
     useEffect(() => {

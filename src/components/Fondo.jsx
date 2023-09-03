@@ -10,7 +10,7 @@ import {
 
 import "../styles/fondo.css";
 
-const Fondo = ({ bg, fontColor, icon, title, txt1, txt2, img }) => {
+const Fondo = ({ bg, fontColor, icon, title, txt1, img }) => {
     //Elementos para responsive
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -23,8 +23,7 @@ const Fondo = ({ bg, fontColor, icon, title, txt1, txt2, img }) => {
                     {title}
                 </Text>
                 <Text mt={2} fontSize={"19px"} fontWeight={400}>
-                    {txt1}
-                    <br />{txt2}
+                    {txt1 ? txt1 : null}
                 </Text>
             </Flex>
             <Flex width={"50%"} justifyContent={"center"} alignItems={"center"}>

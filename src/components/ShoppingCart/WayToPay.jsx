@@ -17,10 +17,10 @@ import {
 import icon1 from '../../assets/icons/quote/tarjeta-de-credito.svg';
 import icon2 from '../../assets/icons/quote/pago-transferencia.svg';
 import icon3 from '../../assets/icons/quote/pago-tienda.svg';
-import icon4 from '../../assets/icons/quote/paypal.svg';
 
 import icon5 from '../../assets/icons/quote/oxxo.svg';
 import icon6 from '../../assets/icons/quote/seven.svg';
+import StripeForm from './StripeForm';
 
 const WayToPay = ({ step2 }) => {
     const [value, setValue] = useState('');
@@ -42,18 +42,7 @@ const WayToPay = ({ step2 }) => {
                             <AccordionIcon />
                         </AccordionButton>
                         <AccordionPanel pb={4}>
-                            <Flex flexDirection={"column"}>
-                                <Flex mb={3}>
-                                    <Input fontSize={"14px"} height={"48px"} placeholder='No. de tarjeta' />
-                                </Flex>
-                                <Flex mb={3}>
-                                    <Input fontSize={"14px"} height={"48px"} placeholder='Fecha de caducidad' mr={3}/>
-                                    <Input fontSize={"14px"} height={"48px"} placeholder='CVV' />
-                                </Flex>
-                                <Flex justifyContent={"end"}>
-                                    <Button width={"208px"} _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"}>Pagar</Button>
-                                </Flex>
-                            </Flex>
+                            <StripeForm />
                         </AccordionPanel>
                     </AccordionItem>
                     <AccordionItem border={"transparent"} mb={5}>
@@ -86,17 +75,6 @@ const WayToPay = ({ step2 }) => {
                                 </Stack>
                             </RadioGroup>
                         </AccordionPanel>
-                    </AccordionItem>
-                    <AccordionItem border={"transparent"} mb={5}>
-                        <AccordionButton width={"661px"} height={"66px"} border={"1px solid #D9D9D9"} borderRadius={"10px"}>
-                            <Box as="span" flex='1' textAlign='left' fontSize={"16px"} fontWeight={400}>
-                                <Radio value='4' mr={3}>
-                                    <Flex alignItems={"center"}>
-                                        <Image src={icon4} width={"37px"} height={"37px"} mr={3}/>Paypal
-                                    </Flex>
-                                </Radio>
-                            </Box>
-                        </AccordionButton>
                     </AccordionItem>
                 </Accordion>
             </RadioGroup>
