@@ -11,8 +11,8 @@ import {
 } from '@stripe/react-stripe-js';
 import 'react-toastify/dist/ReactToastify.css';
 
-const stripePromise = loadStripe('pk_test_51K46X6JgjTMe2feJW9XS6S3GirypYxZHw1OBhZAfiJThdPn1k4ujk1dZkRmpLC5KH3eTUpvvZMCOPjbVR9jOkkQV00CkI8XqUU');
-console.log()
+
+const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
 
 const options = {
   mode: 'payment',
@@ -25,6 +25,7 @@ const options = {
 };
 
 function App() {
+
   return (
     <Elements stripe={stripePromise} options={options}>
       <Provider store={store}>
