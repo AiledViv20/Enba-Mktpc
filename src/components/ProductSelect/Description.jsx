@@ -13,7 +13,6 @@ import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
-import { color } from 'framer-motion';
 import ModalPrintImage from '../ModalPrintImage';
 
 const Description = ({data, colors}) => {

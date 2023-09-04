@@ -1,61 +1,25 @@
 import React from 'react';
 import {
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
   Flex,
-  Text
+  Text,
+  Select
 } from '@chakra-ui/react';
-import { FaBorderAll } from 'react-icons/fa';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 
-const ArticlesPerPage = ({artPerPage, setArtPerPage}) => {
+const ArticlesPerPage = ({ setArtPerPage}) => {
 
     return ( 
         <>
-            <Popover placement='bottom-start'>
-                <PopoverTrigger>
-                    <Flex flexDirection={"column"}>
-                        <Text fontSize={"14px"} fontWeight={600} mb={2}>Artículos por página</Text>
-                        <Button border={"1px solid #CACACA"} color={"#424242"} bg={"#FFF"} fontSize={"14px"} fontWeight={400} 
-                            leftIcon={<FaBorderAll />} rightIcon={<ChevronDownIcon />}
-                            _hover={{
-                                bg: "#FFF"
-                            }}>
-                            Ver: {artPerPage? artPerPage : 50}
-                        </Button>
-                    </Flex>
-                </PopoverTrigger>
-                <PopoverContent w={"8.5rem"}>
-                    <PopoverBody p={"12px 0px"}>
-                        <Flex flexDirection={"column"} fontSize={"16px"} fontWeight={400} color={"#000"}>
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3} cursor={"pointer"} onClick={() => setArtPerPage(25)}>
-                                <Text>25</Text>
-                            </Flex>
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3} cursor={"pointer"} onClick={() => setArtPerPage(50)}>
-                                <Text>50</Text>
-                            </Flex>
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3} cursor={"pointer"} onClick={() => setArtPerPage(75)}>
-                                <Text>75</Text>
-                            </Flex>
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3} cursor={"pointer"} onClick={() => setArtPerPage(100)}>
-                                <Text>100</Text>
-                            </Flex>
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3} cursor={"pointer"} onClick={() => setArtPerPage(150)}>
-                                <Text>150</Text>
-                            </Flex>
-                            <Flex borderBottom={"1px solid #AFAFAF"} pl={5} pb={3} cursor={"pointer"} onClick={() => setArtPerPage(200)}>
-                                <Text>200</Text>
-                            </Flex>
-                            <Flex pt={3} pl={5}>
-                                <Text>250</Text>
-                            </Flex>
-                        </Flex>
-                    </PopoverBody>
-                </PopoverContent>
-            </Popover>
+            <Flex flexDirection={"column"}>
+                <Text fontSize={"14px"} fontWeight={600} mb={2}>Artículos por página</Text>
+                <Select name='articlesPerPage' border={"1px solid #CACACA"} w={"8.5rem"}>
+                    <option onClick={() => setArtPerPage(25)} value={25}>Ver:  25</option>
+                    <option onClick={() => setArtPerPage(50)} value={50}>Ver:  50</option>
+                    <option onClick={() => setArtPerPage(75)} value={75}>Ver:  75</option>
+                    <option onClick={() => setArtPerPage(100)} value={100}>Ver:  100</option>
+                    <option onClick={() => setArtPerPage(150)} value={150}>Ver:  150</option>
+                    <option onClick={() => setArtPerPage(200)} value={200}>Ver:  200</option>
+                </Select>
+            </Flex>
         </>
     );
 }

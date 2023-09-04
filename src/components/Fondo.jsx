@@ -2,18 +2,12 @@ import React from 'react';
 import { 
     Flex,
     Text,
-    Image,
-    Link,
-    useMediaQuery, 
-    useTheme
+    Image
 } from "@chakra-ui/react";
 
 import "../styles/fondo.css";
 
 const Fondo = ({ bg, fontColor, icon, title, txt1, img }) => {
-    //Elementos para responsive
-    const { breakpoints } = useTheme();
-    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
     return (
         <Flex width={"100%"} height={"312px"} borderRadius={"20px"} bgColor={bg} color={fontColor} mb={10}>

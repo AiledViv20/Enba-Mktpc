@@ -28,7 +28,7 @@ const WayToPay = ({ step2 }) => {
 
     return ( 
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
-            <RadioGroup onChange={setValue} value={value}>
+            <RadioGroup onChange={setValue} value={value} zIndex={1}>
                 <Accordion allowMultiple>
                     <AccordionItem border={"transparent"} mb={5}>
                         <AccordionButton width={"661px"} height={"66px"} border={"1px solid #D9D9D9"} borderRadius={"10px"}>
@@ -78,7 +78,7 @@ const WayToPay = ({ step2 }) => {
                     </AccordionItem>
                 </Accordion>
             </RadioGroup>
-            <Flex mt={10}>
+            <Flex mt={10} zIndex={1}>
                 <Flex>
                     <Input fontSize={"14px"} width={"448px"} height={"48px"} placeholder='Introducir un código de promoción' mr={5} />
                 </Flex>

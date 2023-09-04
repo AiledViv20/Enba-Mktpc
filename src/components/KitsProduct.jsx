@@ -9,6 +9,7 @@ import {
     Heading,
     useTheme,
     useMediaQuery,
+    Link
 } from "@chakra-ui/react";
 import KitCard from './KitCard';
 
@@ -77,7 +78,7 @@ const CardsRenderer = (products, status) => {
     }
 }
 
-export const KitsProduct = ({ titleSection, data, props }) => {
+export const KitsProduct = ({ titleSection, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
@@ -123,14 +124,21 @@ export const KitsProduct = ({ titleSection, data, props }) => {
             mb={10}
             {...props}
         >
-            <Text
-                fontSize={"26px"}
-                color="accent.500"
-                mb="2"
-                fontWeight="600"
-            >
-                {titleSection}
-            </Text>
+            <Flex w={"100%"}>
+                <Flex w={"50%"}>
+                    <Text
+                        fontSize={"26px"}
+                        color="accent.500"
+                        mb="2"
+                        fontWeight="600"
+                    >
+                        {titleSection}
+                    </Text>
+                </Flex>
+                <Flex w={"50%"} justifyContent={"end"} zIndex={1} color={"accent.500"}>
+                    <Link textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
+                </Flex>
+            </Flex>
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">

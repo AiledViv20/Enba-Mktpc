@@ -1,11 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
 import { 
     Flex, 
     IconButton,
     Image
 } from '@chakra-ui/react';
-import undefinedImage from '../../assets/images/productsT/none-product.png';
 import { ChevronUpIcon, ChevronDownIcon } from '@chakra-ui/icons';
 
 const Miniature = ({images, setImg, setIdx, idx}) => {

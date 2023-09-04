@@ -3,7 +3,6 @@ import {
     Box,
     HStack,
     Flex,
-    Stack,
     Image,
     Text,
     Tag,
@@ -32,7 +31,7 @@ const KitCard = ({ product }) => {
     },[product])
     
     return ( 
-        <Container key={product.id} margin="0" gap="0" padding="0">
+        <Container key={product.id} margin="0" gap="0" padding="0" zIndex={1}>
             <Box
                 w="294px"
                 h="410px"

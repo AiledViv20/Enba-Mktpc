@@ -3,9 +3,7 @@ import {
     Flex, 
     Box, 
     Text,
-    Button,
-    Input,
-    Textarea
+    Button
 } from '@chakra-ui/react';
 import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
@@ -104,7 +102,7 @@ const QuoteProduct = ({ props }) => {
                                 <Text fontSize={"20px"} fontWeight={600}>$0.00</Text>
                             </Flex>
                         </Flex>
-                        <Flex mt={5} flexDirection={"column"}>
+                        <Flex mt={5} flexDirection={"column"} zIndex={1}>
                             <Button mb={5} _hover={{ bg: "#063D5F"}} 
                                 fontWeight={600} fontSize={"18px"} 
                                 height={"48px"}
