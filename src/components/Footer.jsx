@@ -24,7 +24,7 @@ const Footer = () => {
                     <Stack direction='column'>
                         <Flex mr={"1rem"} alignItems={"center"}>
                             <Image src={iconEmail} width={"25px"} height={"25px"} alt='correo'/>
-                            <Link pl={2} textDecoration={"revert"} display={"flex"} flexDirection={"column"} alignItems={"center"} href='mailto:marketplace@enba.mx' isExternal>
+                            <Link zIndex={1} pl={2} textDecoration={"revert"} display={"flex"} flexDirection={"column"} alignItems={"center"} href='mailto:marketplace@enba.mx' isExternal>
                                 <Text>marketplace@enba.mx</Text>
                             </Link>
                         </Flex>
@@ -41,10 +41,10 @@ const Footer = () => {
                 </Flex>
                 <Flex display={isGreaterThanMd ? "flex" : "none"} width={"33%"} height={"fit-content"} justifyContent={"end"} flexDirection={"column"}>
                     <Stack justifyContent={"end"} direction='row'>
-                        <Link href='https://www.linkedin.com/company/grupo-enba/about/' isExternal>
+                        <Link zIndex={1} href='https://www.linkedin.com/company/grupo-enba/about/' isExternal>
                             <img style={{ marginRight: "0.5rem" }} src={iconLk} width='40px' height='40px' alt='Linkedin'/>
                         </Link>
-                        <Link href='https://www.instagram.com/grupoenbamx/?igshid=MzRlODBiNWFlZA%3D%3D' isExternal>
+                        <Link zIndex={1} href='https://www.instagram.com/grupoenbamx/?igshid=MzRlODBiNWFlZA%3D%3D' isExternal>
                             <img style={{ marginRight: "0.5rem" }} src={iconIg} width='40px' height='40px' alt='Instagram'/>
                         </Link>
                     </Stack>
@@ -55,7 +55,7 @@ const Footer = () => {
                     <Text>&#xa9;ENBA 2023 Todos los Derechos Reservados.</Text>
                 </Flex>
                 <Flex w={"50%"} justifyContent={"end"} alignItems={"center"}>
-                    <Text fontWeight={500} fontSize={"14px"}>
+                    <Text fontWeight={500} fontSize={"14px"} zIndex={1}>
                         <Link textDecoration={"revert"} href='#'>TÉRMINOS Y CONDICIONES</Link>
                         {" "}|{" "}
                         <Link textDecoration={"revert"} href='#'>AVISO DE PRIVACIDAD</Link>

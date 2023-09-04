@@ -74,7 +74,7 @@ const Categories = (props) => {
                         <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                             ACCESORIOS SMARTPHONE<br />Y TABLETS
                         </Text>
-                        <InputGroup border={"transparent"} mt={8}>
+                        <InputGroup border={"transparent"} mt={8} zIndex={1}>
                             <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
                                 placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
                                 _placeholder={{
@@ -144,11 +144,11 @@ const Categories = (props) => {
                         </Flex>
                     </Flex>
                     <Flex width={"75%"} flexDirection={"column"}>
-                        <Flex pl={10} pb={10}>
-                            <ArticlesPerPage setArtPerPage={setArtPerPage} artPerPage={artPerPage}/>
+                        <Flex pl={10} pb={10} zIndex={1}>
+                            <ArticlesPerPage setArtPerPage={setArtPerPage} />
                             <OrderBy setOrder={setOrder}/>
                         </Flex>
-                        <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} gap={10} alignSelf={"center"}>
+                        <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} alignSelf={"center"}>
                             {products && !isLoading ? products.map((item, idx) => {
                                 if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                                     return(
@@ -163,9 +163,9 @@ const Categories = (props) => {
                             }
                         </Grid>
                         {products && !isLoading ? 
-                            <Flex pl={10}>
-                                <ArticlesPerPage />
-                                <OrderBy />
+                            <Flex mt={10} pl={10} zIndex={1}>
+                                <ArticlesPerPage setArtPerPage={setArtPerPage} />
+                                <OrderBy setOrder={setOrder} />
                             </Flex>
                         : null}
                     </Flex>

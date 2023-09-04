@@ -255,18 +255,18 @@ const ProyectosEspeciales = ({ props }) => {
                             handleSubmit();
                         }}>
                         <Flex w={"100%"} flexDirection={"column"}>
-                            <Flex mb={3} justifyContent={"center"}>
+                            <Flex mb={3} justifyContent={"center"} zIndex={1}>
                                 <Input name='name' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Nombre(s)' mr={5} />
                                 <Input name='last_name' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Apellido' />
                             </Flex>
-                            <Flex mb={3} justifyContent={"center"}>
+                            <Flex mb={3} justifyContent={"center"} zIndex={1}>
                                 <Input name='email' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Email' mr={5} />
                                 <Input name='phone' type='number' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Teléfono' />
                             </Flex>
-                            <Flex mb={10} justifyContent={"center"}>
+                            <Flex mb={10} justifyContent={"center"} zIndex={1}>
                                 <Textarea name='message' onChange={handleChange} w={"756px"} height={"180px"} fontSize={"14px"} placeholder='Mensaje' />
                             </Flex>
-                            <Flex justifyContent={"center"}>
+                            <Flex justifyContent={"center"} zIndex={1}>
                                 <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}
                                     isDisabled = {values.name === "" || values.last_name === "" || values.email === "" || values.phone === ""}
                                 >

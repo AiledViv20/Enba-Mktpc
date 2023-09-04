@@ -93,15 +93,15 @@ const Cotizar = ({ props }) => {
                             handleSubmit();
                         }}>
                         <Flex w={"100%"} flexDirection={"column"} mt={5}>
-                            <Flex mb={4} justifyContent={"center"}>
+                            <Flex mb={4} justifyContent={"center"} zIndex={1}>
                                 <Input name='firstname' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Nombre(s)' mr={5} />
                                 <Input name='email' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Email' />
                             </Flex>
-                            <Flex mb={4} justifyContent={"center"}>
+                            <Flex mb={4} justifyContent={"center"} zIndex={1}>
                                 <Input name='phone' type='number' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Teléfono' mr={5} />
                                 <Input name='cp' type='number' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Código postal' />
                             </Flex>
-                            <Flex mb={5} justifyContent={"center"}>
+                            <Flex mb={5} justifyContent={"center"} zIndex={1}>
                                 <Input name='numberOfPieces' type='number' onChange={handleChange} fontSize={"14px"} width={"756px"} height={"56px"} placeholder='Cant. No de piezas' />
                             </Flex>
                             <Flex mb={2} justifyContent={"center"}>
@@ -110,14 +110,14 @@ const Cotizar = ({ props }) => {
                                 </Flex>
                                 <Flex w={"366px"}></Flex>
                             </Flex>
-                            <Flex mb={4} justifyContent={"center"}>
+                            <Flex mb={4} justifyContent={"center"} zIndex={1}>
                                 <Input name='img' type='file' onChange={handleChangeFile} border={"transparent"} width={"366px"} pl={0}/>
                                 <Flex w={"366px"}></Flex>
                             </Flex>
-                            <Flex mb={10} justifyContent={"center"}>
+                            <Flex mb={10} justifyContent={"center"} zIndex={1}>
                                 <Textarea name='message' onChange={handleChange} w={"756px"} height={"180px"} fontSize={"14px"} placeholder='Indicaciones o dudas' />
                             </Flex>
-                            <Flex justifyContent={"center"}>
+                            <Flex justifyContent={"center"} zIndex={1}>
                                 <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}
                                     isDisabled = {values.firstname === "" || values.email === "" || values.phone === "" || values.cp === "" || values.numberOfPieces === ""}
                                     isLoading={isLoading}

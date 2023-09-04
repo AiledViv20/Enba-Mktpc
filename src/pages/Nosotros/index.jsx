@@ -115,7 +115,7 @@ const Nosotros = ({ props }) => {
                 <Text fontSize={"32px"} as={"b"}>Ubicación</Text>
             </Flex>
             <Flex w={"100%"} justifyContent={"center"} mb={20}>
-                <Flex w={"70%"}>
+                <Flex w={"70%"} zIndex={1}>
                     <iframe title='ubicacion' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.9541394757584!2d-103.3564272246096!3d20.67144469995493!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8428b1fc1c9d968b%3A0x92b1a33dc4f1cfe7!2sLibertad%201211%2C%20Zona%20Centro%2C%2044100%20Guadalajara%2C%20Jal.!5e0!3m2!1ses-419!2smx!4v1693467917930!5m2!1ses-419!2smx" width="100%" height="530" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </Flex>
             </Flex>

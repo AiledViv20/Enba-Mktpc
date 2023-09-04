@@ -1,10 +1,10 @@
 import React from 'react';
 
-const ProductSelect = () => {
+const AddProductsKit = () => {
     return (
         <>
         </>
     );
 }
  
-export default ProductSelect;
+export default AddProductsKit;

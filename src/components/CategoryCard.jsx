@@ -9,7 +9,7 @@ import {
 
 const CategoryCard = ({ category }) => {
     return ( 
-        <Container key={category.id} margin="0" gap="0" padding="0">
+        <Container key={category.id} margin="0" gap="0" padding="0" zIndex={1}>
             <Box
                 w="294px"
                 h="338px"

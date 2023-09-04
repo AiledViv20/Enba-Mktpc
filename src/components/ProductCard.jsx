@@ -3,7 +3,6 @@ import {
     Box,
     HStack,
     Flex,
-    Stack,
     Image,
     Text,
     Tag,
@@ -14,7 +13,7 @@ const ProductCard = ({ product }) => {
     const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "")
     const price = product?.retail_price || product?.items[0]?.retail_price
     return ( 
-        <Container key={product.id} margin="0" gap="0" padding="0">
+        <Container key={product.id} margin="0" gap="0" padding="0" zIndex={1}>
             <Box
                 w="294px"
                 h="410px"
@@ -27,7 +26,7 @@ const ProductCard = ({ product }) => {
                 aria-label={product.name}
             >
                 <Tag
-                    bg={product.bg}
+                    bg={product.bg ? product.bg : "#FF9900"}
                     color="white"
                     fontSize={"12px"}
                     fontWeight={500}
@@ -35,7 +34,7 @@ const ProductCard = ({ product }) => {
                     py="2"
                     rounded="20px 0px 20px 0px"
                 >
-                    {product.promotion}
+                    {product.promotion ? product.promotion : "-27%"}
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
                     <Image width={"192px"} height={"192px"} src={image} />

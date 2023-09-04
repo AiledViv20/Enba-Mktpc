@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Flex, useMediaQuery, useTheme } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 import Presentacion from '../../components/Presentacion';
 import RecommendedProducts from '../../components/RecommendedProducts';
 import Fondo from '../../components/Fondo';
@@ -13,22 +13,17 @@ import logoW from '../../assets/icons/logo-blanco.svg';
 import img1 from '../../assets/images/fondo/img-fd1.png';
 import img2 from '../../assets/images/fondo/img-fd2.png';
 
-import { useGetFavoritesQuery, useGetKitsQuery } from '../../hooks/enbaapi';
+import { useGetFavoritesQuery } from '../../hooks/enbaapi';
 
 const Home = () => {
-  const { breakpoints } = useTheme();
-  const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const [productsData, setProductsData] = useState(null);
-  const [kitsData, setKitsData] = useState(null);
   const { data: products, isLoading: isProductsLoading, error: productsError } = useGetFavoritesQuery();
-  
 
   useEffect(() => {
       if(products){
           setProductsData(products);
       }
   },[products])
-
 
   return (
     <>
@@ -48,8 +43,7 @@ const Home = () => {
           title={"“Hecho por ti y para ti.”"}
           img={img2} />
         <KitsProduct 
-          titleSection={"Kits"}
-          data={kitsData} />
+          titleSection={"Kits"} />
       </Flex>
       <Footer />
     </>
