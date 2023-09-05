@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { 
     Flex,
     Text,
@@ -15,13 +15,16 @@ import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
+import { toast } from 'react-toastify';
+
 const Description = ({data, colors}) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const [addKit, setAddKit] = useState(null);
     const [numProducts, setNumProducts] = useState(0);
+    const [selectColor, setSelectColor] = useState(null);
     const [colorsProduct, setColorsProduct] = useState([]);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(0);
     const changeNumProducts = (num) => {
         setNumProducts(num < 0 ? 0 : num) 
     }
@@ -53,14 +56,50 @@ const Description = ({data, colors}) => {
             prices.push(item.retail_price)
         })
         setPrice(Math.min(...prices))
-        setMaxPrice(Math.max(...prices))
         setColorsProduct(colors_ar)
     },[colors])
 
-    const handleChangeSelected = (sku) => {
+    const handleChangeSelected = (color, sku) => {
+        setSelectColor(color);
         const item = data.items.filter((item)=>item.sku === sku)[0]
         setItemSelected(item)
         setPrice(item.retail_price)
+    }
+
+    const validateLS = () => {
+        const result = localStorage.getItem('kits');
+        return result ? true : false;
+    }
+
+    const addKitShoppingCart = () => {
+        if (!selectColor) {
+            toast.error("¡Selecciona un color!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        }
+        if (numProducts > 0 && selectColor) {
+            setAddKit({
+                name: data.name,
+                price: price * numProducts,
+                color: selectColor,
+                numKitsShoppingCart: numProducts
+            });
+            if (validateLS()) {
+                const kitsLS = JSON.parse(localStorage.getItem('kits'));
+                kitsLS.push(addKit)
+                localStorage.setItem('kits', kitsLS);
+            } else {
+                localStorage.setItem('kits', JSON.stringify([{
+                    name: data.name,
+                    price: price * numProducts,
+                    color: selectColor,
+                    numKitsShoppingCart: numProducts
+                }]));
+            }
+            toast.success("¡Se ha modificado kit correctamente!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        }
     }
 
     return ( 
@@ -86,7 +125,7 @@ const Description = ({data, colors}) => {
                                 fontSize={"50px"}
                                 color={item.hex}
                                 onClick={() => {
-                                    handleChangeSelected(item.sku)
+                                    handleChangeSelected(item.color, item.sku)
                                 }}
                             >
                                 &#9679;
@@ -96,7 +135,14 @@ const Description = ({data, colors}) => {
                 </Flex>
             </Flex>
             <Flex mt={5} flexDirection={"column"}>
-                <Flex mb={1}>
+                {selectColor ?
+                    <Flex>
+                        <Text as={"b"}>Color seleccionado:</Text>
+                        <Text ml={2}>{selectColor.toUpperCase()}</Text>
+                    </Flex>
+                    : null
+                }
+                <Flex mt={2} mb={1}>
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
@@ -109,7 +155,7 @@ const Description = ({data, colors}) => {
                         _hover={{
                             bg: "#063D5F"
                         }}
-                        onClick={() => console.log()}>Agregar al carrito
+                        onClick={() => addKitShoppingCart()}>Agregar al carrito
                     </Button>
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
