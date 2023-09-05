@@ -90,7 +90,7 @@ export const KitsProduct = ({ titleSection, props }) => {
         "page": page,
         "category": "",
         "name": ""
-      });
+    });
 
     useEffect(() => {
         if(kits){

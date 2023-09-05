@@ -21,8 +21,6 @@ import { useParams } from 'react-router-dom';
 
 const Categories = (props) => {
     const params_url = useParams();
-    console.log(params_url.category === 'Todas' ? "" : params_url.category)
-    //const [urlCategory, setUrlCategory] = useState(window.location.pathname);
     const [products, setProducts] = useState(null);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
@@ -38,7 +36,6 @@ const Categories = (props) => {
         name: inputSearch,
         order: order
     });
-    console.log(params)
     const {data, isLoading, error} = useGetSearchQuery(params);
 
     useEffect(() => {

@@ -20,15 +20,23 @@ export const reducer = (state, action) => {
                 productsLoader: false,
                 productsError: action.payload,
             };
-        case actions.filterProducts:
+        case actions.getKits:
             return {
                 ...state,
-                productsFilter: action.payload,
+                kitsLoader: true,
+                kitsError: null,
             };
-        case actions.searchProducts:
+        case actions.getKitsSuccess:
             return {
                 ...state,
-                searchBar: action.payload,
+                kits: action.payload,
+                kitsLoader: false,
+            };
+        case actions.getKitsError:
+            return {
+                ...state,
+                kitsLoader: false,
+                kitsError: action.payload,
             };
         default:
             return state;

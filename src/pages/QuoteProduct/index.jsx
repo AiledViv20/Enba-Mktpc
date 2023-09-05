@@ -109,7 +109,12 @@ const QuoteProduct = ({ props }) => {
                                 onClick={() => changeStepQuote(num+1)}>
                                 Continuar
                             </Button>
-                            <Button borderColor={"accent.500"} fontWeight={600} fontSize={"18px"} height={"48px"} variant={"outline"}>Agregar artículos</Button>
+                            <Button borderColor={"accent.500"} 
+                                fontWeight={600} fontSize={"18px"} 
+                                height={"48px"} variant={"outline"}
+                                onClick={() => window.location.href = '/categoria/Todas'}>
+                                Agregar artículos
+                            </Button>
                         </Flex>
                     </Flex>
                 </Flex>

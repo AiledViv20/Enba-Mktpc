@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import lightTheme from "./themes/ligth";
 import Router from './Router';
 import { ChakraProvider, Flex } from '@chakra-ui/react';
@@ -11,6 +11,8 @@ import {
 } from '@stripe/react-stripe-js';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfettiGenerator from "confetti-js";
+
+import ShoppingCartProvider from './context/ShoppingCartContext';
 
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
 
@@ -39,23 +41,24 @@ function App() {
     // Crea una instancia de confetti-js solo si el elemento canvas existe
     const confetti = new ConfettiGenerator(confettiSettings);
     confetti.render();
-
+    
   }, []);
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <Provider store={store}>
-        <ChakraProvider theme={lightTheme}>
-            <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
-              <Router />
-              <Flex position={"absolute"}>
-                <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
+      <ShoppingCartProvider>
+        <Provider store={store}>
+          <ChakraProvider theme={lightTheme}>
+              <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
+                <Router />
+                <Flex position={"absolute"} display={"none"}>
+                  <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
+                </Flex>
               </Flex>
-              
-            </Flex>
-          <ToastContainer />
-        </ChakraProvider>
-      </Provider>
+            <ToastContainer />
+          </ChakraProvider>
+        </Provider>
+      </ShoppingCartProvider>
     </Elements>
   );
 }

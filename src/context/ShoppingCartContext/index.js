@@ -2,15 +2,15 @@ import React, { createContext, useReducer } from 'react';
 import { initialState } from "./constants";
 import { reducer } from "./reducer";
 
-export const CardFilterContext = createContext();
+export const ShoppingCartContext = createContext();
 
-const CardFilterProvider = (props) => {
+const ShoppingCartProvider = (props) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     return ( 
-        <CardFilterContext.Provider value={{ state, dispatch }}>
+        <ShoppingCartContext.Provider value={{ state, dispatch }}>
             {props.children}
-        </CardFilterContext.Provider>
+        </ShoppingCartContext.Provider>
     );
 }
  
-export default CardFilterProvider;
+export default ShoppingCartProvider;
