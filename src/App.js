@@ -12,7 +12,6 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import ConfettiGenerator from "confetti-js";
 
-import ShoppingCartProvider from './context/ShoppingCartContext';
 import Nav from './components/Nav';
 
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
@@ -47,20 +46,18 @@ function App() {
 
   return (
     <Elements stripe={stripePromise} options={options}>
-      <ShoppingCartProvider>
-        <Provider store={store}>
-          <ChakraProvider theme={lightTheme}>
-              <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
-                <Nav />
-                <Router />
-                <Flex position={"absolute"} display={"none"}>
-                  <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
-                </Flex>
+      <Provider store={store}>
+        <ChakraProvider theme={lightTheme}>
+            <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
+              <Nav />
+              <Router />
+              <Flex position={"absolute"} display={"none"}>
+                <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
               </Flex>
-            <ToastContainer />
-          </ChakraProvider>
-        </Provider>
-      </ShoppingCartProvider>
+            </Flex>
+          <ToastContainer />
+        </ChakraProvider>
+      </Provider>
     </Elements>
   );
 }
