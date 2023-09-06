@@ -19,6 +19,7 @@ import img1 from '../../assets/images/banner/proyectosesp/img1.png';
 import img2 from '../../assets/images/banner/proyectosesp/img2.png';
 import img3 from '../../assets/images/banner/proyectosesp/img3.png';
 import img4 from '../../assets/images/banner/proyectosesp/img4.png';
+import img5 from '../../assets/images/banner/proyectosesp/img5.png';
 
 import { usePostLeadMutation } from '../../hooks/enbaapi';
 
@@ -72,12 +73,12 @@ const ProyectosEspeciales = ({ props }) => {
             key: "hero4",
             imageUrl: img4,
             title: "RENATOS TELCEL EN NAVIDAD",
-            description: `Estamos encantados de haber colaborado con la marca Scribe en la creación<br />de una campaña promocional para su evento anual de 60 aniversario. `
+            description: `Estamos encantados de haber colaborado con la marca Scribe en la creación<br />de una campaña promocional para su evento anual de 60 aniversario.`
         },
         {
             key: "hero5",
-            imageUrl: img4,
-            title: "PROYECTO ESPECIAL PARA BAYER",
+            imageUrl: img5,
+            title: "Snowball para bayer",
             description: `En una colaboración especial con la farmacéutica Bayer, desarrollamos un proyecto único que consistió en<br />crear "snowballs" incluyendo elementos flotantes de los medicamentos de sus marcas más icónicas.`
         }
     ];

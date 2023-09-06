@@ -114,7 +114,7 @@ const Presentacion = (props) => {
                                 top={"20"}
                                 justifyContent={"center"}
                                 position="absolute">
-                                <Flex textTransform={"uppercase"} flexDirection="column" alignItems={"center"}>
+                                <Flex flexDirection="column" alignItems={"center"}>
                                     <Text textAlign={"center"} fontWeight={700} fontSize={'39px'}>
                                         {"“Hecho por ti y para ti.“"}
                                     </Text>
