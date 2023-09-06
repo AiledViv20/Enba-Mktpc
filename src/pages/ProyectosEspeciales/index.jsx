@@ -145,9 +145,6 @@ const ProyectosEspeciales = ({ props }) => {
 
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Flex pt={10} justifyContent={"center"} mb={10} color={"accent.500"}>
                 <Text fontSize={"34px"} as={"b"}>Proyectos Especiales</Text>
             </Flex>

@@ -90,9 +90,6 @@ const Presentacion = (props) => {
 
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Box id='proyecto' w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"}  position="relative">
                 <Carousel current={current}>
                     { slides.map((slide, idx) => (

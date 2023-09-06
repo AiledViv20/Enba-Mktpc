@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import lightTheme from "./themes/ligth";
 import Router from './Router';
 import { ChakraProvider, Flex } from '@chakra-ui/react';
@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfettiGenerator from "confetti-js";
 
 import ShoppingCartProvider from './context/ShoppingCartContext';
+import Nav from './components/Nav';
 
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
 
@@ -50,6 +51,7 @@ function App() {
         <Provider store={store}>
           <ChakraProvider theme={lightTheme}>
               <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
+                <Nav />
                 <Router />
                 <Flex position={"absolute"} display={"none"}>
                   <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>

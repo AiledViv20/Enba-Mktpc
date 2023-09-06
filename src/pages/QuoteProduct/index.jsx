@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     Flex, 
     Box, 
     Text,
-    Button
+    Button,
+    IconButton
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import Form from '../../components/ShoppingCart/Form';
 import WayToPay from '../../components/ShoppingCart/WayToPay';
 import Bill from '../../components/ShoppingCart/Bill';
 import ListProductCard from '../../components/ShoppingCart/ListProductCard';
+import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const QuoteProduct = ({ props }) => {
     const [steps, setSteps] = useState({
@@ -19,6 +20,8 @@ const QuoteProduct = ({ props }) => {
         step3: false
     });
     const [num, setNum] = useState(1);
+    const [products, setProducts] = useState([]);
+    const [kits, setKits] = useState([]);
 
     const changeStepQuote = (numStep) => {
         switch (numStep) {
@@ -47,11 +50,14 @@ const QuoteProduct = ({ props }) => {
         setNum(numStep);
     }
 
+    useEffect(() => {
+        var array = localStorage.getItem('productos');
+        array = array ? JSON.parse(array) : [];
+        setProducts(array);
+    }, []);
+
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} position="relative">
                 <Flex>
                     <Text fontSize={"16px"} fontWeight={400}>
@@ -73,11 +79,11 @@ const QuoteProduct = ({ props }) => {
                     <Bill step3={steps.step3}/>
                 </Flex>
                 <Flex w={"50%"} pl={20} >
-                    <Flex w={"100%"} h={"450px"} bg={"#F8F8F8"} border={"1px solid #E2E2E2"} borderRadius={"8px"} p={10} flexDirection={"column"}>
+                    <Flex w={"100%"} height={"fit-content"} bg={"#F8F8F8"} border={"1px solid #E2E2E2"} borderRadius={"8px"} p={10} flexDirection={"column"}>
                         <Flex>
                             <Text fontSize={"20px"} as={"b"}>Mi orden</Text>
                         </Flex>
-                        <ListProductCard />
+                        <ListProductCard data={products}/>
                         <Flex mt={10} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
                             <Flex w={"50%"}>
                                 <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>
@@ -102,7 +108,7 @@ const QuoteProduct = ({ props }) => {
                                 <Text fontSize={"20px"} fontWeight={600}>$0.00</Text>
                             </Flex>
                         </Flex>
-                        <Flex mt={5} flexDirection={"column"} zIndex={1}>
+                        <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 3 ? "none" : "flex"}>
                             <Button mb={5} _hover={{ bg: "#063D5F"}} 
                                 fontWeight={600} fontSize={"18px"} 
                                 height={"48px"}
@@ -115,6 +121,14 @@ const QuoteProduct = ({ props }) => {
                                 onClick={() => window.location.href = '/categoria/Todas'}>
                                 Agregar artículos
                             </Button>
+                        </Flex>
+                        <Flex mt={5} zIndex={1}>
+                        <IconButton
+                            borderColor={"accent.500"} 
+                            aria-label='Back' variant={"outline"}
+                            icon={<ArrowBackIcon />}
+                            onClick={() => changeStepQuote(num === 1 ? 1 : num-1)}
+                            isDisabled={num <= 1 ? true : false}/>
                         </Flex>
                     </Flex>
                 </Flex>

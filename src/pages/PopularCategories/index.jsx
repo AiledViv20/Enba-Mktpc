@@ -20,9 +20,6 @@ import banner from '../../assets/images/banner/categoriaspop/img1.png';
 const PopularCategories = ({ props }) => {
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Flex pt={10} color={"#424242"} fontWeight={400} flexDirection={"column"} padding={"2rem 5%"}>
                 <Text mb={20} fontSize={"16px"}>Home / Categoría popular / Promoción regreso a clases</Text>
                 <Text fontSize={"18px"} as={"b"}>PROMOCIÓN REGRESO A CLASES</Text>

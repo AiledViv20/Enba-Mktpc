@@ -20,7 +20,7 @@ import { toast } from 'react-toastify';
 const Description = ({data, colors}) => {
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [addProduct, setAddProduct] = useState(null);
+    const [addProduct, setAddProduct] = useState([]);
     const [numProducts, setNumProducts] = useState(0);
     const [selectColor, setSelectColor] = useState(null);
     const [colorsProduct, setColorsProduct] = useState([]);

@@ -1,43 +1,19 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     IconButton,
     Text,
     Flex
 } from '@chakra-ui/react';
 import { FaShoppingCart } from 'react-icons/fa';
-import { ShoppingCartContext } from '../../context/ShoppingCartContext';
-import { actions } from '../../context/ShoppingCartContext/actions';
 
 const ButtonShoppingCart = () => {
-    const { state, dispatch } = useContext(ShoppingCartContext);
     const [numShoppingCart, setNumShoppingCart] = useState(0);
-    const [productsSP, setProductsSP] = useState([]);
-    const [kitsSP, setKitsSP] = useState([]);
 
     useEffect(() => {
-        const tlproductsSP = JSON.parse(localStorage.getItem('productos'));
-        console.log(tlproductsSP)
-        if (tlproductsSP) {
-            setProductsSP(tlproductsSP);
-            dispatch({ type: actions.getProducts });
-            dispatch({ type: actions.getProductsSuccess, payload: productsSP });
-            dispatch({ type: actions.getProductsError, payload: "Productos actualizados" });
-            setNumShoppingCart(productsSP.length);
-        }
-        const tlkitsSP = JSON.parse(localStorage.getItem('kits'));
-        console.log(tlkitsSP)
-        if (tlkitsSP) {
-            setKitsSP(tlkitsSP);
-            dispatch({ type: actions.getKits });
-            dispatch({ type: actions.getKitsSuccess, payload: kitsSP });
-            dispatch({ type: actions.getKitsError, payload: "Productos de kit actualizados" });
-            setNumShoppingCart(kitsSP?.length + productsSP?.length);
-        }
+        var array = localStorage.getItem('productos');
+        array = array ? JSON.parse(array) : [];
+        setNumShoppingCart(array?.length);
     }, []);
-
-    useEffect(() => {
-        setNumShoppingCart(kitsSP?.length + productsSP?.length);
-    }, [productsSP, kitsSP]);
 
     return (
         <Flex alignItems={"center"} position={"relative"}>
