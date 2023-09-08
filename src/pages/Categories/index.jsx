@@ -9,7 +9,6 @@ import {
     Grid,
     Spinner,
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
 import ProductCard from '../../components/ProductCard';

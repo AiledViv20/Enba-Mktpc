@@ -7,7 +7,6 @@ import {
     Textarea,
     Button
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import banner from '../../assets/images/banner/banner-contactanos.png';
 import { usePostLeadMutation } from '../../hooks/enbaapi';

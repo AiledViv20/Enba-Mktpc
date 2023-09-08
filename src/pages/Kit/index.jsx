@@ -4,7 +4,6 @@ import {
     Box, 
     Text,
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import RecommendedProducts from '../../components/RecommendedProducts';
 import Footer from '../../components/Footer';
 import { useParams } from 'react-router-dom';

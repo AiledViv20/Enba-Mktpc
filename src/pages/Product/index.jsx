@@ -5,7 +5,6 @@ import {
     Text,
     Image
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import RecommendedProducts from '../../components/RecommendedProducts';
 import Footer from '../../components/Footer';
 import Miniature from '../../components/ProductSelect/Miniature';
@@ -93,7 +92,7 @@ const Product = ({ props }) => {
                             <Flex pl={10}>
                                 <Image src={img} width={"442"} height={"442"} alt='image product'/>
                             </Flex>
-                            <Description data={product} colors={colors}/>
+                            <Description previewImage={img} data={product} colors={colors}/>
                         </Flex>
                     )
                 }

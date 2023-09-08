@@ -5,7 +5,6 @@ import {
     Text,
     Image
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 
 import banner from '../../assets/images/banner/banner-nosotros.png';

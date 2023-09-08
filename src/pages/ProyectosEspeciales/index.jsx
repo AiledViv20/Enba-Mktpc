@@ -8,7 +8,6 @@ import {
     Button,
     IconButton
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 
 import { Carousel } from '../../components/Carousel/Carousel';

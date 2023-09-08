@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Text,
@@ -15,12 +15,16 @@ import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { selectShoppingCart, setShoppingCart } from '../../redux/slices/shoppingCartSlice';
+
 import { toast } from 'react-toastify';
 
-const Description = ({data, colors}) => {
+const Description = ({ previewImage, data, colors }) => {
+    const productsStore = useSelector(selectShoppingCart);
+    const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [addProduct, setAddProduct] = useState([]);
     const [numProducts, setNumProducts] = useState(0);
     const [selectColor, setSelectColor] = useState(null);
     const [colorsProduct, setColorsProduct] = useState([]);
@@ -67,9 +71,8 @@ const Description = ({data, colors}) => {
         setPrice(item.retail_price)
     }
 
-    const validateLS = () => {
-        const result = localStorage.getItem('productos');
-        return result ? true : false;
+    const validateDataStore = () => {
+        console.log(productsStore)
     }
 
     const addProductShoppingCart = () => {
@@ -78,25 +81,26 @@ const Description = ({data, colors}) => {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
         }
+        if (numProducts === 0) {
+            toast.error("¡Selecciona una cantidad valida de productos!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        }
         if (numProducts > 0 && selectColor) {
-            setAddProduct({
+            const product = {
                 name: data.name,
                 price: price * numProducts,
                 color: selectColor,
-                numProductsShoppingCart: numProducts
-            });
-            if (validateLS()) {
-                const productsLS = JSON.parse(localStorage.getItem('productos'));
-                productsLS.push(addProduct)
-                localStorage.setItem('productos', productsLS);
-            } else {
-                localStorage.setItem('productos', JSON.stringify([{
-                    name: data.name,
-                    price: price * numProducts,
-                    color: selectColor,
-                    numProductsShoppingCart: numProducts
-                }]));
+                numProductsShoppingCart: numProducts,
+                img: previewImage
             }
+            //let products = [productsStore];
+            //productsStore.push(product);
+            console.log(productsStore)
+            /* dispatch(
+                setShoppingCart({products: [...productsStore, product]})
+            );
+            validateDataStore(); */
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT
             });

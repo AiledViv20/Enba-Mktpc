@@ -10,8 +10,6 @@ import {
 import "../styles/styled.css";
 import "../styles/presentacion.css";
 
-import Nav from './Nav';
-
 import { Carousel } from './Carousel/Carousel';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
