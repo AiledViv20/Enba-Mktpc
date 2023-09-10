@@ -4,7 +4,6 @@ import Router from './Router';
 import { ChakraProvider, Flex } from '@chakra-ui/react';
 import { ToastContainer } from 'react-toastify';
 import { store } from './hooks';
-import { storesp } from './redux';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
@@ -16,8 +15,9 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfettiGenerator from "confetti-js";
 
 import Nav from './components/Nav';
+import Card from './components/Card';
 
-const persistor = persistStore(storesp);
+const persistor = persistStore(store);
 
 const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
 
@@ -52,19 +52,18 @@ function App() {
   return (
     <Elements stripe={stripePromise} options={options}>
       <PersistGate persistor={persistor}>
-        <Provider store={storesp}>
-          <Provider store={store}>
-            <ChakraProvider theme={lightTheme}>
-                <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
-                  <Nav />
-                  <Router />
-                  <Flex position={"absolute"} display={"none"}>
-                    <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
-                  </Flex>
+        <Provider store={store}>
+          <ChakraProvider theme={lightTheme}>
+              <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
+                <Card />
+                <Nav />
+                <Router />
+                <Flex position={"absolute"} display={"none"}>
+                  <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
                 </Flex>
-              <ToastContainer />
-            </ChakraProvider>
-          </Provider>
+              </Flex>
+            <ToastContainer />
+          </ChakraProvider>
         </Provider>
       </PersistGate>
     </Elements>

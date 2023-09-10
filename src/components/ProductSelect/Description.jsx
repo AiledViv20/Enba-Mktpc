@@ -15,14 +15,9 @@ import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
-import { useSelector, useDispatch } from 'react-redux';
-import { selectShoppingCart, setShoppingCart } from '../../redux/slices/shoppingCartSlice';
-
 import { toast } from 'react-toastify';
 
 const Description = ({ previewImage, data, colors }) => {
-    const productsStore = useSelector(selectShoppingCart);
-    const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [numProducts, setNumProducts] = useState(0);
@@ -71,11 +66,7 @@ const Description = ({ previewImage, data, colors }) => {
         setPrice(item.retail_price)
     }
 
-    const validateDataStore = () => {
-        console.log(productsStore)
-    }
-
-    const addProductShoppingCart = () => {
+    /* const addProductShoppingCart = () => {
         if (!selectColor) {
             toast.error("¡Selecciona un color!", {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -94,18 +85,15 @@ const Description = ({ previewImage, data, colors }) => {
                 numProductsShoppingCart: numProducts,
                 img: previewImage
             }
-            //let products = [productsStore];
-            //productsStore.push(product);
-            console.log(productsStore)
-            /* dispatch(
+            dispatch(
                 setShoppingCart({products: [...productsStore, product]})
             );
-            validateDataStore(); */
+            validateDataStore();
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
         }
-    }
+    } */
 
     return ( 
         <Flex flexDirection={"column"}>
@@ -159,8 +147,7 @@ const Description = ({ previewImage, data, colors }) => {
                     <Button w={"176px"} fontSize={"14px"} fontWeight={500}
                         _hover={{
                             bg: "#063D5F"
-                        }}
-                        onClick={() => addProductShoppingCart()}>Agregar al carrito
+                        }}>Agregar al carrito
                     </Button>
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
