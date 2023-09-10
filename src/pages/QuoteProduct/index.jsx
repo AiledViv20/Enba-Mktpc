@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectProducts } from '../../hooks/slices/counterSlice';
 import { 
     Flex, 
     Box, 
@@ -14,6 +16,8 @@ import ListProductCard from '../../components/ShoppingCart/ListProductCard';
 import { ArrowBackIcon } from '@chakra-ui/icons';
 
 const QuoteProduct = ({ props }) => {
+    const productsStore = useSelector(selectProducts);
+
     const [steps, setSteps] = useState({
         step1: true,
         step2: false,
@@ -51,9 +55,7 @@ const QuoteProduct = ({ props }) => {
     }
 
     useEffect(() => {
-        var array = localStorage.getItem('productos');
-        array = array ? JSON.parse(array) : [];
-        setProducts(array);
+        setProducts(productsStore);
     }, []);
 
     return ( 
@@ -80,10 +82,15 @@ const QuoteProduct = ({ props }) => {
                 </Flex>
                 <Flex w={"50%"} pl={20} >
                     <Flex w={"100%"} height={"fit-content"} bg={"#F8F8F8"} border={"1px solid #E2E2E2"} borderRadius={"8px"} p={10} flexDirection={"column"}>
-                        <Flex>
+                        <Flex mb={8}>
                             <Text fontSize={"20px"} as={"b"}>Mi orden</Text>
                         </Flex>
-                        <ListProductCard data={products}/>
+                        {products.length > 1 ?
+                            <Flex maxHeight={"150px"} overflowY={"auto"}>
+                                <ListProductCard data={products}/>
+                            </Flex> : 
+                            <ListProductCard data={products}/>
+                        }
                         <Flex mt={10} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
                             <Flex w={"50%"}>
                                 <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>

@@ -15,7 +15,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfettiGenerator from "confetti-js";
 
 import Nav from './components/Nav';
-import Card from './components/Card';
 
 const persistor = persistStore(store);
 
@@ -55,7 +54,6 @@ function App() {
         <Provider store={store}>
           <ChakraProvider theme={lightTheme}>
               <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
-                <Card />
                 <Nav />
                 <Router />
                 <Flex position={"absolute"} display={"none"}>

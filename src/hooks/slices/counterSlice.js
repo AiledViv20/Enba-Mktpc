@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    counter: 0,
+    products: [],
+    kits: []
 }
 
 export const counterSlice = createSlice({
     name: 'counterSlice',
     initialState,
     reducers: {
-        setCounter: (state, action) => {
-            state.counter = action.payload.counter;
+        setProducts: (state, action) => {
+            state.products = action.payload.products;
         }
     }
 })
 
-export const { setCounter } = counterSlice.actions;
-export const selectCounter = (state) => state.counterState.counter;
+export const { setProducts } = counterSlice.actions;
+export const selectProducts = (state) => state.counterState.products;
 export default counterSlice.reducer;

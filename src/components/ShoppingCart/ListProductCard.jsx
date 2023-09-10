@@ -7,7 +7,7 @@ import ProductCardSp from './ProductCardSp';
 const ListProductCard = ({ data }) => {
     
     return ( 
-        <Flex flexDirection={"column"} mt={8}>
+        <Flex flexDirection={"column"} w={"100%"} pr={2}>
             {data ? data.map((item, idx) => {
                 return (
                     <ProductCardSp key={idx} product={item} />

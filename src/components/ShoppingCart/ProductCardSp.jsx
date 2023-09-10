@@ -4,19 +4,23 @@ import {
     Image,
     Text
 } from "@chakra-ui/react";
-import img from '../../assets/icons/shoppingcart.png';
 
 const ProductCardSp = ({ product }) => {
+
+    function capitalizeFirstLetter(text) {
+        // Convierte la primera letra a mayúscula y el resto a minúscula
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    }
 
     return ( 
         <Flex bg={"#FFF"} border={"1px solid #E2E2E2"} mb={3} padding={3} borderRadius={"8px"}>
             <Flex w={"30%"}>
-                <Image src={img} width={"106px"} height={"80px"} alt='img' />
+                <Image src={product.img} width={"106px"} height={"80px"} alt='img' />
             </Flex>
             <Flex w={"70%"}>
                 <Flex w={"80%"} flexDirection={"column"} h={"100%"}>
-                    <Flex>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{product.name}</Text>
+                    <Flex w={"100%"} height={"100%"}>
+                        <Text lineHeight={1.2} w={"90%"} color={"#212121"} fontSize={"16px"} fontWeight={600}>{capitalizeFirstLetter(product.name)}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"}>
                         <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>Quantity:  {product.numProductsShoppingCart}</Text>

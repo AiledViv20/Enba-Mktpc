@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectProducts } from '../../hooks/slices/counterSlice';
 import { 
     IconButton,
     Text,
@@ -8,12 +10,15 @@ import { FaShoppingCart } from 'react-icons/fa';
 
 const ButtonShoppingCart = () => {
     const [numShoppingCart, setNumShoppingCart] = useState(0);
+    const productsStore = useSelector(selectProducts);
 
     useEffect(() => {
-        var array = localStorage.getItem('productos');
-        array = array ? JSON.parse(array) : [];
-        setNumShoppingCart(array?.length);
+        setNumShoppingCart(productsStore?.length);
     }, []);
+
+    useEffect(() => {
+        setNumShoppingCart(productsStore?.length);
+    }, [productsStore]);
 
     return (
         <Flex alignItems={"center"} position={"relative"}>

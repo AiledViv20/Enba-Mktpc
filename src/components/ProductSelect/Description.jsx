@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -18,6 +20,8 @@ import ModalPrintImage from '../ModalPrintImage';
 import { toast } from 'react-toastify';
 
 const Description = ({ previewImage, data, colors }) => {
+    const productsStore = useSelector(selectProducts);
+    const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [numProducts, setNumProducts] = useState(0);
@@ -66,7 +70,7 @@ const Description = ({ previewImage, data, colors }) => {
         setPrice(item.retail_price)
     }
 
-    /* const addProductShoppingCart = () => {
+    const addProductShoppingCart = () => {
         if (!selectColor) {
             toast.error("¡Selecciona un color!", {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -86,14 +90,15 @@ const Description = ({ previewImage, data, colors }) => {
                 img: previewImage
             }
             dispatch(
-                setShoppingCart({products: [...productsStore, product]})
+                setProducts({products: [
+                    ...productsStore, product
+                ]})
             );
-            validateDataStore();
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
         }
-    } */
+    }
 
     return ( 
         <Flex flexDirection={"column"}>
@@ -147,7 +152,8 @@ const Description = ({ previewImage, data, colors }) => {
                     <Button w={"176px"} fontSize={"14px"} fontWeight={500}
                         _hover={{
                             bg: "#063D5F"
-                        }}>Agregar al carrito
+                        }}
+                        onClick={() => addProductShoppingCart()}>Agregar al carrito
                     </Button>
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
