@@ -42,6 +42,7 @@ const AddKitCard = ({ product }) => {
             total_price: product.items[0]?.price,
             quantity: 1,
             name: product.name,
+            category: product.category,
             color: product.items[0]?.color,
             img: product.items[0]?.images.images_item[0]
         }

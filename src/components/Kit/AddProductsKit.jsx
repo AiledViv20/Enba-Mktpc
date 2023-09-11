@@ -15,7 +15,7 @@ import AddKitCard from './AddKitCard';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const CardsRenderer = (data, products, status) => {
+const CardsRenderer = (products, status) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
@@ -134,7 +134,7 @@ const AddProductsKit = ({ titleSection, data, props }) => {
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page - 1}`}
                         />
-                        {CardsRenderer(data, products, status)}
+                        {CardsRenderer(products, status)}
                         <IconButton
                             icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"

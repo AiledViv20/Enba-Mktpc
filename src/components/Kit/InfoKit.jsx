@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
+
 import { 
     Flex, 
     Box, 
@@ -14,7 +17,12 @@ import { useGetKitQuery } from '../../hooks/enbaapi';
 import AddProductsKit from './AddProductsKit';
 import KitIncludes from './KitIncludes';
 
+import { toast } from 'react-toastify';
+
 const InfoKit = ({ props }) => {
+    const kitsListStore = useSelector(selectKitsList);
+    const dispatch = useDispatch();
+
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
@@ -77,7 +85,7 @@ const InfoKit = ({ props }) => {
         if(images){
             setImg(images[idx]);
         }
-    },[idx])
+    },[idx]);
 
     return ( 
         <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
@@ -103,13 +111,19 @@ const InfoKit = ({ props }) => {
                 )
             }
             {
+                kitsListStore.length > 0 && (
+                    <KitIncludes 
+                        titleSection={"Tu kit incluye:"}
+                        data={kitsListStore}/>
+                )
+            }
+            {
                 product && (
                     <AddProductsKit 
                         titleSection={"Agrega otros productos a tu kit"}
                         data={kit}/>
                 )
             }
-            <KitIncludes />
             {
                 product && (
                     <Characteristics 
