@@ -12,6 +12,7 @@ import Characteristics from './Characteristics';
 import { colors_dict } from '../../resource';
 import { useGetKitQuery } from '../../hooks/enbaapi';
 import AddProductsKit from './AddProductsKit';
+import KitIncludes from './KitIncludes';
 
 const InfoKit = ({ props }) => {
     const params_url = useParams();
@@ -108,6 +109,7 @@ const InfoKit = ({ props }) => {
                         data={kit}/>
                 )
             }
+            <KitIncludes />
             {
                 product && (
                     <Characteristics 

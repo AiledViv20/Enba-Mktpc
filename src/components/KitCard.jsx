@@ -8,6 +8,7 @@ import {
     Tag,
     Container,
 } from "@chakra-ui/react";
+import { formatterValue } from '../resource/validate';
 
 const KitCard = ({ product }) => {
     const [price, setPrice] = useState(0);
@@ -79,7 +80,7 @@ const KitCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${price}
+                                    <br />{formatterValue(price)}
                                 </Text>
                         </Text>
                     </HStack>

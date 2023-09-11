@@ -11,6 +11,7 @@ import {
     Container,
     Button
 } from "@chakra-ui/react";
+import { formatterValue } from '../../resource/validate';
 
 import { toast } from 'react-toastify';
 
@@ -25,6 +26,13 @@ const AddKitCard = ({ product }) => {
         total = parseFloat(total);
         setPrice(total.toFixed(2))
     },[product]);
+
+    const validateAddKits = () => {
+        if (kitsListStore.length === 4) {
+            return true;
+        }
+        return false;
+    }
 
     const addListKit = () => {
         const productSelect = {
@@ -94,7 +102,7 @@ const AddKitCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${price}
+                                    <br />{formatterValue(price)}
                                 </Text>
                         </Text>
                     </HStack>
@@ -103,7 +111,8 @@ const AddKitCard = ({ product }) => {
                     <Button 
                         w={"144px"} h={"38px"} fontSize={"14px"} 
                         variant={"outline"} border={"1px solid #064A73"}
-                        onClick={() => addListKit()}>
+                        onClick={() => addListKit()}
+                        isDisabled={validateAddKits()}>
                         Agregar al kit
                     </Button>
                 </Flex>

@@ -8,6 +8,7 @@ import {
     Tag,
     Container,
 } from "@chakra-ui/react";
+import { formatterValue } from '../resource/validate';
 
 const ProductCard = ({ product }) => {
     const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "")
@@ -60,7 +61,7 @@ const ProductCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${price}
+                                    <br />{formatterValue(price)}
                                 </Text>
                         </Text>
                     </HStack>
