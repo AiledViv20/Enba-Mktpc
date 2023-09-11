@@ -62,11 +62,11 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             color: selectedColor.toUpperCase(),
             img: previewImage
         }
-        // dispatch(
-        //     setProducts({products: [
-        //         ...productsStore, product
-        //     ]})
-        // );
+        dispatch(
+            setProducts({products: [
+                ...productsStore, product
+            ]})
+        );
         console.log(product)
         toast.success("¡Se ha agregado correctamente el nuevo producto!", {
             position: toast.POSITION.BOTTOM_RIGHT
