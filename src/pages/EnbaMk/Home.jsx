@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Flex } from '@chakra-ui/react';
 import Presentacion from '../../components/Presentacion';
 import RecommendedProducts from '../../components/RecommendedProducts';
@@ -8,8 +7,9 @@ import FeaturedCategories from '../../components/FeaturedCategories';
 import Footer from '../../components/Footer';
 import KitsProduct from '../../components/KitsProduct';
 
+import { categoriesTemplate } from '../../resource';
+
 import logo from '../../assets/icons/logo.svg';
-import logoW from '../../assets/icons/logo-blanco.svg';
 import img1 from '../../assets/images/fondo/img-fd1.png';
 import img2 from '../../assets/images/fondo/img-fd2.png';
 
@@ -37,7 +37,8 @@ const Home = () => {
           title={"“Hecho por ti y para ti.”"}
           img={img1} />
         <FeaturedCategories 
-          titleSection={"Categorias destacadas"} />
+          titleSection={"Categorias destacadas"}
+          data={categoriesTemplate} />
         <Fondo 
           bg={"#DFD8D1"} fontColor={"#064A73"} icon={logo}
           title={"“Hecho por ti y para ti.”"}

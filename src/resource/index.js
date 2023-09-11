@@ -9,6 +9,9 @@ import ctg1 from '../assets/images/categoriesT/bebidas.svg';
 import ctg2 from '../assets/images/categoriesT/bienestar.svg';
 import ctg3 from '../assets/images/categoriesT/hogar.svg';
 import ctg4 from '../assets/images/categoriesT/oficina.svg';
+import ctg5 from '../assets/images/categoriesT/textiles.svg';
+import ctg6 from '../assets/images/categoriesT/tiempo-libre.svg';
+import ctg7 from '../assets/images/categoriesT/marcas.svg';
 
 export const handleDownload = (url, filename) => {
     axios.get(url, {
@@ -110,6 +113,24 @@ export const categoriesTemplate = [
         url_reditect: "ESCRITORIO",
         title: "Oficina y tecnología"
     },
+    {
+        id: 5,
+        url: ctg5,
+        url_reditect: "PLAYERAS",
+        title: "Textiles"
+    },
+    {
+        id: 6,
+        url: ctg6,
+        url_reditect: "JUGUETES",
+        title: "Tiempo libre"
+    },
+    {
+        id: 7,
+        url: ctg7,
+        url_reditect: "DECORACION",
+        title: "Marcas"
+    }
 ];
 
 export const listSearchCategories = [

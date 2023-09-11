@@ -97,8 +97,6 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
         }
     },[page])
 
-
-
     return ( 
         <Box
             w="full"
