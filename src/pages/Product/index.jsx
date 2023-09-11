@@ -23,7 +23,6 @@ const Product = ({ props }) => {
     const [idx, setIdx] = useState(0);
     const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
-    const [numProducts, setNumProducts] = useState(0);
     const [productRecommended, setProductRecommended] = useState(null);
     const params = {
         sku: params_url.product
@@ -123,9 +122,7 @@ const Product = ({ props }) => {
                                 previewImage={img} 
                                 data={product} 
                                 colors={colors}
-                                colorsProduct={colorsProduct}
-                                numProducts={numProducts}
-                                setNumProducts={setNumProducts} />
+                                colorsProduct={colorsProduct} />
                         </Flex>
                     )
                 }

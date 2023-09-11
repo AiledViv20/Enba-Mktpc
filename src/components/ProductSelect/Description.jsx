@@ -16,11 +16,11 @@ import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
-import { formatterValue } from '../../resource/validate';
+import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 
 import { toast } from 'react-toastify';
 
-const Description = ({ previewImage, data, colors, colorsProduct, numProducts, setNumProducts }) => {
+const Description = ({ previewImage, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
     const dispatch = useDispatch();
 
@@ -28,6 +28,7 @@ const Description = ({ previewImage, data, colors, colorsProduct, numProducts, s
     const [selectColor, setSelectColor] = useState(null);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
+    const [numProducts, setNumProducts] = useState(0);
     const changeNumProducts = (num) => {
         setNumProducts(num < 0 ? 0 : num) 
     }
@@ -37,18 +38,14 @@ const Description = ({ previewImage, data, colors, colorsProduct, numProducts, s
         data.items.map((item)=>{
             prices.push(item.retail_price)
         })
-        let sumTotalDesc = Math.min(...prices);
-        sumTotalDesc = formatterValue(sumTotalDesc);
-        setPrice(sumTotalDesc);
+        setPrice(Math.min(...prices));
     },[colors])
 
     const handleChangeSelected = (color, sku) => {
         setSelectColor(color);
         const item = data.items.filter((item)=>item.sku === sku)[0]
         setItemSelected(item)
-        let sumTotalDesc1 = item.retail_price;
-        sumTotalDesc1 = formatterValue(sumTotalDesc1);
-        setPrice(sumTotalDesc1);
+        setPrice(item.retail_price);
     }
 
     const validateData = () => {
@@ -113,7 +110,7 @@ const Description = ({ previewImage, data, colors, colorsProduct, numProducts, s
                 {selectColor ?
                     <Flex>
                         <Text as={"b"}>Color seleccionado:</Text>
-                        <Text ml={2}>{selectColor.toUpperCase()}</Text>
+                        <Text ml={2}>{capitalizeFirstLetter(selectColor)}</Text>
                     </Flex>
                     : null
                 }
@@ -121,7 +118,7 @@ const Description = ({ previewImage, data, colors, colorsProduct, numProducts, s
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
-                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>{price}</Text>
+                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>{formatterValue(price)}</Text>
                 </Flex>
             </Flex>
             <Flex mt={10}>

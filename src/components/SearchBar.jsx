@@ -7,6 +7,7 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
 import { useGetCategoriesQuery } from '../hooks/enbaapi';
+import { capitalizeFirstLetter } from '../resource/validate';
 
 const SearchBar = () => {
     const [selectedCategory, setSelectedCategory] = useState('Todas');
@@ -34,7 +35,7 @@ const SearchBar = () => {
                             categories && (
                                 categories.map((e, idx) => {
                                     return (
-                                        <option key={idx} value={e.category}>{e.category.toUpperCase()}</option>
+                                        <option key={idx} value={e.category}>{capitalizeFirstLetter(e.category)}</option>
                                     )  
                                 })
                             )

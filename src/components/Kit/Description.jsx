@@ -1,4 +1,6 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -8,7 +10,7 @@ import {
     Tooltip,
     useDisclosure
 } from '@chakra-ui/react';
-import { colors_dict } from '../../resource';
+import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
@@ -17,46 +19,25 @@ import ModalPrintImage from '../ModalPrintImage';
 
 import { toast } from 'react-toastify';
 
-const Description = ({data, colors}) => {
+const Description = ({  kit = false, previewImage, data, colors, colorsProduct }) => {
+    const productsStore = useSelector(selectProducts);
+    const dispatch = useDispatch();
+
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [addKit, setAddKit] = useState(null);
-    const [numProducts, setNumProducts] = useState(0);
     const [selectColor, setSelectColor] = useState(null);
-    const [colorsProduct, setColorsProduct] = useState([]);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
+    const [numProducts, setNumProducts] = useState(0);
     const changeNumProducts = (num) => {
         setNumProducts(num < 0 ? 0 : num) 
     }
 
     useEffect(() => {
-        const colors_ar = []
-        colors.map((item)=>{
-            let color_ = ''
-            colors_dict.filter((color)=>{
-                if(item.color.includes(color.color)){
-                    color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: color.hex
-                    }]
-                }
-            })
-            if(!color_[0]){
-                color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: '#444444'
-                }]
-            }
-            colors_ar.push(color_[0])
-        })
         const prices = []
         data.items.map((item)=>{
             prices.push(item.retail_price)
         })
-        setPrice(Math.min(...prices))
-        setColorsProduct(colors_ar)
+        setPrice(Math.min(...prices));
     },[colors])
 
     const handleChangeSelected = (color, sku) => {
@@ -66,40 +47,17 @@ const Description = ({data, colors}) => {
         setPrice(item.retail_price)
     }
 
-    const validateLS = () => {
-        const result = localStorage.getItem('kits');
-        return result ? true : false;
+    const validateData = () => {
+        if (selectColor && numProducts !== 0) {
+            return false;
+        }
+        return true;
     }
 
     const addKitShoppingCart = () => {
-        if (!selectColor) {
-            toast.error("¡Selecciona un color!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-        }
-        if (numProducts > 0 && selectColor) {
-            setAddKit({
-                name: data.name,
-                price: price * numProducts,
-                color: selectColor,
-                numKitsShoppingCart: numProducts
-            });
-            if (validateLS()) {
-                const kitsLS = JSON.parse(localStorage.getItem('kits'));
-                kitsLS.push(addKit)
-                localStorage.setItem('kits', kitsLS);
-            } else {
-                localStorage.setItem('kits', JSON.stringify([{
-                    name: data.name,
-                    price: price * numProducts,
-                    color: selectColor,
-                    numKitsShoppingCart: numProducts
-                }]));
-            }
-            toast.success("¡Se ha modificado kit correctamente!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-        }
+        toast.success("¡Se ha modificado kit correctamente!", {
+            position: toast.POSITION.BOTTOM_RIGHT
+        });
     }
 
     return ( 
@@ -138,7 +96,7 @@ const Description = ({data, colors}) => {
                 {selectColor ?
                     <Flex>
                         <Text as={"b"}>Color seleccionado:</Text>
-                        <Text ml={2}>{selectColor.toUpperCase()}</Text>
+                        <Text ml={2}>{capitalizeFirstLetter(selectColor)}</Text>
                     </Flex>
                     : null
                 }
@@ -146,7 +104,7 @@ const Description = ({data, colors}) => {
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
-                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>${price}</Text>
+                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>{formatterValue(price)}</Text>
                 </Flex>
             </Flex>
             <Flex mt={10}>
@@ -155,7 +113,8 @@ const Description = ({data, colors}) => {
                         _hover={{
                             bg: "#063D5F"
                         }}
-                        onClick={() => addKitShoppingCart()}>Agregar al carrito
+                        onClick={() => addKitShoppingCart()}
+                        isDisabled={validateData()}>Agregar al carrito
                     </Button>
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>

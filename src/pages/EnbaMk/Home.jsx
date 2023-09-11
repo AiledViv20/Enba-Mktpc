@@ -33,7 +33,7 @@ const Home = () => {
           titleSection={"Productos destacados"}
           data={productsData} />
         <Fondo 
-          bg={"#31689C"} fontColor={"#FFF"} icon={logoW}
+          bg={"#DFDFDF"} fontColor={"#064A73"} icon={logo}
           title={"“Hecho por ti y para ti.”"}
           img={img1} />
         <FeaturedCategories 

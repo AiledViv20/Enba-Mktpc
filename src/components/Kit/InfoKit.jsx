@@ -9,15 +9,18 @@ import Miniature from '../ProductSelect/Miniature';
 import Description from './Description';
 import DescriptionKit from './DescriptionKit';
 import Characteristics from '../ProductSelect/Characteristics';
+import { colors_dict } from '../../resource';
 import { useGetKitQuery } from '../../hooks/enbaapi';
 
 const InfoKit = ({ props }) => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
+    const [colorsProduct, setColorsProduct] = useState([]);
     const [idx, setIdx] = useState(0);
     const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
+    const [numProducts, setNumProducts] = useState(0);
     const params = {
         sku: params_url.product
     }
@@ -44,6 +47,31 @@ const InfoKit = ({ props }) => {
     },[kit])
 
     useEffect(() => {
+        const colors_ar = []
+        colors.map((item)=>{
+            let color_ = ''
+            colors_dict.filter((color)=>{
+                if(item.color.includes(color.color)){
+                    color_ = [{
+                        sku: item.sku,
+                        color: item.color,
+                        hex: color.hex
+                    }]
+                }
+            })
+            if(!color_[0]){
+                color_ = [{
+                        sku: item.sku,
+                        color: item.color,
+                        hex: '#444444'
+                }]
+            }
+            colors_ar.push(color_[0])
+        });
+        setColorsProduct(colors_ar);
+    },[colors]);
+
+    useEffect(() => {
         if(images){
             setImg(images[idx]);
         }
@@ -58,19 +86,27 @@ const InfoKit = ({ props }) => {
                         <Flex pl={10}>
                             <Image src={img} width={"442"} height={"442"} alt='image product'/>
                         </Flex>
-                        <Description data={product.products[0]} colors={colors}/>
+                        <Description 
+                            previewImage={img}
+                            data={product.products[0]} 
+                            colors={colors}
+                            colorsProduct={colorsProduct}/>
                     </Flex>
                 )
             }
             {
                 product && (
-                    <DescriptionKit data={product.products[0]}/>
+                    <DescriptionKit 
+                        data={product.products[0]}/>
                 )
             }
             {
                 product && (
                     <Characteristics 
-                        kit={true} data={product.products[0]} />
+                        kit={true} 
+                        data={product.products[0]}
+                        colorsProduct={colorsProduct}
+                        previewImage={img} />
                 )
             }
         </Box>

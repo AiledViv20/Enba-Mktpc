@@ -21,7 +21,7 @@ const Fondo = ({ bg, fontColor, icon, title, txt1, img }) => {
                 </Text>
             </Flex>
             <Flex width={"50%"} justifyContent={"center"} alignItems={"center"}>
-                <Image mb={5} width={"80%"} height={"80%"} src={img} alt="producto" />
+                <Image mb={5} width={"60%"} height={"80%"} src={img} alt="producto" />
             </Flex>
         </Flex>
     );
