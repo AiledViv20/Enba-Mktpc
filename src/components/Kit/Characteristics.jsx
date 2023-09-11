@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
+import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -21,7 +21,7 @@ import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 import { toast } from 'react-toastify';
 
 const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => {
-    const productsStore = useSelector(selectProducts);
+    const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
     const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -51,6 +51,23 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     }
     
     const handleSubmit = () => {
+        const filterItem = data.items?.filter(element => element.color === selectedColor);
+        const productSelect = {
+            sku_item: filterItem[0].sku,
+            code_item: filterItem[0].code,
+            unit_price: values.unitPrice,
+            total_price: total,
+            quantity: values.amount,
+            name: data.name,
+            category: data.category,
+            color: selectedColor,
+            img: previewImage
+        }
+        dispatch(
+            setKitsList({kitsList: [
+                ...kitsListStore, productSelect
+            ]})
+        );
         toast.success("¡Se ha agregado correctamente el nuevo producto al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });

@@ -54,8 +54,8 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     const handleSubmit = () => {
         const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
         const product = {
-            sku_item: filterItem[0].product_sku,
-            code_item: filterItem[0].product_code,
+            sku_item: filterItem[0].sku,
+            code_item: filterItem[0].code,
             unit_price: filterItem[0].price,
             total_price: total,
             quantity: values.amount,
