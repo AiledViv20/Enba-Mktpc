@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -22,6 +22,7 @@ import { toast } from 'react-toastify';
 
 const Description = ({ previewImage, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
+    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -57,12 +58,13 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
 
     const addProductShoppingCart = () => {
         if (numProducts > 0 && selectColor) {
+            const calcTotalPrice = price * numProducts;
             const filterItem = data.items?.filter(element => element.color === selectColor);
             const product = {
                 sku_item: filterItem[0].product_sku,
                 code_item: filterItem[0].product_code,
                 unit_price: filterItem[0].price,
-                total_price: price * numProducts,
+                total_price: calcTotalPrice,
                 quantity: numProducts,
                 name: data.name,
                 color: selectColor.toUpperCase(),
@@ -72,6 +74,9 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
                 setProducts({products: [
                     ...productsStore, product
                 ]})
+            );
+            dispatch(
+                setTotalAmount({totalAmount: totalAmountStore + calcTotalPrice})
             );
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT

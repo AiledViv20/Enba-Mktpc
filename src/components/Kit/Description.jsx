@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectKits, setKits } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -21,6 +21,7 @@ import { toast } from 'react-toastify';
 
 const Description = ({  kit = false, previewImage, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
+    const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();

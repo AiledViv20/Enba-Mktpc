@@ -9,8 +9,9 @@ import {
 import { FaShoppingCart } from 'react-icons/fa';
 
 const ButtonShoppingCart = () => {
-    const [numShoppingCart, setNumShoppingCart] = useState(0);
     const productsStore = useSelector(selectProducts);
+
+    const [numShoppingCart, setNumShoppingCart] = useState(0);
 
     useEffect(() => {
         setNumShoppingCart(productsStore?.length);

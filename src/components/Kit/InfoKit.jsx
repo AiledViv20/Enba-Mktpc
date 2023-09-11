@@ -25,7 +25,6 @@ const InfoKit = ({ props }) => {
     }
     const { data: kit, isKitLoading, kitError } = useGetKitQuery({ name: params.sku});
 
-    console.log(kit)
     useEffect(() => {
         if(kit){
             setProduct(kit);

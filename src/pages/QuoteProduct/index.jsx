@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectProducts } from '../../hooks/slices/counterSlice';
+import { selectProducts, selectTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex, 
     Box, 
@@ -14,9 +14,11 @@ import WayToPay from '../../components/ShoppingCart/WayToPay';
 import Bill from '../../components/ShoppingCart/Bill';
 import ListProductCard from '../../components/ShoppingCart/ListProductCard';
 import { ArrowBackIcon } from '@chakra-ui/icons';
+import { formatterValue } from '../../resource/validate';
 
 const QuoteProduct = ({ props }) => {
     const productsStore = useSelector(selectProducts);
+    const totalAmountStore = useSelector(selectTotalAmount);
 
     const [steps, setSteps] = useState({
         step1: true,
@@ -97,7 +99,7 @@ const QuoteProduct = ({ props }) => {
                                 <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>
                             </Flex>
                             <Flex w={"50%"} justifyContent={"end"}>
-                                <Text fontSize={"20px"} fontWeight={600}>$0.00</Text>
+                                <Text fontSize={"20px"} fontWeight={600}>{formatterValue(totalAmountStore)}</Text>
                             </Flex>
                         </Flex>
                         <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
@@ -113,7 +115,7 @@ const QuoteProduct = ({ props }) => {
                                 <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>
                             </Flex>
                             <Flex w={"50%"} justifyContent={"end"}>
-                                <Text fontSize={"20px"} fontWeight={600}>$0.00</Text>
+                                <Text fontSize={"20px"} fontWeight={600}>{formatterValue(totalAmountStore)}</Text>
                             </Flex>
                         </Flex>
                         <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 3 ? "none" : "flex"}>

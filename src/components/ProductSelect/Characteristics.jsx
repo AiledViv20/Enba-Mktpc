@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -22,6 +22,7 @@ import { toast } from 'react-toastify';
 
 const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => {
     const productsStore = useSelector(selectProducts);
+    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -67,7 +68,9 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                 ...productsStore, product
             ]})
         );
-        console.log(product)
+        dispatch(
+            setTotalAmount({totalAmount: totalAmountStore + total})
+        );
         toast.success("¡Se ha agregado correctamente el nuevo producto!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
