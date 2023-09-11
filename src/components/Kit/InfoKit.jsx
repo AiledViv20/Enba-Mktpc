@@ -11,6 +11,7 @@ import DescriptionKit from './DescriptionKit';
 import Characteristics from './Characteristics';
 import { colors_dict } from '../../resource';
 import { useGetKitQuery } from '../../hooks/enbaapi';
+import AddProductsKit from './AddProductsKit';
 
 const InfoKit = ({ props }) => {
     const params_url = useParams();
@@ -98,6 +99,13 @@ const InfoKit = ({ props }) => {
                 product && (
                     <DescriptionKit 
                         data={product.products[0]}/>
+                )
+            }
+            {
+                product && (
+                    <AddProductsKit 
+                        titleSection={"Agrega otros productos a tu kit"}
+                        data={kit}/>
                 )
             }
             {

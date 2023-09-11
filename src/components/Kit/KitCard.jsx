@@ -1,10 +1,9 @@
 import React from 'react';
 
-const KitIncludes = () => {
-
+const KitCard = () => {
     return ( 
         <></>
     );
 }
  
-export default KitIncludes;
+export default KitCard;
