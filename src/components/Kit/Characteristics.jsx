@@ -51,23 +51,18 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     }
     
     const handleSubmit = () => {
-        const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
         const product = {
-            sku_item: filterItem[0].product_sku,
-            code_item: filterItem[0].product_code,
-            unit_price: filterItem[0].price,
-            total_price: total,
-            quantity: values.amount,
             name: data.name,
+            price: total,
             color: selectedColor.toUpperCase(),
+            numProductsShoppingCart: values.amount,
             img: previewImage
         }
-        // dispatch(
-        //     setProducts({products: [
-        //         ...productsStore, product
-        //     ]})
-        // );
-        console.log(product)
+        dispatch(
+            setProducts({products: [
+                ...productsStore, product
+            ]})
+        );
         toast.success("¡Se ha agregado correctamente el nuevo producto!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });

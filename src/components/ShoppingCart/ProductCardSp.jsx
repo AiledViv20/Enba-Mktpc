@@ -19,15 +19,15 @@ const ProductCardSp = ({ product }) => {
                         <Text lineHeight={1.2} w={"90%"} color={"#212121"} fontSize={"16px"} fontWeight={600}>{capitalizeFirstLetter(product.name)}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"}>
-                        <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>Quantity:  {product.numProductsShoppingCart}</Text>
+                        <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>Quantity:  {product.quantity}</Text>
                     </Flex>
                 </Flex>
                 <Flex w={"20%"} flexDirection={"column"} h={"100%"}>
                     <Flex>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.price)}</Text>
+                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.total_price)}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
-                        <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>{product.numProductsShoppingCart}</Text>
+                        <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>{product.quantity}</Text>
                     </Flex>
                 </Flex>
             </Flex>

@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     products: [],
-    kits: []
+    kits: [],
+    totalAmount: 0,
+    infoKits: []
 }
 
 export const counterSlice = createSlice({

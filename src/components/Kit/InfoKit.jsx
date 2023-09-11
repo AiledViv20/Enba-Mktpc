@@ -8,7 +8,7 @@ import { useParams } from 'react-router-dom';
 import Miniature from '../ProductSelect/Miniature';
 import Description from './Description';
 import DescriptionKit from './DescriptionKit';
-import Characteristics from '../ProductSelect/Characteristics';
+import Characteristics from './Characteristics';
 import { colors_dict } from '../../resource';
 import { useGetKitQuery } from '../../hooks/enbaapi';
 
@@ -20,7 +20,6 @@ const InfoKit = ({ props }) => {
     const [idx, setIdx] = useState(0);
     const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
-    const [numProducts, setNumProducts] = useState(0);
     const params = {
         sku: params_url.product
     }

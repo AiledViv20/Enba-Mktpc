@@ -57,11 +57,15 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
 
     const addProductShoppingCart = () => {
         if (numProducts > 0 && selectColor) {
+            const filterItem = data.items?.filter(element => element.color === selectColor);
             const product = {
+                sku_item: filterItem[0].product_sku,
+                code_item: filterItem[0].product_code,
+                unit_price: filterItem[0].price,
+                total_price: price * numProducts,
+                quantity: numProducts,
                 name: data.name,
-                price: price * numProducts,
-                color: selectColor,
-                numProductsShoppingCart: numProducts,
+                color: selectColor.toUpperCase(),
                 img: previewImage
             }
             dispatch(
