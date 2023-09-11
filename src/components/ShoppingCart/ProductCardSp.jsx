@@ -4,7 +4,7 @@ import {
     Image,
     Text
 } from "@chakra-ui/react";
-import { capitalizeFirstLetter } from '../../resource/validate';
+import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 
 const ProductCardSp = ({ product }) => {
 
@@ -24,7 +24,7 @@ const ProductCardSp = ({ product }) => {
                 </Flex>
                 <Flex w={"20%"} flexDirection={"column"} h={"100%"}>
                     <Flex>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>${product.price}</Text>
+                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.price)}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
                         <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>{product.numProductsShoppingCart}</Text>

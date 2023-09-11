@@ -13,6 +13,10 @@ const Card = () => {
         )
     }
 
+    useEffect(() => {
+        console-log("Test")
+    }, []);
+
     return ( 
         <Flex>
             <Text>{`El contador es ${counter}`}</Text>
