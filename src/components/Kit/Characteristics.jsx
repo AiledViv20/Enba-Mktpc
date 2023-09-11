@@ -51,19 +51,7 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     }
     
     const handleSubmit = () => {
-        const product = {
-            name: data.name,
-            price: total,
-            color: selectedColor.toUpperCase(),
-            numProductsShoppingCart: values.amount,
-            img: previewImage
-        }
-        dispatch(
-            setProducts({products: [
-                ...productsStore, product
-            ]})
-        );
-        toast.success("¡Se ha agregado correctamente el nuevo producto!", {
+        toast.success("¡Se ha agregado correctamente el nuevo producto al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
     }

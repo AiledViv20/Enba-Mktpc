@@ -4,7 +4,6 @@ const initialState = {
     products: [],
     kits: [],
     totalAmount: 0,
-    infoKits: []
 }
 
 export const counterSlice = createSlice({
@@ -13,10 +12,20 @@ export const counterSlice = createSlice({
     reducers: {
         setProducts: (state, action) => {
             state.products = action.payload.products;
-        }
+        },
+        setKits: (state, action) => {
+            state.kits = action.payload.kits;
+        },
+        setTotalAmount: (state, action) => {
+            state.totalAmount = action.payload.totalAmount;
+        },
     }
 })
 
 export const { setProducts } = counterSlice.actions;
 export const selectProducts = (state) => state.counterState.products;
+export const { setKits } = counterSlice.actions;
+export const selectKits = (state) => state.counterState.kits;
+export const { setTotalAmount } = counterSlice.actions;
+export const selectTotalAmount = (state) => state.counterState.totalAmount;
 export default counterSlice.reducer;
