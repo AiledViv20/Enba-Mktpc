@@ -32,9 +32,9 @@ const SearchBar = () => {
                     icon={<ChevronDownIcon />}>
                         {
                             categories && (
-                                categories.map((e) => {
+                                categories.map((e, idx) => {
                                     return (
-                                        <option value={e.category}>{e.category.toUpperCase()}</option>
+                                        <option key={idx} value={e.category}>{e.category.toUpperCase()}</option>
                                     )  
                                 })
                             )

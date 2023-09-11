@@ -4,13 +4,9 @@ import {
     Image,
     Text
 } from "@chakra-ui/react";
+import { capitalizeFirstLetter } from '../../resource/validate';
 
 const ProductCardSp = ({ product }) => {
-
-    function capitalizeFirstLetter(text) {
-        // Convierte la primera letra a mayúscula y el resto a minúscula
-        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
-    }
 
     return ( 
         <Flex bg={"#FFF"} border={"1px solid #E2E2E2"} mb={3} padding={3} borderRadius={"8px"}>

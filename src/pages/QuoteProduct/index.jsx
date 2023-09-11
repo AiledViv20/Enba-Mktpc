@@ -26,6 +26,7 @@ const QuoteProduct = ({ props }) => {
     const [num, setNum] = useState(1);
     const [products, setProducts] = useState([]);
     const [kits, setKits] = useState([]);
+    const [priceTotal, setPriceTotal] = useState(0);
 
     const changeStepQuote = (numStep) => {
         switch (numStep) {

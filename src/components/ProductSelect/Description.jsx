@@ -10,23 +10,22 @@ import {
     Tooltip,
     useDisclosure
 } from '@chakra-ui/react';
-import { colors_dict } from '../../resource';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
+import { formatterValue } from '../../resource/validate';
+
 import { toast } from 'react-toastify';
 
-const Description = ({ previewImage, data, colors }) => {
+const Description = ({ previewImage, data, colors, colorsProduct, numProducts, setNumProducts }) => {
     const productsStore = useSelector(selectProducts);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [numProducts, setNumProducts] = useState(0);
     const [selectColor, setSelectColor] = useState(null);
-    const [colorsProduct, setColorsProduct] = useState([]);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
     const changeNumProducts = (num) => {
@@ -34,53 +33,32 @@ const Description = ({ previewImage, data, colors }) => {
     }
 
     useEffect(() => {
-        const colors_ar = []
-        colors.map((item)=>{
-            let color_ = ''
-            colors_dict.filter((color)=>{
-                if(item.color.includes(color.color)){
-                    color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: color.hex
-                    }]
-                }
-            })
-            if(!color_[0]){
-                color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: '#444444'
-                }]
-            }
-            colors_ar.push(color_[0])
-        })
         const prices = []
         data.items.map((item)=>{
             prices.push(item.retail_price)
         })
-        setPrice(Math.min(...prices))
-        setColorsProduct(colors_ar)
+        let sumTotalDesc = Math.min(...prices);
+        sumTotalDesc = formatterValue(sumTotalDesc);
+        setPrice(sumTotalDesc);
     },[colors])
 
     const handleChangeSelected = (color, sku) => {
         setSelectColor(color);
         const item = data.items.filter((item)=>item.sku === sku)[0]
         setItemSelected(item)
-        setPrice(item.retail_price)
+        let sumTotalDesc1 = item.retail_price;
+        sumTotalDesc1 = formatterValue(sumTotalDesc1);
+        setPrice(sumTotalDesc1);
+    }
+
+    const validateData = () => {
+        if (selectColor && numProducts !== 0) {
+            return false;
+        }
+        return true;
     }
 
     const addProductShoppingCart = () => {
-        if (!selectColor) {
-            toast.error("¡Selecciona un color!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-        }
-        if (numProducts === 0) {
-            toast.error("¡Selecciona una cantidad valida de productos!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-        }
         if (numProducts > 0 && selectColor) {
             const product = {
                 name: data.name,
@@ -115,13 +93,12 @@ const Description = ({ previewImage, data, colors }) => {
                     w="100%"
                     pl={2}>
                     {colorsProduct.map((item, index) => (
-                        <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
+                        <Tooltip key={`color-${index}`} hasArrow label={item.color} bg='gray.300' color='black'>
                             <Text
-                                key={`color-${index}`}
                                 marginRight={"1px"}
                                 cursor="pointer"
                                 fontSize={"50px"}
-                                color={item.hex}
+                                color={item.color === "BLANCO" ? "#F4F4F4" :  item.hex}
                                 onClick={() => {
                                     handleChangeSelected(item.color, item.sku)
                                 }}
@@ -144,7 +121,7 @@ const Description = ({ previewImage, data, colors }) => {
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
-                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>${price}</Text>
+                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>{price}</Text>
                 </Flex>
             </Flex>
             <Flex mt={10}>
@@ -153,7 +130,8 @@ const Description = ({ previewImage, data, colors }) => {
                         _hover={{
                             bg: "#063D5F"
                         }}
-                        onClick={() => addProductShoppingCart()}>Agregar al carrito
+                        onClick={() => addProductShoppingCart()}
+                        isDisabled={validateData()}>Agregar al carrito
                     </Button>
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
