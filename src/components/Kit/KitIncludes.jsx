@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectKits, setKits } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectKits, setKits, selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
 import {
     Box,
     Flex,
@@ -11,12 +11,16 @@ import {
     useTheme,
     useMediaQuery,
     Button,
-    IconButton
+    IconButton,
+    useDisclosure
 } from "@chakra-ui/react";
 import KitCard from './KitCard';
 
 import { FaTrashAlt } from "react-icons/fa";
 import { WarningTwoIcon } from "@chakra-ui/icons";
+import ModalTrashProduct from './ModalTrashProduct';
+
+import { toast } from 'react-toastify';
 
 const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedProductTrash) => {
     const { breakpoints } = useTheme();
@@ -90,11 +94,14 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
 const KitIncludes = ({ titleSection, data, kit, props }) => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
+    const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const [confirmTrash, setConfirmTrash] = useState(false);
     const [isSelectedProductTrash, setIsSelectedProductTrash] = useState([]);
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
@@ -124,8 +131,34 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
         const counterProducts = [...productsStore, 
             data[0], data[1], data[2], data[3]
         ];
-        
+        //Guardar en kit, en products y eliminar todo de kitsLits
     }
+
+    const modalTrashProductAction = () => {
+        onOpen();
+    }
+
+    const trashProductAction = () => {
+        // Obtén los sku_item de los objetos en productos seleccionados para eliminar en este caso isSelectedProductTrash
+        const skuProductsTrash = isSelectedProductTrash.map((element) => element.sku_item);
+
+        // Filtra los objetos en products cuyos sku_item no están en isSelectedProductTrash
+        const productsFilter = products.filter((element1) => !skuProductsTrash.includes(element1.sku_item));
+        dispatch(
+            setKitsList({kitsList: productsFilter})
+        );
+        setIsSelectedProductTrash([]);
+        setConfirmTrash(false);
+        toast.warning("¡Se ha eliminado correctamente el producto del kit!", {
+            position: toast.POSITION.BOTTOM_RIGHT
+        });
+    }
+
+    useEffect(() => {
+        if (confirmTrash) {
+            trashProductAction();
+        }
+    }, [confirmTrash])
 
     return ( 
         <Box
@@ -155,6 +188,7 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
                         colorScheme='accent.500'
                         aria-label='Trash'
                         icon={<FaTrashAlt />}
+                        onClick={() => modalTrashProductAction()}
                         isDisabled={isSelectedProductTrash.length > 0 ? false : true}/>
                 </Flex>
             </Flex>
@@ -170,9 +204,16 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
                         bg: "#063D5F"
                     }}
                     onClick={() => addListProductsKits()}
-                    isDisabled={data.length === 4 ? false : true}>Agregar kit</Button>
+                    isDisabled={data.length === 4 && isSelectedProductTrash.length === 0 ? false : true}>Agregar kit</Button>
                 </Flex>
             </Flex>
+            {isOpen ?
+                <ModalTrashProduct 
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    setConfirmTrash={setConfirmTrash}
+                /> : null
+            }
         </Box>
     );
 }

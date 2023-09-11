@@ -35,6 +35,12 @@ const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedP
         }
     }, [isChecked])
 
+    useEffect(() => {
+        if (isSelectedProductTrash.length === 0) {
+            setIsChecked(false);
+        }
+    }, [isSelectedProductTrash])
+
     return (
         <Flex>
             <Flex display={showIconPlus ?  "flex" : "none"} alignItems={"center"}>
