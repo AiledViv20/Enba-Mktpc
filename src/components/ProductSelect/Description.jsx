@@ -67,6 +67,7 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
                 total_price: calcTotalPrice,
                 quantity: numProducts,
                 name: data.name,
+                category: data.category,
                 color: selectColor.toUpperCase(),
                 img: previewImage
             }

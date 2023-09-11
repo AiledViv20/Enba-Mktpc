@@ -60,6 +60,7 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             total_price: total,
             quantity: values.amount,
             name: data.name,
+            category: data.category,
             color: selectedColor.toUpperCase(),
             img: previewImage
         }

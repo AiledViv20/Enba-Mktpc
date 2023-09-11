@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectKits, setKits } from '../../hooks/slices/counterSlice';
+import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -20,8 +20,7 @@ import ModalPrintImage from '../ModalPrintImage';
 import { toast } from 'react-toastify';
 
 const Description = ({  kit = false, previewImage, data, colors, colorsProduct }) => {
-    const productsStore = useSelector(selectProducts);
-    const kitsStore = useSelector(selectKits);
+    const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,6 +55,24 @@ const Description = ({  kit = false, previewImage, data, colors, colorsProduct }
     }
 
     const addKitShoppingCart = () => {
+        const sumTotal = price * numProducts;
+        const filterItem = data.items?.filter(element => element.color === selectColor);
+        const productSelect = {
+            sku_item: filterItem[0].product_sku,
+            code_item: filterItem[0].product_code,
+            unit_price: filterItem[0].price,
+            total_price: sumTotal,
+            quantity: numProducts,
+            name: data.name,
+            category: data.category,
+            color: selectColor,
+            img: previewImage
+        }
+        dispatch(
+            setKitsList({kitsList: [
+                ...kitsListStore, productSelect
+            ]})
+        );
         toast.success("¡Se ha modificado kit correctamente!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
