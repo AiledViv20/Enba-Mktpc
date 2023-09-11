@@ -27,7 +27,7 @@ const ProductCard = ({ product }) => {
                 aria-label={product.name}
             >
                 <Tag
-                    bg={product.bg ? product.bg : "#FF9900"}
+                    bg={product.promotion ? "#FF9900" : "#FFF"}
                     color="white"
                     fontSize={"12px"}
                     fontWeight={500}
@@ -35,7 +35,7 @@ const ProductCard = ({ product }) => {
                     py="2"
                     rounded="20px 0px 20px 0px"
                 >
-                    {product.promotion ? product.promotion : "-27%"}
+                    {product.promotion ? product.promotion : ""}
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
                     <Image width={"192px"} height={"192px"} src={image} />

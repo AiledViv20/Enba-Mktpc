@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProducts, setProducts, selectKits, setKits } from '../../hooks/slices/counterSlice';
 import {
     Box,
     Flex,
     Text,
-    IconButton,
     Stack,
     Skeleton,
     Heading,
     useTheme,
     useMediaQuery,
-    Button
+    Button,
+    IconButton
 } from "@chakra-ui/react";
 import KitCard from './KitCard';
 
 import { FaTrashAlt } from "react-icons/fa";
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const CardsRenderer = (products, status) => {
+const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedProductTrash) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
@@ -37,10 +39,18 @@ const CardsRenderer = (products, status) => {
         );
     } else if (products.length > 0 && status === "loaded") {
         if (!isGreaterThanMd) {
-            return <KitCard product={products[0]} />;
+            return <KitCard 
+                product={products[0]} 
+                isSelectedProductTrash={isSelectedProductTrash}
+                setIsSelectedProductTrash={setIsSelectedProductTrash} />;
         }
         return products.map((element, idx) => (
-            <KitCard key={idx} product={element} showIconPlus={idx === 0 ? false : true} />
+            <KitCard 
+                key={idx} 
+                product={element} 
+                showIconPlus={idx === 0 ? false : true}
+                isSelectedProductTrash={isSelectedProductTrash}
+                setIsSelectedProductTrash={setIsSelectedProductTrash} />
         ));
     } else {
         return isGreaterThanMd ? (
@@ -77,11 +87,15 @@ const CardsRenderer = (products, status) => {
     }
 }
 
-const KitIncludes = ({ titleSection, data, props }) => {
+const KitIncludes = ({ titleSection, data, kit, props }) => {
+    const productsStore = useSelector(selectProducts);
+    const kitsStore = useSelector(selectKits);
+    const dispatch = useDispatch();
+
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
-    const [isSelectedProductTrash, setIsSelectedProductTrash] = useState(false);
+    const [isSelectedProductTrash, setIsSelectedProductTrash] = useState([]);
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
 
@@ -97,6 +111,21 @@ const KitIncludes = ({ titleSection, data, props }) => {
             setProducts(data.slice(page * 4, (page + 1) * 4));   
         }
     },[page]);
+
+    const addListProductsKits = () => {
+        const kitAdd = {
+            discount_code: "4UAEPO55L",
+            is_kit: true,
+            sku_kit: kit.sku,
+            code_kit: kit.code,
+            total_kits: 1,
+            items: data
+        }
+        const counterProducts = [...productsStore, 
+            data[0], data[1], data[2], data[3]
+        ];
+        
+    }
 
     return ( 
         <Box
@@ -126,13 +155,13 @@ const KitIncludes = ({ titleSection, data, props }) => {
                         colorScheme='accent.500'
                         aria-label='Trash'
                         icon={<FaTrashAlt />}
-                        isDisabled={isSelectedProductTrash ? false : true}/>
+                        isDisabled={isSelectedProductTrash.length > 0 ? false : true}/>
                 </Flex>
             </Flex>
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
-                        {CardsRenderer(products, status)}
+                        {CardsRenderer(products, status, isSelectedProductTrash, setIsSelectedProductTrash)}
                     </Flex>
                 </Box>
                 <Flex mt={"2rem"}>
@@ -140,6 +169,7 @@ const KitIncludes = ({ titleSection, data, props }) => {
                     _hover={{
                         bg: "#063D5F"
                     }}
+                    onClick={() => addListProductsKits()}
                     isDisabled={data.length === 4 ? false : true}>Agregar kit</Button>
                 </Flex>
             </Flex>

@@ -114,7 +114,8 @@ const InfoKit = ({ props }) => {
                 kitsListStore.length > 0 && (
                     <KitIncludes 
                         titleSection={"Tu kit incluye:"}
-                        data={kitsListStore}/>
+                        data={kitsListStore}
+                        kit={kit}/>
                 )
             }
             {

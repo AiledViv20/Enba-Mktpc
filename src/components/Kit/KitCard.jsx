@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
+
 import {
     Box,
     HStack,
@@ -9,17 +8,32 @@ import {
     Text,
     Tag,
     Container,
-    IconButton
+    IconButton,
+    Checkbox
 } from "@chakra-ui/react";
 import { formatterValue } from '../../resource/validate';
 
-import { toast } from 'react-toastify';
-
 import { FaPlus } from "react-icons/fa";
 
-const KitCard = ({ product, showIconPlus }) => {
-    const kitsListStore = useSelector(selectKitsList);
-    const dispatch = useDispatch();
+const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedProductTrash }) => {
+
+    const [isChecked, setIsChecked] = useState(false);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+    };
+
+    useEffect(() => {
+        if (isChecked) {
+            setIsSelectedProductTrash([
+                ...isSelectedProductTrash,
+                product
+            ]);
+        } else {
+            const filterListProductTrash = isSelectedProductTrash.filter((element) => element.name !== product.name);
+            setIsSelectedProductTrash(filterListProductTrash);
+        }
+    }, [isChecked])
 
     return (
         <Flex>
@@ -29,6 +43,7 @@ const KitCard = ({ product, showIconPlus }) => {
                     w={"20px"} h={"30px"}
                     colorScheme='accent.500'
                     aria-label='Plus'
+                    cursor={"default"}
                     icon={<FaPlus />}
                     />
             </Flex>
@@ -40,20 +55,29 @@ const KitCard = ({ product, showIconPlus }) => {
                     border={"1px solid #A4A4A4"}
                     borderRadius={"20px"}
                     overflow="hidden"
-                    cursor="pointer"
                     aria-label={product.name} zIndex={-1}
                 >
-                    <Tag
-                        bg={'#FF9900'}
-                        color="white"
-                        fontSize={"12px"}
-                        fontWeight={500}
-                        px="8"
-                        py="2"
-                        rounded="20px 0px 20px 0px"
-                    >
-                        -5%
-                    </Tag>
+                    <Flex w={"100%"}>
+                        <Flex w={"80%"}>
+                            <Tag
+                                bg={'#FF9900'}
+                                color="white"
+                                fontSize={"12px"}
+                                fontWeight={500}
+                                px="8"
+                                py="2"
+                                rounded="20px 0px 20px 0px"
+                            >
+                                -5%
+                            </Tag>
+                        </Flex>
+                        <Flex w={"20%"} justifyContent={"center"}>
+                            <Checkbox
+                                isChecked={isChecked}
+                                onChange={handleCheckboxChange}
+                            ></Checkbox>
+                        </Flex>
+                    </Flex>
                     <Flex justifyContent={"center"} pt={5}>
                         <Image width={"192px"} height={"192px"} src={product.img} alt={product.name} />
                     </Flex>
