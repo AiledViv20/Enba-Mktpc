@@ -56,8 +56,8 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
         const product = {
             sku_item: filterItem[0].sku,
             code_item: filterItem[0].code,
-            unit_price: filterItem[0].price,
-            total_price: total,
+            unit_price: parseFloat(filterItem[0].price),
+            total_price: total.toFixed(2),
             quantity: values.amount,
             name: data.name,
             category: data.category,

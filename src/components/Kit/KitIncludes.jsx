@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectKits, setKits, selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectKits, setKits, selectKitsList, setKitsList, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
 import {
     Box,
     Flex,
@@ -93,8 +93,6 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
 
 const KitIncludes = ({ titleSection, data, kit, props }) => {
     const productsStore = useSelector(selectProducts);
-    const kitsStore = useSelector(selectKits);
-    const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
     const { breakpoints } = useTheme();
@@ -123,14 +121,23 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
         const kitAdd = {
             discount_code: "4UAEPO55L",
             is_kit: true,
-            sku_kit: kit.sku,
-            code_kit: kit.code,
+            sku_kit: kit?.sku,
+            code_kit: kit?.code,
             total_kits: 1,
             items: data
         }
+        dispatch(
+            setKits({kits: kitAdd})
+        );
         const counterProducts = [...productsStore, 
             data[0], data[1], data[2], data[3]
         ];
+        dispatch(
+            setProducts({products: counterProducts})
+        );
+        dispatch(
+            setKitsList({kitsList: []})
+        );
         //Guardar en kit, en products y eliminar todo de kitsLits
     }
 

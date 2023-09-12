@@ -55,13 +55,13 @@ const Description = ({  kit = false, previewImage, data, colors, colorsProduct }
     }
 
     const addKitShoppingCart = () => {
-        const sumTotal = price * numProducts;
+        let sumTotal = price * numProducts;
         const filterItem = data.items?.filter(element => element.color === selectColor);
         const productSelect = {
             sku_item: filterItem[0].sku,
             code_item: filterItem[0].code,
-            unit_price: filterItem[0].price,
-            total_price: sumTotal,
+            unit_price: parseFloat(filterItem[0].price),
+            total_price: parseFloat(sumTotal),
             quantity: numProducts,
             name: data.name,
             category: data.category,
