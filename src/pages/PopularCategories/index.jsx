@@ -5,10 +5,12 @@ import {
     Text,
     Input,
     InputGroup,
-    InputRightElement
+    InputRightElement,
+    Grid,
+    Spinner
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
-import { listSearchCategories, colors } from '../../resource';
+import { colors_complement, colors } from '../../resource';
 import ProductCard from '../../components/ProductCard';
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
@@ -19,8 +21,46 @@ import ConfettiGenerator from "confetti-js";
 import bnn1 from '../../assets/images/banner/categoriaspop/bnn1.png';
 import banner from '../../assets/images/banner/categoriaspop/img1.png';
 
+import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useParams } from 'react-router-dom';
+
 const PopularCategories = ({ props }) => {
     const [stopAnimation, setStopAnimation] = useState(false);
+
+    const params_url = useParams();
+    const [products, setProducts] = useState(null);
+    const [colorSelected, setColorSelected] = useState("");
+    const [inputSearch, setInputSearch] = useState(params_url.product_name);
+    const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
+    const [order, setOrder] = useState('ASC');
+    const [artPerPage, setArtPerPage] = useState(25);
+    const [page, setPage] = useState(0);
+    const [params, setParams] = useState({
+        take: artPerPage,
+        page: page,
+        color: colorSelected,
+        category: param_category,
+        name: inputSearch,
+        order: order
+    });
+    const {data, isLoading, error} = useGetSearchQuery(params);
+
+    useEffect(() => {
+        if(data){
+            setProducts(data);
+        }
+    },[data])
+
+    useEffect(() => {
+        setParams({
+            take: artPerPage,
+            page: page,
+            color: colorSelected,
+            category: params_url.category === 'Todas' ? "" : params_url.category,
+            name: inputSearch,
+            order: order
+        })
+    },[colorSelected, order, artPerPage])
 
     useEffect(() => {
         const confettiSettings = {target:"confetti-holder",max:"80",size:"1",animate:true,props:["circle","square","triangle","line"],colors:[[255,0,0],[93,255,0],[255,240,0],[225,225,225]],clock:"25",rotate:true,width:"1920",height:"931",start_from_edge:false,respawn:true};
@@ -61,7 +101,7 @@ const PopularCategories = ({ props }) => {
                         backgroundRepeat="no-repeat"
                         backgroundColor="gray.100"
                         position="relative"
-                        p="0"
+                        p="0" zIndex={-1}
                         borderRadius="20px">
                         <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000002e"}></Flex>
                         <Flex
@@ -82,14 +122,16 @@ const PopularCategories = ({ props }) => {
                             <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                                 ACCESORIOS SMARTPHONE<br />Y TABLETS
                             </Text>
-                            <InputGroup border={"transparent"} mt={8}>
+                            <InputGroup border={"transparent"} mt={8} zIndex={1}>
                                 <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
                                     placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
                                     _placeholder={{
                                         color: "#383838"
-                                    }} />
+                                    }} 
+                                    onChange={(e) => setInputSearch(e.target.value)}
+                                />
                                 <InputRightElement h={"100%"} mr={2}>
-                                    <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"}>
+                                    <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} onClick={(e) => {e.preventDefault(); setParams({ ...params, "name": inputSearch })}}>
                                         <SearchIcon color='#FFF' />
                                     </Flex>
                                 </InputRightElement>
@@ -101,12 +143,14 @@ const PopularCategories = ({ props }) => {
                                 <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
                                     <Flex flexDirection={"column"} pl={"15px"}>
                                         <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5}>Accesorios de computo</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5}>Accesorios para smartphone y tablet</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5}>Audifonos</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5}>Carpetas</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5}>Sets para escritorio y organizadores</Text>
-                                        <Text fontSize={"14px"} fontWeight={600} mt={2}>Color</Text>
+                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Computo".toUpperCase() })}}>
+                                            Accesorios de computo
+                                        </Text>
+                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Accesorios smartphone y tablet".toUpperCase() })}}>Accesorios para smartphone y tablet</Text>
+                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Audífonos".toUpperCase() })}}>Audífonos</Text>
+                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Carpetas".toUpperCase() })}}>Carpetas</Text>
+                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Escritorio".toUpperCase() })}}>Sets para escritorio y organizadores</Text>
+                                        <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                                     </Flex>
                                     <Flex
                                         justifyContent="center"
@@ -118,6 +162,27 @@ const PopularCategories = ({ props }) => {
                                             cursor="pointer"
                                             fontSize={"55px"}
                                             color={item.hex}
+                                            onClick={() => {
+                                                setColorSelected(item.color);
+                                            }}
+                                        >
+                                            &#9679;
+                                        </Text>
+                                        ))}
+                                    </Flex>
+                                    <Flex
+                                        justifyContent="center"
+                                        w="100%">
+                                        {colors_complement.map((item, index) => (
+                                        <Text
+                                            key={`color-${index}`}
+                                            marginRight={"2px"}
+                                            cursor="pointer"
+                                            fontSize={"55px"}
+                                            color={item.hex}
+                                            onClick={() => {
+                                                setColorSelected(item.color);
+                                            }}
                                         >
                                             &#9679;
                                         </Text>
@@ -127,26 +192,32 @@ const PopularCategories = ({ props }) => {
                             </Flex>
                         </Flex>
                         <Flex width={"75%"} flexDirection={"column"}>
-                            <Flex pl={10} pb={10}>
-                                <ArticlesPerPage />
-                                <OrderBy />
+                            <Flex pl={10} pb={10} zIndex={1}>
+                                <ArticlesPerPage setArtPerPage={setArtPerPage} />
+                                <OrderBy setOrder={setOrder}/>
                             </Flex>
-                            <Flex justifyContent={"center"} pb={10}>
-                                {/*listSearchCategories ? listSearchCategories.map((item, idx) => {
-                                    return(
-                                        <Flex key={idx}>
-                                            <ProductCard product={item} />
-                                        </Flex>
-                                    )
+                            <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} alignSelf={"center"}>
+                                {products && !isLoading ? products.map((item, idx) => {
+                                    if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                                        return(
+                                            <Flex key={idx}>
+                                                <ProductCard product={item} />
+                                            </Flex>
+                                        )
+                                    }
                                 })
-                                : null*/}
-                            </Flex>
-                            <Flex pl={10}>
-                                <ArticlesPerPage />
-                                <OrderBy />
-                            </Flex>
+                                : 
+                                <Spinner mt={20}/>
+                                }
+                            </Grid>
+                            {products && !isLoading ? 
+                                <Flex mt={10} pl={10} zIndex={1}>
+                                    <ArticlesPerPage setArtPerPage={setArtPerPage} />
+                                    <OrderBy setOrder={setOrder} />
+                                </Flex>
+                            : null}
                         </Flex>
-                    </Flex>
+                </Flex>
                 </Box>
             </Flex>
             <Footer />

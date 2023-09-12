@@ -1,5 +1,4 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Select,
   InputLeftElement,
@@ -12,15 +11,20 @@ import { useGetCategoriesQuery } from '../../hooks/enbaapi';
 import { capitalizeFirstLetter } from '../../resource/validate';
 
 const ButtonCategories = () => {
-  const [categories, setCategories] = useState(null);
-  const [selectedCategory, setSelectedCategory] = useState('Todas');
-  const {data, isLoading, error} = useGetCategoriesQuery();
-  useEffect(() => {
-      if(data){
-          setCategories(data);
-      }
-      
-  },[data])
+    const [categories, setCategories] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('Todas');
+    const {data, isLoading, error} = useGetCategoriesQuery();
+    useEffect(() => {
+        if(data){
+            setCategories(data);
+        }
+    },[data])
+
+    useEffect(() => {
+        if (selectedCategory !== "Todas") {
+            window.location.href = `/categoria/${selectedCategory}`
+        }
+    }, [selectedCategory])
 
   return ( 
     <>
@@ -48,7 +52,9 @@ const ButtonCategories = () => {
                             categories && (
                                 categories.map((e, idx) => {
                                     return (
-                                        <option key={idx} value={e.category} style={{ color: '#000' }}>{capitalizeFirstLetter(e.category)}</option>
+                                        <option key={idx} 
+                                            value={e.category} 
+                                            style={{ color: '#000' }}>{capitalizeFirstLetter(e.category)}</option>
                                     )  
                                 })
                             )
