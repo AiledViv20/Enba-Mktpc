@@ -17,7 +17,7 @@ import Nav from './components/Nav';
 
 const persistor = persistStore(store);
 
-const stripePromise = loadStripe(process.env.REACT_APP_PUBLIC_KEY);
+const stripePromise = loadStripe(process.env.REACT_APP_TEST_STRIPE_PUBLIC_KEY);
 
 const options = {
   mode: 'payment',

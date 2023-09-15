@@ -9,6 +9,7 @@ import {
     useElements,
 } from '@stripe/react-stripe-js';
 import './styled.css';
+import { api } from '../../service';
 
 const StripeForm = () => {
     const stripe = useStripe();
@@ -32,14 +33,12 @@ const StripeForm = () => {
         } else {
             // Envía el ID del método de pago a tu servidor para completar la transacción
             try {
-                const response = await fetch('http://localhost:3001/procesar-pago', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${process.env.REACT_APP_SECRET_KEY}`
-                    },
-                    body: JSON.stringify({ payment_method_id: paymentMethod.id }),
+                const response = await api({
+                    method: "post",
+                    url: "/procesar-pago",
+                    data: { payment_method_id: paymentMethod.id }
                 });
+                console.log(response)
                 if (response.ok) {
                     const data = await response.json();
                     console.log('Respuesta exitosa:', data);
