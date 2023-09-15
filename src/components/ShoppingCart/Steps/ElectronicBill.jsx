@@ -6,10 +6,10 @@ import {
     Button
 } from '@chakra-ui/react';
 
-const Bill = ({ step3 }) => {
+const ElectronicBill = ({ step5 }) => {
 
     return ( 
-        <Flex mt={10} flexDirection={"column"} display={step3 ? "flex" : "none"}>
+        <Flex mt={10} flexDirection={"column"} display={step5 ? "flex" : "none"}>
             <Flex fontSize={"16px"} flexDirection={"column"}>
                 <Text mb={10} as={"b"}>Te hemos enviado una confirmación por correo</Text>
                 <Text mb={5} as={"b"}>{"Factura electronica (CFDI)"}</Text>
@@ -47,4 +47,4 @@ const Bill = ({ step3 }) => {
     );
 }
  
-export default Bill;
+export default ElectronicBill;

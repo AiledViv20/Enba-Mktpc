@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { 
     Flex,
     Image,
@@ -12,22 +12,22 @@ import {
     Box,
     Input,
     Button,
-    Stack
+    Stack,
+    Text
 } from '@chakra-ui/react';
-import icon1 from '../../assets/icons/quote/tarjeta-de-credito.svg';
-import icon2 from '../../assets/icons/quote/pago-transferencia.svg';
-import icon3 from '../../assets/icons/quote/pago-tienda.svg';
+import icon1 from '../../../assets/icons/quote/tarjeta-de-credito.svg';
+import icon2 from '../../../assets/icons/quote/pago-transferencia.svg';
+import icon3 from '../../../assets/icons/quote/pago-tienda.svg';
 
-import icon5 from '../../assets/icons/quote/oxxo.svg';
-import icon6 from '../../assets/icons/quote/seven.svg';
-import StripeForm from './StripeForm';
+import icon5 from '../../../assets/icons/quote/oxxo.svg';
+import icon6 from '../../../assets/icons/quote/seven.svg';
+import StripeForm from '../StripeForm';
 
-const WayToPay = ({ step2 }) => {
-    const [value, setValue] = useState('');
-    const [payPerStore, setPayPerStore] = useState('');
+const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore }) => {
 
-    return ( 
+    return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
+            <Text mb={10} fontSize={"16px"} fontWeight={700}>Seleccionar forma de pago</Text>
             <RadioGroup onChange={setValue} value={value} zIndex={1}>
                 <Accordion allowMultiple>
                     <AccordionItem border={"transparent"} mb={5}>
@@ -90,4 +90,4 @@ const WayToPay = ({ step2 }) => {
     );
 }
  
-export default WayToPay;
+export default Step2;

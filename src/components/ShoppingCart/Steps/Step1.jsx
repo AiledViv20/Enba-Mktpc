@@ -7,9 +7,9 @@ import {
     Textarea,
     useDisclosure
 } from '@chakra-ui/react';
-import ModalPrintImage from '../ModalPrintImage';
+import ModalPrintImage from '../../ModalPrintImage';
 
-const Form = ({ step1 }) => {
+const Step1 = ({ step1 }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     return (
@@ -59,4 +59,4 @@ const Form = ({ step1 }) => {
     );
 }
  
-export default Form;
+export default Step1;
