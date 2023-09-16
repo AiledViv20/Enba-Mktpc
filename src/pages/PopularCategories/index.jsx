@@ -101,7 +101,7 @@ const PopularCategories = ({ props }) => {
                         backgroundRepeat="no-repeat"
                         backgroundColor="gray.100"
                         position="relative"
-                        p="0" zIndex={-1}
+                        p="0"
                         borderRadius="20px">
                         <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000002e"}></Flex>
                         <Flex
@@ -162,6 +162,7 @@ const PopularCategories = ({ props }) => {
                                             cursor="pointer"
                                             fontSize={"55px"}
                                             color={item.hex}
+                                            zIndex={1}
                                             onClick={() => {
                                                 setColorSelected(item.color);
                                             }}
@@ -192,7 +193,7 @@ const PopularCategories = ({ props }) => {
                             </Flex>
                         </Flex>
                         <Flex width={"75%"} flexDirection={"column"}>
-                            <Flex pl={10} pb={10} zIndex={1}>
+                            <Flex pl={10} pb={10}>
                                 <ArticlesPerPage setArtPerPage={setArtPerPage} />
                                 <OrderBy setOrder={setOrder}/>
                             </Flex>
@@ -200,7 +201,7 @@ const PopularCategories = ({ props }) => {
                                 {products && !isLoading ? products.map((item, idx) => {
                                     if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                                         return(
-                                            <Flex key={idx}>
+                                            <Flex key={idx} zIndex={1}>
                                                 <ProductCard product={item} />
                                             </Flex>
                                         )

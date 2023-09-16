@@ -12,18 +12,17 @@ app.get('/', (req, res) => {
 });
 
 app.post('/procesar-pago', async (req, res) => {
-  const { payment_method_id } = req.body;
+  const { payment_method_id, amount_total } = req.body;
 
     try {
         // Crea un pago o suscripción en Stripe usando payment_method_id
         const paymentIntent = await stripe.paymentIntents.create({
             payment_method: payment_method_id,
-            amount: 1000, // Monto en centavos
+            amount: amount_total, // Monto en centavos
             currency: 'MXN',
             confirmation_method: 'manual',
             confirm: true,
         });
-
         // Responde con el estado del pago
         res.json({ success: true, paymentIntent });
     } catch (error) {

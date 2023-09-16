@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Button
@@ -12,6 +14,8 @@ import './styled.css';
 import { api } from '../../service';
 
 const StripeForm = () => {
+    const totalAmountStore = useSelector(selectTotalAmount);
+
     const stripe = useStripe();
     const elements = useElements();
 
@@ -36,7 +40,7 @@ const StripeForm = () => {
                 const response = await api({
                     method: "post",
                     url: "/procesar-pago",
-                    data: { payment_method_id: paymentMethod.id }
+                    data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
                 });
                 console.log(response)
                 if (response.ok) {
