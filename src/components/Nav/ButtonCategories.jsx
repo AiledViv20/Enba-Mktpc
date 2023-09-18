@@ -1,58 +1,67 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverBody,
-  Link, 
-  Flex
+  Select,
+  InputLeftElement,
+  Icon,
+  InputGroup
 } from '@chakra-ui/react';
 import { FaBorderAll } from 'react-icons/fa';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { useGetCategoriesQuery } from '../../hooks/enbaapi';
+import { capitalizeFirstLetter } from '../../resource/validate';
 
 const ButtonCategories = () => {
-  const [categories, setCategories] = useState(null);
-  const {data, isLoading, error} = useGetCategoriesQuery();
-  useEffect(() => {
-      if(data){
-          setCategories(data);
-      }
-      
-  },[data])
+    const [categories, setCategories] = useState(null);
+    const [selectedCategory, setSelectedCategory] = useState('Todas');
+    const {data, isLoading, error} = useGetCategoriesQuery();
+    useEffect(() => {
+        if(data){
+            setCategories(data);
+        }
+    },[data])
+
+    useEffect(() => {
+        if (selectedCategory !== "Todas") {
+            window.location.href = `/categoria/${selectedCategory}`
+        }
+    }, [selectedCategory])
 
   return ( 
     <>
-      <Popover placement='bottom-start'>
-        <PopoverTrigger>
-          <Button fontSize={"14px"} fontWeight={500} zIndex={1} 
-            leftIcon={<FaBorderAll />} rightIcon={<ChevronDownIcon />}
+        <InputGroup 
+            w={"154px"} h={"38px"} bg={"accent.500"}
+            borderRadius={"5px"}
             _hover={{
-              bg: "#063D5F"
+                bg: "#063D5F",
+                cursor: "pointer"
             }}>
-            Categorias
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent maxHeight={"400px"} overflow={"auto"}>
-          <PopoverBody p={"12px 0px"}>
-            <Flex flexDirection={"column"} fontSize={"16px"} fontWeight={400} color={"#000"}>
-              {
-                categories && (
-                    categories.map((e, idx) => {
-                        return (
-                            <Flex key={idx} borderBottom={"1px solid #AFAFAF"} pl={5} pb={3}>
-                              <Link href={`/categoria/${e.category}`}>{e.category.toUpperCase()}</Link>
-                            </Flex>
-                        )
-                    })
-                )
-              }
-            </Flex>
-          </PopoverBody>
-        </PopoverContent>
-      </Popover>
+            <Select 
+                fontSize={"14px"}
+                placeholder='Categorias' 
+                value={selectedCategory}
+                pl={8}
+                border={"transparent"}
+                focusBorderColor="transparent"
+                color={"#FFF"} fontWeight={500}
+                onChange={e => setSelectedCategory(e.target.value)}
+                _hover={{
+                    cursor: "pointer"
+                }}
+                icon={<ChevronDownIcon />}>
+                        {
+                            categories && (
+                                categories.map((e, idx) => {
+                                    return (
+                                        <option key={idx} 
+                                            value={e.category} 
+                                            style={{ color: '#000' }}>{capitalizeFirstLetter(e.category)}</option>
+                                    )  
+                                })
+                            )
+                        }
+            </Select>
+            <InputLeftElement pointerEvents="none" children={<Icon as={FaBorderAll} />} color={"#FFF"} />
+        </InputGroup>
     </>
   );
 }

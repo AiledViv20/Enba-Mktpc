@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Flex,
@@ -11,7 +11,6 @@ import {
     useMediaQuery,
 } from "@chakra-ui/react";
 import CategoryCard from './CategoryCard';
-import { categoriesTemplate } from '../resource';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
@@ -77,11 +76,25 @@ const CardsRenderer = (categories, status) => {
     }
 }
 
-const FeaturedCategories = ({ titleSection, props }) => {
+const FeaturedCategories = ({ titleSection, data, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
+    const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loaded');//loading, loaded
+
+    useEffect(() => {
+        if (data) {
+            setProducts(data.slice(page * 4, (page + 1) * 4));
+            setStatus('loaded');
+        }
+    },[data])
+
+    useEffect(() => {
+        if(data){
+            setProducts(data.slice(page * 4, (page + 1) * 4));   
+        }
+    },[page])
 
     return ( 
         <Box
@@ -121,7 +134,7 @@ const FeaturedCategories = ({ titleSection, props }) => {
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page - 1}`}
                         />
-                        {CardsRenderer(categoriesTemplate, status)}
+                        {CardsRenderer(products, status)}
                         <IconButton
                             icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"

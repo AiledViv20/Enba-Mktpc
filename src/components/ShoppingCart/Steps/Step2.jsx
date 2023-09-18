@@ -12,22 +12,22 @@ import {
     Box,
     Input,
     Button,
-    Stack
+    Stack,
+    Text
 } from '@chakra-ui/react';
-import icon1 from '../../assets/icons/quote/tarjeta-de-credito.svg';
-import icon2 from '../../assets/icons/quote/pago-transferencia.svg';
-import icon3 from '../../assets/icons/quote/pago-tienda.svg';
+import icon1 from '../../../assets/icons/quote/tarjeta-de-credito.svg';
+import icon2 from '../../../assets/icons/quote/pago-transferencia.svg';
+import icon3 from '../../../assets/icons/quote/pago-tienda.svg';
 
-import icon5 from '../../assets/icons/quote/oxxo.svg';
-import icon6 from '../../assets/icons/quote/seven.svg';
-import StripeForm from './StripeForm';
+import icon5 from '../../../assets/icons/quote/oxxo.svg';
+import icon6 from '../../../assets/icons/quote/seven.svg';
+import StripeForm from '../StripeForm';
 
-const WayToPay = ({ step2 }) => {
-    const [value, setValue] = useState('');
-    const [payPerStore, setPayPerStore] = useState('');
+const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
 
-    return ( 
+    return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
+            <Text mb={10} fontSize={"16px"} fontWeight={700}>Seleccionar forma de pago</Text>
             <RadioGroup onChange={setValue} value={value} zIndex={1}>
                 <Accordion allowMultiple>
                     <AccordionItem border={"transparent"} mb={5}>
@@ -78,7 +78,7 @@ const WayToPay = ({ step2 }) => {
                     </AccordionItem>
                 </Accordion>
             </RadioGroup>
-            <Flex mt={10} zIndex={1}>
+            <Flex mt={4} zIndex={1}>
                 <Flex>
                     <Input fontSize={"14px"} width={"448px"} height={"48px"} placeholder='Introducir un código de promoción' mr={5} />
                 </Flex>
@@ -86,8 +86,16 @@ const WayToPay = ({ step2 }) => {
                     <Button _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"} width={"148px"} height={"48px"}>Aplicar</Button>
                 </Flex>
             </Flex>
+            <Flex mt={8} justifyContent={"center"}>
+                <Button 
+                    _hover={{ bg: "#063D5F"}} fontWeight={600} 
+                    fontSize={"14px"} w={"174px"}
+                    onClick={() => handleSubmitCreateOrder()}
+                    isLoading={isLoadingStep2}
+                    isDisabled={validateSteps()}>Enviar</Button>
+            </Flex>
         </Flex>
     );
 }
  
-export default WayToPay;
+export default Step2;

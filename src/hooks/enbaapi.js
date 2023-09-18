@@ -121,6 +121,42 @@ export const enbaApi = createApi({
               };
           },
         }),
+        postCalculateOrder: build.mutation({
+          query: ({body}) => {
+              return {
+                  url: `order/calculate`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
+        postCreateOrder: build.mutation({
+          query: ({body}) => {
+              return {
+                  url: `order/calculate`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
+        postCreateInvoice: build.mutation({
+          query: ({body}) => {
+              return {
+                  url: `order/calculate`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
+        postProof: build.mutation({
+          query: ({folio, body}) => {
+              return {
+                  url: `order/proof/${folio}`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
     }),
 })
 
@@ -134,5 +170,9 @@ export const {
     useGetKitQuery,
     usePostLeadMutation,
     usePostQuotationMutation,
+    usePostCalculateOrderMutation,
+    usePostCreateOrderMutation,
+    usePostCreateInvoiceMutation,
+    usePostProofMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi

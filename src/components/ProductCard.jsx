@@ -8,16 +8,18 @@ import {
     Tag,
     Container,
 } from "@chakra-ui/react";
+import { formatterValue } from '../resource/validate';
 
 const ProductCard = ({ product }) => {
     const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "")
     const price = product?.retail_price || product?.items[0]?.retail_price
     return ( 
-        <Container key={product.id} margin="0" gap="0" padding="0" zIndex={1}>
+        <Container key={product.id} margin="0" gap="0" padding="0">
             <Box
                 w="294px"
                 h="410px"
                 m="2"
+                bg={"#FFF"}
                 border={"1px solid #A4A4A4"}
                 borderRadius={"20px"}
                 overflow="hidden"
@@ -26,7 +28,7 @@ const ProductCard = ({ product }) => {
                 aria-label={product.name}
             >
                 <Tag
-                    bg={product.bg ? product.bg : "#FF9900"}
+                    bg={product.promotion ? "#FF9900" : "#FFF"}
                     color="white"
                     fontSize={"12px"}
                     fontWeight={500}
@@ -34,7 +36,7 @@ const ProductCard = ({ product }) => {
                     py="2"
                     rounded="20px 0px 20px 0px"
                 >
-                    {product.promotion ? product.promotion : "-27%"}
+                    {product.promotion ? product.promotion : ""}
                 </Tag>
                 <Flex justifyContent={"center"} pt={5}>
                     <Image width={"192px"} height={"192px"} src={image} />
@@ -60,7 +62,7 @@ const ProductCard = ({ product }) => {
                             >
                                 Desde
                                 <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                    <br />${price}
+                                    <br />{formatterValue(price)}
                                 </Text>
                         </Text>
                     </HStack>

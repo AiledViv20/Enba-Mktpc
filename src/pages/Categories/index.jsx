@@ -9,7 +9,6 @@ import {
     Grid,
     Spinner,
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
 import ProductCard from '../../components/ProductCard';
@@ -21,8 +20,6 @@ import { useParams } from 'react-router-dom';
 
 const Categories = (props) => {
     const params_url = useParams();
-    console.log(params_url.category === 'Todas' ? "" : params_url.category)
-    //const [urlCategory, setUrlCategory] = useState(window.location.pathname);
     const [products, setProducts] = useState(null);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
@@ -38,7 +35,6 @@ const Categories = (props) => {
         name: inputSearch,
         order: order
     });
-    console.log(params)
     const {data, isLoading, error} = useGetSearchQuery(params);
 
     useEffect(() => {
@@ -60,9 +56,6 @@ const Categories = (props) => {
 
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 5%"} pb={20} position="relative">
                 <Flex>
                     <Text fontSize={"16px"} fontWeight={400}>

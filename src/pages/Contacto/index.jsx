@@ -7,7 +7,6 @@ import {
     Textarea,
     Button
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
 import Footer from '../../components/Footer';
 import banner from '../../assets/images/banner/banner-contactanos.png';
 import { usePostLeadMutation } from '../../hooks/enbaapi';
@@ -55,9 +54,6 @@ const Contacto = ({ props }) => {
 
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 5%"} pb={20} position="relative">
                 <Flex
                     w="100%"

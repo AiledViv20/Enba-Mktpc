@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -6,61 +8,94 @@ import {
     IconButton,
     Image,
     Tooltip,
+    Input,
     useDisclosure
 } from '@chakra-ui/react';
-import { colors_dict } from '../../resource';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
-const Description = ({data, colors}) => {
+import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
+
+import { toast } from 'react-toastify';
+
+const Description = ({ previewImage, data, colors, colorsProduct }) => {
+    const productsStore = useSelector(selectProducts);
+    const totalAmountStore = useSelector(selectTotalAmount);
+    const dispatch = useDispatch();
+
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [numProducts, setNumProducts] = useState(0);
-    const [colorsProduct, setColorsProduct] = useState([]);
+    const [selectColor, setSelectColor] = useState(null);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
-    const [maxPrice, setMaxPrice] = useState(0);
-    const changeNumProducts = (num) => {
-        setNumProducts(num < 0 ? 0 : num) 
+    const [values, setValues] = useState({
+        num: 0
+    });
+    const changeNumProducts = (nums) => {
+        setValues({
+            ...values,
+            num: nums < 0 ? 0 : nums
+        }) 
+    }
+
+    const handleChange = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: parseInt(e.target.value)
+        })
     }
 
     useEffect(() => {
-        const colors_ar = []
-        colors.map((item)=>{
-            let color_ = ''
-            colors_dict.filter((color)=>{
-                if(item.color.includes(color.color)){
-                    color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: color.hex
-                    }]
-                }
-            })
-            if(!color_[0]){
-                color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: '#444444'
-                }]
-            }
-            colors_ar.push(color_[0])
-        })
         const prices = []
         data.items.map((item)=>{
             prices.push(item.retail_price)
         })
-        setPrice(Math.min(...prices))
-        setMaxPrice(Math.max(...prices))
-        setColorsProduct(colors_ar)
+        setPrice(Math.min(...prices));
     },[colors])
 
-    const handleChangeSelected = (sku) => {
+    const handleChangeSelected = (color, sku) => {
+        setSelectColor(color);
         const item = data.items.filter((item)=>item.sku === sku)[0]
         setItemSelected(item)
-        setPrice(item.retail_price)
+        setPrice(item.retail_price);
+    }
+
+    const validateData = () => {
+        if (selectColor && values.num !== 0) {
+            return false;
+        }
+        return true;
+    }
+
+    const addProductShoppingCart = () => {
+        if (values.num > 0 && selectColor) {
+            let calcTotalPrice = price * values.num;
+            const filterItem = data.items?.filter(element => element.color === selectColor);
+            const product = {
+                sku: filterItem[0].sku,
+                code_item: filterItem[0].code,
+                unit_price: parseFloat(filterItem[0].price),
+                total_price: parseFloat(calcTotalPrice),
+                quantity: values.num,
+                name: data.name,
+                category: data.category,
+                color: selectColor.toUpperCase(),
+                image: previewImage
+            }
+            dispatch(
+                setProducts({products: [
+                    ...productsStore, product
+                ]})
+            );
+            dispatch(
+                setTotalAmount({totalAmount: totalAmountStore + calcTotalPrice})
+            );
+            toast.success("¡Se ha agregado correctamente el nuevo producto!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        }
     }
 
     return ( 
@@ -78,15 +113,14 @@ const Description = ({data, colors}) => {
                     w="100%"
                     pl={2}>
                     {colorsProduct.map((item, index) => (
-                        <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
+                        <Tooltip key={`color-${index}`} hasArrow label={item.color} bg='gray.300' color='black'>
                             <Text
-                                key={`color-${index}`}
                                 marginRight={"1px"}
                                 cursor="pointer"
                                 fontSize={"50px"}
-                                color={item.hex}
+                                color={item.color === "BLANCO" ? "#F4F4F4" :  item.hex}
                                 onClick={() => {
-                                    handleChangeSelected(item.sku)
+                                    handleChangeSelected(item.color, item.sku)
                                 }}
                             >
                                 &#9679;
@@ -96,13 +130,18 @@ const Description = ({data, colors}) => {
                 </Flex>
             </Flex>
             <Flex mt={5} flexDirection={"column"}>
-                <Flex mb={1}>
+                {selectColor ?
+                    <Flex>
+                        <Text as={"b"}>Color seleccionado:</Text>
+                        <Text ml={2}>{capitalizeFirstLetter(selectColor)}</Text>
+                    </Flex>
+                    : null
+                }
+                <Flex mt={2} mb={1}>
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
-                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>${price}</Text>
-                    {/*<Text fontSize={"18px"} fontWeight={400} color={"#A7A7A7"} as='del'>${maxPrice}</Text>
-                    <Text ml={5} fontSize={"18px"} fontWeight={500} color={"#31508C"}>Descuento 50%</Text>*/}
+                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>{formatterValue(price)}</Text>
                 </Flex>
             </Flex>
             <Flex mt={10}>
@@ -110,23 +149,28 @@ const Description = ({data, colors}) => {
                     <Button w={"176px"} fontSize={"14px"} fontWeight={500}
                         _hover={{
                             bg: "#063D5F"
-                        }}>Agregar al carrito
+                        }}
+                        onClick={() => addProductShoppingCart()}
+                        isDisabled={validateData()}>Agregar al carrito
                     </Button>
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
                     <IconButton
                         w={"37px"} h={"37px"}
                         bg={"#D0D0D2"}
-                        onClick={() => changeNumProducts(numProducts - 1)}
+                        onClick={() => changeNumProducts(values.num - 1)}
                         boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                         color={"#383838"}
                         fontSize={"16px"}
                         icon={<MinusIcon />}/>
-                    <Text m={"0px 1rem"} fontSize={"18px"} fontWeight={500} color={"#31508C"}>{numProducts}</Text>
+                    <Input 
+                        name='num' type='number' m={"0px 1rem"}
+                        onChange={handleChange} value={values.num} fontWeight={500} fontSize={"16px"} 
+                        width={"80px"} height={"40px"} />
                     <IconButton
                         w={"37px"} h={"37px"}
                         bg='#31508C'
-                        onClick={() => changeNumProducts(numProducts + 1)}
+                        onClick={() => changeNumProducts(values.num + 1)}
                         boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                         color={"#FFF"}
                         fontSize={"16px"}

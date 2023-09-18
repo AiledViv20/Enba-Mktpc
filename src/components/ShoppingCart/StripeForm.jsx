@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Button
@@ -9,51 +11,51 @@ import {
     useElements,
 } from '@stripe/react-stripe-js';
 import './styled.css';
+import { api } from '../../service';
+
+import { toast } from 'react-toastify';
 
 const StripeForm = () => {
+    const totalAmountStore = useSelector(selectTotalAmount);
+
     const stripe = useStripe();
     const elements = useElements();
 
     const [errorMessage, setErrorMessage] = useState(null);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        if (elements == null) {
+    const handleSubmit = async () => {
+      
+        if (!stripe || !elements) {
           return;
         }
-    
-        // Trigger form validation and wallet collection
-        const {error: submitError} = await elements.submit();
-        if (submitError) {
-          // Show error to your customer
-          setErrorMessage(submitError.message);
-          return;
-        }
-    
-        // Create the PaymentIntent and obtain clientSecret from your server endpoint
-        const res = await fetch('/create-intent', {
-          method: 'POST',
+      
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+          type: 'card',
+          card: elements.getElement(CardElement),
         });
-    
-        const {client_secret: clientSecret} = await res.json();
-    
-        const {error} = await stripe.confirmPayment({
-          //`Elements` instance that was used to create the Payment Element
-          elements,
-          clientSecret,
-          confirmParams: {
-            return_url: 'https://example.com/order/123/complete',
-          },
-        });
-    
+      
         if (error) {
-          setErrorMessage(error.message);
+          console.error(error);
         } else {
-
+            // Envía el ID del método de pago a tu servidor para completar la transacción
+            try {
+                const response = await api({
+                    method: "post",
+                    url: "/procesar-pago",
+                    data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
+                });
+                const { data, status } = response;
+                if (status === 200) {
+                    toast.success("¡Tu pago hecho correctamente!", {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                }
+            } catch (error) {
+                console.error('Error en la solicitud:', error);
+            }
         }
-    };
-    
+    };      
+
     return ( 
         <Flex flexDirection={"column"}>
             <form onSubmit={(e) => {

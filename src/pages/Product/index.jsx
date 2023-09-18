@@ -5,7 +5,7 @@ import {
     Text,
     Image
 } from '@chakra-ui/react';
-import Nav from '../../components/Nav';
+import { colors_dict } from '../../resource';
 import RecommendedProducts from '../../components/RecommendedProducts';
 import Footer from '../../components/Footer';
 import Miniature from '../../components/ProductSelect/Miniature';
@@ -19,6 +19,7 @@ const Product = ({ props }) => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
+    const [colorsProduct, setColorsProduct] = useState([]);
     const [idx, setIdx] = useState(0);
     const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
@@ -71,6 +72,30 @@ const Product = ({ props }) => {
         }
     },[data])
 
+    useEffect(() => {
+        const colors_ar = []
+        colors.map((item)=>{
+            let color_ = ''
+            colors_dict.filter((color)=>{
+                if(item.color.includes(color.color)){
+                    color_ = [{
+                        sku: item.sku,
+                        color: item.color,
+                        hex: color.hex
+                    }]
+                }
+            })
+            if(!color_[0]){
+                color_ = [{
+                        sku: item.sku,
+                        color: item.color,
+                        hex: '#444444'
+                }]
+            }
+            colors_ar.push(color_[0])
+        });
+        setColorsProduct(colors_ar);
+    },[colors]);
 
     useEffect(() => {
         if(images){
@@ -80,9 +105,6 @@ const Product = ({ props }) => {
 
     return ( 
         <>
-            <Flex display={"block"} boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}>
-                <Nav />
-            </Flex>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
                 <Flex>
                     <Text fontSize={"16px"} fontWeight={400}>
@@ -96,13 +118,20 @@ const Product = ({ props }) => {
                             <Flex pl={10}>
                                 <Image src={img} width={"442"} height={"442"} alt='image product'/>
                             </Flex>
-                            <Description data={product} colors={colors}/>
+                            <Description 
+                                previewImage={img} 
+                                data={product} 
+                                colors={colors}
+                                colorsProduct={colorsProduct} />
                         </Flex>
                     )
                 }
                 {
                     product && (
-                        <Characteristics data={product}/>
+                        <Characteristics 
+                            data={product} 
+                            colorsProduct={colorsProduct}
+                            previewImage={img} />
                     )
                 }
             </Box>
