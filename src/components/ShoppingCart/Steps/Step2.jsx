@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
     Flex,
     Image,
@@ -23,7 +23,7 @@ import icon5 from '../../../assets/icons/quote/oxxo.svg';
 import icon6 from '../../../assets/icons/quote/seven.svg';
 import StripeForm from '../StripeForm';
 
-const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore }) => {
+const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
 
     return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
@@ -78,13 +78,21 @@ const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore }) => {
                     </AccordionItem>
                 </Accordion>
             </RadioGroup>
-            <Flex mt={10} zIndex={1}>
+            <Flex mt={4} zIndex={1}>
                 <Flex>
                     <Input fontSize={"14px"} width={"448px"} height={"48px"} placeholder='Introducir un código de promoción' mr={5} />
                 </Flex>
                 <Flex justifyContent={"end"}>
                     <Button _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"} width={"148px"} height={"48px"}>Aplicar</Button>
                 </Flex>
+            </Flex>
+            <Flex mt={8} justifyContent={"center"}>
+                <Button 
+                    _hover={{ bg: "#063D5F"}} fontWeight={600} 
+                    fontSize={"14px"} w={"174px"}
+                    onClick={() => handleSubmitCreateOrder()}
+                    isLoading={isLoadingStep2}
+                    isDisabled={validateSteps()}>Enviar</Button>
             </Flex>
         </Flex>
     );

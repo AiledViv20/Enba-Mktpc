@@ -13,6 +13,8 @@ import {
 import './styled.css';
 import { api } from '../../service';
 
+import { toast } from 'react-toastify';
+
 const StripeForm = () => {
     const totalAmountStore = useSelector(selectTotalAmount);
 
@@ -42,10 +44,11 @@ const StripeForm = () => {
                     url: "/procesar-pago",
                     data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
                 });
-                console.log(response)
-                if (response.ok) {
-                    const data = await response.json();
-                    console.log('Respuesta exitosa:', data);
+                const { data, status } = response;
+                if (status === 200) {
+                    toast.success("¡Tu pago hecho correctamente!", {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
                 }
             } catch (error) {
                 console.error('Error en la solicitud:', error);
