@@ -157,6 +157,15 @@ export const enbaApi = createApi({
               };
           },
         }),
+        postDiscountCode: build.mutation({
+          query: ({body}) => {
+              return {
+                  url: `discount-code/validate`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
     }),
 })
 
@@ -174,5 +183,6 @@ export const {
     usePostCreateOrderMutation,
     usePostCreateInvoiceMutation,
     usePostProofMutation,
+    usePostDiscountCodeMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi

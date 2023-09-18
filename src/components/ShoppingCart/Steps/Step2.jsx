@@ -23,7 +23,32 @@ import icon5 from '../../../assets/icons/quote/oxxo.svg';
 import icon6 from '../../../assets/icons/quote/seven.svg';
 import StripeForm from '../StripeForm';
 
+import { usePostDiscountCodeMutation } from '../../../hooks/enbaapi';
+import { toast } from 'react-toastify';
+
 const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
+    const [codex, setCodex] = useState("");
+    const [postDiscountCode] = usePostDiscountCodeMutation();
+    const [isLoadingStep5, setIsLoadingStep5] = useState(false);
+
+    const handleSubmit = () => {
+        setIsLoadingStep5(true);
+        let discountCode = {
+            code: codex
+        }
+        postDiscountCode(discountCode).then(res => {
+            toast.success("¡Tu código se ha aplicado correctamente!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            setIsLoadingStep5(false);
+        }).catch(err => {
+            console.log(err);
+            toast.error("¡Algo salió mal!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            setIsLoadingStep5(false);
+        })
+    }
 
     return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
@@ -80,10 +105,17 @@ const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingS
             </RadioGroup>
             <Flex mt={4} zIndex={1}>
                 <Flex>
-                    <Input fontSize={"14px"} width={"448px"} height={"48px"} placeholder='Introducir un código de promoción' mr={5} />
+                    <Input name='codex' onChange={(e) => setCodex(e.target.value)} value={codex} fontSize={"14px"} width={"448px"} height={"48px"} placeholder='Introducir un código de promoción' mr={5} />
                 </Flex>
                 <Flex justifyContent={"end"}>
-                    <Button _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"} width={"148px"} height={"48px"}>Aplicar</Button>
+                    <Button 
+                        _hover={{ bg: "#063D5F"}} fontWeight={600} type='button'
+                        fontSize={"14px"} width={"148px"} height={"48px"}
+                        isDisabled={codex === "" ? true : false}
+                        onClick={() => handleSubmit()}
+                        isLoading={isLoadingStep5}>
+                        Aplicar
+                    </Button>
                 </Flex>
             </Flex>
             <Flex mt={8} justifyContent={"center"}>
