@@ -15,7 +15,7 @@ import AddKitCard from './AddKitCard';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const CardsRenderer = (products, status) => {
+const CardsRenderer = (products, status, showKitIncludes, setShowKitIncludes) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
@@ -36,10 +36,10 @@ const CardsRenderer = (products, status) => {
         );
     } else if (products.length > 0 && status === "loaded") {
         if (!isGreaterThanMd) {
-            return <AddKitCard product={products[0]} />;
+            return <AddKitCard product={products[0]} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />;
         }
         return products.map((element) => (
-            <AddKitCard key={element.id} product={element} />
+            <AddKitCard key={element.id} product={element} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />
         ));
     } else {
         return isGreaterThanMd ? (
@@ -76,7 +76,7 @@ const CardsRenderer = (products, status) => {
     }
 }
 
-const AddProductsKit = ({ titleSection, data, props }) => {
+const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitIncludes, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
@@ -84,15 +84,15 @@ const AddProductsKit = ({ titleSection, data, props }) => {
     const [status, setStatus] = useState('loaded');//loading, loaded
 
     useEffect(() => {
-        if (data.products) {
-            setProducts(data.products.slice(page * 4, (page + 1) * 4));
+        if (data) {
+            setProducts(data.slice(page * 4, (page + 1) * 4));
             setStatus('loaded');
         }
     },[data])
 
     useEffect(() => {
-        if(data.products){
-            setProducts(data.products.slice(page * 4, (page + 1) * 4));   
+        if(data){
+            setProducts(data.slice(page * 4, (page + 1) * 4));   
         }
     },[page])
 
@@ -134,7 +134,7 @@ const AddProductsKit = ({ titleSection, data, props }) => {
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page - 1}`}
                         />
-                        {CardsRenderer(products, status)}
+                        {CardsRenderer(products, status, showKitIncludes, setShowKitIncludes)}
                         <IconButton
                             icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"

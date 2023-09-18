@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
 import {
     Box,
     HStack,
@@ -15,9 +13,7 @@ import { formatterValue } from '../../resource/validate';
 
 import { toast } from 'react-toastify';
 
-const AddKitCard = ({ product }) => {
-    const kitsListStore = useSelector(selectKitsList);
-    const dispatch = useDispatch();
+const AddKitCard = ({ product, showKitIncludes, setShowKitIncludes }) => {
 
     const [price, setPrice] = useState(0);
 
@@ -28,7 +24,7 @@ const AddKitCard = ({ product }) => {
     },[product]);
 
     const validateAddKits = () => {
-        if (kitsListStore.length === 4) {
+        if (showKitIncludes.length === 4 ) {
             return true;
         }
         return false;
@@ -36,21 +32,23 @@ const AddKitCard = ({ product }) => {
 
     const addListKit = () => {
         const productSelect = {
-            sku_item: product.sku,
+            sku: product.sku,
             code_item: product.code,
-            unit_price: product.items[0]?.price,
-            total_price: product.items[0]?.price,
+            unit_price: parseFloat(product.items[0]?.price),
+            total_price: parseFloat(product.items[0]?.price),
             quantity: 1,
             name: product.name,
             category: product.category,
             color: product.items[0]?.color,
-            img: product.items[0]?.images.images_item[0]
+            image: product.items[0]?.images.images_item[0],
+            images: product.images,
+            items: product.items
         }
-        dispatch(
-            setKitsList({kitsList: [
-                ...kitsListStore, productSelect
-            ]})
-        );
+        const newAddList = [
+            ...showKitIncludes,
+            productSelect
+        ];
+        setShowKitIncludes(newAddList)
         toast.success("¡Se ha agregado correctamente el nuevo producto al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });

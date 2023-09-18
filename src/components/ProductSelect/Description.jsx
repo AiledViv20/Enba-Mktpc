@@ -8,6 +8,7 @@ import {
     IconButton,
     Image,
     Tooltip,
+    Input,
     useDisclosure
 } from '@chakra-ui/react';
 import { MinusIcon } from '@chakra-ui/icons';
@@ -29,9 +30,21 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
     const [selectColor, setSelectColor] = useState(null);
     const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
-    const [numProducts, setNumProducts] = useState(0);
-    const changeNumProducts = (num) => {
-        setNumProducts(num < 0 ? 0 : num) 
+    const [values, setValues] = useState({
+        num: 0
+    });
+    const changeNumProducts = (nums) => {
+        setValues({
+            ...values,
+            num: nums < 0 ? 0 : nums
+        }) 
+    }
+
+    const handleChange = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: parseInt(e.target.value)
+        })
     }
 
     useEffect(() => {
@@ -50,26 +63,26 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
     }
 
     const validateData = () => {
-        if (selectColor && numProducts !== 0) {
+        if (selectColor && values.num !== 0) {
             return false;
         }
         return true;
     }
 
     const addProductShoppingCart = () => {
-        if (numProducts > 0 && selectColor) {
-            let calcTotalPrice = price * numProducts;
+        if (values.num > 0 && selectColor) {
+            let calcTotalPrice = price * values.num;
             const filterItem = data.items?.filter(element => element.color === selectColor);
             const product = {
-                sku_item: filterItem[0].sku,
+                sku: filterItem[0].sku,
                 code_item: filterItem[0].code,
                 unit_price: parseFloat(filterItem[0].price),
                 total_price: parseFloat(calcTotalPrice),
-                quantity: numProducts,
+                quantity: values.num,
                 name: data.name,
                 category: data.category,
                 color: selectColor.toUpperCase(),
-                img: previewImage
+                image: previewImage
             }
             dispatch(
                 setProducts({products: [
@@ -145,16 +158,19 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
                     <IconButton
                         w={"37px"} h={"37px"}
                         bg={"#D0D0D2"}
-                        onClick={() => changeNumProducts(numProducts - 1)}
+                        onClick={() => changeNumProducts(values.num - 1)}
                         boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                         color={"#383838"}
                         fontSize={"16px"}
                         icon={<MinusIcon />}/>
-                    <Text m={"0px 1rem"} fontSize={"18px"} fontWeight={500} color={"#31508C"}>{numProducts}</Text>
+                    <Input 
+                        name='num' type='number' m={"0px 1rem"}
+                        onChange={handleChange} value={values.num} fontWeight={500} fontSize={"16px"} 
+                        width={"80px"} height={"40px"} />
                     <IconButton
                         w={"37px"} h={"37px"}
                         bg='#31508C'
-                        onClick={() => changeNumProducts(numProducts + 1)}
+                        onClick={() => changeNumProducts(values.num + 1)}
                         boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                         color={"#FFF"}
                         fontSize={"16px"}

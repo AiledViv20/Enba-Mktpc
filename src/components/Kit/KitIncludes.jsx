@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectKits, setKits, selectKitsList, setKitsList, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectKits, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
 import {
     Box,
     Flex,
@@ -91,8 +91,9 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
     }
 }
 
-const KitIncludes = ({ titleSection, data, kit, props }) => {
+const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, props }) => {
     const productsStore = useSelector(selectProducts);
+    const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
 
     const { breakpoints } = useTheme();
@@ -101,19 +102,36 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [confirmTrash, setConfirmTrash] = useState(false);
     const [isSelectedProductTrash, setIsSelectedProductTrash] = useState([]);
-    const [products, setProducts] = useState([]);
+    const [productsIncludes, setProductsIncludes] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
 
     useEffect(() => {
-        if (data) {
-            setProducts(data.slice(page * 4, (page + 1) * 4));
+        if (showKitIncludes) {
+            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
             setStatus('loaded');
         }
-    },[data])
+        if (showKitIncludes.length > 0) {
+            const filterDataKitIncludes = showKitIncludes.map((item, idx) => {
+                return {
+                    ...item,
+                    sku: item.sku,
+                    code_item: item.code,
+                    unit_price: parseFloat(item.items[0].price),
+                    total_price: parseFloat(item.items[0].price),
+                    quantity: 1,
+                    name: item.name,
+                    category: item.category,
+                    color: "All Kit",
+                    image: item.images?.product_images[0]
+                }
+            });
+            setShowKitIncludes(filterDataKitIncludes);
+        }
+    },[showKitIncludes])
 
     useEffect(() => {
-        if(data){
-            setProducts(data.slice(page * 4, (page + 1) * 4));   
+        if(showKitIncludes){
+            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));   
         }
     },[page]);
 
@@ -124,21 +142,31 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
             sku_kit: kit?.sku,
             code_kit: kit?.code,
             total_kits: 1,
-            items: data
+            items: showKitIncludes
         }
+        const counterKits = [...kitsStore, 
+            kitAdd
+        ];
         dispatch(
-            setKits({kits: kitAdd})
+            setKits({kits: counterKits})
         );
         const counterProducts = [...productsStore, 
-            data[0], data[1], data[2], data[3]
+            showKitIncludes[0], showKitIncludes[1], showKitIncludes[2], showKitIncludes[3]
         ];
         dispatch(
             setProducts({products: counterProducts})
         );
+        let sumTotalKits = 0;
+        counterProducts.forEach(element => {
+            sumTotalKits = sumTotalKits + element.total_price
+        });
         dispatch(
-            setKitsList({kitsList: []})
+            setTotalAmount({totalAmount: sumTotalKits})
         );
         //Guardar en kit, en products y eliminar todo de kitsLits
+        toast.success("¡Se han agregado exitosamente los productos al kit!", {
+            position: toast.POSITION.BOTTOM_RIGHT
+        });
     }
 
     const modalTrashProductAction = () => {
@@ -147,13 +175,10 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
 
     const trashProductAction = () => {
         // Obtén los sku_item de los objetos en productos seleccionados para eliminar en este caso isSelectedProductTrash
-        const skuProductsTrash = isSelectedProductTrash.map((element) => element.sku_item);
-
+        const skuProductsTrash = isSelectedProductTrash.map((element) => element.sku);
         // Filtra los objetos en products cuyos sku_item no están en isSelectedProductTrash
-        const productsFilter = products.filter((element1) => !skuProductsTrash.includes(element1.sku_item));
-        dispatch(
-            setKitsList({kitsList: productsFilter})
-        );
+        const productsFilter = showKitIncludes.filter((element1) => !skuProductsTrash.includes(element1.sku));
+        setShowKitIncludes(productsFilter)
         setIsSelectedProductTrash([]);
         setConfirmTrash(false);
         toast.warning("¡Se ha eliminado correctamente el producto del kit!", {
@@ -202,7 +227,7 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
-                        {CardsRenderer(products, status, isSelectedProductTrash, setIsSelectedProductTrash)}
+                        {CardsRenderer(productsIncludes, status, isSelectedProductTrash, setIsSelectedProductTrash)}
                     </Flex>
                 </Box>
                 <Flex mt={"2rem"}>
@@ -211,7 +236,7 @@ const KitIncludes = ({ titleSection, data, kit, props }) => {
                         bg: "#063D5F"
                     }}
                     onClick={() => addListProductsKits()}
-                    isDisabled={data.length === 4 && isSelectedProductTrash.length === 0 ? false : true}>Agregar kit</Button>
+                    isDisabled={showKitIncludes.length === 4 && isSelectedProductTrash.length === 0 ? false : true}>Agregar kit</Button>
                 </Flex>
             </Flex>
             {isOpen ?

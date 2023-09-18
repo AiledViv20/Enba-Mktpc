@@ -54,7 +54,7 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     const handleSubmit = () => {
         const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
         const product = {
-            sku_item: filterItem[0].sku,
+            sku: filterItem[0].sku,
             code_item: filterItem[0].code,
             unit_price: parseFloat(filterItem[0].price),
             total_price: total.toFixed(2),
@@ -62,7 +62,7 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             name: data.name,
             category: data.category,
             color: selectedColor.toUpperCase(),
-            img: previewImage
+            image: previewImage
         }
         dispatch(
             setProducts({products: [

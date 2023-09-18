@@ -25,19 +25,12 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     const dispatch = useDispatch();
 
     const [isSwitchOn, setIsSwitchOn] = useState(false);
-    const [total, setTotal] = useState(0);
+    const [total, setTotal] = useState("");
     const [selectedColor, setSelectedColor] = useState('');
     const [values, setValues] = useState({
         amount: null,
         unitPrice: null
     });
-
-    const handleChange = (e) => {
-        setValues({
-            ...values,
-            [e.target.name]: parseInt(e.target.value)
-        })
-    }
 
     const handleSwitchChange = () => {
         setIsSwitchOn(!isSwitchOn);
@@ -49,19 +42,27 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
         }
         return true;
     }
+
+    const handleChange = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        })
+    }
     
     const handleSubmit = () => {
-        const filterItem = data.items?.filter(element => element.color === selectedColor);
+        const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
+        const newTotal = parseFloat(total).toFixed(2);
         const productSelect = {
-            sku_item: filterItem[0]?.sku,
+            sku: filterItem[0]?.sku,
             code_item: filterItem[0]?.code,
             unit_price: parseFloat(values.unitPrice),
-            total_price: total.toFixed(2),
-            quantity: values.amount,
+            total_price: parseFloat(newTotal),
+            quantity: parseInt(values.amount),
             name: data.name,
             category: data.category,
             color: selectedColor,
-            img: previewImage
+            image: previewImage
         }
         dispatch(
             setKitsList({kitsList: [
@@ -75,7 +76,7 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
 
     useEffect(() => {
         if (values.amount > 0 && values.unitPrice > 0) {
-            let sumTotalProduct = values.amount * values.unitPrice;
+            let sumTotalProduct = parseFloat(values.amount * values.unitPrice);
             setTotal(sumTotalProduct);
         }
     }, [values]);
@@ -127,8 +128,14 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                                                 )
                                             }
                                     </Select>
-                                    <Input name='amount' type='number' onChange={handleChange} value={values.amount} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Cantidad' />
-                                    <Input name='unitPrice' type='number' onChange={handleChange} value={values.unitPrice} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Precio unitario' ml={5}/>
+                                    <Input 
+                                        name='amount' type='number' 
+                                        onChange={handleChange} value={values.amount} fontSize={"14px"} 
+                                        width={"366px"} height={"56px"} placeholder='Cantidad' />
+                                    <Input 
+                                        name='unitPrice' type='number' 
+                                        onChange={handleChange} value={values.unitPrice} fontSize={"14px"} 
+                                        width={"366px"} height={"56px"} placeholder='Precio unitario' ml={5}/>
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>

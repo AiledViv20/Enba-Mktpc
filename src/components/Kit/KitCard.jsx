@@ -85,7 +85,7 @@ const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedP
                         </Flex>
                     </Flex>
                     <Flex justifyContent={"center"} pt={5}>
-                        <Image width={"192px"} height={"192px"} src={product.img} alt={product.name} />
+                        <Image width={"192px"} height={"192px"} src={product.images?.product_images[0]} alt={product.name} />
                     </Flex>
                     <Flex direction="column" px="4" pt="10" pb="1">
                         <Box
@@ -108,7 +108,7 @@ const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedP
                                 >
                                     Desde
                                     <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                        <br />{formatterValue(product.unit_price)}
+                                        <br />{formatterValue(product.items[0]?.price)}
                                     </Text>
                             </Text>
                         </HStack>

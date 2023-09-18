@@ -14,8 +14,8 @@ import DescriptionKit from './DescriptionKit';
 import Characteristics from './Characteristics';
 import { colors_dict } from '../../resource';
 import { useGetKitQuery } from '../../hooks/enbaapi';
-import AddProductsKit from './AddProductsKit';
 import KitIncludes from './KitIncludes';
+import AddProductsKit from './AddProductsKit';
 
 import { toast } from 'react-toastify';
 
@@ -34,10 +34,16 @@ const InfoKit = ({ props }) => {
         sku: params_url.product
     }
     const { data: kit, isKitLoading, kitError } = useGetKitQuery({ name: params.sku});
+    const [showKitIncludes, setShowKitIncludes] = useState([]);
+    const [showAddOthersKits, setShowAddOthersKits] = useState([]);
 
     useEffect(() => {
         if(kit){
             setProduct(kit);
+            setShowKitIncludes(kit.products);
+            if (kit.replacements) {
+                setShowAddOthersKits(kit.replacements);
+            }
             setImg(kit?.products[0]?.images?.product_images[0] || kit?.products[0]?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];
@@ -52,7 +58,27 @@ const InfoKit = ({ props }) => {
             setColors(colors_);
             setImages(images_);
         }
-    },[kit])
+    },[kit]);
+
+    useEffect(() => {
+        if (showAddOthersKits.length > 0) {
+            const filterDataOthersKits = showAddOthersKits.map((item, idx) => {
+                return {
+                    ...item,
+                    sku: item.sku,
+                    code_item: item.code,
+                    unit_price: parseFloat(item.items[0].price),
+                    total_price: parseFloat(item.items[0].price),
+                    quantity: 1,
+                    name: item.name,
+                    category: item.category,
+                    color: "All Kit",
+                    image: item.images?.product_images[0]
+                }
+            });
+            setShowAddOthersKits(filterDataOthersKits);
+        }
+    }, [showAddOthersKits]);
 
     useEffect(() => {
         const colors_ar = []
@@ -109,18 +135,21 @@ const InfoKit = ({ props }) => {
                 )
             }
             {
-                kitsListStore.length > 0 && (
+                showKitIncludes.length > 0 && (
                     <KitIncludes 
                         titleSection={"Tu kit incluye:"}
-                        data={kitsListStore}
+                        showKitIncludes={showKitIncludes}
+                        setShowKitIncludes={setShowKitIncludes}
                         kit={kit}/>
                 )
             }
             {
-                product && (
+                showAddOthersKits.length > 0 && (
                     <AddProductsKit 
                         titleSection={"Agrega otros productos a tu kit"}
-                        data={kit}/>
+                        data={showAddOthersKits}
+                        showKitIncludes={showKitIncludes}
+                        setShowKitIncludes={setShowKitIncludes} />
                 )
             }
             {
