@@ -10,4 +10,9 @@ services:
       - ./src:/app/src
     ports:
       - 3000:3000
+    environment:
+      - REACT_APP_STRIPE_SECRET_KEY=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
+      - REACT_APP_STRIPE_PUBLIC_KEY=pk_live_51NmnkwFrURH8XhAquuVd3Z56cdKkYK8p44r4IWx34z5siW4jn6QGczk1NSJt5Ieo14Ke0DdsNZzvGy3zX0xa85Dt00qkN4djLB
+      - REACT_APP_TEST_STRIPE_SECRET_KEY=sk_test_51NmnkwFrURH8XhAqRk1bViZtk3ItsCMs5jecHpmaeLXciMDUzHX2sYYXu7MbGmuqZHZ6e0RGIfUKAsdBRX8MWwON00r3BGmI67
+      - REACT_APP_TEST_STRIPE_PUBLIC_KEY=pk_test_51NmnkwFrURH8XhAqSWDVyGsuQl0xIFFzrtZ941w5Hs3Q09NjmpDrqrAbpESbOD3FZHTsCdX2j8lMVMrlZRDOhiJV00rLA0fiuP
     restart: unless-stopped
