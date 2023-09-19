@@ -6,7 +6,9 @@ import {
     Box, 
     Text,
     Button,
-    IconButton
+    IconButton,
+    Alert,
+    AlertIcon,
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 import Step1 from '../../components/ShoppingCart/Steps/Step1';
@@ -381,13 +383,20 @@ const QuoteProduct = ({ props }) => {
                             </Flex>
                         </Flex>
                         <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 1 || num === 2 ? "flex" : "none"}>
-                            <Button mb={5} _hover={{ bg: "#063D5F"}} 
-                                fontWeight={600} fontSize={"18px"} 
-                                height={"48px"}
-                                onClick={() => nextStep()}
-                                isDisabled={validateSteps()}>
-                                Continuar
-                            </Button>
+                            {totalAmountStore < 3000 ? 
+                                <Alert mb={5} status='error'>
+                                    <AlertIcon />
+                                    No es posible realizar el proceso, el mínimo de compra debe ser $3,000.00
+                                </Alert>
+                                : 
+                                <Button mb={5} _hover={{ bg: "#063D5F"}} 
+                                    fontWeight={600} fontSize={"18px"} 
+                                    height={"48px"}
+                                    onClick={() => nextStep()}
+                                    isDisabled={validateSteps()}>
+                                    Continuar
+                                </Button>
+                            }
                             <Button borderColor={"accent.500"} 
                                 fontWeight={600} fontSize={"18px"} 
                                 height={"48px"} variant={"outline"}
