@@ -14,13 +14,26 @@ import {
 import { formatterValue } from '../../resource/validate';
 
 import { FaPlus } from "react-icons/fa";
+import { toast } from 'react-toastify';
 
-const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedProductTrash }) => {
+const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedProductTrash, limitTrash, setLimitTrash }) => {
 
     const [isChecked, setIsChecked] = useState(false);
 
     const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
+        if (!isChecked) {
+            if (limitTrash === 0) {
+                setIsChecked(!isChecked);
+                setLimitTrash(limitTrash + 1);
+            } else if (limitTrash === 1) {
+                toast.error("¡Solo es posible reemplazar uno a la vez!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
+        } else {
+            setIsChecked(!isChecked);
+            setLimitTrash(0);
+        }
     };
 
     useEffect(() => {
