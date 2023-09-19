@@ -41,7 +41,7 @@ const StripeForm = () => {
             try {
                 const response = await api({
                     method: "post",
-                    url: "/procesar-pago",
+                    url: "/api-stripe/procesar-pago",
                     data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
                 });
                 const { data, status } = response;

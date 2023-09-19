@@ -83,36 +83,28 @@ export const KitsProduct = ({ titleSection, props }) => {
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
+    const [productsInclude, setProductsInclude] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
 
     const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({
-        "take": 4,
-        "page": page,
-        "category": "",
-        "name": ""
+        take: 4,
+        page: page,
+        category: "",
+        name: ""
     });
 
     useEffect(() => {
-        if(kits){
-            setProducts(kits);
+        if (kits) {
+            setProducts(kits.slice(page * 4, (page + 1) * 4));
             setStatus('loaded');
         }
     },[kits])
 
-    /*useEffect(() => {
-        if (data) {
-            setProducts(data.slice(page * 4, (page + 1) * 4));
-            setStatus('loaded');
-        }
-    },[data])
-
     useEffect(() => {
-        if(data){
-            setProducts(data.slice(page * 4, (page + 1) * 4));   
+        if(kits){
+            setProducts(kits.slice(page * 4, (page + 1) * 4));   
         }
-    },[page])*/
-
-
+    },[page])
 
     return ( 
         <Box

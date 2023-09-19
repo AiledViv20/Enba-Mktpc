@@ -9,8 +9,6 @@ import Footer from '../../components/Footer';
 import { useParams } from 'react-router-dom';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import InfoKit from '../../components/Kit/InfoKit';
-import AddProductsKit from '../../components/Kit/AddProductsKit';
-import KitIncludes from '../../components/Kit/KitIncludes';
 
 const Kit = ({ props }) => {
     const params_url = useParams();
