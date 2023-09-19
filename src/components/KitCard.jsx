@@ -7,29 +7,44 @@ import {
     Text,
     Tag,
     Container,
+    Grid,
+    GridItem
 } from "@chakra-ui/react";
 import { formatterValue } from '../resource/validate';
 
 const KitCard = ({ product }) => {
     const [price, setPrice] = useState(0);
+    const [imgList, setImgList] = useState([]);
     
     useEffect(() => {
-        const min_prices = []
-        product.products.forEach(element => {
+        const min_prices = [];
+        let imgCollageList = [];
+        product.products.forEach((element, idx) => {
             let min_price = 9999999
             element.prices.map((e) => {
                 if (e.retail_price < min_price) {
                     min_price = e.retail_price
                 }
             })
-            if(min_price !== 9999999)
+            if(min_price !== 9999999) {
                 min_prices.push(min_price)
+            }
+            imgCollageList = [
+                ...imgCollageList,
+                {
+                    id: idx,
+                    imgUrl: element.images[0]?.images?.images_item[0]
+
+                }
+            ]
         })
+        setImgList(imgCollageList);
         let total = 0
         min_prices.map((e) => {
             total += parseFloat(e)
         })
-        setPrice(total.toFixed(2))
+        setPrice(total.toFixed(2));
+        
     },[product])
     
     return ( 
@@ -56,13 +71,33 @@ const KitCard = ({ product }) => {
                 >
                     -5% en la compra del kit
                 </Tag>
-                <Flex justifyContent={"center"} pt={5}>
-                    <Image width={"192px"} height={"192px"} src={product.products[0].images[0].images.images_item[0]} alt={product.title} />
-                </Flex>
-                <Flex direction="column" px="4" pt="10" pb="1">
+                {imgList.length >= 4 && (
+                    <Grid templateColumns='repeat(2, 2fr)'w={"100%"} h={"196px"}>
+                        <GridItem>
+                            <Flex w={"100%"} justifyContent={"center"}>
+                                <Image w={"96px"} h={"96px"} src={imgList[0].imgUrl} alt={"kit1"} />
+                            </Flex>
+                        </GridItem>
+                        <GridItem>
+                            <Flex w={"100%"} justifyContent={"center"}>
+                                <Image w={"96px"} h={"96px"} src={imgList[1].imgUrl} alt={"kit2"} />
+                            </Flex>
+                        </GridItem>
+                        <GridItem>
+                            <Flex w={"100%"} justifyContent={"center"}>
+                                <Image w={"96px"} h={"96px"} src={imgList[2].imgUrl} alt={"kit3"} />
+                            </Flex>
+                        </GridItem>
+                        <GridItem>
+                            <Flex w={"100%"} justifyContent={"center"}>
+                                <Image w={"96px"} h={"96px"} src={imgList[3].imgUrl} alt={"kit4"} />
+                            </Flex>
+                        </GridItem>
+                    </Grid>
+                )}
+                <Flex direction="column" px="4" pt="5" pb="1">
                     <Box
-                        title={product.name.toLowerCase()} textAlign={"center"}
-                    >
+                        title={product.name.toLowerCase()} textAlign={"center"}>
                         <Text fontSize="14px" fontWeight={500} color="#A4A4A4" lineHeight={"10px"} textTransform={"capitalize"}>
                             {product.category.toLowerCase()}
                         </Text>
