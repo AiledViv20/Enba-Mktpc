@@ -52,7 +52,7 @@ const Step1 = ({ step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoI
             <Flex mt={10} mb={3} zIndex={1}>
                 <Flex flexDirection={"column"} justifyContent={"center"}>
                     <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb</Text>
-                    <Input name='logo' type='file' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} accept="image/*" placeholder='Seleccionar archivo' />
+                    <Input name='logo' type='file' accept='.svg, .eps, .pdf' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} placeholder='Seleccionar archivo' />
                 </Flex>
                 <Flex>
                     <Button onClick={onOpen} type='button' fontWeight={500} fontSize={"14px"} color={"accent.500"} border={"1px solid"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
