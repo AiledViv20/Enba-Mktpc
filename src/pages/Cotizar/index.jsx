@@ -107,7 +107,7 @@ const Cotizar = ({ props }) => {
                                 <Flex w={"366px"}></Flex>
                             </Flex>
                             <Flex mb={4} justifyContent={"center"} zIndex={1}>
-                                <Input name='img' type='file' onChange={handleChangeFile} border={"transparent"} width={"366px"} pl={0}/>
+                                <Input name='img' type='file' accept='.svg, .eps, .pdf' onChange={handleChangeFile} border={"transparent"} width={"366px"} pl={0}/>
                                 <Flex w={"366px"}></Flex>
                             </Flex>
                             <Flex mb={10} justifyContent={"center"} zIndex={1}>

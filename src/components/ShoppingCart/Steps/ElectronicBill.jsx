@@ -87,27 +87,27 @@ const ElectronicBill = ({ step5, sendOrder }) => {
             </Flex>
             <Flex flexDirection={"column"}>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='order_number' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='No. de pedido' mr={5} />
-                    <Input name='business_name' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Razón social' />
+                    <Input name='order_number' onChange={handleChange} value={createInvoice.order_number} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='No. de pedido' mr={5} />
+                    <Input name='business_name' onChange={handleChange} value={createInvoice.business_name} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Razón social' />
                 </Flex>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='RFC' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='RFC' mr={5} />
-                    <Input name='CFDI_use' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Uso de CFDI' />
+                    <Input name='RFC' onChange={handleChange} value={createInvoice.RFC} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='RFC' mr={5} />
+                    <Input name='CFDI_use' onChange={handleChange} value={createInvoice.CFDI_use} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Uso de CFDI' />
                 </Flex>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='tax_regime' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Regimen fiscal' mr={5} />
+                    <Input name='tax_regime' onChange={handleChange} value={createInvoice.tax_regime} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Regimen fiscal' mr={5} />
                 </Flex>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='street' onChange={handleChange} fontSize={"14px"} width={"100%"} height={"48px"} placeholder='Calle' />
+                    <Input name='street' onChange={handleChange} value={createInvoice.street} fontSize={"14px"} width={"100%"} height={"48px"} placeholder='Calle' />
                 </Flex>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='state' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Estado' mr={5} />
-                    <Input name='city' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Municipio' />
+                    <Input name='state' onChange={handleChange} value={createInvoice.state} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Estado' mr={5} />
+                    <Input name='city' onChange={handleChange} value={createInvoice.city} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Municipio' />
                 </Flex>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='postal_code' onChange={handleChange} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Código postal' mr={5} />
-                    <Input name='internal_number' onChange={handleChange} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Interior' mr={2} />
-                    <Input name='external_number' onChange={handleChange} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Exterior' />
+                    <Input name='postal_code' onChange={handleChange} value={createInvoice.postal_code} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Código postal' mr={5} />
+                    <Input name='internal_number' onChange={handleChange} value={createInvoice.internal_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Interior' mr={2} />
+                    <Input name='external_number' onChange={handleChange} value={createInvoice.external_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Exterior' />
                 </Flex>
                 <Flex mt={10} justifyContent={"center"} zIndex={1}>
                     <Button 

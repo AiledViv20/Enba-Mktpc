@@ -41,12 +41,12 @@ const StripeForm = () => {
             try {
                 const response = await api({
                     method: "post",
-                    url: "/procesar-pago",
+                    url: "/api-stripe/procesar-pago",
                     data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
                 });
                 const { data, status } = response;
                 if (status === 200) {
-                    toast.success("¡Tu pago hecho correctamente!", {
+                    toast.success("¡Tu pago se ha realizado correctamente!", {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });
                 }

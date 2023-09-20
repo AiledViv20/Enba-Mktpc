@@ -22,7 +22,7 @@ import ModalTrashProduct from './ModalTrashProduct';
 
 import { toast } from 'react-toastify';
 
-const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedProductTrash) => {
+const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedProductTrash, limitTrash, setLimitTrash) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
@@ -46,7 +46,9 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
             return <KitCard 
                 product={products[0]} 
                 isSelectedProductTrash={isSelectedProductTrash}
-                setIsSelectedProductTrash={setIsSelectedProductTrash} />;
+                setIsSelectedProductTrash={setIsSelectedProductTrash}
+                limitTrash={limitTrash}
+                setLimitTrash={setLimitTrash} />;
         }
         return products.map((element, idx) => (
             <KitCard 
@@ -54,7 +56,9 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
                 product={element} 
                 showIconPlus={idx === 0 ? false : true}
                 isSelectedProductTrash={isSelectedProductTrash}
-                setIsSelectedProductTrash={setIsSelectedProductTrash} />
+                setIsSelectedProductTrash={setIsSelectedProductTrash}
+                limitTrash={limitTrash}
+                setLimitTrash={setLimitTrash} />
         ));
     } else {
         return isGreaterThanMd ? (
@@ -101,6 +105,7 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
     const [page, setPage] = useState(0);
     const { isOpen, onOpen, onClose } = useDisclosure()
     const [confirmTrash, setConfirmTrash] = useState(false);
+    const [limitTrash, setLimitTrash] = useState(0);
     const [isSelectedProductTrash, setIsSelectedProductTrash] = useState([]);
     const [productsIncludes, setProductsIncludes] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
@@ -181,6 +186,8 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
         setShowKitIncludes(productsFilter)
         setIsSelectedProductTrash([]);
         setConfirmTrash(false);
+        localStorage.setItem("kit_trash_category", isSelectedProductTrash[0].category);
+        setLimitTrash(0);
         toast.warning("¡Se ha eliminado correctamente el producto del kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
@@ -227,7 +234,7 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
-                        {CardsRenderer(productsIncludes, status, isSelectedProductTrash, setIsSelectedProductTrash)}
+                        {CardsRenderer(productsIncludes, status, isSelectedProductTrash, setIsSelectedProductTrash, limitTrash, setLimitTrash)}
                     </Flex>
                 </Box>
                 <Flex mt={"2rem"}>

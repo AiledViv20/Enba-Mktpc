@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const api = ({ data, method, url, responseType }) => {
     return axios({
-        baseURL: "http://localhost:3001/",
+        baseURL: "http://18.117.23.154/",
         data,
         method,
         url,

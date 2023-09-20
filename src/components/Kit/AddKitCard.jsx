@@ -31,27 +31,35 @@ const AddKitCard = ({ product, showKitIncludes, setShowKitIncludes }) => {
     }
 
     const addListKit = () => {
-        const productSelect = {
-            sku: product.sku,
-            code_item: product.code,
-            unit_price: parseFloat(product.items[0]?.price),
-            total_price: parseFloat(product.items[0]?.price),
-            quantity: 1,
-            name: product.name,
-            category: product.category,
-            color: product.items[0]?.color,
-            image: product.items[0]?.images.images_item[0],
-            images: product.images,
-            items: product.items
+        const categorySaveLS = localStorage.getItem("kit_trash_category");
+        const categoryLS = categorySaveLS.split(" ");
+        if (product.category.includes(categoryLS[0])) {
+            const productSelect = {
+                sku: product.sku,
+                code_item: product.code,
+                unit_price: parseFloat(product.items[0]?.price),
+                total_price: parseFloat(product.items[0]?.price),
+                quantity: 1,
+                name: product.name,
+                category: product.category,
+                color: product.items[0]?.color,
+                image: product.items[0]?.images.images_item[0],
+                images: product.images,
+                items: product.items
+            }
+            const newAddList = [
+                ...showKitIncludes,
+                productSelect
+            ];
+            setShowKitIncludes(newAddList)
+            toast.success("¡Se ha agregado correctamente el nuevo producto al kit!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        } else {
+            toast.warning("¡Solo es posible reemplazar producto por otro de la misma categoría!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
         }
-        const newAddList = [
-            ...showKitIncludes,
-            productSelect
-        ];
-        setShowKitIncludes(newAddList)
-        toast.success("¡Se ha agregado correctamente el nuevo producto al kit!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
     }
 
     return ( 

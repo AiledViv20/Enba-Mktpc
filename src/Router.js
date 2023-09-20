@@ -11,6 +11,8 @@ import ProyectosEspeciales from "./pages/ProyectosEspeciales";
 import PopularCategories from "./pages/PopularCategories";
 import Cotizar from "./pages/Cotizar";
 import Kit from "./pages/Kit";
+import Terms from "./components/Tyc/Terms";
+import Privacy from "./components/Tyc/Privacy";
 
 const SwitchRouter = () => {
     return (
@@ -36,6 +38,8 @@ const SwitchRouter = () => {
                 <Route path='/categorias-populares' element={<PopularCategories />} />
                 <Route path='/cotizar' element={<Cotizar />} />
                 <Route path='/kit/:product' element={<Kit/>} />
+                <Route path='/terminos-condiciones' element={<Terms/>} />
+                <Route path='/aviso-privacidad' element={<Privacy/>} />
             </Routes>
         </Suspense>    
     );

@@ -6,7 +6,9 @@ import {
     Box, 
     Text,
     Button,
-    IconButton
+    IconButton,
+    Alert,
+    AlertIcon,
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 import Step1 from '../../components/ShoppingCart/Steps/Step1';
@@ -81,7 +83,6 @@ const QuoteProduct = ({ props }) => {
     const [value, setValue] = useState(null);
     const [payPerStore, setPayPerStore] = useState('1');
     const [productsQuote, setProductsQuote] = useState([]);
-    const [kitsQuote, setKitsQuote] = useState([]);
     const [itemsCalculate, setItemsCalculate] = useState([]);
 
     const changeStepQuote = (numStep) => {
@@ -195,25 +196,35 @@ const QuoteProduct = ({ props }) => {
     const handleSubmit = () => {
         setIsLoadingStep1(true);
         let calculateOrder = {}
-        if (kitsQuote.length > 0) {
+        if (kitsStore.length > 0) {
             calculateOrder = {
                 discount_code: createOrder.discount_code,
-                is_kit: true,
-                sku_kit: kitsQuote.sku_kit ? kitsQuote.sku_kit : "",
-                code_kit: kitsQuote.code_kit ? kitsQuote.code_kit : "",
-                total_kits: kitsQuote.length,
+                is_kit: "true",
+                sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
+                code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
+                total_kits: kitsStore.length,
                 items: itemsCalculate
             }
         } else {
             calculateOrder = {
+                is_kit: "",
+                sku_kit: "",
+                code_kit: "",
+                total_kits: "",
                 discount_code: createOrder.discount_code,
                 items: itemsCalculate
             }
         }
         postCalculateOrder(calculateOrder).then(res => {
-            toast.success("¡Tus datos fueron eviados correctamente!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
+            if (res.data) {
+                toast.success("¡Tus datos fueron eviados correctamente!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            } else {
+                toast.error("¡Algo salió mal!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
             setIsLoadingStep1(false);
         }).catch(err => {
             console.log(err);
@@ -258,41 +269,56 @@ const QuoteProduct = ({ props }) => {
             internal_number: createOrder.internal_number
         }
         const formData = new FormData();
-        formData.append("user", infoUser);
+        formData.append("user", JSON.stringify({
+            name: createOrder.name,
+            last_name: createOrder.last_name,
+            email: createOrder.email,
+            phone: createOrder.phone,
+            state: createOrder.state,
+            city: createOrder.city,
+            postal_code: createOrder.postal_code,
+            external_number: createOrder.external_number,
+            internal_number: createOrder.internal_number
+        }));
         formData.append("max_delivery_date", createOrder.max_delivery_date);
         formData.append("files", logo);
         formData.append("comments", createOrder.comments);
         formData.append("pay_method", typePayMethod(value));
-        if (value === "3") {
-            formData.append("pay_details", typePayMethodDetails(payPerStore));
-        }
+        formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : "");
         formData.append("discount_code", createOrder.discount_code);
-        if (kitsQuote.length > 0) {
-            formData.append("is_kit", true);
-            formData.append("sku_kit", kitsQuote.sku_kit ? kitsQuote.sku_kit : "");
-            formData.append("code_kit", kitsQuote.code_kit ? kitsQuote.code_kit : "");
-            formData.append("total_kits", kitsQuote.length);
-        }
-        formData.append("items", itemsCalculate);
-        postCreateOrder({body: formData}).then(res => {
-            toast.success("¡Tus orden de compra fue creada correctamente!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-            dispatch(
-                setProducts({products: []})
-            )
-            dispatch(
-                setKits({kits: []})
-            )
-            dispatch(
-                setTotalAmount({totalAmount: 0})
-            )
+        formData.append("is_kit", kitsStore[0].sku_kit ? "true" : "");
+        formData.append("sku_kit", kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "");
+        formData.append("code_kit", kitsStore[0].code_kit ? kitsStore[0].code_kit : "");
+        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : "");
+        formData.append("items", JSON.stringify(itemsCalculate));
+        postCreateOrder(formData).then(res => {
+            console.log(formData);
+            console.log(infoUser, itemsCalculate)
+            console.log(res)
+            if (res.data) {
+                toast.success("¡Tus orden de compra fue creada correctamente!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+                dispatch(
+                    setProducts({products: []})
+                )
+                dispatch(
+                    setKits({kits: []})
+                )
+                dispatch(
+                    setTotalAmount({totalAmount: 0})
+                )
+            } else {
+                toast.error("¡Algo salió mal!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
             setIsLoadingStep2(false);
         }).catch(err => {
             console.log(err);
             toast.error("¡Algo salió mal!", {
                 position: toast.POSITION.BOTTOM_RIGHT
-            })
+            });
             setIsLoadingStep2(false);
         })
     }
@@ -374,20 +400,27 @@ const QuoteProduct = ({ props }) => {
                         </Flex>
                         <Flex mt={5} w={"100%"} pb={3}>
                             <Flex w={"50%"}>
-                                <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>
+                                <Text fontSize={"20px"} fontWeight={600}>Total</Text>
                             </Flex>
                             <Flex w={"50%"} justifyContent={"end"}>
                                 <Text fontSize={"20px"} fontWeight={600}>{formatterValue(totalAmountStore)}</Text>
                             </Flex>
                         </Flex>
                         <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 1 || num === 2 ? "flex" : "none"}>
-                            <Button mb={5} _hover={{ bg: "#063D5F"}} 
-                                fontWeight={600} fontSize={"18px"} 
-                                height={"48px"}
-                                onClick={() => nextStep()}
-                                isDisabled={validateSteps()}>
-                                Continuar
-                            </Button>
+                            {totalAmountStore < 3000 ? 
+                                <Alert mb={5} status='error' lineHeight={1.2}>
+                                    <AlertIcon />
+                                    No es posible realizar el proceso, el mínimo de compra debe ser $3,000.00 MXN
+                                </Alert>
+                                : 
+                                <Button mb={5} _hover={{ bg: "#063D5F"}} 
+                                    fontWeight={600} fontSize={"18px"} 
+                                    height={"48px"}
+                                    onClick={() => nextStep()}
+                                    isDisabled={validateSteps()}>
+                                    Continuar
+                                </Button>
+                            }
                             <Button borderColor={"accent.500"} 
                                 fontWeight={600} fontSize={"18px"} 
                                 height={"48px"} variant={"outline"}

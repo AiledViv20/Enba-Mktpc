@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://3.131.84.16/',
+        baseUrl: 'http://localhost:4005/',
     }),
     tagTypes: [
         "search",
@@ -46,6 +46,16 @@ export const enbaApi = createApi({
             query: () => {
               return {
                 url: `inventory/categories`,
+                method: "GET",
+              };
+            },
+            providesTags: (result, error, arg) =>
+              result ? [{ type: "search", id: arg }] : [],
+        }),
+        getSubCategories: build.query({
+            query: () => {
+              return {
+                url: `inventory/categories-master`,
                 method: "GET",
               };
             },
@@ -113,7 +123,7 @@ export const enbaApi = createApi({
           },
         }),
         postQuotation: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
                   url: `quotation/create`,
                   method: 'POST',
@@ -122,7 +132,8 @@ export const enbaApi = createApi({
           },
         }),
         postCalculateOrder: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
+            console.log(body)
               return {
                   url: `order/calculate`,
                   method: 'POST',
@@ -131,27 +142,36 @@ export const enbaApi = createApi({
           },
         }),
         postCreateOrder: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
-                  url: `order/calculate`,
+                  url: `order/create`,
                   method: 'POST',
                   body: body
               };
           },
         }),
         postCreateInvoice: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
-                  url: `order/calculate`,
+                  url: `order/invoice/create`,
                   method: 'POST',
                   body: body
               };
           },
         }),
         postProof: build.mutation({
-          query: ({folio, body}) => {
+          query: (folio, body) => {
               return {
                   url: `order/proof/${folio}`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
+        postDiscountCode: build.mutation({
+          query: (body) => {
+              return {
+                  url: `discount-code/validate`,
                   method: 'POST',
                   body: body
               };
@@ -164,6 +184,7 @@ export const {
     useGetSearchQuery,
     useGetProductQuery,
     useGetCategoriesQuery,
+    useGetSubCategoriesQuery,
     useGetColorsQuery,
     useGetFavoritesQuery,
     useGetKitsQuery,
@@ -174,5 +195,6 @@ export const {
     usePostCreateOrderMutation,
     usePostCreateInvoiceMutation,
     usePostProofMutation,
+    usePostDiscountCodeMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi

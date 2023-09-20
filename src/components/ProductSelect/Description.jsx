@@ -196,7 +196,8 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
             {isOpen ?
                     <ModalPrintImage 
                         isOpen={isOpen}
-                        onClose={onClose} />
+                        onClose={onClose}
+                        product={previewImage} />
                 : null
             }
         </Flex>
