@@ -9,19 +9,8 @@ import {
 } from '@chakra-ui/react';
 import ModalPrintImage from '../../ModalPrintImage';
 
-import { useGetSearchQuery } from '../../../hooks/enbaapi';
-
 const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, validateStep1, isLoadingStep1, handleSubmit }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const [paaramsRecommended, setParamsRecommended] = useState({
-        take: 25,
-        page: 0,
-        color: productsStore[0] === "All Kit" ? "" : productsStore[0]?.color,
-        category: productsStore[0] ? productsStore[0].category : "",
-        name: productsStore[0] ? productsStore[0].name : ""
-    });
-    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetSearchQuery(paaramsRecommended);
 
     const handleChange = (e) => {
         setCreateOrder({
@@ -87,7 +76,7 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
                 <ModalPrintImage 
                     isOpen={isOpen}
                     onClose={onClose}
-                    product={dataRecommended[0]?.images?.images_item[0]} />
+                    product={productsStore[0]?.productsPreview[0]?.images?.images_item[0]} />
                 : null
             }
         </Flex>

@@ -64,7 +64,8 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
             name: data.name,
             category: data.category,
             color: selectedColor.toUpperCase(),
-            image: previewImage
+            image: previewImage,
+            productsPreview: filterItem
         }
         dispatch(
             setProducts({products: [

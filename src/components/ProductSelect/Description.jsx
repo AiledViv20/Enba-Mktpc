@@ -82,7 +82,8 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
                 name: data.name,
                 category: data.category,
                 color: selectColor.toUpperCase(),
-                image: previewImage
+                image: previewImage,
+                productsPreview: filterItem
             }
             dispatch(
                 setProducts({products: [

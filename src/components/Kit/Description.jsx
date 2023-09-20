@@ -79,7 +79,8 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
             name: data.name,
             category: data.category,
             color: selectColor,
-            image: previewImage
+            image: previewImage,
+            productsPreview: filterItem
         }
         dispatch(
             setKitsList({kitsList: [

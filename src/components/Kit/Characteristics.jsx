@@ -62,7 +62,8 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             name: data.name,
             category: data.category,
             color: selectedColor,
-            image: previewImage
+            image: previewImage,
+            productsPreview: filterItem
         }
         dispatch(
             setKitsList({kitsList: [
