@@ -4,6 +4,8 @@ import {
     Text
 } from '@chakra-ui/react';
 
+import TablePrice from '../TablePrice';
+
 const DescriptionKit = ({ data }) => {
 
     return ( 
@@ -13,6 +15,10 @@ const DescriptionKit = ({ data }) => {
                 <Text lineHeight={1.2}>
                     {data.description}
                 </Text>
+            </Flex>
+            <Flex mt={10}>
+                <TablePrice
+                    pdt={data} />
             </Flex>
         </Flex>
     );
