@@ -46,7 +46,7 @@ const StripeForm = () => {
                 });
                 const { data, status } = response;
                 if (status === 200) {
-                    toast.success("¡Tu pago hecho correctamente!", {
+                    toast.success("¡Tu pago se ha realizado correctamente!", {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });
                 }

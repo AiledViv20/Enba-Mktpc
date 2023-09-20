@@ -13,11 +13,14 @@ const ThanksForPayment = ({ step4, nextStep }) => {
             <Text mb={10} fontSize={"16px"} fontWeight={400}>
                 Si deseas solicitar factura, da clic en el boton “Solicitar factura”,<br />una vez llenado los datos podrás descargarla 
             </Text>
-            <Button 
-                variant={"outline"} border={"1px solid #064A73"}
-                width={"350px"} height={"40px"} color={"accent.500"}
+            <Button border={"1px solid #064A73"}
+                width={"350px"} height={"40px"}
                 fontSize={"18px"} fontWeight={600}
                 onClick={() => nextStep()}>Solicitar factura</Button>
+            <Button mt={5} variant={"outline"} border={"1px solid #064A73"}
+                width={"350px"} height={"40px"} color={"accent.500"}
+                fontSize={"18px"} fontWeight={600}
+                onClick={() => window.location.href = "/"}>Seguir comprando</Button>
         </Flex>
     );
 }

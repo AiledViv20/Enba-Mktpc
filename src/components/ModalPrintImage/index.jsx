@@ -107,7 +107,7 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                         </Flex>
                         <Flex mb={10} h={"178px"} bg={"#F6F6F6"} justifyContent={"center"} alignItems={"center"} border={"1px solid #D9D9D9"} flexDirection={"column"}>
                             <Text fontFamily={"Montserrat, sans-serif"} color={"#000"} fontSize={"18px"}>Carga tu logotipo en formato PNG</Text>
-                            <Input name='img' type='file' accept='.jpg, .png' mt={2} w={"auto"} onChange={handleChangeFile} border={"transparent"} pl={0}/>
+                            <Input name='img' type='file' accept='.png' mt={2} w={"auto"} onChange={handleChangeFile} border={"transparent"} pl={0}/>
                         </Flex>
                         <Flex mb={5} justifyContent={"center"}>
                             <Text fontSize={"16px"} color={"#002B49"}>O escoge un logotipo de nuestra biblioteca, para observar un ejemplo de impresión</Text>
