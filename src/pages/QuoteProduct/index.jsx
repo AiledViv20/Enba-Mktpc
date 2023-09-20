@@ -286,9 +286,9 @@ const QuoteProduct = ({ props }) => {
         formData.append("pay_method", typePayMethod(value));
         formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : "");
         formData.append("discount_code", createOrder.discount_code);
-        formData.append("is_kit", kitsStore[0].sku_kit ? "true" : "");
-        formData.append("sku_kit", kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "");
-        formData.append("code_kit", kitsStore[0].code_kit ? kitsStore[0].code_kit : "");
+        formData.append("is_kit", kitsStore[0]?.sku_kit ? "true" : "");
+        formData.append("sku_kit", kitsStore[0]?.sku_kit ? kitsStore[0].sku_kit : "");
+        formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : "");
         formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : "");
         formData.append("items", JSON.stringify(itemsCalculate));
         postCreateOrder(formData).then(res => {
