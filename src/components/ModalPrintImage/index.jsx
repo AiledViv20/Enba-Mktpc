@@ -22,7 +22,7 @@ import icon5 from '../../assets/icons/printproduct/creativelogo.svg';
 
 import { colors_print_product } from '../../resource';
 
-const ModalPrintImage = ({  isOpen, onClose, product = null }) => {
+const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
     const [selectColor, setSelectColor] = useState(null);
     const [img, setImg] = useState();
     const [nextStepImg, setNextStepImg] = useState(false);
