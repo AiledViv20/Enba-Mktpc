@@ -17,7 +17,7 @@ import Nav from './components/Nav';
 
 const persistor = persistStore(store);
 
-//const stripePromise = loadStripe(process.env.REACT_APP_TEST_STRIPE_PUBLIC_KEY);
+const stripePromise = loadStripe(process.env.REACT_APP_TEST_STRIPE_PUBLIC_KEY);
 
 const options = {
   mode: 'payment',
@@ -32,7 +32,8 @@ const options = {
 function App() {
 
   return (
-    <PersistGate persistor={persistor}>
+    <Elements stripe={stripePromise} options={options}>
+      <PersistGate persistor={persistor}>
         <Provider store={store}>
           <ChakraProvider theme={lightTheme}>
               <Flex width={"100%"} flexDirection={"column"}>
@@ -43,6 +44,7 @@ function App() {
           </ChakraProvider>
         </Provider>
       </PersistGate>
+    </Elements>
   );
 }
 

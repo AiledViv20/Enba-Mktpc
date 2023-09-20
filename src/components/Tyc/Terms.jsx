@@ -10,7 +10,7 @@ const Terms = () => {
         <>
             <Flex width={"100%"} mt={10} mb={20}>
                 <Flex width={"30%"} pt={10} flexDirection={"column"} pl={5}>
-                    <Flex borderLeft={"3px solid #17669D"} pl={5} mb={5}>
+                    <Flex borderLeft={"3px solid #FFF"} pl={5} mb={5}>
                         <Text 
                             fontSize={"16px"} fontWeight={700} 
                             onClick={() => window.location.href = "/aviso-privacidad"}
@@ -19,7 +19,7 @@ const Terms = () => {
                             }}
                             color={"#005895"}>Grupo Enba - Aviso de Privacidad</Text>
                     </Flex>
-                    <Flex borderLeft={"3px solid #FFF"} pl={5}>
+                    <Flex borderLeft={"3px solid #17669D"} pl={5}>
                         <Text 
                             fontSize={"16px"} fontWeight={700} 
                             onClick={() => window.location.href = "/terminos-condiciones"}
