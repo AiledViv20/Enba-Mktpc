@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://localhost:4005/',
+        baseUrl: 'http://3.131.84.16/',
     }),
     tagTypes: [
         "search",

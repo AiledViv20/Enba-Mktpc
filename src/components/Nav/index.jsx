@@ -37,6 +37,7 @@ export default function Nav() {
       <Flex
         bg={useColorModeValue('transparent', 'gray.800')}
         color={useColorModeValue('gray.600', 'gray.600')}
+        boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
         minH={'60px'}
         py={{ base: 2 }}
         px={{ base: 10 }}
