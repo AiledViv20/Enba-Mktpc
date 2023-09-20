@@ -7,13 +7,13 @@ import {
 } from '@chakra-ui/react';
 import { FaBorderAll } from 'react-icons/fa';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useGetCategoriesQuery } from '../../hooks/enbaapi';
+import { useGetCategoriesQuery, useGetSubCategoriesQuery } from '../../hooks/enbaapi';
 import { capitalizeFirstLetter } from '../../resource/validate';
 
 const ButtonCategories = () => {
     const [categories, setCategories] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState('Todas');
-    const {data, isLoading, error} = useGetCategoriesQuery();
+    const {data, isLoading, error} = useGetSubCategoriesQuery();
     useEffect(() => {
         if(data){
             setCategories(data);
@@ -53,8 +53,8 @@ const ButtonCategories = () => {
                                 categories.map((e, idx) => {
                                     return (
                                         <option key={idx} 
-                                            value={e.category} 
-                                            style={{ color: '#000' }}>{capitalizeFirstLetter(e.category)}</option>
+                                            value={e.master_category} 
+                                            style={{ color: '#000' }}>{capitalizeFirstLetter(e.master_category)}</option>
                                     )  
                                 })
                             )

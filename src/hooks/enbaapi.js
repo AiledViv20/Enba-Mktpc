@@ -52,6 +52,16 @@ export const enbaApi = createApi({
             providesTags: (result, error, arg) =>
               result ? [{ type: "search", id: arg }] : [],
         }),
+        getSubCategories: build.query({
+            query: () => {
+              return {
+                url: `inventory/categories-master`,
+                method: "GET",
+              };
+            },
+            providesTags: (result, error, arg) =>
+              result ? [{ type: "search", id: arg }] : [],
+        }),
         getColors: build.query({
             query: () => {
               return {
@@ -174,6 +184,7 @@ export const {
     useGetSearchQuery,
     useGetProductQuery,
     useGetCategoriesQuery,
+    useGetSubCategoriesQuery,
     useGetColorsQuery,
     useGetFavoritesQuery,
     useGetKitsQuery,

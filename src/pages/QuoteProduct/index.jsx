@@ -284,24 +284,19 @@ const QuoteProduct = ({ props }) => {
         postCreateOrder(formData).then(res => {
             console.log(formData);
             console.log(infoUser, itemsCalculate)
-            if (res.data) {
-                toast.success("¡Tus orden de compra fue creada correctamente!", {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                });
-                /* dispatch(
-                    setProducts({products: []})
-                )
-                dispatch(
-                    setKits({kits: []})
-                )
-                dispatch(
-                    setTotalAmount({totalAmount: 0})
-                ) */
-            } else {
-                toast.error("¡Algo salió mal!", {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                });
-            }
+            console.log(res)
+            toast.success("¡Tus orden de compra fue creada correctamente!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            dispatch(
+                setProducts({products: []})
+            )
+            dispatch(
+                setKits({kits: []})
+            )
+            dispatch(
+                setTotalAmount({totalAmount: 0})
+            )
             setIsLoadingStep2(false);
         }).catch(err => {
             console.log(err);
