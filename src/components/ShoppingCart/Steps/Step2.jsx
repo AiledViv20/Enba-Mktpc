@@ -37,9 +37,15 @@ const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingS
             code: codex
         }
         postDiscountCode(discountCode).then(res => {
-            toast.success("¡Tu código se ha aplicado correctamente!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
+            if (res.data) {
+                toast.success("¡Tu código se ha aplicado correctamente!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            } else {
+                toast.error("¡Algo salió mal!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
             setIsLoadingStep5(false);
         }).catch(err => {
             console.log(err);

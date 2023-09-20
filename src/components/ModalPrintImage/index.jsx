@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -21,9 +21,12 @@ import icon5 from '../../assets/icons/printproduct/creativelogo.svg';
 
 import { colors_print_product } from '../../resource';
 
-const ModalPrintImage = ({ isOpen, onClose }) => {
+const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
     const [selectColor, setSelectColor] = useState(null);
     const [img, setImg] = useState();
+    const [nextStepImg, setNextStepImg] = useState(false);
+    const [selectedFile, setSelectedFile] = useState(null);
+
     const [container, setContainer] = useState({
         selected1: false,
         selected2: false,
@@ -33,7 +36,13 @@ const ModalPrintImage = ({ isOpen, onClose }) => {
     });
 
     const handleChangeFile = (e) => {
+        const file = e.target.files[0];
         setImg(e.target.files[0]);
+        const reader = new FileReader();
+        reader.onload = () => {
+            setSelectedFile(reader.result);
+        };
+        reader.readAsDataURL(file);
     }
 
     const selectLogo = (num) => {
@@ -92,7 +101,7 @@ const ModalPrintImage = ({ isOpen, onClose }) => {
             <ModalContent>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Flex fontWeight={400} mt={5} flexDirection={"column"}>
+                    <Flex display={nextStepImg ? "none" : "flex"} fontWeight={400} mt={5} flexDirection={"column"}>
                         <Flex mb={5}>
                             <Text fontSize={"18px"} color={"#002B49"}>Sube tu logotipo para tener una previsualizacion de la impresión</Text>
                         </Flex>
@@ -172,9 +181,19 @@ const ModalPrintImage = ({ isOpen, onClose }) => {
                         <Flex mb={5} justifyContent={"center"}>
                             <Button fontWeight={500} fontSize={"14px"} color={"accent.500"} w={"290px"} h={"44px"}
                                 border={"1px solid"} borderColor={"accent.500"} variant={"outline"} type='button'
-                                onClick={onClose}>
+                                onClick={() => setNextStepImg(true)}
+                                isDisabled={product ? false : true}>
                                 Continuar
                             </Button>
+                        </Flex>
+                    </Flex>
+                    <Flex display={nextStepImg ? "flex" : "none"} justifyContent={"center"} alignItems={"center"} position={"relative"}>
+                        <Flex>
+                            <Image src={product ? product : ""} w={"442px"} h={"442px"} alt='img'/>
+                        </Flex>
+                        <Flex position={"absolute"} justifyContent={"center"}>
+                            {console.log(img)}
+                            <Image src={selectedFile ? selectedFile : ""} w={"100px"} h={"50px"} alt='logo'/>
                         </Flex>
                     </Flex>
                 </ModalBody>

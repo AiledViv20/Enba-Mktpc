@@ -83,7 +83,6 @@ const QuoteProduct = ({ props }) => {
     const [value, setValue] = useState(null);
     const [payPerStore, setPayPerStore] = useState('1');
     const [productsQuote, setProductsQuote] = useState([]);
-    const [kitsQuote, setKitsQuote] = useState([]);
     const [itemsCalculate, setItemsCalculate] = useState([]);
 
     const changeStepQuote = (numStep) => {
@@ -197,25 +196,35 @@ const QuoteProduct = ({ props }) => {
     const handleSubmit = () => {
         setIsLoadingStep1(true);
         let calculateOrder = {}
-        if (kitsQuote.length > 0) {
+        if (kitsStore.length > 0) {
             calculateOrder = {
                 discount_code: createOrder.discount_code,
-                is_kit: true,
-                sku_kit: kitsQuote.sku_kit ? kitsQuote.sku_kit : "",
-                code_kit: kitsQuote.code_kit ? kitsQuote.code_kit : "",
-                total_kits: kitsQuote.length,
+                is_kit: "true",
+                sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
+                code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
+                total_kits: kitsStore.length,
                 items: itemsCalculate
             }
         } else {
             calculateOrder = {
+                is_kit: "",
+                sku_kit: "",
+                code_kit: "",
+                total_kits: "",
                 discount_code: createOrder.discount_code,
                 items: itemsCalculate
             }
         }
         postCalculateOrder(calculateOrder).then(res => {
-            toast.success("¡Tus datos fueron eviados correctamente!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
+            if (res.data) {
+                toast.success("¡Tus datos fueron eviados correctamente!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            } else {
+                toast.error("¡Algo salió mal!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
             setIsLoadingStep1(false);
         }).catch(err => {
             console.log(err);
@@ -265,36 +274,40 @@ const QuoteProduct = ({ props }) => {
         formData.append("files", logo);
         formData.append("comments", createOrder.comments);
         formData.append("pay_method", typePayMethod(value));
-        if (value === "3") {
-            formData.append("pay_details", typePayMethodDetails(payPerStore));
-        }
+        formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : "");
         formData.append("discount_code", createOrder.discount_code);
-        if (kitsQuote.length > 0) {
-            formData.append("is_kit", true);
-            formData.append("sku_kit", kitsQuote.sku_kit ? kitsQuote.sku_kit : "");
-            formData.append("code_kit", kitsQuote.code_kit ? kitsQuote.code_kit : "");
-            formData.append("total_kits", kitsQuote.length);
-        }
+        formData.append("is_kit", kitsStore[0].sku_kit ? "true" : "");
+        formData.append("sku_kit", kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "");
+        formData.append("code_kit", kitsStore[0].code_kit ? kitsStore[0].code_kit : "");
+        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : "");
         formData.append("items", itemsCalculate);
-        postCreateOrder({body: formData}).then(res => {
-            toast.success("¡Tus orden de compra fue creada correctamente!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-            dispatch(
-                setProducts({products: []})
-            )
-            dispatch(
-                setKits({kits: []})
-            )
-            dispatch(
-                setTotalAmount({totalAmount: 0})
-            )
+        postCreateOrder(formData).then(res => {
+            console.log(formData);
+            console.log(infoUser, itemsCalculate)
+            if (res.data) {
+                toast.success("¡Tus orden de compra fue creada correctamente!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+                /* dispatch(
+                    setProducts({products: []})
+                )
+                dispatch(
+                    setKits({kits: []})
+                )
+                dispatch(
+                    setTotalAmount({totalAmount: 0})
+                ) */
+            } else {
+                toast.error("¡Algo salió mal!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
             setIsLoadingStep2(false);
         }).catch(err => {
             console.log(err);
             toast.error("¡Algo salió mal!", {
                 position: toast.POSITION.BOTTOM_RIGHT
-            })
+            });
             setIsLoadingStep2(false);
         })
     }

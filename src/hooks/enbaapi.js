@@ -113,7 +113,7 @@ export const enbaApi = createApi({
           },
         }),
         postQuotation: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
                   url: `quotation/create`,
                   method: 'POST',
@@ -122,7 +122,8 @@ export const enbaApi = createApi({
           },
         }),
         postCalculateOrder: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
+            console.log(body)
               return {
                   url: `order/calculate`,
                   method: 'POST',
@@ -131,25 +132,25 @@ export const enbaApi = createApi({
           },
         }),
         postCreateOrder: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
-                  url: `order/calculate`,
+                  url: `order/create`,
                   method: 'POST',
                   body: body
               };
           },
         }),
         postCreateInvoice: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
-                  url: `order/calculate`,
+                  url: `order/invoice/create`,
                   method: 'POST',
                   body: body
               };
           },
         }),
         postProof: build.mutation({
-          query: ({folio, body}) => {
+          query: (folio, body) => {
               return {
                   url: `order/proof/${folio}`,
                   method: 'POST',
@@ -158,7 +159,7 @@ export const enbaApi = createApi({
           },
         }),
         postDiscountCode: build.mutation({
-          query: ({body}) => {
+          query: (body) => {
               return {
                   url: `discount-code/validate`,
                   method: 'POST',
