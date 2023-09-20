@@ -20,7 +20,7 @@ import ModalPrintImage from '../ModalPrintImage';
 
 import { toast } from 'react-toastify';
 
-const Description = ({  kit = false, previewImage, data, colors, colorsProduct }) => {
+const Description = ({ kit = false, previewImage, images, data, colors, colorsProduct }) => {
     const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
@@ -189,8 +189,10 @@ const Description = ({  kit = false, previewImage, data, colors, colorsProduct }
             </Flex>
             {isOpen ?
                     <ModalPrintImage 
+                        images={images}
                         isOpen={isOpen}
-                        onClose={onClose} />
+                        onClose={onClose}
+                        product={previewImage} />
                 : null
             }
         </Flex>

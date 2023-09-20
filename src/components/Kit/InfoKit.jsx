@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
 
 import { 
     Flex, 
@@ -17,11 +15,7 @@ import { useGetKitQuery } from '../../hooks/enbaapi';
 import KitIncludes from './KitIncludes';
 import AddProductsKit from './AddProductsKit';
 
-import { toast } from 'react-toastify';
-
 const InfoKit = ({ props }) => {
-    const kitsListStore = useSelector(selectKitsList);
-    const dispatch = useDispatch();
 
     const params_url = useParams();
     const [images, setImages] = useState(null);
@@ -122,6 +116,7 @@ const InfoKit = ({ props }) => {
                         </Flex>
                         <Description 
                             previewImage={img}
+                            images={images}
                             data={product.products[0]} 
                             colors={colors}
                             colorsProduct={colorsProduct}/>

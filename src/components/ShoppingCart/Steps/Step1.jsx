@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import ModalPrintImage from '../../ModalPrintImage';
 
-const Step1 = ({ step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, validateStep1, isLoadingStep1, handleSubmit }) => {
+const Step1 = ({ showPreview, step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, validateStep1, isLoadingStep1, handleSubmit }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleChange = (e) => {
@@ -54,7 +54,7 @@ const Step1 = ({ step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoI
                     <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb</Text>
                     <Input name='logo' type='file' accept='.svg, .eps, .pdf' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} placeholder='Seleccionar archivo' />
                 </Flex>
-                <Flex>
+                <Flex display={showPreview ? "flex" : "none"}>
                     <Button onClick={onOpen} type='button' fontWeight={500} fontSize={"14px"} color={"accent.500"} border={"1px solid"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
                 </Flex>
             </Flex>

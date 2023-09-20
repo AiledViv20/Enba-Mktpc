@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -10,7 +10,8 @@ import {
     Image,
     Input,
     Flex,
-    Tooltip
+    Tooltip,
+    ModalHeader
 } from '@chakra-ui/react';
 
 import icon1 from '../../assets/icons/printproduct/enba.svg';
@@ -21,7 +22,7 @@ import icon5 from '../../assets/icons/printproduct/creativelogo.svg';
 
 import { colors_print_product } from '../../resource';
 
-const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
+const ModalPrintImage = ({ images, isOpen, onClose, product = null }) => {
     const [selectColor, setSelectColor] = useState(null);
     const [img, setImg] = useState();
     const [nextStepImg, setNextStepImg] = useState(false);
@@ -99,9 +100,10 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
         <Modal size={"2xl"} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
+                <ModalHeader color={"transparent"}>Modal Title</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <Flex display={nextStepImg ? "none" : "flex"} fontWeight={400} mt={5} flexDirection={"column"}>
+                    <Flex display={nextStepImg ? "none" : "flex"} fontWeight={400} mt={2} flexDirection={"column"}>
                         <Flex mb={5}>
                             <Text fontSize={"18px"} color={"#002B49"}>Sube tu logotipo para tener una previsualizacion de la impresión</Text>
                         </Flex>
@@ -189,7 +191,7 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                     </Flex>
                     <Flex display={nextStepImg ? "flex" : "none"} justifyContent={"center"} alignItems={"center"} position={"relative"}>
                         <Flex>
-                            <Image src={product ? product : ""} w={"442px"} h={"442px"} alt='img'/>
+                            <Image src={product ? images[2] : ""} w={"442px"} h={"442px"} alt='img'/>
                         </Flex>
                         <Flex position={"absolute"} justifyContent={"center"}>
                             {console.log(img)}

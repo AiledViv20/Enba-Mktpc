@@ -21,7 +21,7 @@ import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 
 import { toast } from 'react-toastify';
 
-const Description = ({ previewImage, data, colors, colorsProduct }) => {
+const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
     const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
@@ -195,6 +195,7 @@ const Description = ({ previewImage, data, colors, colorsProduct }) => {
             </Flex>
             {isOpen ?
                     <ModalPrintImage 
+                        images={images}
                         isOpen={isOpen}
                         onClose={onClose}
                         product={previewImage} />

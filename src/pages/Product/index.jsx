@@ -119,7 +119,8 @@ const Product = ({ props }) => {
                                 <Image src={img} width={"442"} height={"442"} alt='image product'/>
                             </Flex>
                             <Description 
-                                previewImage={img} 
+                                previewImage={img}
+                                images={images} 
                                 data={product} 
                                 colors={colors}
                                 colorsProduct={colorsProduct} />
