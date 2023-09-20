@@ -292,13 +292,14 @@ const QuoteProduct = ({ props }) => {
         formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : "");
         formData.append("items", JSON.stringify(itemsCalculate));
         postCreateOrder(formData).then(res => {
-            console.log(formData);
-            console.log(infoUser, itemsCalculate)
-            console.log(res)
             if (res.data) {
                 toast.success("¡Tus orden de compra fue creada correctamente!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
+                setSendOrder({
+                    ...sendOrder,
+                    folio: res.data?.folio
+                })
                 dispatch(
                     setProducts({products: []})
                 )

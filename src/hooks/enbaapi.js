@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://3.131.84.16/',
+        baseUrl: 'http://localhost:4005/',
     }),
     tagTypes: [
         "search",
@@ -133,7 +133,6 @@ export const enbaApi = createApi({
         }),
         postCalculateOrder: build.mutation({
           query: (body) => {
-            console.log(body)
               return {
                   url: `order/calculate`,
                   method: 'POST',
