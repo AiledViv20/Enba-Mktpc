@@ -188,11 +188,10 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
                 <Button onClick={onOpen} type='button' w={"430px"} fontSize={"14px"} fontWeight={500} color={"accent.500"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
             </Flex>
             {isOpen ?
-                    <ModalPrintImage 
-                        images={images}
+                    <ModalPrintImage
                         isOpen={isOpen}
                         onClose={onClose}
-                        product={previewImage} />
+                        product={images[2]} />
                 : null
             }
         </Flex>

@@ -22,7 +22,7 @@ import icon5 from '../../assets/icons/printproduct/creativelogo.svg';
 
 import { colors_print_product } from '../../resource';
 
-const ModalPrintImage = ({ images, isOpen, onClose, product = null }) => {
+const ModalPrintImage = ({  isOpen, onClose, product = null }) => {
     const [selectColor, setSelectColor] = useState(null);
     const [img, setImg] = useState();
     const [nextStepImg, setNextStepImg] = useState(false);
@@ -183,18 +183,16 @@ const ModalPrintImage = ({ images, isOpen, onClose, product = null }) => {
                         <Flex mb={5} justifyContent={"center"}>
                             <Button fontWeight={500} fontSize={"14px"} color={"accent.500"} w={"290px"} h={"44px"}
                                 border={"1px solid"} borderColor={"accent.500"} variant={"outline"} type='button'
-                                onClick={() => setNextStepImg(true)}
-                                isDisabled={product ? false : true}>
+                                onClick={() => setNextStepImg(true)}>
                                 Continuar
                             </Button>
                         </Flex>
                     </Flex>
                     <Flex display={nextStepImg ? "flex" : "none"} justifyContent={"center"} alignItems={"center"} position={"relative"}>
                         <Flex>
-                            <Image src={product ? images[2] : ""} w={"442px"} h={"442px"} alt='img'/>
+                            <Image src={product ? product : ""} w={"442px"} h={"442px"} alt='img'/>
                         </Flex>
                         <Flex position={"absolute"} justifyContent={"center"}>
-                            {console.log(img)}
                             <Image src={selectedFile ? selectedFile : ""} w={"100px"} h={"50px"} alt='logo'/>
                         </Flex>
                     </Flex>

@@ -343,6 +343,7 @@ const QuoteProduct = ({ props }) => {
                     </Flex>
                     <Step1 
                         showPreview={productsQuote.length === 1 ? true : false}
+                        productsStore={productsStore}
                         step1={steps.step1}
                         createOrder={createOrder}
                         setCreateOrder={setCreateOrder}
