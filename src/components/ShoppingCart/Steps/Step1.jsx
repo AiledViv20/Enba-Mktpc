@@ -61,17 +61,6 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
             <Flex zIndex={1}>
                 <Textarea name='comments' onChange={handleChange} value={createOrder.comments} fontSize={"14px"} placeholder='Indicaciones o dudas' />
             </Flex>
-            <Flex mt={20} justifyContent={"center"} zIndex={1}>
-                <Button 
-                    type='button'
-                    _hover={{ bg: "#063D5F"}} w={"174px"} 
-                    fontWeight={500} fontSize={"14px"}
-                    onClick={() => handleSubmit()}
-                    isDisabled={validateStep1()}
-                    isLoading={isLoadingStep1}>
-                    Enviar
-                </Button>
-            </Flex>
             {isOpen ?
                 <ModalPrintImage 
                     isOpen={isOpen}

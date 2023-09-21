@@ -18,7 +18,7 @@ const TablePrice = ({ pdt }) => {
             <Table variant='simple'>
                 <Thead bg={"accent.500"}>
                     <Tr>
-                        <Th color={"#FFF"} fontSize={"14px"} textTransform={"none"}>Rango de precio</Th>
+                        <Th color={"#FFF"} fontSize={"14px"} textTransform={"none"}>Volumen de Compra</Th>
                         <Th color={"#FFF"} fontSize={"14px"} textTransform={"none"}>Precio unitario</Th>
                     </Tr>
                 </Thead>
@@ -28,7 +28,7 @@ const TablePrice = ({ pdt }) => {
                         <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.retail_price)}</Td>
                     </Tr>
                     <Tr>
-                        <Td border={"1px solid #D9D9D9"}>$15,001.00 - $30,000.00</Td>
+                        <Td border={"1px solid #D9D9D9"}>$15,001.00 ó <span style={{ fontWeight: 700, fontSize: "20px" }}>+</span></Td>
                         <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.wholesale_price)}</Td>
                     </Tr>
                 </Tbody>    

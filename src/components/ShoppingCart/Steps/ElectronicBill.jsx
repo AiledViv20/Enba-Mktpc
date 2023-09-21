@@ -14,7 +14,7 @@ const ElectronicBill = ({ step5, sendOrder }) => {
     const [isLoadingStep3, setIsLoadingStep3] = useState(false);
 
     const [createInvoice, setCreateInvoice] = useState({
-        order_number: "",
+        order_number: sendOrder.folio,
         business_name: "",
         RFC: "",
         CFDI_use: "",
@@ -48,7 +48,7 @@ const ElectronicBill = ({ step5, sendOrder }) => {
         setIsLoadingStep3(true);
         let invoice = {
             user: {
-                order_number: createInvoice.order_number,
+                order_number: sendOrder.folio,
                 business_name: createInvoice.business_name,
                 RFC: createInvoice.RFC,
                 CFDI_use: createInvoice.CFDI_use,
@@ -87,7 +87,7 @@ const ElectronicBill = ({ step5, sendOrder }) => {
             </Flex>
             <Flex flexDirection={"column"}>
                 <Flex mb={3} zIndex={1}>
-                    <Input name='order_number' onChange={handleChange} value={createInvoice.order_number} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='No. de pedido' mr={5} />
+                    <Input name='order_number' value={sendOrder.folio} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='No. de pedido' mr={5} isDisabled/>
                     <Input name='business_name' onChange={handleChange} value={createInvoice.business_name} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Razón social' />
                 </Flex>
                 <Flex mb={3} zIndex={1}>

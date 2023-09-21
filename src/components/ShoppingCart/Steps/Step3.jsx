@@ -52,7 +52,7 @@ const Step3 = ({ step3, nextStep, sendOrder }) => {
             <Input 
                 name='proofPayment' type='file' 
                 onChange={handleChangeFile} mt={5}
-                border={"transparent"} accept="image/*" 
+                border={"transparent"} accept="image/*, application/pdf" 
                 placeholder='' 
                 _hover={{
                     cursor: "pointer"

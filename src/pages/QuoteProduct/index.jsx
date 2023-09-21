@@ -47,7 +47,8 @@ const QuoteProduct = ({ props }) => {
         items: []
     });
     const [sendOrder, setSendOrder] = useState({
-        folio: ""
+        folio: "",
+        discount: ""
     });
     const [logo, setLogo] = useState();
     const [logoInfo, setLogoInfo] = useState();
@@ -67,9 +68,12 @@ const QuoteProduct = ({ props }) => {
             createOrder.state === "" || createOrder.city === "" ||
             createOrder.postal_code === "" || createOrder.external_number === "" ||
             createOrder.max_delivery_date === "" || createOrder.comments === "") {
-            return true;
+            toast.error("¡Es necesario llenar todos los campos antes de continuar!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            return false;
         }
-        return false;
+        return true;
     }
 
     const [steps, setSteps] = useState({
@@ -194,45 +198,48 @@ const QuoteProduct = ({ props }) => {
     }, [productsQuote]);
 
     const handleSubmit = () => {
-        setIsLoadingStep1(true);
-        let calculateOrder = {}
-        if (kitsStore.length > 0) {
-            calculateOrder = {
-                discount_code: createOrder.discount_code,
-                is_kit: "true",
-                sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
-                code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
-                total_kits: kitsStore.length,
-                items: itemsCalculate
-            }
-        } else {
-            calculateOrder = {
-                is_kit: "",
-                sku_kit: "",
-                code_kit: "",
-                total_kits: "",
-                discount_code: createOrder.discount_code,
-                items: itemsCalculate
-            }
-        }
-        postCalculateOrder(calculateOrder).then(res => {
-            if (res.data) {
-                toast.success("¡Tus datos fueron eviados correctamente!", {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                });
+        if (validateStep1()) {
+            setIsLoadingStep1(true);
+            let calculateOrder = {}
+            if (kitsStore.length > 0) {
+                calculateOrder = {
+                    discount_code: createOrder.discount_code,
+                    is_kit: "true",
+                    sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
+                    code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
+                    total_kits: kitsStore.length,
+                    items: itemsCalculate
+                }
             } else {
+                calculateOrder = {
+                    is_kit: "",
+                    sku_kit: "",
+                    code_kit: "",
+                    total_kits: "",
+                    discount_code: createOrder.discount_code,
+                    items: itemsCalculate
+                }
+            }
+            postCalculateOrder(calculateOrder).then(res => {
+                if (res.data) {
+                    toast.success("¡Tus datos fueron eviados correctamente!", {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                    nextStep();
+                } else {
+                    toast.error("¡Algo salió mal!", {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                }
+                setIsLoadingStep1(false);
+            }).catch(err => {
+                console.log(err);
                 toast.error("¡Algo salió mal!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
-            }
-            setIsLoadingStep1(false);
-        }).catch(err => {
-            console.log(err);
-            toast.error("¡Algo salió mal!", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-            setIsLoadingStep1(false);
-        })
+                setIsLoadingStep1(false);
+            })
+        }   
     }
 
     const typePayMethod = (val) => {
@@ -257,17 +264,6 @@ const QuoteProduct = ({ props }) => {
 
     const handleSubmitCreateOrder = () => {
         setIsLoadingStep2(true);
-        const infoUser = {
-            name: createOrder.name,
-            last_name: createOrder.last_name,
-            email: createOrder.email,
-            phone: createOrder.phone,
-            state: createOrder.state,
-            city: createOrder.city,
-            postal_code: createOrder.postal_code,
-            external_number: createOrder.external_number,
-            internal_number: createOrder.internal_number
-        }
         const formData = new FormData();
         formData.append("user", JSON.stringify({
             name: createOrder.name,
@@ -298,17 +294,21 @@ const QuoteProduct = ({ props }) => {
                 });
                 setSendOrder({
                     ...sendOrder,
-                    folio: res.data?.folio
+                    folio: res.data?.folio,
+                    discount: res.data?.discount?.code
                 })
-                dispatch(
-                    setProducts({products: []})
-                )
-                dispatch(
-                    setKits({kits: []})
-                )
-                dispatch(
-                    setTotalAmount({totalAmount: 0})
-                )
+                nextStep();
+                setTimeout(() => {
+                    dispatch(
+                        setProducts({products: []})
+                    )
+                    dispatch(
+                        setKits({kits: []})
+                    )
+                    dispatch(
+                        setTotalAmount({totalAmount: 0})
+                    )
+                }, 1000);
             } else {
                 toast.error("¡Algo salió mal!", {
                     position: toast.POSITION.BOTTOM_RIGHT
@@ -416,10 +416,10 @@ const QuoteProduct = ({ props }) => {
                                     No es posible realizar el proceso, el mínimo de compra debe ser $3,000.00 MXN
                                 </Alert>
                                 : 
-                                <Button mb={5} _hover={{ bg: "#063D5F"}} 
+                                <Button display={steps.step2 ? "none" : "flex"} mb={5} _hover={{ bg: "#063D5F"}} 
                                     fontWeight={600} fontSize={"18px"} 
                                     height={"48px"}
-                                    onClick={() => nextStep()}
+                                    onClick={() => handleSubmit()}
                                     isDisabled={validateSteps()}>
                                     Continuar
                                 </Button>
