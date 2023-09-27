@@ -310,6 +310,9 @@ const QuoteProduct = ({ props }) => {
                     )
                 }, 1000);
             } else {
+                toast.error("¡Algo salió mal!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
             }
             setIsLoadingStep2(false);
         }).catch(err => {
