@@ -43,7 +43,7 @@ const QuoteProduct = ({ props }) => {
         comments: "",
         pay_method: "",
         pay_details: "",
-        discount_code: "4UAEPO55L",
+        discount_code: "",
         items: []
     });
     const [sendOrder, setSendOrder] = useState({
@@ -310,9 +310,6 @@ const QuoteProduct = ({ props }) => {
                     )
                 }, 1000);
             } else {
-                toast.error("¡Algo salió mal!", {
-                    position: toast.POSITION.BOTTOM_RIGHT
-                });
             }
             setIsLoadingStep2(false);
         }).catch(err => {

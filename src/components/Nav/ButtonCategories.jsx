@@ -3,27 +3,37 @@ import {
   Menu,
   MenuButton,
   MenuList,
-  MenuItem,
   Button,
   Flex,
   Text
 } from '@chakra-ui/react';
 import { FaBorderAll } from 'react-icons/fa';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { useGetSubCategoriesQuery } from '../../hooks/enbaapi';
 import { capitalizeFirstLetter } from '../../resource/validate';
-import ListSubCategories from './ListSubCategories';
+import { categoriesList } from '../../resource/save';
+import ListSubCategoriesMaster from './ListSubCategoriesMaster';
 
 const ButtonCategories = () => {
     const [categories, setCategories] = useState(null);
-    const [selectedCategoryMaster, setSelectedCategoryMaster] = useState('');
+    const [selectedCategoryGeneral, setSelectedCategoryGeneral] = useState('');
+    const [selectedCategoryMaster, setSelectedCategoryMaster] = useState(null);
     
-    const {data, isLoading, error} = useGetSubCategoriesQuery();
     useEffect(() => {
-        if(data){
-            setCategories(data);
+        if(categoriesList){
+            setCategories(categoriesList);
         }
-    },[data])
+    },[categoriesList]);
+
+    useEffect(() => {
+        setSelectedCategoryGeneral('TEXTILES');
+    }, []);
+
+    useEffect(() => {
+        if (categories) {
+            const filterCategories = categories.filter((element) => element.general_category === selectedCategoryGeneral);
+            setSelectedCategoryMaster(filterCategories[0]);
+        }
+    }, [selectedCategoryGeneral]);
 
     return ( 
         <>
@@ -31,31 +41,35 @@ const ButtonCategories = () => {
                 <MenuButton 
                     color={"#FFF"} fontWeight={500}
                     fontSize={"14px"} pl={8} border={"transparent"}
-                    as={Button} rightIcon={<FaBorderAll />}
+                    as={Button} rightIcon={<ChevronDownIcon />} leftIcon={<FaBorderAll />}
                     _hover={{
                         cursor: "pointer"
                     }}>
                     Categorias
                 </MenuButton>
-                <MenuList zIndex={1} pl={3} maxHeight={"200px"} overflowY={"auto"} width={"600px"}>
+                <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"900px"} p={0}>
                     <Flex width={"100%"} h={"100%"}>
-                        <Flex width={"40%"} h={"100%"} flexDirection={"column"}>
+                        <Flex width={"30%"} h={"100%"} flexDirection={"column"}>
                             {categories && categories.map((e, idx) => (
-                                <Text 
-                                    key={idx}
-                                    mb={2} 
-                                    _hover={{
-                                        cursor: "pointer"
-                                    }}
-                                    onClick={() => setSelectedCategoryMaster(e.master_category)}>
-                                    {capitalizeFirstLetter(e.master_category)}
-                                </Text>
+                                <Flex pt={2} border={"1px solid #AFAFAF"} pl={3} 
+                                    borderTopColor={"transparent"}
+                                    borderLeftColor={"transparent"}>
+                                    <Text 
+                                        key={idx}
+                                        mb={2} 
+                                        fontSize={"14px"}
+                                        _hover={{
+                                            cursor: "pointer"
+                                        }}
+                                        onClick={() => setSelectedCategoryGeneral(e.general_category)}>
+                                        {capitalizeFirstLetter(e.general_category)}
+                                    </Text>
+                                </Flex>
                             ))}
                         </Flex>
-                        <Flex width={"60%"} zIndex={1} flexDirection={"column"}>
-                            <ListSubCategories 
-                                selectedCategoryMaster={selectedCategoryMaster}
-                                categories={categories} />
+                        <Flex width={"70%"} zIndex={1} pt={2} pl={3}>
+                            <ListSubCategoriesMaster 
+                                selectedCategoryMaster={selectedCategoryMaster} />
                         </Flex>
                     </Flex>
                 </MenuList>

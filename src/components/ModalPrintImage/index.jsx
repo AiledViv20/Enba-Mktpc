@@ -27,6 +27,7 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
     const [img, setImg] = useState();
     const [nextStepImg, setNextStepImg] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
+    const [selectNum, setSelectNum] = useState(null);
 
     const [container, setContainer] = useState({
         selected1: false,
@@ -93,6 +94,22 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                     selected5: true
                 });
                 break;
+        }
+        setSelectNum(num);
+    }
+    
+    const validateSelectLogoIcon = () => {
+        switch (selectNum) {
+            case 1:
+                return icon1;
+            case 2:
+                return icon2;
+            case 3:
+                return icon3;
+            case 4:
+                return icon4;
+            default:
+                return icon5;
         }
     }
 
@@ -190,10 +207,10 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                     </Flex>
                     <Flex display={nextStepImg ? "flex" : "none"} justifyContent={"center"} alignItems={"center"} position={"relative"}>
                         <Flex>
-                            <Image src={product ? product : ""} w={"442px"} h={"442px"} alt='img'/>
+                            <Image src={product ? product : ""} alt='img'/>
                         </Flex>
                         <Flex position={"absolute"} justifyContent={"center"}>
-                            <Image src={selectedFile ? selectedFile : ""} w={"100px"} h={"50px"} alt='logo'/>
+                            <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} alt='logo'/>
                         </Flex>
                     </Flex>
                 </ModalBody>
