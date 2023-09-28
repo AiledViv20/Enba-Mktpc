@@ -21,6 +21,8 @@ const CardsRenderer = (products, status) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
+    console.log(products)
+
     if (products.length === 0 && status === "loaded") {
         return (
             <Stack direction="row" alignItems="center">
@@ -83,7 +85,6 @@ export const KitsProduct = ({ titleSection, props }) => {
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
-    const [productsInclude, setProductsInclude] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
 
     const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({

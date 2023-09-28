@@ -179,25 +179,6 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                             </Flex>
                         </Flex>
                         <Flex mb={5} justifyContent={"center"}>
-                            <Text fontSize={"16px"} color={"#002B49"}>{`Escoge el color del logotipo ${selectColor ? `(${selectColor})` : ''}`}</Text>
-                        </Flex>
-                        <Flex mb={5} justifyContent={"center"}>
-                            {colors_print_product.map((item, index) => (
-                                <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
-                                    <Text
-                                        key={`color-${index}`}
-                                        marginRight={"1px"}
-                                        cursor="pointer"
-                                        fontSize={"50px"}
-                                        color={item.hex}
-                                        onClick={() => setSelectColor(item.color)}
-                                    >
-                                        &#9679;
-                                    </Text>
-                                </Tooltip>
-                            ))}
-                        </Flex>
-                        <Flex mb={5} justifyContent={"center"}>
                             <Button fontWeight={500} fontSize={"14px"} color={"accent.500"} w={"290px"} h={"44px"}
                                 border={"1px solid"} borderColor={"accent.500"} variant={"outline"} type='button'
                                 onClick={() => setNextStepImg(true)}>
