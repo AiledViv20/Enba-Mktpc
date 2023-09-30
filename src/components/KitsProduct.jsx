@@ -21,8 +21,6 @@ const CardsRenderer = (products, status) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
-    console.log(products)
-
     if (products.length === 0 && status === "loaded") {
         return (
             <Stack direction="row" alignItems="center">
@@ -107,7 +105,7 @@ export const KitsProduct = ({ titleSection, props }) => {
         }
     },[page])
 
-    return ( 
+    return (
         <Box
             w="full"
             mx="auto"

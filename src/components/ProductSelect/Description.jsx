@@ -63,8 +63,10 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
     }
 
     const validateData = () => {
-        if (selectColor && values.num !== 0) {
-            return false;
+        if (itemSelected.stock !== "0") {
+            if (selectColor && values.num !== 0) {
+                return false;
+            }
         }
         return true;
     }

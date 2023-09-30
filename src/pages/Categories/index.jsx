@@ -11,6 +11,8 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
+import { categoriesList } from '../../resource/save';
+import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
@@ -27,6 +29,7 @@ const Categories = (props) => {
     const [order, setOrder] = useState('ASC');
     const [artPerPage, setArtPerPage] = useState(25);
     const [page, setPage] = useState(0);
+    const [filterList, setFilterList] = useState(null);
     const [params, setParams] = useState({
         take: artPerPage,
         page: page,
@@ -36,6 +39,19 @@ const Categories = (props) => {
         order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+
+    useEffect(() => {
+        if (params_url.category) {
+            const urlCategory = params_url.category.split(" ");
+            categoriesList.forEach((element) => {
+                const filterCategories = element.master_category.filter((e) => e.master_category === urlCategory[0]);
+                if (filterCategories.length > 0) {
+                    setFilterList(filterCategories[0].categories);
+                }
+            });
+            console.log(filterList)
+        }
+    }, []);
 
     useEffect(() => {
         if(data){
@@ -65,7 +81,7 @@ const Categories = (props) => {
                 <Flex width={"100%"} mt={10}>
                     <Flex width={"25%"} flexDirection={"column"}>
                         <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
-                            ACCESORIOS SMARTPHONE<br />Y TABLETS
+                            {params_url.category}
                         </Text>
                         <InputGroup border={"transparent"} mt={8} zIndex={1}>
                             <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
@@ -88,13 +104,9 @@ const Categories = (props) => {
                             <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
                                 <Flex flexDirection={"column"} pl={"15px"}>
                                     <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Computo".toUpperCase() })}}>
-                                        Accesorios de computo
-                                    </Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Accesorios smartphone y tablet".toUpperCase() })}}>Accesorios para smartphone y tablet</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Audífonos".toUpperCase() })}}>Audífonos</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Carpetas".toUpperCase() })}}>Carpetas</Text>
-                                    <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Escritorio".toUpperCase() })}}>Sets para escritorio y organizadores</Text>
+                                    {filterList && filterList.map((element, idx) => (
+                                        <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": element.category.toUpperCase() })}}>{capitalizeFirstLetter(element.category)}</Text>
+                                    ))}
                                     <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                                 </Flex>
                                 <Flex

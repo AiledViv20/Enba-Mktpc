@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import lightTheme from "./themes/ligth";
 import Router from './Router';
 import { ChakraProvider, Flex } from '@chakra-ui/react';

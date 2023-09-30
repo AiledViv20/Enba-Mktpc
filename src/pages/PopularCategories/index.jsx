@@ -49,7 +49,14 @@ const PopularCategories = ({ props }) => {
         if(data){
             setProducts(data);
         }
-    },[data])
+    },[data]);
+
+    useEffect(() => {
+        if(products){
+            const filterProducts = products.filter((element) => element.stock !== "0");
+            setProducts(filterProducts);
+        }
+    },[products]);
 
     useEffect(() => {
         setParams({
@@ -88,8 +95,7 @@ const PopularCategories = ({ props }) => {
                   <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
                 </Flex>
                 <Flex pt={10} color={"#424242"} fontWeight={400} flexDirection={"column"} padding={"2rem 5%"}>
-                    <Text mb={20} fontSize={"16px"}>Home / Categoría popular / Promoción regreso a clases</Text>
-                    <Text fontSize={"18px"} as={"b"}>PROMOCIÓN REGRESO A CLASES</Text>
+                    <Text mb={20} fontSize={"16px"}>Home / Categoría popular</Text>
                 </Flex>
                 <Box w="full" mx="auto" maxW="3x1" {...props} padding={"0px 5%"} pb={20} position="relative">
                     <Flex
@@ -142,14 +148,6 @@ const PopularCategories = ({ props }) => {
                                 </Flex>
                                 <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
                                     <Flex flexDirection={"column"} pl={"15px"}>
-                                        <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Computo".toUpperCase() })}}>
-                                            Accesorios de computo
-                                        </Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Accesorios smartphone y tablet".toUpperCase() })}}>Accesorios para smartphone y tablet</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Audífonos".toUpperCase() })}}>Audífonos</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Carpetas".toUpperCase() })}}>Carpetas</Text>
-                                        <Text fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": "Escritorio".toUpperCase() })}}>Sets para escritorio y organizadores</Text>
                                         <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                                     </Flex>
                                     <Flex
@@ -181,6 +179,7 @@ const PopularCategories = ({ props }) => {
                                             cursor="pointer"
                                             fontSize={"55px"}
                                             color={item.hex}
+                                            zIndex={1}
                                             onClick={() => {
                                                 setColorSelected(item.color);
                                             }}
@@ -208,7 +207,7 @@ const PopularCategories = ({ props }) => {
                                     }
                                 })
                                 : 
-                                <Spinner mt={20}/>
+                                    <Spinner mt={20}/>
                                 }
                             </Grid>
                             {products && !isLoading ? 
