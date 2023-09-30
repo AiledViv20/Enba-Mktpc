@@ -61,8 +61,10 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
     }
 
     const validateData = () => {
-        if (selectColor && values.num !== 0) {
-            return false;
+        if (itemSelected.stock !== "0") {
+            if (selectColor && values.num !== 0) {
+                return false;
+            }
         }
         return true;
     }
