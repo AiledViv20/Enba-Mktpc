@@ -28,7 +28,7 @@ const CardsRenderer = (categories, status) => {
                         Oops!
                     </Heading>
                     <Text fontSize="sm" color={"gray.500"}>
-                        Lo sentimos, no pudimos comunicarnos con el servicio de propiedades,
+                        Lo sentimos, no pudimos comunicarnos con el servicio de productos,
                         intenta de nuevo mientras lo restablecemos.
                     </Text>
                 </Box>

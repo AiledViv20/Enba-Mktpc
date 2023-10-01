@@ -8,6 +8,8 @@ import {
     InputRightElement,
     Grid,
     Spinner,
+    Stack,
+    Heading
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
@@ -20,9 +22,11 @@ import Footer from '../../components/Footer';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
+import { WarningTwoIcon } from "@chakra-ui/icons";
+
 const Categories = (props) => {
     const params_url = useParams();
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
@@ -49,7 +53,7 @@ const Categories = (props) => {
                     setFilterList(filterCategories[0].categories);
                 }
             });
-            console.log(filterList)
+            
         }
     }, []);
 
@@ -57,7 +61,14 @@ const Categories = (props) => {
         if(data){
             setProducts(data);
         }
-    },[data])
+    },[data]);
+
+    useEffect(() => {
+        if(products.length > 0){
+            const filterProducts = products.filter((element) => element.stock !== "0");
+            setProducts(filterProducts);
+        }
+    },[products]);
 
     useEffect(() => {
         setParams({
@@ -167,6 +178,20 @@ const Categories = (props) => {
                             <Spinner mt={20}/>
                             }
                         </Grid>
+                        {products.length === 0 ?
+                            <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                                <Box textAlign="center" py={6} px={3}>
+                                    <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
+                                    <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
+                                        Oops!
+                                    </Heading>
+                                    <Text fontSize="sm" color={"gray.500"}>
+                                        Lo sentimos, no se encontraron productos, <br/>
+                                        intenta con otra categoría.
+                                    </Text>
+                                </Box>
+                            </Stack> : null
+                        }
                         {products && !isLoading ? 
                             <Flex mt={10} pl={10} zIndex={1}>
                                 <ArticlesPerPage setArtPerPage={setArtPerPage} />
