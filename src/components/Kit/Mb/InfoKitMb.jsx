@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
-
 import { 
     Flex, 
     Box, 
     Image
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import Miniature from '../ProductSelect/Miniature';
-import Description from './Description';
-import DescriptionKit from './DescriptionKit';
-import Characteristics from './Characteristics';
-import { colors_dict } from '../../resource';
-import { useGetKitQuery } from '../../hooks/enbaapi';
-import KitIncludes from './KitIncludes';
-import AddProductsKit from './AddProductsKit';
+import MiniatureMb from '../../ProductSelect/Mb/MiniatureMb';
+import DescriptionMb from './DescriptionMb';
+import DescriptionKitMb from './DescriptionKitMb';
+import CharacteristicsMb from './CharacteristicsMb';
+import { colors_dict } from '../../../resource';
+import { useGetKitQuery } from '../../../hooks/enbaapi';
+import KitIncludesMb from './KitIncludesMb';
+import AddProductsKitMb from './AddProductsKitMb';
 
-const InfoKit = ({ props }) => {
+const InfoKitMb = ({ props }) => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
@@ -106,57 +105,68 @@ const InfoKit = ({ props }) => {
 
     return ( 
         <>
-            {
-                product && (
-                    <Flex p={10} justifyContent={"space-between"}>
-                        <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                        <Flex pl={10}>
-                            <Image src={img} width={"442"} height={"442"} alt='image product'/>
+            <Flex flexDirection={"column"} width={"100%"}>
+                {
+                    product && (
+                        <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
+                            <MiniatureMb data={product.products[0]}  images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
                         </Flex>
-                        <Description 
-                            previewImage={img}
-                            images={images}
-                            data={product.products[0]} 
-                            colors={colors}
-                            colorsProduct={colorsProduct}/>
-                    </Flex>
-                )
-            }
-            {
-                product && (
-                    <DescriptionKit 
-                        data={product.products[0]}/>
-                )
-            }
-            {
-                showKitIncludes.length > 0 && (
-                    <KitIncludes 
-                        titleSection={"Tu kit incluye:"}
-                        showKitIncludes={showKitIncludes}
-                        setShowKitIncludes={setShowKitIncludes}
-                        kit={kit}/>
-                )
-            }
-            {
-                showAddOthersKits.length > 0 && (
-                    <AddProductsKit 
-                        titleSection={"Agrega otros productos a tu kit"}
-                        data={showAddOthersKits}
-                        showKitIncludes={showKitIncludes}
-                        setShowKitIncludes={setShowKitIncludes} />
-                )
-            }
-            {
-                product && (
-                    <Characteristics 
-                        kit={true} 
-                        data={product.products[0]}
-                        colorsProduct={colorsProduct}
-                        previewImage={img} />
-                )
-            }
+                    )
+                }
+            </Flex>
         </>
     );
 }
  
-export default InfoKit;
+export default InfoKitMb;
+
+/*
+<Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
+    {
+        product && (
+            <Flex p={10} justifyContent={"space-between"}>
+                <MiniatureMb images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                <DescriptionMb 
+                    previewImage={img}
+                    images={images}
+                    data={product.products[0]} 
+                    colors={colors}
+                    colorsProduct={colorsProduct}/>
+            </Flex>
+        )
+    }
+    {
+        product && (
+            <DescriptionKitMb 
+                data={product.products[0]}/>
+        )
+    }
+    {
+        showKitIncludes.length > 0 && (
+            <KitIncludesMb 
+                titleSection={"Tu kit incluye:"}
+                showKitIncludes={showKitIncludes}
+                setShowKitIncludes={setShowKitIncludes}
+                kit={kit}/>
+        )
+    }
+    {
+        showAddOthersKits.length > 0 && (
+            <AddProductsKitMb 
+                titleSection={"Agrega otros productos a tu kit"}
+                data={showAddOthersKits}
+                showKitIncludes={showKitIncludes}
+                setShowKitIncludes={setShowKitIncludes} />
+        )
+    }
+    {
+        product && (
+            <CharacteristicsMb 
+                kit={true} 
+                data={product.products[0]}
+                colorsProduct={colorsProduct}
+                previewImage={img} />
+        )
+    }
+</Box>
+*/

@@ -111,14 +111,14 @@ export const KitsProduct = ({ titleSection, props }) => {
             mx="auto"
             height="full"
             px={{ base: "2", md: "8" }}
-            p={isGreaterThanMd ? 2 : 10}
+            p={isGreaterThanMd ? 2 : 0}
             mb={10}
             {...props}
         >
-            <Flex w={"100%"}>
-                <Flex w={"50%"}>
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} w={"100%"} position={"relative"}>
+                <Flex w={isGreaterThanMd ? "50%" : "100%"} pl={isGreaterThanMd ? 0 : 2}>
                     <Text
-                        fontSize={"26px"}
+                        fontSize={isGreaterThanMd ? "26px" : "20px"}
                         color="accent.500"
                         mb="2"
                         fontWeight="600"
@@ -126,14 +126,49 @@ export const KitsProduct = ({ titleSection, props }) => {
                         {titleSection}
                     </Text>
                 </Flex>
-                <Flex w={"50%"} justifyContent={"end"} zIndex={1} color={"accent.500"}>
-                    <Link textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
+                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={1} color={"accent.500"}>
+                    <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
+                </Flex>
+                <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={isGreaterThanMd ? "relative" : "absolute"}>
+                    <IconButton
+                        icon={<ChevronLeftIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        isDisabled={page <= 0 ? true : false}
+                        onClick={() => setPage(page - 1)}
+                        position="relative"
+                        left={250}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar productos página: ${page - 1}`}
+                    />
+                    <IconButton
+                        icon={<ChevronRightIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        onClick={() => setPage(page + 1)}
+                        position="relative"
+                        left={260}
+                        isDisabled={products.length < 4 ? true : false}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar productos página: ${page + 1}`}
+                    />
                 </Flex>
             </Flex>
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
                         <IconButton
+                            display={isGreaterThanMd ? "flex" : "none"}
                             icon={<ChevronLeftIcon color={"#888888"} />}
                             rounded="full"
                             border="0"
@@ -151,6 +186,7 @@ export const KitsProduct = ({ titleSection, props }) => {
                         />
                         {CardsRenderer(products, status)}
                         <IconButton
+                            display={isGreaterThanMd ? "flex" : "none"}
                             icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"
                             border="0"

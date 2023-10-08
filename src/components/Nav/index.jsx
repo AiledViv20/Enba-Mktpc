@@ -13,7 +13,9 @@ import {
     useColorModeValue,
     useDisclosure,
     Image,
-    Button
+    Button,
+    useTheme,
+    useMediaQuery
   } from '@chakra-ui/react';
   import {
     HamburgerIcon,
@@ -31,6 +33,8 @@ import ButtonShoppingCart from './ButtonShoppingCart';
   
 export default function Nav() {
   const { isOpen, onToggle } = useDisclosure();
+  const { breakpoints } = useTheme();
+  const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
   
   return (
     <Box>
@@ -50,11 +54,12 @@ export default function Nav() {
         </Flex>
         <Stack
           flex={{ base: 1, md: 0 }}
-          justify={'center'}
+          justify={isGreaterThanMd ? 'center' :  "end"}
           padding={"0px 1rem"}
           direction={'row'}>
           <ButtonShoppingCart />
           <Button
+            display={isGreaterThanMd ? "flex" : "none"}
             zIndex={1}
             width={"104px"}
             height={"37px"}
@@ -256,5 +261,9 @@ const NAV_ITEMS = [
   {
     label: 'Contacto',
     href: '/contacto',
+  },
+  {
+    label: 'Cotizar',
+    href: '/cotizar',
   }
 ];
