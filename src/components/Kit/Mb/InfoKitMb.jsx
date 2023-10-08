@@ -5,7 +5,7 @@ import {
     Image
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import MiniatureMb from '../../ProductSelect/Mb/MiniatureMb';
+import MiniatureMb from './MiniatureMb';
 import DescriptionMb from './DescriptionMb';
 import DescriptionKitMb from './DescriptionKitMb';
 import CharacteristicsMb from './CharacteristicsMb';
@@ -14,7 +14,7 @@ import { useGetKitQuery } from '../../../hooks/enbaapi';
 import KitIncludesMb from './KitIncludesMb';
 import AddProductsKitMb from './AddProductsKitMb';
 
-const InfoKitMb = ({ props }) => {
+const InfoKitMb = () => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
@@ -110,7 +110,46 @@ const InfoKitMb = ({ props }) => {
                     product && (
                         <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
                             <MiniatureMb data={product.products[0]}  images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                            <DescriptionMb 
+                                previewImage={img}
+                                images={images}
+                                data={product.products[0]} 
+                                colors={colors}
+                                colorsProduct={colorsProduct}/>
                         </Flex>
+                    )
+                }
+                {
+                    product && (
+                        <DescriptionKitMb 
+                            data={product.products[0]}/>
+                    )
+                }
+                {
+                    showKitIncludes.length > 0 && (
+                        <KitIncludesMb 
+                            titleSection={"Tu kit incluye:"}
+                            showKitIncludes={showKitIncludes}
+                            setShowKitIncludes={setShowKitIncludes}
+                            kit={kit}/>
+                    )
+                }
+                {
+                    showAddOthersKits.length > 0 && (
+                        <AddProductsKitMb 
+                            titleSection={"Agrega otros productos a tu kit"}
+                            data={showAddOthersKits}
+                            showKitIncludes={showKitIncludes}
+                            setShowKitIncludes={setShowKitIncludes} />
+                    )
+                }
+                {
+                    product && (
+                        <CharacteristicsMb 
+                            kit={true} 
+                            data={product.products[0]}
+                            colorsProduct={colorsProduct}
+                            previewImage={img} />
                     )
                 }
             </Flex>

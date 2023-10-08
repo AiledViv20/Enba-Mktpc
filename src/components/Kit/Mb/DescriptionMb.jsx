@@ -96,13 +96,6 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
 
     return ( 
         <Flex flexDirection={"column"}>
-            <Flex>
-                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data.name.toUpperCase()}</Text>
-            </Flex>
-            <Flex mt={10} fontSize={"14px"} fontWeight={400} color={"#424242"}>
-                <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{data.sku}</Text>
-                <Text><Text as={"b"}>Categoría:</Text>{" "}{data.category.toUpperCase()}</Text>
-            </Flex>
             <Flex fontSize={"14px"} fontWeight={400} color={"#424242"} alignItems={"center"}>
                 <Text as={"b"}>Colores:</Text>
                 <Flex
@@ -138,20 +131,11 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
                 <Flex alignItems={"center"}>
-                    <Text mr={5} fontSize={"36px"} fontWeight={700} color={"#383838"}>{formatterValue(price)}</Text>
+                    <Text mr={5} fontSize={"26px"} fontWeight={700} color={"#383838"}>{formatterValue(price)}</Text>
                 </Flex>
             </Flex>
-            <Flex mt={10}>
-                <Flex>
-                    <Button w={"176px"} fontSize={"14px"} fontWeight={500}
-                        _hover={{
-                            bg: "#063D5F"
-                        }}
-                        onClick={() => addKitShoppingCart()}
-                        isDisabled={validateData()}>Agregar al carrito
-                    </Button>
-                </Flex>
-                <Flex ml={10} alignItems={"center"}>
+            <Flex mt={8} flexDirection={"column"}>
+                <Flex justifyContent={"center"} alignItems={"center"}>
                     <IconButton
                         w={"37px"} h={"37px"}
                         bg={"#D0D0D2"}
@@ -176,6 +160,15 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
                         }}
                         icon={<FaPlus />}/>
                 </Flex>
+                <Flex justifyContent={"center"} mt={5}>
+                    <Button w={"430px"} fontSize={"14px"} fontWeight={500}
+                        _hover={{
+                            bg: "#063D5F"
+                        }}
+                        onClick={() => addKitShoppingCart()}
+                        isDisabled={validateData()}>Agregar al carrito
+                    </Button>
+                </Flex>
             </Flex>
             <Flex mt={5} h={"66px"} border={"1px solid"} borderTopColor={"#CCCCCC"} borderBottomColor={"#CCCCCC"} borderLeftColor={"transparent"} borderRightColor={"transparent"}>
                 <Flex alignItems={"center"} mr={10}>
@@ -187,7 +180,7 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
                     <Text ml={2}>{itemSelected.stock} en stock</Text>
                 </Flex>
             </Flex>
-            <Flex mt={5}>
+            <Flex mt={5} justifyContent={"center"}>
                 <Button onClick={onOpen} type='button' w={"430px"} fontSize={"14px"} fontWeight={500} color={"accent.500"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
             </Flex>
             {isOpen ?

@@ -207,8 +207,8 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             mx="auto"
             height="full"
             px={{ base: "2", md: "8" }}
-            p={isGreaterThanMd ? 2 : 10}
-            mb={10}
+            pt={10}
+            pb={10}
             {...props}
         >
             <Flex w={"100%"}>

@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 import Step1 from '../../components/ShoppingCart/Steps/Step1';
-import Step2 from '../../components/ShoppingCart/Steps/Step2';
+//import Step2 from '../../components/ShoppingCart/Steps/Step2';
 import Step3 from '../../components/ShoppingCart/Steps/Step3';
 import ThanksForPayment from '../../components/ShoppingCart/Steps/ThanksForPayment';
 import ElectronicBill from '../../components/ShoppingCart/Steps/ElectronicBill';
@@ -354,7 +354,7 @@ const QuoteProduct = ({ props }) => {
                         validateStep1={validateStep1}
                         isLoadingStep1={isLoadingStep1}
                         handleSubmit={handleSubmit} />
-                    <Step2 
+                    {/* <Step2 
                         step2={steps.step2}
                         value={value}
                         setValue={setValue}
@@ -362,7 +362,7 @@ const QuoteProduct = ({ props }) => {
                         setPayPerStore={setPayPerStore}
                         isLoadingStep2={isLoadingStep2}
                         handleSubmitCreateOrder={handleSubmitCreateOrder}
-                        validateSteps={validateSteps} />
+                        validateSteps={validateSteps} /> */}
                     <Step3 
                         step3={steps.step3}
                         nextStep={nextStep}

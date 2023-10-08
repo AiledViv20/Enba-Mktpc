@@ -81,7 +81,7 @@ const ProductMb = () => {
                 {
                     product && (
                         <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
-                            <MiniatureMb images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                            <MiniatureMb data={product} images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
                             <DescriptionMb 
                                 previewImage={img}
                                 images={images} 

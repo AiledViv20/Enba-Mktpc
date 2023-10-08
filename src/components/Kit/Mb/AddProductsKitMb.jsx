@@ -102,15 +102,15 @@ const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitInclude
             mx="auto"
             height="full"
             px={{ base: "2", md: "8" }}
-            p={isGreaterThanMd ? 2 : 10}
-            mb={10}
+            p={isGreaterThanMd ? 2 : 0}
+            pt={8}
+            pb={5}
             {...props}
         >
             <Text
                 fontSize={"18px"}
                 color="#424242"
                 mb="2"
-                mt={"10"}
                 fontWeight="700"
             >
                 {titleSection}
