@@ -4,7 +4,9 @@ import {
     Text,
     Image,
     Box,
-    IconButton
+    IconButton,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 
 import "../styles/styled.css";
@@ -23,6 +25,8 @@ import icon2 from '../assets/icons/circle-off.svg';
 import SearchBar from './SearchBar';
 
 const Presentacion = (props) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [current, setCurrent] = useState(0);
     const [dotClicked, setDotClicked] = useState(false);
 
@@ -134,6 +138,7 @@ const Presentacion = (props) => {
                     <SearchBar />
                 </Flex>
                 <Flex
+                    display={isGreaterThanMd ? "flex" : "none"}
                     justifyContent="flex-start"
                     alignItems="center"
                     position="absolute"
@@ -159,6 +164,7 @@ const Presentacion = (props) => {
                     />
                 </Flex>
                 <Flex
+                    display={isGreaterThanMd ? "flex" : "none"}
                     justifyContent="flex-end"
                     alignItems="center"
                     position="absolute"

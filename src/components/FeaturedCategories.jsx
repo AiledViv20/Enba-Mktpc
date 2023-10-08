@@ -102,23 +102,61 @@ const FeaturedCategories = ({ titleSection, data, props }) => {
             mx="auto"
             height="full"
             px={{ base: "2", md: "8" }}
-            p={isGreaterThanMd ? 2 : 10}
+            p={isGreaterThanMd ? 2 : 0}
             mb={10}
             {...props}
         >
-            <Text
-                fontSize={"26px"}
-                color="accent.500"
-                mb="2"
-                mt={"10"}
-                fontWeight="600"
-            >
-                {titleSection}
-            </Text>
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} w={"100%"} position={"relative"}>
+                <Flex w={isGreaterThanMd ? "50%" : "100%"} pl={isGreaterThanMd ? 0 : 2}>
+                    <Text
+                        fontSize={isGreaterThanMd ? "26px" : "20px"}
+                        color="accent.500"
+                        mb="2"
+                        mt={"10"}
+                        fontWeight="600"
+                    >
+                        {titleSection}
+                    </Text>
+                </Flex>
+                <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={isGreaterThanMd ? "relative" : "absolute"}>
+                    <IconButton
+                        icon={<ChevronLeftIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        isDisabled={page <= 0 ? true : false}
+                        onClick={() => setPage(page - 1)}
+                        position="relative"
+                        left={250}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar categorias página: ${page - 1}`}
+                    />
+                    <IconButton
+                        icon={<ChevronRightIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        onClick={() => setPage(page + 1)}
+                        position="relative"
+                        left={260}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar categorias página: ${page + 1}`}
+                    />
+                </Flex>
+            </Flex>
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
                         <IconButton
+                            display={isGreaterThanMd ? "flex" : "none"}
                             icon={<ChevronLeftIcon color={"#888888"} />}
                             rounded="full"
                             border="0"
@@ -136,6 +174,7 @@ const FeaturedCategories = ({ titleSection, data, props }) => {
                         />
                         {CardsRenderer(products, status)}
                         <IconButton
+                            display={isGreaterThanMd ? "flex" : "none"}
                             icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"
                             border="0"

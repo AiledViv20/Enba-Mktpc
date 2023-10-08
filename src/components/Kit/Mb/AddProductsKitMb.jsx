@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Box,
     Flex,
@@ -9,14 +9,13 @@ import {
     Heading,
     useTheme,
     useMediaQuery,
-    Link
 } from "@chakra-ui/react";
-import ProductCard from './ProductCard';
+import AddKitCardMb from './AddKitCardMb';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const CardsRenderer = (products, status) => {
+const CardsRenderer = (products, status, showKitIncludes, setShowKitIncludes) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
@@ -37,10 +36,10 @@ const CardsRenderer = (products, status) => {
         );
     } else if (products.length > 0 && status === "loaded") {
         if (!isGreaterThanMd) {
-            return <ProductCard product={products[0]} />;
+            return <AddKitCardMb product={products[0]} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />;
         }
         return products.map((element) => (
-            <ProductCard key={element.id} product={element} />
+            <AddKitCardMb key={element.id} product={element} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />
         ));
     } else {
         return isGreaterThanMd ? (
@@ -77,12 +76,12 @@ const CardsRenderer = (products, status) => {
     }
 }
 
-export const RecommendedProducts = ({ titleSection, data, props }) => {
+const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitIncludes, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
-    const [status, setStatus] = useState('loading');//loading, loaded
+    const [status, setStatus] = useState('loaded');//loading, loaded
 
     useEffect(() => {
         if (data) {
@@ -103,62 +102,23 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
             mx="auto"
             height="full"
             px={{ base: "2", md: "8" }}
-            p={isGreaterThanMd ? 2 : 0}
+            p={isGreaterThanMd ? 2 : 10}
             mb={10}
             {...props}
         >
-            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} w={"100%"} position={"relative"}>
-                <Flex w={isGreaterThanMd ? "50%" : "100%"} pl={isGreaterThanMd ? 0 : 2}>
-                    <Text
-                        fontSize={isGreaterThanMd ? "26px" : "20px"}
-                        color="accent.500"
-                        mb="2"
-                        fontWeight="600"
-                    >
-                        {titleSection}
-                    </Text>
-                </Flex>
-                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={1} color={"accent.500"}>
-                    <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
-                </Flex>
-                <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={"absolute"}>
-                    <IconButton
-                        icon={<ChevronLeftIcon color={"#888888"} />}
-                        rounded="full"
-                        border="0"
-                        colorScheme="brand"
-                        shadow="md"
-                        transitionDuration=".3s"
-                        _hover={{ shadow: "lg" }}
-                        isDisabled={page <= 0 ? true : false}
-                        onClick={() => setPage(page - 1)}
-                        left={250}
-                        bg="#E2E2E2"
-                        zIndex="2"
-                        aria-label={`Mostrar productos página: ${page - 1}`}
-                    />
-                    <IconButton
-                        icon={<ChevronRightIcon color={"#888888"} />}
-                        rounded="full"
-                        border="0"
-                        colorScheme="brand"
-                        shadow="md"
-                        transitionDuration=".3s"
-                        _hover={{ shadow: "lg" }}
-                        onClick={() => setPage(page + 1)}
-                        left={260}
-                        isDisabled={products.length < 4 ? true : false}
-                        bg="#E2E2E2"
-                        zIndex="2"
-                        aria-label={`Mostrar productos página: ${page + 1}`}
-                    />
-                </Flex>
-            </Flex>
+            <Text
+                fontSize={"18px"}
+                color="#424242"
+                mb="2"
+                mt={"10"}
+                fontWeight="700"
+            >
+                {titleSection}
+            </Text>
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
                         <IconButton
-                            display={isGreaterThanMd ? "flex" : "none"}
                             icon={<ChevronLeftIcon color={"#888888"} />}
                             rounded="full"
                             border="0"
@@ -172,11 +132,10 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
                             right={{ base: "-6", md: 0 }}
                             bg="#E2E2E2"
                             zIndex="2"
-                            aria-label={`Mostrar productos página: ${page - 1}`}
+                            aria-label={`Mostrar categorias página: ${page - 1}`}
                         />
-                        {CardsRenderer(products, status)}
+                        {CardsRenderer(products, status, showKitIncludes, setShowKitIncludes)}
                         <IconButton
-                            display={isGreaterThanMd ? "flex" : "none"}
                             icon={<ChevronRightIcon color={"#888888"} />}
                             rounded="full"
                             border="0"
@@ -187,10 +146,9 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
                             onClick={() => setPage(page + 1)}
                             position="relative"
                             left={{ base: "-6", md: 0 }}
-                            isDisabled={products.length < 4 ? true : false}
                             bg="#E2E2E2"
                             zIndex="2"
-                            aria-label={`Mostrar productos página: ${page + 1}`}
+                            aria-label={`Mostrar categorias página: ${page + 1}`}
                         />
                     </Flex>
                 </Box>
@@ -199,4 +157,4 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
     );
 }
  
-export default RecommendedProducts;
+export default AddProductsKit;

@@ -1,28 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import { 
-    Flex, 
-    Box, 
-    Text,
-    Image
+    Box,
+    useTheme,
+    useMediaQuery,
+    Flex
 } from '@chakra-ui/react';
-import { colors_dict } from '../../resource';
-import RecommendedProducts from '../../components/RecommendedProducts';
-import Footer from '../../components/Footer';
-import Miniature from '../../components/ProductSelect/Miniature';
-import Description from '../../components/ProductSelect/Description';
+
 import { useParams } from 'react-router-dom';
 import { useGetProductQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 
-import Characteristics from '../../components/ProductSelect/Characteristics';
+import RecommendedProducts from '../../components/RecommendedProducts';
+import Footer from '../../components/Footer';
+
+import ProductDkst from './ProductDkst';
+import ProductMb from './ProductMb';
 
 const Product = ({ props }) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const params_url = useParams();
-    const [images, setImages] = useState(null);
-    const [colors, setColors] = useState([]);
-    const [colorsProduct, setColorsProduct] = useState([]);
-    const [idx, setIdx] = useState(0);
-    const [img, setImg] = useState(null);
-    const [product, setProduct] = useState(null);
     const [productRecommended, setProductRecommended] = useState(null);
     const params = {
         sku: params_url.product
@@ -47,7 +43,6 @@ const Product = ({ props }) => {
 
     useEffect(() => {
         if(data){
-            setProduct(data);
             setParamsRecommended({
                     take: 12,
                     page: 0,
@@ -56,85 +51,16 @@ const Product = ({ props }) => {
                     name: "",
                     order: 'DESC'
             })
-            setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
-            const images_ = [];
-            const colors_ = [];
-            if(data?.images?.product_images[0])
-                images_.push(data?.images?.product_images[0]);
-            if(data?.images?.vector_images[0])
-                images_.push(data?.images?.vector_images[0]);
-            data.items.map((item)=>{
-                images_.push(...item.images.images_item)
-                colors_.push({sku: item.sku, color: item.color})
-            })
-            setColors(colors_);
-            setImages(images_);
         }
     },[data])
 
-    useEffect(() => {
-        const colors_ar = []
-        colors.map((item)=>{
-            let color_ = ''
-            colors_dict.filter((color)=>{
-                if(item.color.includes(color.color)){
-                    color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: color.hex
-                    }]
-                }
-            })
-            if(!color_[0]){
-                color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: '#444444'
-                }]
-            }
-            colors_ar.push(color_[0])
-        });
-        setColorsProduct(colors_ar);
-    },[colors]);
-
-    useEffect(() => {
-        if(images){
-            setImg(images[idx]);
-        }
-    },[idx])
-
     return ( 
         <>
-            <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
-                <Flex>
-                    <Text fontSize={"16px"} fontWeight={400}>
-                        {`Home / ${params_url.product}`}
-                    </Text>
-                </Flex>
-                {
-                    product && (
-                        <Flex p={10} justifyContent={"space-between"}>
-                            <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                            <Flex pl={10}>
-                                <Image src={img} width={"442"} height={"442"} alt='image product'/>
-                            </Flex>
-                            <Description 
-                                previewImage={img}
-                                images={images} 
-                                data={product} 
-                                colors={colors}
-                                colorsProduct={colorsProduct} />
-                        </Flex>
-                    )
-                }
-                {
-                    product && (
-                        <Characteristics 
-                            data={product} 
-                            colorsProduct={colorsProduct}
-                            previewImage={img} />
-                    )
-                }
+            <Box flexDirection={"column"} display={isGreaterThanMd ? "flex" : "none"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
+                <ProductDkst />
+            </Box>
+            <Box display={isGreaterThanMd ? "none" : "flex"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
+                <ProductMb/>
             </Box>
             {
                 productRecommended && (

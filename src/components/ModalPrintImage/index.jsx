@@ -10,8 +10,9 @@ import {
     Image,
     Input,
     Flex,
-    Tooltip,
-    ModalHeader
+    ModalHeader,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 
 import icon1 from '../../assets/icons/printproduct/enba.svg';
@@ -20,10 +21,9 @@ import icon3 from '../../assets/icons/printproduct/namelogo.svg';
 import icon4 from '../../assets/icons/printproduct/letterlogo.svg';
 import icon5 from '../../assets/icons/printproduct/creativelogo.svg';
 
-import { colors_print_product } from '../../resource';
-
 const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
-    const [selectColor, setSelectColor] = useState(null);
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [img, setImg] = useState();
     const [nextStepImg, setNextStepImg] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
@@ -121,17 +121,17 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex display={nextStepImg ? "none" : "flex"} fontWeight={400} mt={2} flexDirection={"column"}>
-                        <Flex mb={5}>
-                            <Text fontSize={"18px"} color={"#002B49"}>Sube tu logotipo para tener una previsualizacion de la impresión</Text>
+                        <Flex mb={5} justifyContent={isGreaterThanMd ? "initial" : "center"}>
+                            <Text textAlign={isGreaterThanMd ? "initial" : "center"} fontSize={isGreaterThanMd ? "18px" : "16px"} color={"#002B49"}>Sube tu logotipo para tener una<br />previsualizacion de la impresión</Text>
                         </Flex>
                         <Flex mb={10} h={"178px"} bg={"#F6F6F6"} justifyContent={"center"} alignItems={"center"} border={"1px solid #D9D9D9"} flexDirection={"column"}>
-                            <Text fontFamily={"Montserrat, sans-serif"} color={"#000"} fontSize={"18px"}>Carga tu logotipo en formato PNG</Text>
+                            <Text fontFamily={"Montserrat, sans-serif"} color={"#000"} fontSize={isGreaterThanMd ? "18px" : "16px"}>Carga tu logotipo en formato PNG</Text>
                             <Input name='img' type='file' accept='.png' mt={2} w={"auto"} onChange={handleChangeFile} border={"transparent"} pl={0}/>
                         </Flex>
-                        <Flex mb={5} justifyContent={"center"}>
-                            <Text fontSize={"16px"} color={"#002B49"}>O escoge un logotipo de nuestra biblioteca, para observar un ejemplo de impresión</Text>
+                        <Flex mb={5} justifyContent={isGreaterThanMd ? "initial" : "center"}>
+                            <Text textAlign={isGreaterThanMd ? "initial" : "center"} fontSize={"16px"} color={"#002B49"}>O escoge un logotipo de nuestra biblioteca, para observar un ejemplo de impresión</Text>
                         </Flex>
-                        <Flex mb={8} justifyContent={"center"}>
+                        <Flex mb={8} justifyContent={"center"} display={isGreaterThanMd ? "flex" : "none"}>
                             <Flex bg={"#F0F0F0"} borderRadius={"10px"} w={"146px"} h={"90px"} justifyContent={"center"} alignItems={"center"} mr={5}
                                 onClick={() => selectLogo(1)} border={"3px solid"} borderColor={container.selected1 ? "accent.500" : "transparent"}
                                 _hover={{
@@ -175,6 +175,57 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                                 }}>
                                 <Flex>
                                     <Image src={icon5} alt='icono logo' />
+                                </Flex>
+                            </Flex>
+                        </Flex>
+                        <Flex mb={8} display={isGreaterThanMd ? "none" : "flex"} flexDirection={"column"}>
+                            <Flex justifyContent={"center"}>
+                                <Flex bg={"#F0F0F0"} borderRadius={"10px"} w={"112px"} h={"68px"} justifyContent={"center"} alignItems={"center"} mr={5}
+                                    onClick={() => selectLogo(1)} border={"3px solid"} borderColor={container.selected1 ? "accent.500" : "transparent"}
+                                    _hover={{
+                                        cursor: "pointer"                                    
+                                    }}>
+                                    <Flex>
+                                        <Image w={"60px"} h={"16px"} src={icon1} alt='icono logo' />
+                                    </Flex>
+                                </Flex>
+                                <Flex bg={"#F0F0F0"} borderRadius={"10px"} w={"112px"} h={"68px"} justifyContent={"center"} alignItems={"center"} mr={5}
+                                    onClick={() => selectLogo(2)} border={"3px solid"} borderColor={container.selected2 ? "accent.500" : "transparent"}
+                                    _hover={{
+                                        cursor: "pointer"                                    
+                                    }}>
+                                    <Flex>
+                                        <Image w={"70px"} h={"50px"} src={icon2} alt='icono logo' />
+                                    </Flex>
+                                </Flex>
+                                <Flex bg={"#F0F0F0"} borderRadius={"10px"} w={"112px"} h={"68px"} justifyContent={"center"} alignItems={"center"} mr={5}
+                                    onClick={() => selectLogo(3)} border={"3px solid"} borderColor={container.selected3 ? "accent.500" : "transparent"}
+                                    _hover={{
+                                        cursor: "pointer"                                    
+                                    }}>
+                                    <Flex>
+                                        <Image w={"70px"} h={"40px"} src={icon3} alt='icono logo' />
+                                    </Flex>
+                                </Flex>
+                            </Flex>
+                            <Flex mt={5} justifyContent={"center"}>
+                                <Flex bg={"#F0F0F0"} borderRadius={"10px"} w={"112px"} h={"68px"} justifyContent={"center"} alignItems={"center"} mr={5}
+                                    onClick={() => selectLogo(4)} border={"3px solid"} borderColor={container.selected4 ? "accent.500" : "transparent"}
+                                    _hover={{
+                                        cursor: "pointer"                                    
+                                    }}>
+                                    <Flex>
+                                        <Image w={"70px"} h={"40px"} src={icon4} alt='icono logo' />
+                                    </Flex>
+                                </Flex>
+                                <Flex bg={"#F0F0F0"} borderRadius={"10px"} w={"112px"} h={"68px"} justifyContent={"center"} alignItems={"center"} mr={5}
+                                    onClick={() => selectLogo(5)} border={"3px solid"} borderColor={container.selected5 ? "accent.500" : "transparent"}
+                                    _hover={{
+                                        cursor: "pointer"                                    
+                                    }}>
+                                    <Flex>
+                                        <Image w={"70px"} h={"40px"} src={icon5} alt='icono logo' />
+                                    </Flex>
                                 </Flex>
                             </Flex>
                         </Flex>

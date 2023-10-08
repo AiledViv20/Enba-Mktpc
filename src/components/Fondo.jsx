@@ -2,26 +2,32 @@ import React from 'react';
 import { 
     Flex,
     Text,
-    Image
+    Image,
+    useTheme,
+    useMediaQuery
 } from "@chakra-ui/react";
 
 import "../styles/fondo.css";
 
-const Fondo = ({ bg, fontColor, icon, title, txt1, img }) => {
+const Fondo = ({ space, bg, fontColor, icon, title, img }) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+
+    const titleMb = "Desarrollamos productos para ti";
 
     return (
-        <Flex width={"100%"} height={"312px"} borderRadius={"20px"} bgColor={bg} color={fontColor} mb={10}>
-            <Flex flexDirection={"column"} width={"50%"} justifyContent={"center"} alignItems={"center"}>
-                <Text fontSize={"32px"} fontWeight={700}>
+        <Flex pt={space} flexDirection={isGreaterThanMd ? "row" : "column"} width={"100%"} height={isGreaterThanMd ? "312px" : "520px"} borderRadius={"20px"} bgColor={bg} color={fontColor} mb={10}>
+            <Flex flexDirection={"column"} width={isGreaterThanMd ? "50%" : "100%"} justifyContent={"center"} alignItems={"center"}>
+                <Text display={"flex"} flexDirection={"column"} alignItems={isGreaterThanMd ? "initial" : "center"} mt={isGreaterThanMd ? 0 : 10} fontSize={isGreaterThanMd ? "32px" : "20px"} fontWeight={700}>
                     <Image mb={5} width={"150px"} height={"64px"} src={icon} alt="logo" />
-                    {title}
+                    {isGreaterThanMd ? title : titleMb}
                 </Text>
-                <Text mt={2} fontSize={"19px"} fontWeight={400}>
-                    {txt1 ? txt1 : null}
+                <Text textAlign={"center"} display={isGreaterThanMd ? "none" : "flex"} mt={4} mb={10} fontSize={"19px"} fontWeight={400}>
+                    Nos especializamos en innovación y<br />desarrollo de nuevos productos para<br />facilitar tu día a día.
                 </Text>
             </Flex>
-            <Flex width={"50%"} justifyContent={"center"} alignItems={"center"}>
-                <Image mb={5} width={"60%"} height={"80%"} src={img} alt="producto" />
+            <Flex width={isGreaterThanMd ? "50%" : "100%"} justifyContent={"center"} alignItems={"center"}>
+                <Image mb={5} width={"auto"} height={"auto"} src={img} alt="producto" />
             </Flex>
         </Flex>
     );

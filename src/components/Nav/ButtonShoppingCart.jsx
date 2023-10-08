@@ -4,11 +4,15 @@ import { selectProducts } from '../../hooks/slices/counterSlice';
 import { 
     IconButton,
     Text,
-    Flex
+    Flex,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 import { FaShoppingCart } from 'react-icons/fa';
 
 const ButtonShoppingCart = () => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const productsStore = useSelector(selectProducts);
 
     const [numShoppingCart, setNumShoppingCart] = useState(0);
@@ -35,7 +39,7 @@ const ButtonShoppingCart = () => {
                 fontSize='26px'
                 icon={<FaShoppingCart />}
             />
-            <Text ml={2} fontSize={"16px"} fontWeight={500} color={"#424242"}>Carrito</Text>
+            <Text display={isGreaterThanMd ? "flex" : "none"} ml={2} fontSize={"16px"} fontWeight={500} color={"#424242"}>Carrito</Text>
         </Flex>
     );
 }
