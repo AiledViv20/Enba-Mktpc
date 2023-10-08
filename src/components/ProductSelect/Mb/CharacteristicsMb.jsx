@@ -179,8 +179,8 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
                                                 )
                                             }
                                     </Select>
-                                    <Input mt={5} name='amount' type='number' onChange={handleChange} value={values.amount} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Cantidad' />
-                                    <Input mt={5} name='unitPrice' type='number' onChange={handleChange} value={values.unitPrice} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Precio unitario' />
+                                    <Input mt={3} name='amount' type='number' onChange={handleChange} value={values.amount} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Cantidad' />
+                                    <Input mt={3} name='unitPrice' type='number' onChange={handleChange} value={values.unitPrice} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Precio unitario' />
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>

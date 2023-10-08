@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-
 import { 
     Flex, 
     Box, 
@@ -15,7 +14,7 @@ import { useGetKitQuery } from '../../hooks/enbaapi';
 import KitIncludes from './KitIncludes';
 import AddProductsKit from './AddProductsKit';
 
-const InfoKit = ({ props }) => {
+const InfoKit = () => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);

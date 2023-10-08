@@ -24,6 +24,12 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
     const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
+    const [selectTab, setSelectTab] = useState({
+        tab1: true,
+        tab2: false,
+        tab3: false,
+        tab4: false
+    });
     const [isSwitchOn, setIsSwitchOn] = useState(false);
     const [total, setTotal] = useState("");
     const [selectedColor, setSelectedColor] = useState('');
@@ -82,8 +88,45 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
         }
     }, [values]);
 
+    const handleChangeTab = (num) => {
+        switch (num) {
+            case 1:
+                setSelectTab({
+                    tab1: true,
+                    tab2: false,
+                    tab3: false,
+                    tab4: false
+                });
+                break;
+            case 2:
+                setSelectTab({
+                    tab1: false,
+                    tab2: true,
+                    tab3: false,
+                    tab4: false
+                });
+                break;
+            case 3:
+                setSelectTab({
+                    tab1: false,
+                    tab2: false,
+                    tab3: true,
+                    tab4: false
+                });
+                break;
+            default:
+                setSelectTab({
+                    tab1: false,
+                    tab2: false,
+                    tab3: false,
+                    tab4: true
+                });
+                break;
+        }
+    }
+
     return ( 
-        <Flex color={"#424242"} fontSize={"16px"} mt={10} flexDirection={"column"} pl={10} pr={20}>
+        <Flex color={"#424242"} fontSize={"16px"} flexDirection={"column"} mb={10} width={"100%"}>
             <Flex flexDirection={"column"} display={kit ? "none" : "flex"}>
                 <Text as={"b"} mb={4}>DESCRIPCIÓN Y CARACTERÍSTICAS</Text>
                 <Text lineHeight={1.2}>
@@ -92,11 +135,11 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             </Flex>
             <Flex mt={10}>
                 <Tabs position="relative" variant="unstyled" width={"100%"}>
-                    <TabList>
-                        <Tab fontWeight={500}>Cotizar</Tab>
-                        <Tab fontWeight={500}>Información básica</Tab>
-                        <Tab fontWeight={500}>Impresión</Tab>
-                        <Tab fontWeight={500}>Empaque</Tab>
+                    <TabList flexDirection={"column"}>
+                        <Tab border={"2px solid"} borderColor={"transparent"} borderBottomColor={selectTab.tab1 ? "accent.500" : "transparent"} fontWeight={500} fontSize={"14px"} onClick={() => handleChangeTab(1)}>Cotizar</Tab>
+                        <Tab border={"2px solid"} borderColor={"transparent"} borderBottomColor={selectTab.tab2 ? "accent.500" : "transparent"} fontWeight={500} fontSize={"14px"} onClick={() => handleChangeTab(2)}>Información básica</Tab>
+                        <Tab border={"2px solid"} borderColor={"transparent"} borderBottomColor={selectTab.tab3 ? "accent.500" : "transparent"} fontWeight={500} fontSize={"14px"} onClick={() => handleChangeTab(3)}>Impresión</Tab>
+                        <Tab border={"2px solid"} borderColor={"transparent"} borderBottomColor={selectTab.tab4 ? "accent.500" : "transparent"} fontWeight={500} fontSize={"14px"} onClick={() => handleChangeTab(4)}>Empaque</Tab>
                     </TabList>
                     <TabIndicator
                         mt="-1.5px"
@@ -111,10 +154,10 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                                     <Text fontWeight={400}>Agregar impresión</Text>
                                     <Switch ml={3} size='lg' isChecked={isSwitchOn} onChange={handleSwitchChange}/>
                                 </Flex>
-                                <Flex mt={5} justifyContent={"end"}>
+                                <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
                                     <Select 
                                         fontSize={"14px"} mr={5}
-                                        width={"366px"} height={"56px"}
+                                        width={"100%"} height={"56px"}
                                         placeholder='Seleccionar color' 
                                         value={capitalizeFirstLetter(selectedColor)}
                                         onChange={e => setSelectedColor(e.target.value)}
@@ -130,13 +173,15 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                                             }
                                     </Select>
                                     <Input 
+                                        mt={3}
                                         name='amount' type='number' 
                                         onChange={handleChange} value={values.amount} fontSize={"14px"} 
-                                        width={"366px"} height={"56px"} placeholder='Cantidad' />
+                                        width={"100%"} height={"56px"} placeholder='Cantidad' />
                                     <Input 
+                                        mt={3}
                                         name='unitPrice' type='number' 
                                         onChange={handleChange} value={values.unitPrice} fontSize={"14px"} 
-                                        width={"366px"} height={"56px"} placeholder='Precio unitario' ml={5}/>
+                                        width={"100%"} height={"56px"} placeholder='Precio unitario'/>
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>
@@ -144,16 +189,17 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                                     </Flex>
                                 </Flex>
                                 <Flex mt={5} width={"100%"} justifyContent={"end"}>
-                                    <Flex flexDirection={"column"} textAlign={"end"}>
+                                    <Flex flexDirection={"column"} textAlign={"end"} width={"100%"}>
                                         <Text fontWeight={400}><Text as={"b"}>Total:</Text>{" "}{formatterValue(total)}</Text>
-                                        <Flex mt={5}>
+                                        <Flex mt={5} flexDirection={"column"}>
                                             <Button 
-                                                w={"208px"} fontSize={"14px"} 
+                                                w={"100%"} fontSize={"14px"} 
                                                 fontWeight={500} color={"#000"} 
                                                 borderColor={"accent.500"} variant='outline'
                                                 isDisabled={validateData()}>Imprimir cotización</Button>
                                             <Button 
-                                                ml={5} w={"208px"} 
+                                                mt={5}
+                                                w={"100%"} 
                                                 fontSize={"14px"} 
                                                 fontWeight={500}
                                                 _hover={{
