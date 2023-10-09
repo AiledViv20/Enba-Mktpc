@@ -73,7 +73,7 @@ const PopularCategories = ({ props }) => {
                     <Flex width={"100%"} mt={10} display={isGreaterThanMd ? "flex" : "none"}>
                         <PopularCategoriesDkst />
                     </Flex>
-                    <Flex width={"100%"} mt={10} display={isGreaterThanMd ? "none" : "flex"}>
+                    <Flex width={"100%"} mt={10} display={isGreaterThanMd ? "none" : "flex"} flexDirection={"column"}>
                         <PopularCategoriesMb />
                     </Flex>
                 </Box>
