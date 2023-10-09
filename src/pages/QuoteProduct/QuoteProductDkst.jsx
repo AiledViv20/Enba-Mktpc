@@ -201,11 +201,11 @@ const QuoteProductDkts = ({ props }) => {
             let calculateOrder = {}
             if (kitsStore.length > 0) {
                 calculateOrder = {
-                    discount_code: createOrder.discount_code,
+                    discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     is_kit: "true",
-                    sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
-                    code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
-                    total_kits: kitsStore.length,
+                    sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : null,
+                    code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : null,
+                    total_kits: kitsStore.length > 0 ? kitsStore.length : null,
                     items: itemsCalculate
                 }
             } else {

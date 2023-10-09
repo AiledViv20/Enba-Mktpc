@@ -43,9 +43,9 @@ const ElectronicBill = ({ step5, sendOrder }) => {
         createInvoice.CFDI_use === "" || createInvoice.tax_regime === "" || createInvoice.street === "" || 
         createInvoice.city === "" || createInvoice.state === "" || createInvoice.postal_code === "" || 
         createInvoice.external_number === "" || createInvoice.internal_number === "") {
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     const handleSubmit = () => {
