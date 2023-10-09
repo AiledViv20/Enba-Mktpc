@@ -23,7 +23,6 @@ import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
-import Footer from '../../components/Footer';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
@@ -39,6 +38,7 @@ const CategoriesMb = () => {
     const [artPerPage, setArtPerPage] = useState(25);
     const [page, setPage] = useState(0);
     const [filterList, setFilterList] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [params, setParams] = useState({
         take: artPerPage,
         page: page,
@@ -80,14 +80,18 @@ const CategoriesMb = () => {
     },[products]);
 
     useEffect(() => {
-        setParams({
-            take: artPerPage,
-            page: page,
-            color: colorSelected,
-            category: params_url.category === 'Todas' ? "" : params_url.category,
-            name: inputSearch,
-            order: order
-        })
+        setLoading(true);
+        setTimeout(() => {
+            setParams({
+                take: artPerPage,
+                page: page,
+                color: colorSelected,
+                category: params_url.category === 'Todas' ? "" : params_url.category,
+                name: inputSearch,
+                order: order
+            });
+            setLoading(false);
+        }, 1500);
     },[colorSelected, order, artPerPage]);
 
     return ( 
@@ -114,7 +118,11 @@ const CategoriesMb = () => {
                                     onChange={(e) => setInputSearch(e.target.value)}
                                 />
                                 <InputRightElement h={"100%"} mr={2}>
-                                    <Flex _hover={{ cursor: "pointer" }} w={"25px"} h={"25px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} onClick={(e) => {e.preventDefault(); setParams({ ...params, "name": inputSearch }); toggleAccordion()}}>
+                                    <Flex _hover={{ cursor: "pointer" }} w={"25px"} h={"25px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
+                                        }}>
                                         <SearchIcon w={"15px"} h={"15px"} color='#FFF' />
                                     </Flex>
                                 </InputRightElement>
@@ -123,7 +131,12 @@ const CategoriesMb = () => {
                                 <Flex flexDirection={"column"} pl={"15px"}>
                                     <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
                                     {filterList && filterList.map((element, idx) => (
-                                        <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": element.category.toUpperCase() }); toggleAccordion()}}>{capitalizeFirstLetter(element.category)}</Text>
+                                        <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
+                                        onClick={(e) => {
+                                            e.preventDefault(); 
+                                            window.location.href = `/categoria/${element.category.toUpperCase()}`;
+                                        }}>{capitalizeFirstLetter(element.category)}
+                                        </Text>
                                     ))}
                                     <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                                 </Flex>
@@ -163,6 +176,10 @@ const CategoriesMb = () => {
                                     </Text>
                                     ))}
                                 </Flex>
+                                <Flex mt={3} display={colorSelected !== "" ? "flex" : "none"} pl={5} >
+                                    <Text fontSize={"14px"} fontWeight={600}>Búsqueda en:</Text>
+                                    <Text fontWeight={400} ml={2}>{capitalizeFirstLetter(colorSelected)}</Text>
+                                </Flex>
                             </Flex>
                         </AccordionPanel>
                     </AccordionItem>
@@ -174,7 +191,7 @@ const CategoriesMb = () => {
                     <OrderBy setOrder={setOrder}/>
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products && !isLoading ? products.map((item, idx) => {
+                    {products && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -184,7 +201,7 @@ const CategoriesMb = () => {
                         }
                     })
                     : 
-                    <Spinner mt={20}/>
+                        <Spinner mt={20}/>
                     }
                 </Grid>
                 {products.length === 0 ?

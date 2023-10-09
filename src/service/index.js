@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const api = ({ data, method, url, responseType }) => {
     return axios({
-        baseURL: "http://18.117.23.154/",
+        baseURL: "http://enba.mx/",
         data,
         method,
         url,

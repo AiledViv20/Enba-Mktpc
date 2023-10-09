@@ -45,8 +45,12 @@ const StripeForm = () => {
                     data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
                 });
                 const { data, status } = response;
-                if (status === 200) {
+                if (status === 200 || status === 201) {
                     toast.success("¡Tu pago se ha realizado correctamente!", {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                } else {
+                    toast.error("¡Tu pago no se ha realizado correctamente!", {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });
                 }

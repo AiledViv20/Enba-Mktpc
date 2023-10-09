@@ -85,16 +85,16 @@ const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitInclude
 
     useEffect(() => {
         if (data) {
-            setProducts(data.slice(page * 4, (page + 1) * 4));
+            setProducts(data.slice(page * 1, (page + 1) * 4));
             setStatus('loaded');
         }
-    },[data])
+    },[data]);
 
     useEffect(() => {
         if(data){
-            setProducts(data.slice(page * 4, (page + 1) * 4));   
+            setProducts(data.slice(page * 1, (page + 1) * 4));   
         }
-    },[page])
+    },[page]);
 
     return ( 
         <Box
@@ -107,49 +107,55 @@ const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitInclude
             pb={5}
             {...props}
         >
-            <Text
-                fontSize={"18px"}
-                color="#424242"
-                mb="2"
-                fontWeight="700"
-            >
-                {titleSection}
-            </Text>
+            <Flex w={"100%"} flexDirection={"column"}>
+                <Flex>
+                    <IconButton
+                        icon={<ChevronLeftIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        isDisabled={page <= 0 ? true : false}
+                        onClick={() => setPage(page - 1)}
+                        position="relative"
+                        left={210}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar categorias página: ${page - 1}`}
+                    />
+                    <IconButton
+                        icon={<ChevronRightIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        onClick={() => setPage(page + 1)}
+                        position="relative"
+                        left={230}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar categorias página: ${page + 1}`}
+                    />
+                </Flex>
+                <Flex mt={5}>
+                    <Text
+                        fontSize={"18px"}
+                        color="#424242"
+                        mb="2"
+                        fontWeight="700"
+                    >
+                        {titleSection}
+                    </Text>
+                </Flex>
+            </Flex>
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
-                        <IconButton
-                            icon={<ChevronLeftIcon color={"#888888"} />}
-                            rounded="full"
-                            border="0"
-                            colorScheme="brand"
-                            shadow="md"
-                            transitionDuration=".3s"
-                            _hover={{ shadow: "lg" }}
-                            isDisabled={page <= 0 ? true : false}
-                            onClick={() => setPage(page - 1)}
-                            position="relative"
-                            right={{ base: "-6", md: 0 }}
-                            bg="#E2E2E2"
-                            zIndex="2"
-                            aria-label={`Mostrar categorias página: ${page - 1}`}
-                        />
                         {CardsRenderer(products, status, showKitIncludes, setShowKitIncludes)}
-                        <IconButton
-                            icon={<ChevronRightIcon color={"#888888"} />}
-                            rounded="full"
-                            border="0"
-                            colorScheme="brand"
-                            shadow="md"
-                            transitionDuration=".3s"
-                            _hover={{ shadow: "lg" }}
-                            onClick={() => setPage(page + 1)}
-                            position="relative"
-                            left={{ base: "-6", md: 0 }}
-                            bg="#E2E2E2"
-                            zIndex="2"
-                            aria-label={`Mostrar categorias página: ${page + 1}`}
-                        />
                     </Flex>
                 </Box>
             </Flex>

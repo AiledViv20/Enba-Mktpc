@@ -18,7 +18,6 @@ import Footer from '../../components/Footer';
 
 import ConfettiGenerator from "confetti-js";
 
-import bnn1 from '../../assets/images/banner/categoriaspop/bnn1.png';
 import banner from '../../assets/images/banner/categoriaspop/img1.png';
 
 import { useGetSearchQuery } from '../../hooks/enbaapi';
@@ -90,12 +89,9 @@ const PopularCategories = ({ props }) => {
 
     return ( 
         <>
-            <Flex width={"100%"} flexDirection={"column"} position={"relative"} backgroundImage={`url(${bnn1})`}>
-                <Flex position={"absolute"} display={stopAnimation ? "none" : "flex"}>
-                  <canvas id='confetti-holder' style={{ width: "100%", height: "100vh", position: "fixed" }}></canvas>
-                </Flex>
+            <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
                 <Flex pt={10} color={"#424242"} fontWeight={400} flexDirection={"column"} padding={"2rem 5%"}>
-                    <Text mb={20} fontSize={"16px"}>Home / Categoría popular</Text>
+                    <Text mb={10} fontSize={"16px"}>Home / Categoría popular</Text>
                 </Flex>
                 <Box w="full" mx="auto" maxW="3x1" {...props} padding={"0px 5%"} pb={20} position="relative">
                     <Flex
@@ -128,7 +124,7 @@ const PopularCategories = ({ props }) => {
                             <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                                 ACCESORIOS SMARTPHONE<br />Y TABLETS
                             </Text>
-                            <InputGroup border={"transparent"} mt={8} zIndex={1}>
+                            <InputGroup border={"transparent"} mt={8}>
                                 <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
                                     placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
                                     _placeholder={{
@@ -211,7 +207,7 @@ const PopularCategories = ({ props }) => {
                                 }
                             </Grid>
                             {products && !isLoading ? 
-                                <Flex mt={10} pl={10} zIndex={1}>
+                                <Flex mt={10} pl={10}>
                                     <ArticlesPerPage setArtPerPage={setArtPerPage} />
                                     <OrderBy setOrder={setOrder} />
                                 </Flex>

@@ -18,7 +18,6 @@ import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
-import Footer from '../../components/Footer';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
@@ -34,6 +33,7 @@ const CategoriesDkst = () => {
     const [artPerPage, setArtPerPage] = useState(25);
     const [page, setPage] = useState(0);
     const [filterList, setFilterList] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [params, setParams] = useState({
         take: artPerPage,
         page: page,
@@ -70,14 +70,18 @@ const CategoriesDkst = () => {
     },[products]);
 
     useEffect(() => {
-        setParams({
-            take: artPerPage,
-            page: page,
-            color: colorSelected,
-            category: params_url.category === 'Todas' ? "" : params_url.category,
-            name: inputSearch,
-            order: order
-        })
+        setLoading(true);
+        setTimeout(() => {
+            setParams({
+                take: artPerPage,
+                page: page,
+                color: colorSelected,
+                category: params_url.category === 'Todas' ? "" : params_url.category,
+                name: inputSearch,
+                order: order
+            });
+            setLoading(false);
+        }, 1500);
     },[colorSelected, order, artPerPage]);
 
     return ( 
@@ -86,7 +90,7 @@ const CategoriesDkst = () => {
                 <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                     {params_url.category}
                 </Text>
-                <InputGroup border={"transparent"} mt={8} zIndex={1}>
+                <InputGroup border={"transparent"} mt={8}>
                     <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
                         placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
                         _placeholder={{
@@ -95,7 +99,12 @@ const CategoriesDkst = () => {
                         onChange={(e) => setInputSearch(e.target.value)}
                     />
                     <InputRightElement h={"100%"} mr={2}>
-                        <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} onClick={(e) => {e.preventDefault(); setParams({ ...params, "name": inputSearch })}}>
+                        <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
+                            onClick={(e) => {
+                                e.preventDefault(); 
+                                setParams({ ...params, "name": inputSearch });
+                                window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
+                            }}>
                             <SearchIcon color='#FFF' />
                         </Flex>
                     </InputRightElement>
@@ -108,7 +117,11 @@ const CategoriesDkst = () => {
                         <Flex flexDirection={"column"} pl={"15px"}>
                             <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
                             {filterList && filterList.map((element, idx) => (
-                                <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} onClick={(e) => {e.preventDefault(); setParams({ ...params, "category": element.category.toUpperCase() })}}>{capitalizeFirstLetter(element.category)}</Text>
+                                <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        window.location.href = `/categoria/${element.category.toUpperCase()}`;
+                                    }}>{capitalizeFirstLetter(element.category)}</Text>
                             ))}
                             <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                         </Flex>
@@ -148,16 +161,20 @@ const CategoriesDkst = () => {
                             </Text>
                             ))}
                         </Flex>
+                        <Flex mt={3} display={colorSelected !== "" ? "flex" : "none"} pl={5} >
+                            <Text fontSize={"14px"} fontWeight={600}>Búsqueda en:</Text>
+                            <Text fontWeight={400} ml={2}>{capitalizeFirstLetter(colorSelected)}</Text>
+                        </Flex>
                     </Flex>
                 </Flex>
             </Flex>
             <Flex width={"75%"} flexDirection={"column"}>
-                <Flex pl={10} pb={10} zIndex={1}>
+                <Flex pl={10} pb={10}>
                     <ArticlesPerPage setArtPerPage={setArtPerPage} />
                     <OrderBy setOrder={setOrder}/>
                 </Flex>
                 <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} alignSelf={"center"}>
-                    {products && !isLoading ? products.map((item, idx) => {
+                    {products && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -167,7 +184,7 @@ const CategoriesDkst = () => {
                         }
                     })
                     : 
-                    <Spinner mt={20}/>
+                        <Spinner mt={20}/>
                     }
                 </Grid>
                 {products.length === 0 ?
@@ -185,7 +202,7 @@ const CategoriesDkst = () => {
                     </Stack> : null
                 }
                 {products && !isLoading ? 
-                    <Flex mt={10} pl={10} zIndex={1}>
+                    <Flex mt={10} pl={10}>
                         <ArticlesPerPage setArtPerPage={setArtPerPage} />
                         <OrderBy setOrder={setOrder} />
                     </Flex>

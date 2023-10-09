@@ -18,6 +18,8 @@ import { selectProducts, setProducts, selectKits, setKits, setTotalAmount } from
 
 import KitCardMb from './KitCardMb';
 
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+
 import { FaTrashAlt } from "react-icons/fa";
 import { WarningTwoIcon } from "@chakra-ui/icons";
 import ModalTrashProduct from '../ModalTrashProduct';
@@ -114,7 +116,7 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
 
     useEffect(() => {
         if (showKitIncludes) {
-            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
+            setProductsIncludes(showKitIncludes.slice(page * 1, (page + 1) * 4));
             setStatus('loaded');
         }
         if (showKitIncludes.length > 0) {
@@ -138,7 +140,7 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
 
     useEffect(() => {
         if(showKitIncludes){
-            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));   
+            setProductsIncludes(showKitIncludes.slice(page * 1, (page + 1) * 4));   
         }
     },[page]);
 
@@ -211,19 +213,8 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             pb={10}
             {...props}
         >
-            <Flex w={"100%"}>
-                <Flex w={"50%"}>
-                    <Text
-                        fontSize={"18px"}
-                        color="#424242"
-                        mb="2"
-                        mt={"10"}
-                        fontWeight="700"
-                    >
-                        {titleSection}
-                    </Text>
-                </Flex>
-                <Flex w={"50%"} justifyContent={"end"} zIndex={1}>
+            <Flex w={"100%"} flexDirection={"column"}>
+                <Flex w={"100%"} justifyContent={"end"} zIndex={1} mb={5}>
                     <IconButton
                         variant='outline'
                         colorScheme='accent.500'
@@ -231,6 +222,50 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
                         icon={<FaTrashAlt />}
                         onClick={() => modalTrashProductAction()}
                         isDisabled={isSelectedProductTrash.length > 0 ? false : true}/>
+                </Flex>
+                <Flex>
+                    <IconButton
+                        icon={<ChevronLeftIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        isDisabled={page <= 0 ? true : false}
+                        onClick={() => setPage(page - 1)}
+                        position="relative"
+                        left={210}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar productos página: ${page - 1}`}
+                    />
+                    <IconButton
+                        icon={<ChevronRightIcon color={"#888888"} />}
+                        rounded="full"
+                        border="0"
+                        colorScheme="brand"
+                        shadow="md"
+                        transitionDuration=".3s"
+                        _hover={{ shadow: "lg" }}
+                        onClick={() => setPage(page + 1)}
+                        position="relative"
+                        left={230}
+                        isDisabled={showKitIncludes.length < 4 || page === 3 ? true : false}
+                        bg="#E2E2E2"
+                        zIndex="2"
+                        aria-label={`Mostrar productos página: ${page + 1}`}
+                    />
+                </Flex>
+                <Flex>
+                    <Text
+                        fontSize={"18px"}
+                        color="#424242"
+                        mb="2"
+                        fontWeight="700"
+                    >
+                        {titleSection}
+                    </Text>
                 </Flex>
             </Flex>
             <Flex direction="column" align="center">
