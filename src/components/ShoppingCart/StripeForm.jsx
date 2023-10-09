@@ -8,7 +8,7 @@ import {
 import {
     CardElement,
     useStripe,
-    useElements,
+    useElements
 } from '@stripe/react-stripe-js';
 import './styled.css';
 import { api } from '../../service';
@@ -56,29 +56,27 @@ const StripeForm = () => {
         }
     };      
 
-    return ( 
-        <Flex flexDirection={"column"}>
-            <form onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit();}}>
-                <CardElement 
-                    options={{
-                        style: {
-                            base: {
-                                fontSize: '16px',
-                                
-                            },
+    return (
+        <form onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();}}>
+            <CardElement 
+                options={{
+                    style: {
+                        base: {
+                            fontSize: '16px',
+                            
                         },
-                    }}/>
-                <Flex mt={3} justifyContent={"end"}>
-                    <Button width={"208px"} _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"}
-                        type="submit" disabled={!stripe || !elements}>
-                        Pagar
-                    </Button>
-                    {errorMessage && <div>{errorMessage}</div>}
-                </Flex>
-            </form>
-        </Flex>
+                    },
+            }}/>
+            <Flex mt={3} justifyContent={"end"}>
+                <Button width={"208px"} _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"}
+                    type="submit" disabled={!stripe || !elements}>
+                    Pagar
+                </Button>
+                {errorMessage && <div>{errorMessage}</div>}
+            </Flex>
+        </form>
     );
 }
  

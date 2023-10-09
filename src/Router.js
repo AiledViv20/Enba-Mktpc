@@ -11,8 +11,8 @@ import ProyectosEspeciales from "./pages/ProyectosEspeciales";
 import PopularCategories from "./pages/PopularCategories";
 import Cotizar from "./pages/Cotizar";
 import Kit from "./pages/Kit";
-import Terms from "./components/Tyc/Terms";
-import Privacy from "./components/Tyc/Privacy";
+import Terms from "./pages/Tyc/Terms";
+import Privacy from "./pages/Tyc/Privacy";
 
 const SwitchRouter = () => {
     return (
