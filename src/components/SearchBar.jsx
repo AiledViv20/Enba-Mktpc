@@ -29,7 +29,7 @@ const SearchBar = () => {
             <Flex width={isGreaterThanMd ? "30%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} ml={"12px"} borderRadius={"10px 0px 0px 10px"}>
                 <Select 
                     fontSize={"12px"}
-                    placeholder='Todas las categorias' 
+                    placeholder={isGreaterThanMd ? 'Todas las categorías' : 'Categorías'}
                     value={selectedCategory}
                     border={"transparent"}
                     focusBorderColor="transparent"
