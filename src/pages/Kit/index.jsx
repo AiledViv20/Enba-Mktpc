@@ -47,9 +47,7 @@ const Kit = ({ props }) => {
             <Box flexDirection={"column"} display={isGreaterThanMd ? "flex" : "none"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"0px 5%"} position="relative">
                 <InfoKit />
             </Box>
-            <Box width={"100%"} display={isGreaterThanMd ? "none" : "flex"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"0px 5%"} position="relative">
-                <InfoKitMb />
-            </Box>
+            
             {
                 productRecommended && (
                     <RecommendedProducts 

@@ -119,8 +119,8 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             const filterDataKitIncludes = showKitIncludes.map((item, idx) => {
                 return {
                     ...item,
-                    sku: item.sku,
-                    code_item: item.code,
+                    sku: item.items[0].sku,
+                    code_item: item.items[0].code,
                     unit_price: parseFloat(item.items[0].price),
                     total_price: parseFloat(item.items[0].price),
                     quantity: 1,

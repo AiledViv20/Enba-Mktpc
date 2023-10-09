@@ -35,8 +35,8 @@ const AddKitCard = ({ product, showKitIncludes, setShowKitIncludes }) => {
         const categoryLS = categorySaveLS.split(" ");
         if (product.category.includes(categoryLS[0])) {
             const productSelect = {
-                sku: product.sku,
-                code_item: product.code,
+                sku: product.items[0]?.sku,
+                code_item: product.items[0]?.code,
                 unit_price: parseFloat(product.items[0]?.price),
                 total_price: parseFloat(product.items[0]?.price),
                 quantity: 1,
