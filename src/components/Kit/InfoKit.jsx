@@ -39,14 +39,16 @@ const InfoKit = () => {
             setImg(kit?.products[0]?.images?.product_images[0] || kit?.products[0]?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];
-            if(kit?.products[0]?.images?.product_images[0])
+            if(kit?.products[0]?.images?.product_images[0]) {
                 images_.push(kit?.products[0]?.images?.product_images[0]);
-            if(kit?.products[0]?.images?.vector_images[0])
+            }
+            if(kit?.products[0]?.images?.vector_images[0]) {
                 images_.push(kit?.products[0]?.images?.vector_images[0]);
                 kit.products[0].items.map((item)=>{
                     images_.push(...item.images.images_item)
                     colors_.push({sku: item.sku, color: item.color})
                 })
+            }
             setColors(colors_);
             setImages(images_);
         }
@@ -159,3 +161,59 @@ const InfoKit = () => {
 }
  
 export default InfoKit;
+
+/*
+
+<>
+    {
+        product && (
+            <Flex p={10} justifyContent={"space-between"}>
+                <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                <Flex pl={10}>
+                    <Image src={img} width={"442"} height={"442"} alt='image product'/>
+                </Flex>
+                <Description 
+                    previewImage={img}
+                    images={images}
+                    data={product.products[0]} 
+                    colors={colors}
+                    colorsProduct={colorsProduct}/>
+            </Flex>
+        )
+    }
+    {
+        product && (
+            <DescriptionKit 
+                data={product.products[0]}/>
+        )
+    }
+    {
+        showKitIncludes.length > 0 && (
+            <KitIncludes 
+                titleSection={"Tu kit incluye:"}
+                showKitIncludes={showKitIncludes}
+                setShowKitIncludes={setShowKitIncludes}
+                kit={kit}/>
+        )
+    }
+    {
+        showAddOthersKits.length > 0 && (
+            <AddProductsKit 
+                titleSection={"Agrega otros productos a tu kit"}
+                data={showAddOthersKits}
+                showKitIncludes={showKitIncludes}
+                setShowKitIncludes={setShowKitIncludes} />
+        )
+    }
+    {
+        product && (
+            <Characteristics 
+                kit={true} 
+                data={product.products[0]}
+                colorsProduct={colorsProduct}
+                previewImage={img} />
+        )
+    }
+</>
+
+*/
