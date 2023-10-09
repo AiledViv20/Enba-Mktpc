@@ -38,8 +38,8 @@ const CardsRenderer = (products, status, showKitIncludes, setShowKitIncludes) =>
         if (!isGreaterThanMd) {
             return <AddKitCardMb product={products[0]} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />;
         }
-        return products.map((element) => (
-            <AddKitCardMb key={element.id} product={element} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />
+        return products.map((element, idx) => (
+            <AddKitCardMb key={idx} product={element} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />
         ));
     } else {
         return isGreaterThanMd ? (
