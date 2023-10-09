@@ -86,14 +86,23 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
 
     useEffect(() => {
         if (data) {
-            setProducts(data.slice(page * 4, (page + 1) * 4));
-            setStatus('loaded');
+            if (isGreaterThanMd) {
+                setProducts(data.slice(page * 4, (page + 1) * 4));
+                setStatus('loaded');
+            } else {
+                setProducts(data.slice(page * 1, (page + 1) * 4));
+                setStatus('loaded');
+            }
         }
     },[data])
 
     useEffect(() => {
         if(data){
-            setProducts(data.slice(page * 4, (page + 1) * 4));   
+            if (isGreaterThanMd) {
+                setProducts(data.slice(page * 4, (page + 1) * 4)); 
+            } else {
+                setProducts(data.slice(page * 1, (page + 1) * 4)); 
+            }
         }
     },[page])
 

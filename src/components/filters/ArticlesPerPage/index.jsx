@@ -9,7 +9,7 @@ const ArticlesPerPage = ({ setArtPerPage}) => {
 
     return ( 
         <>
-            <Flex flexDirection={"column"} zIndex={1} bg={"#FFF"}>
+            <Flex flexDirection={"column"}>
                 <Text fontSize={"14px"} fontWeight={600} mb={2}>Artículos por página</Text>
                 <Select _hover={{ cursor: 'pointer' }} name='articlesPerPage' border={"1px solid #CACACA"} w={"8.5rem"}>
                     <option onClick={() => setArtPerPage(25)} value={25}>Ver:  25</option>

@@ -94,14 +94,23 @@ export const KitsProduct = ({ titleSection, props }) => {
 
     useEffect(() => {
         if (kits) {
-            setProducts(kits.slice(page * 4, (page + 1) * 4));
-            setStatus('loaded');
+            if (isGreaterThanMd) {
+                setProducts(kits.slice(page * 4, (page + 1) * 4));
+                setStatus('loaded');
+            } else {
+                setProducts(kits.slice(page * 1, (page + 1) * 4));
+                setStatus('loaded');
+            }
         }
     },[kits])
 
     useEffect(() => {
         if(kits){
-            setProducts(kits.slice(page * 4, (page + 1) * 4));   
+            if (isGreaterThanMd) {
+                setProducts(kits.slice(page * 4, (page + 1) * 4));   
+            } else {
+                setProducts(kits.slice(page * 1, (page + 1) * 4));   
+            }
         }
     },[page])
 

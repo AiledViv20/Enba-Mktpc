@@ -214,7 +214,7 @@ const QuoteProductDkts = ({ props }) => {
                     sku_kit: null,
                     code_kit: null,
                     total_kits: null,
-                    discount_code: createOrder.discount_code,
+                    discount_code: null,
                     items: itemsCalculate
                 }
             }
@@ -278,12 +278,12 @@ const QuoteProductDkts = ({ props }) => {
         formData.append("files", logo);
         formData.append("comments", createOrder.comments);
         formData.append("pay_method", typePayMethod(value));
-        formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : "");
-        formData.append("discount_code", createOrder.discount_code);
-        formData.append("is_kit", kitsStore[0]?.sku_kit ? "true" : "");
-        formData.append("sku_kit", kitsStore[0]?.sku_kit ? kitsStore[0].sku_kit : "");
-        formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : "");
-        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : "");
+        formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : null);
+        formData.append("discount_code", createOrder.discount_code !== "" ? createOrder.discount_code : null);
+        formData.append("is_kit", kitsStore[0]?.sku_kit ? "true" : null);
+        formData.append("sku_kit", kitsStore[0]?.sku_kit ? kitsStore[0].sku_kit : null);
+        formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : null);
+        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : null);
         formData.append("items", JSON.stringify(itemsCalculate));
         postCreateOrder(formData).then(res => {
             if (res.data) {
