@@ -50,11 +50,6 @@ const PopularCategoriesMb = () => {
         order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
-    const [isOpen, setIsOpen] = useState(false);
-
-    const toggleAccordion = () => {
-        setIsOpen(!isOpen);
-    };
 
     useEffect(() => {
         if (params_url.category) {
@@ -99,7 +94,7 @@ const PopularCategoriesMb = () => {
     return ( 
         <>
             <Flex flexDirection={"column"} width={"100%"}>
-                <Accordion allowMultiple border={"transparent"} allowToggle>
+                <Accordion allowMultiple border={"transparent"} allowToggle zIndex={1}>
                     <AccordionItem>
                         <AccordionButton bg={"#F4F4F4"} mt={5} border={"1px solid #B9B9B9"} borderRadius={"5px"}>
                             <Box as="span" flex='1' textAlign='left'>
@@ -174,6 +169,40 @@ const PopularCategoriesMb = () => {
                         </AccordionPanel>
                     </AccordionItem>
                 </Accordion>
+            </Flex>
+            <Flex flexDirection={"column"}>
+                <Flex pt={5} pb={10} zIndex={1}>
+                    <ArticlesPerPage setArtPerPage={setArtPerPage} />
+                    <OrderBy setOrder={setOrder}/>
+                </Flex>
+                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
+                    {products && !loading ? products.map((item, idx) => {
+                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                            return(
+                                <Flex key={idx}>
+                                    <ProductCard product={item} />
+                                </Flex>
+                            )
+                        }
+                    })
+                    : 
+                        <Spinner mt={20}/>
+                    }
+                </Grid>
+                {products.length === 0 ?
+                    <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                        <Box textAlign="center" py={6} px={3}>
+                            <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
+                            <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
+                                Oops!
+                            </Heading>
+                            <Text fontSize="sm" color={"gray.500"}>
+                                Lo sentimos, no se encontraron productos, <br/>
+                                intenta con otra categoría.
+                            </Text>
+                        </Box>
+                    </Stack> : null
+                }
             </Flex>
         </>
     );

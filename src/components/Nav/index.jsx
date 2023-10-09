@@ -225,7 +225,7 @@ const MobileNavItem = ({ label, children, href }) => {
         )}
       </Flex>
 
-      <Collapse in={isOpen} animateOpacity style={{ marginTop: '0!important' }}>
+      <Collapse in={isOpen} zIndex={1} animateOpacity style={{ marginTop: '0!important' }}>
         <Stack
           mt={2}
           pl={4}
