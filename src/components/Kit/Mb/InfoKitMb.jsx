@@ -39,14 +39,16 @@ const InfoKitMb = () => {
             setImg(kit?.products[0]?.images?.product_images[0] || kit?.products[0]?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];
-            if(kit?.products[0]?.images?.product_images[0])
+            if(kit?.products[0]?.images?.product_images[0]) {
                 images_.push(kit?.products[0]?.images?.product_images[0]);
-            if(kit?.products[0]?.images?.vector_images[0])
+            }
+            if(kit?.products[0]?.images?.vector_images[0]) {
                 images_.push(kit?.products[0]?.images?.vector_images[0]);
                 kit.products[0].items.map((item)=>{
                     images_.push(...item.images.images_item)
                     colors_.push({sku: item.sku, color: item.color})
                 })
+            }
             setColors(colors_);
             setImages(images_);
         }
@@ -59,8 +61,8 @@ const InfoKitMb = () => {
                 if (item.items.length > 0) {
                     filterDataOthersKits.push({
                         ...item,
-                        sku: item.sku,
-                        code_item: item.code,
+                        sku: item.sku ? item.sku : "",
+                        code_item: item.code ? item.code : "",
                         unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         quantity: 1,
@@ -82,8 +84,8 @@ const InfoKitMb = () => {
                 if (item.items.length > 0) {
                     filterDataIncludesKits.push({
                         ...item,
-                        sku: item.sku,
-                        code_item: item.code,
+                        sku: item.sku ? item.sku : "",
+                        code_item: item.code ? item.code : "",
                         unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         quantity: 1,
@@ -184,54 +186,3 @@ const InfoKitMb = () => {
 }
  
 export default InfoKitMb;
-
-/*
-<Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} pb={20} position="relative">
-    {
-        product && (
-            <Flex p={10} justifyContent={"space-between"}>
-                <MiniatureMb images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                <DescriptionMb 
-                    previewImage={img}
-                    images={images}
-                    data={product.products[0]} 
-                    colors={colors}
-                    colorsProduct={colorsProduct}/>
-            </Flex>
-        )
-    }
-    {
-        product && (
-            <DescriptionKitMb 
-                data={product.products[0]}/>
-        )
-    }
-    {
-        showKitIncludes.length > 0 && (
-            <KitIncludesMb 
-                titleSection={"Tu kit incluye:"}
-                showKitIncludes={showKitIncludes}
-                setShowKitIncludes={setShowKitIncludes}
-                kit={kit}/>
-        )
-    }
-    {
-        showAddOthersKits.length > 0 && (
-            <AddProductsKitMb 
-                titleSection={"Agrega otros productos a tu kit"}
-                data={showAddOthersKits}
-                showKitIncludes={showKitIncludes}
-                setShowKitIncludes={setShowKitIncludes} />
-        )
-    }
-    {
-        product && (
-            <CharacteristicsMb 
-                kit={true} 
-                data={product.products[0]}
-                colorsProduct={colorsProduct}
-                previewImage={img} />
-        )
-    }
-</Box>
-*/

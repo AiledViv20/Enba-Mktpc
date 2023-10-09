@@ -120,11 +120,11 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             setStatus('loaded');
         }
         if (showKitIncludes.length > 0) {
-            const filterDataKitIncludes = showKitIncludes.map((item, idx) => {
+            const filterDataKitIncludes = showKitIncludes.map((item) => {
                 return {
                     ...item,
-                    sku: item.items[0].sku,
-                    code_item: item.items[0].code,
+                    sku: item.items.length > 0 ? item.items[0].sku : "",
+                    code_item: item.items.length > 0 ? item.items[0].code : "",
                     unit_price: parseFloat(item.items[0].price),
                     total_price: parseFloat(item.items[0].price),
                     quantity: 1,
