@@ -87,7 +87,7 @@ export const KitsProduct = ({ titleSection, props }) => {
 
     const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({
         take: 4,
-        page: page,
+        page: 0,
         category: "",
         name: ""
     });
@@ -166,7 +166,6 @@ export const KitsProduct = ({ titleSection, props }) => {
                         onClick={() => setPage(page + 1)}
                         position="relative"
                         left={260}
-                        isDisabled={products.length < 4 ? true : false}
                         bg="#E2E2E2"
                         zIndex="2"
                         aria-label={`Mostrar productos página: ${page + 1}`}

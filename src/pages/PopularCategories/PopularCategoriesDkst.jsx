@@ -16,14 +16,16 @@ import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
+
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
+
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const CategoriesDkst = () => {
+const PopularCategoriesDkst = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
@@ -87,9 +89,6 @@ const CategoriesDkst = () => {
     return ( 
         <>
             <Flex width={"25%"} flexDirection={"column"}>
-                <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
-                    {params_url.category}
-                </Text>
                 <InputGroup border={"transparent"} mt={8}>
                     <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
                         placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
@@ -114,14 +113,6 @@ const CategoriesDkst = () => {
                     </Flex>
                     <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
                         <Flex flexDirection={"column"} pl={"15px"}>
-                            <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                            {filterList && filterList.map((element, idx) => (
-                                <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        window.location.href = `/categoria/${element.category.toUpperCase()}`;
-                                    }}>{capitalizeFirstLetter(element.category)}</Text>
-                            ))}
                             <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                         </Flex>
                         <Flex
@@ -134,6 +125,7 @@ const CategoriesDkst = () => {
                                 cursor="pointer"
                                 fontSize={"55px"}
                                 color={item.hex}
+                                zIndex={1}
                                 onClick={() => {
                                     setColorSelected(item.color);
                                 }}
@@ -152,6 +144,7 @@ const CategoriesDkst = () => {
                                 cursor="pointer"
                                 fontSize={"55px"}
                                 color={item.hex}
+                                zIndex={1}
                                 onClick={() => {
                                     setColorSelected(item.color);
                                 }}
@@ -159,10 +152,6 @@ const CategoriesDkst = () => {
                                 &#9679;
                             </Text>
                             ))}
-                        </Flex>
-                        <Flex mt={3} display={colorSelected !== "" ? "flex" : "none"} pl={5} >
-                            <Text fontSize={"14px"} fontWeight={600}>Búsqueda en:</Text>
-                            <Text fontWeight={400} ml={2}>{capitalizeFirstLetter(colorSelected)}</Text>
                         </Flex>
                     </Flex>
                 </Flex>
@@ -176,7 +165,7 @@ const CategoriesDkst = () => {
                     {products && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
-                                <Flex key={idx}>
+                                <Flex key={idx} zIndex={1}>
                                     <ProductCard product={item} />
                                 </Flex>
                             )
@@ -186,20 +175,6 @@ const CategoriesDkst = () => {
                         <Spinner mt={20}/>
                     }
                 </Grid>
-                {products.length === 0 ?
-                    <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
-                        <Box textAlign="center" py={6} px={3}>
-                            <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                            <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                                Oops!
-                            </Heading>
-                            <Text fontSize="sm" color={"gray.500"}>
-                                Lo sentimos, no se encontraron productos, <br/>
-                                intenta con otra categoría.
-                            </Text>
-                        </Box>
-                    </Stack> : null
-                }
                 {products && !isLoading ? 
                     <Flex mt={10} pl={10}>
                         <ArticlesPerPage setArtPerPage={setArtPerPage} />
@@ -211,4 +186,4 @@ const CategoriesDkst = () => {
     );
 }
  
-export default CategoriesDkst;
+export default PopularCategoriesDkst;
