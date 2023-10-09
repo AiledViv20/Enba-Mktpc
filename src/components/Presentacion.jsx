@@ -97,7 +97,7 @@ const Presentacion = (props) => {
                     { slides.map((slide, idx) => (
                         <Flex
                             w="100%"
-                            h="456px"
+                            h={isGreaterThanMd ? "456px" : "356px"}
                             key={idx}
                             id="fondo"
                             backgroundImage={`url(${slide.imageUrl})`}
@@ -117,7 +117,7 @@ const Presentacion = (props) => {
                                 justifyContent={"center"}
                                 position="absolute">
                                 <Flex flexDirection="column" alignItems={"center"}>
-                                    <Text textAlign={"center"} fontWeight={700} fontSize={'39px'}>
+                                    <Text textAlign={"center"} fontWeight={700} fontSize={isGreaterThanMd ? '39px' : '36px'}>
                                         {"“Hecho por ti y para ti.“"}
                                     </Text>
                                 </Flex>
@@ -130,7 +130,7 @@ const Presentacion = (props) => {
                     alignItems="end"
                     height="100vh"
                     position="absolute"
-                    bottom="60"
+                    bottom={isGreaterThanMd ? "60" : "40"}
                     w="100%"
                     left="0"
                     right="0"
