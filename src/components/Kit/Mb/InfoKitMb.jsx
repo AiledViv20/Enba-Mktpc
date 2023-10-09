@@ -54,23 +54,49 @@ const InfoKitMb = () => {
 
     useEffect(() => {
         if (showAddOthersKits.length > 0) {
-            const filterDataOthersKits = showAddOthersKits.map((item, idx) => {
-                return {
-                    ...item,
-                    sku: item.sku,
-                    code_item: item.code,
-                    unit_price: parseFloat(item.items[0].price),
-                    total_price: parseFloat(item.items[0].price),
-                    quantity: 1,
-                    name: item.name,
-                    category: item.category,
-                    color: "All Kit",
-                    image: item.images?.product_images[0]
+            let filterDataOthersKits = [];
+            showAddOthersKits.forEach((item) => {
+                if (item.items.length > 0) {
+                    filterDataOthersKits.push({
+                        ...item,
+                        sku: item.sku,
+                        code_item: item.code,
+                        unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
+                        total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
+                        quantity: 1,
+                        name: item.name,
+                        category: item.category,
+                        color: "All Kit",
+                        image: item.images?.product_images[0]
+                    }); 
                 }
-            });
+            })
             setShowAddOthersKits(filterDataOthersKits);
         }
     }, [showAddOthersKits]);
+
+    useEffect(() => {
+        if (showKitIncludes.length > 0) {
+            let filterDataIncludesKits = [];
+            showKitIncludes.forEach((item) => {
+                if (item.items.length > 0) {
+                    filterDataIncludesKits.push({
+                        ...item,
+                        sku: item.sku,
+                        code_item: item.code,
+                        unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
+                        total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
+                        quantity: 1,
+                        name: item.name,
+                        category: item.category,
+                        color: "All Kit",
+                        image: item.images?.product_images[0]
+                    }); 
+                }
+            })
+            setShowKitIncludes(filterDataIncludesKits);
+        }
+    }, [showKitIncludes]);
 
     useEffect(() => {
         const colors_ar = []
