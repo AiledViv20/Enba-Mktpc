@@ -6,6 +6,8 @@ import {
     Alert,
     AlertIcon,
     Input,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 import '../styled.css';
 
@@ -13,6 +15,8 @@ import { usePostProofMutation } from '../../../hooks/enbaapi';
 import { toast } from 'react-toastify';
 
 const Step3 = ({ step3, nextStep, sendOrder }) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [proofPayment, setProofPayment] = useState();
 
     const [postProof] = usePostProofMutation();
@@ -64,11 +68,11 @@ const Step3 = ({ step3, nextStep, sendOrder }) => {
             </Text>
             <Button 
                 variant={"outline"} border={"1px solid #064A73"}
-                width={"350px"} height={"40px"} color={"accent.500"}
+                width={isGreaterThanMd ? "350px" : "100%"} height={"40px"} color={"accent.500"}
                 fontSize={"18px"} fontWeight={600} mt={5}
                 onClick={() => handleSubmitCreateOrder()}
                 isLoading={isLoadingStep4}>Siguiente</Button>
-            <Alert mt={20} status='info' width={"max-content"}>
+            <Alert mt={20} status='info' width={isGreaterThanMd ? "max-content" : "100%"}>
                 <AlertIcon />
                 A partir de este momento cuentas con 14 días naturales/10 días hábiles<br />para realizar el pago, de lo contrario el pedido se cancelará.
             </Alert>
