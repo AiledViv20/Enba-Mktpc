@@ -21,14 +21,16 @@ import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
+
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
+
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
-const CategoriesMb = () => {
+const PopularCategoriesMb = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
@@ -48,6 +50,11 @@ const CategoriesMb = () => {
         order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleAccordion = () => {
+        setIsOpen(!isOpen);
+    };
 
     useEffect(() => {
         if (params_url.category) {
@@ -91,10 +98,7 @@ const CategoriesMb = () => {
 
     return ( 
         <>
-            <Flex flexDirection={"column"}>
-                <Text fontSize={"14px"} fontWeight={700} lineHeight={1.2}>
-                    {params_url.category}
-                </Text>
+            <Flex flexDirection={"column"} width={"100%"}>
                 <Accordion allowMultiple border={"transparent"} allowToggle>
                     <AccordionItem>
                         <AccordionButton bg={"#F4F4F4"} mt={5} border={"1px solid #B9B9B9"} borderRadius={"5px"}>
@@ -124,15 +128,6 @@ const CategoriesMb = () => {
                             </InputGroup>
                             <Flex mt={8} flexDirection={"column"}>
                                 <Flex flexDirection={"column"} pl={"15px"}>
-                                    <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                                    {filterList && filterList.map((element, idx) => (
-                                        <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
-                                        onClick={(e) => {
-                                            e.preventDefault(); 
-                                            window.location.href = `/categoria/${element.category.toUpperCase()}`;
-                                        }}>{capitalizeFirstLetter(element.category)}
-                                        </Text>
-                                    ))}
                                     <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
                                 </Flex>
                                 <Flex
@@ -180,42 +175,8 @@ const CategoriesMb = () => {
                     </AccordionItem>
                 </Accordion>
             </Flex>
-            <Flex flexDirection={"column"}>
-                <Flex pt={5} pb={10} zIndex={1}>
-                    <ArticlesPerPage setArtPerPage={setArtPerPage} />
-                    <OrderBy setOrder={setOrder}/>
-                </Flex>
-                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products && !loading ? products.map((item, idx) => {
-                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
-                            return(
-                                <Flex key={idx}>
-                                    <ProductCard product={item} />
-                                </Flex>
-                            )
-                        }
-                    })
-                    : 
-                        <Spinner mt={20}/>
-                    }
-                </Grid>
-                {products.length === 0 ?
-                    <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
-                        <Box textAlign="center" py={6} px={3}>
-                            <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                            <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                                Oops!
-                            </Heading>
-                            <Text fontSize="sm" color={"gray.500"}>
-                                Lo sentimos, no se encontraron productos, <br/>
-                                intenta con otra categoría.
-                            </Text>
-                        </Box>
-                    </Stack> : null
-                }
-            </Flex>
         </>
     );
 }
  
-export default CategoriesMb;
+export default PopularCategoriesMb;
