@@ -1,23 +1,38 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Flex,
   Text,
   Select
 } from '@chakra-ui/react';
+import { CardFilterContext } from '../../../context';
+import { actions } from '../../../context/actions';
 
-const ArticlesPerPage = ({ setArtPerPage}) => {
+const ArticlesPerPage = () => {
+    const { state, dispatch } = useContext(CardFilterContext);
+
+    const handleChange = (e) => {
+        dispatch({
+            type: actions.artPerPageCards,
+            payload: parseInt(e.target.value)
+        });
+    };
 
     return ( 
         <>
             <Flex flexDirection={"column"}>
                 <Text fontSize={"14px"} fontWeight={600} mb={2}>Artículos por página</Text>
-                <Select _hover={{ cursor: 'pointer' }} name='articlesPerPage' border={"1px solid #CACACA"} w={"8.5rem"}>
-                    <option onClick={() => setArtPerPage(25)} value={25}>Ver:  25</option>
-                    <option onClick={() => setArtPerPage(50)} value={50}>Ver:  50</option>
-                    <option onClick={() => setArtPerPage(75)} value={75}>Ver:  75</option>
-                    <option onClick={() => setArtPerPage(100)} value={100}>Ver:  100</option>
-                    <option onClick={() => setArtPerPage(150)} value={150}>Ver:  150</option>
-                    <option onClick={() => setArtPerPage(200)} value={200}>Ver:  200</option>
+                <Select 
+                    _hover={{ cursor: 'pointer' }} 
+                    name='artPerPage' 
+                    border={"1px solid #CACACA"} w={"8.5rem"}
+                    onChange={handleChange}
+                    value={state.artPerPage}>
+                    <option value={1}>Ver:  Todos</option>
+                    <option value={3}>Ver:  3</option>
+                    <option value={6}>Ver:  6</option>
+                    <option value={9}>Ver:  9</option>
+                    <option value={16}>Ver:  16</option>
+                    <option value={25}>Ver:  25</option>
                 </Select>
             </Flex>
         </>
