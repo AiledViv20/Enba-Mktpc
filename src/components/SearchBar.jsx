@@ -66,7 +66,7 @@ const SearchBar = () => {
                     }}
                     aria-label='Search category' icon={<SearchIcon />} 
                     onClick={(e) => {
-                        window.location.href = `/categoria/${selectedCategory}/${keySearch}`
+                        window.location.href = `/categoria${selectedCategory === "Todas" ? "" :  `/${selectedCategory}`}/${keySearch}`
                     }}
                 />
             </Flex>

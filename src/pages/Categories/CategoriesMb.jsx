@@ -75,18 +75,13 @@ const CategoriesMb = () => {
     },[products]);
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setParams({
-                take: artPerPage,
-                page: page,
-                color: colorSelected,
-                category: params_url.category === 'Todas' ? "" : params_url.category,
-                name: inputSearch,
-                order: order
-            });
+        if (products.length > 0) {
+            setLoading(true);
+            products.forEach((element) => {
+                console.log(element);
+            })
             setLoading(false);
-        }, 1500);
+        }
     },[colorSelected, order, artPerPage]);
 
     return ( 
@@ -95,7 +90,7 @@ const CategoriesMb = () => {
                 <Text fontSize={"14px"} fontWeight={700} lineHeight={1.2}>
                     {params_url.category}
                 </Text>
-                <Accordion allowMultiple border={"transparent"} allowToggle>
+                <Accordion allowMultiple border={"transparent"}>
                     <AccordionItem>
                         <AccordionButton bg={"#F4F4F4"} mt={5} border={"1px solid #B9B9B9"} borderRadius={"5px"}>
                             <Box as="span" flex='1' textAlign='left'>

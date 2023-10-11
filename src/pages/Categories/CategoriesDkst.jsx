@@ -70,18 +70,12 @@ const CategoriesDkst = () => {
     },[products]);
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setParams({
-                take: artPerPage,
-                page: page,
-                color: colorSelected,
-                category: params_url.category === 'Todas' ? "" : params_url.category,
-                name: inputSearch,
-                order: order
-            });
+        if (data.length > 0) {
+            setLoading(true);
+            const filterProductsByColor = data.filter((element) => element.color === colorSelected);
+            setProducts(filterProductsByColor);
             setLoading(false);
-        }, 1500);
+        }
     },[colorSelected, order, artPerPage]);
 
     return ( 
