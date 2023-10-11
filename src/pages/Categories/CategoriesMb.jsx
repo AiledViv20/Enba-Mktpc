@@ -31,6 +31,7 @@ import { WarningTwoIcon } from "@chakra-ui/icons";
 const CategoriesMb = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
+    const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
@@ -64,6 +65,7 @@ const CategoriesMb = () => {
     useEffect(() => {
         if(data){
             setProducts(data);
+            setProductsDefault(data);
         }
     },[data]);
 
@@ -75,11 +77,10 @@ const CategoriesMb = () => {
     },[products]);
 
     useEffect(() => {
-        if (products.length > 0) {
+        if (productsDefault.length > 0) {
             setLoading(true);
-            products.forEach((element) => {
-                console.log(element);
-            })
+            const filterProductsByColor = productsDefault.filter((element) => element.color === colorSelected);
+            setProducts(filterProductsByColor);
             setLoading(false);
         }
     },[colorSelected, order, artPerPage]);
@@ -181,7 +182,7 @@ const CategoriesMb = () => {
                     <OrderBy setOrder={setOrder}/>
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products && !loading ? products.map((item, idx) => {
+                    {products.length > 0 && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -191,7 +192,12 @@ const CategoriesMb = () => {
                         }
                     })
                     : 
-                        <Spinner mt={20}/>
+                        null
+                    }
+                </Grid>
+                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
+                    {loading ?
+                        <Spinner mt={20} /> : null
                     }
                 </Grid>
                 {products.length === 0 ?
