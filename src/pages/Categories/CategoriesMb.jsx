@@ -31,6 +31,7 @@ import { WarningTwoIcon } from "@chakra-ui/icons";
 const CategoriesMb = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
+    const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
@@ -64,6 +65,7 @@ const CategoriesMb = () => {
     useEffect(() => {
         if(data){
             setProducts(data);
+            setProductsDefault(data);
         }
     },[data]);
 
@@ -75,18 +77,12 @@ const CategoriesMb = () => {
     },[products]);
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setParams({
-                take: artPerPage,
-                page: page,
-                color: colorSelected,
-                category: params_url.category === 'Todas' ? "" : params_url.category,
-                name: inputSearch,
-                order: order
-            });
+        if (productsDefault.length > 0) {
+            setLoading(true);
+            const filterProductsByColor = productsDefault.filter((element) => element.color === colorSelected);
+            setProducts(filterProductsByColor);
             setLoading(false);
-        }, 1500);
+        }
     },[colorSelected, order, artPerPage]);
 
     return ( 
@@ -95,7 +91,7 @@ const CategoriesMb = () => {
                 <Text fontSize={"14px"} fontWeight={700} lineHeight={1.2}>
                     {params_url.category}
                 </Text>
-                <Accordion allowMultiple border={"transparent"} allowToggle>
+                <Accordion allowMultiple border={"transparent"}>
                     <AccordionItem>
                         <AccordionButton bg={"#F4F4F4"} mt={5} border={"1px solid #B9B9B9"} borderRadius={"5px"}>
                             <Box as="span" flex='1' textAlign='left'>
@@ -186,7 +182,7 @@ const CategoriesMb = () => {
                     <OrderBy setOrder={setOrder}/>
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products && !loading ? products.map((item, idx) => {
+                    {products.length > 0 && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -196,7 +192,12 @@ const CategoriesMb = () => {
                         }
                     })
                     : 
-                        <Spinner mt={20}/>
+                        null
+                    }
+                </Grid>
+                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
+                    {loading ?
+                        <Spinner mt={20} /> : null
                     }
                 </Grid>
                 {products.length === 0 ?

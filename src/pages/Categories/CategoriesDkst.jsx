@@ -26,6 +26,7 @@ import { WarningTwoIcon } from "@chakra-ui/icons";
 const CategoriesDkst = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
+    const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
@@ -59,6 +60,7 @@ const CategoriesDkst = () => {
     useEffect(() => {
         if(data){
             setProducts(data);
+            setProductsDefault(data);
         }
     },[data]);
 
@@ -70,18 +72,12 @@ const CategoriesDkst = () => {
     },[products]);
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setParams({
-                take: artPerPage,
-                page: page,
-                color: colorSelected,
-                category: params_url.category === 'Todas' ? "" : params_url.category,
-                name: inputSearch,
-                order: order
-            });
+        if (productsDefault.length > 0) {
+            setLoading(true);
+            const filterProductsByColor = productsDefault.filter((element) => element.color === colorSelected);
+            setProducts(filterProductsByColor);
             setLoading(false);
-        }, 1500);
+        }
     },[colorSelected, order, artPerPage]);
 
     return ( 
@@ -173,7 +169,7 @@ const CategoriesDkst = () => {
                     <OrderBy setOrder={setOrder}/>
                 </Flex>
                 <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} alignSelf={"center"}>
-                    {products && !loading ? products.map((item, idx) => {
+                    {products.length > 0 && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -183,7 +179,7 @@ const CategoriesDkst = () => {
                         }
                     })
                     : 
-                        <Spinner mt={20}/>
+                        null
                     }
                 </Grid>
                 {products.length === 0 ?
@@ -200,6 +196,11 @@ const CategoriesDkst = () => {
                         </Box>
                     </Stack> : null
                 }
+                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
+                    {loading ?
+                        <Spinner mt={20} /> : null
+                    }
+                </Grid>
                 {products && !isLoading ? 
                     <Flex mt={10} pl={10}>
                         <ArticlesPerPage setArtPerPage={setArtPerPage} />

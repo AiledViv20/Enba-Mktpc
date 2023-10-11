@@ -61,8 +61,8 @@ const InfoKit = () => {
                 if (item.items.length > 0) {
                     filterDataOthersKits.push({
                         ...item,
-                        sku: item.sku,
-                        code_item: item.code,
+                        sku: item.sku ? item.sku : "",
+                        code_item: item.code ? item.code : "",
                         unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         quantity: 1,
@@ -84,8 +84,8 @@ const InfoKit = () => {
                 if (item.items.length > 0) {
                     filterDataIncludesKits.push({
                         ...item,
-                        sku: item.sku,
-                        code_item: item.code,
+                        sku: item.sku ? item.sku : "",
+                        code_item: item.code ? item.code : "",
                         unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
                         quantity: 1,
