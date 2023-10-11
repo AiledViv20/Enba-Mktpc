@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { 
     Flex, 
     Box, 
@@ -16,33 +16,34 @@ import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
-
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import { WarningTwoIcon } from "@chakra-ui/icons";
 
+import { CardFilterContext } from '../../context';
+
 const PopularCategoriesDkst = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
+    const { state } = useContext(CardFilterContext);
+    const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.product_name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
-    const [order, setOrder] = useState('ASC');
-    const [artPerPage, setArtPerPage] = useState(25);
     const [page, setPage] = useState(0);
     const [filterList, setFilterList] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
-        take: artPerPage,
+        take: "",
         page: page,
         color: colorSelected,
         category: param_category,
         name: inputSearch,
-        order: order
+        order: state.order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
 
@@ -59,32 +60,49 @@ const PopularCategoriesDkst = () => {
     }, []);
 
     useEffect(() => {
-        if(data){
+        if (data && changeFirstValue) {
+            setLoading(true);
             setProducts(data);
+            setProductsDefault(data);
+            setLoading(false);
+            setChangeFirstValue(false);
         }
     },[data]);
 
     useEffect(() => {
-        if(products.length > 0){
-            const filterProducts = products.filter((element) => element.stock !== "0");
+        if (productsDefault.length > 0) {
+            let filterProducts = productsDefault.filter((element) => element.stock !== "0");
             setProducts(filterProducts);
         }
-    },[products]);
+    }, [productsDefault]);
 
     useEffect(() => {
-        setLoading(true);
-        setTimeout(() => {
-            setParams({
-                take: artPerPage,
-                page: page,
-                color: colorSelected,
-                category: params_url.category === 'Todas' ? "" : params_url.category,
-                name: inputSearch,
-                order: order
-            });
+        if (productsDefault.length > 0) {
+            setLoading(true);
+            if (colorSelected !== "") {
+                let filterProductsByColor = productsDefault.filter((element) => element.color === colorSelected);
+                filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
+                if (filterProductsByColor.length > 0) {
+                    if (state.artPerPage !== "" && state.artPerPage !== 1) {
+                        filterProductsByColor = filterProductsByColor.slice(0, state.artPerPage);
+                    } else  if (state.artPerPage === 1) {
+                        setProducts(filterProductsByColor);
+                    }
+                } else {
+                    setProducts(filterProductsByColor);
+                }
+            } else {
+                let filterProductsByOptions = productsDefault.filter((element) => element.stock !== "0");
+                if (state.artPerPage !== "" && state.artPerPage !== 1) {
+                    filterProductsByOptions = productsDefault.slice(0, state.artPerPage);
+                    setProducts(filterProductsByOptions);
+                } else if (state.artPerPage === 1) {
+                    setProducts(filterProductsByOptions);
+                }
+            }
             setLoading(false);
-        }, 1500);
-    },[colorSelected, order, artPerPage]);
+        }
+    },[colorSelected, state]);
 
     return ( 
         <>
@@ -153,32 +171,52 @@ const PopularCategoriesDkst = () => {
                             </Text>
                             ))}
                         </Flex>
+                        <Flex mt={3} display={colorSelected !== "" ? "flex" : "none"} pl={5} >
+                            <Text fontSize={"14px"} fontWeight={600}>Búsqueda en:</Text>
+                            <Text fontWeight={400} ml={2}>{capitalizeFirstLetter(colorSelected)}</Text>
+                        </Flex>
                     </Flex>
                 </Flex>
             </Flex>
             <Flex width={"75%"} flexDirection={"column"}>
                 <Flex pl={10} pb={10}>
-                    <ArticlesPerPage setArtPerPage={setArtPerPage} />
-                    <OrderBy setOrder={setOrder}/>
+                    <ArticlesPerPage />
+                    <OrderBy />
                 </Flex>
-                <Grid templateColumns={{base: "repeat(1, 1fr)", md: "repeat(3, 1fr)"}} alignSelf={"center"}>
-                    {products && !loading ? products.map((item, idx) => {
+                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
+                    {loading ?
+                        <Spinner mt={20} /> : null
+                    }
+                </Grid>
+                <Grid templateColumns={products.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"} alignSelf={"center"}>
+                    {products.length > 0 && !loading ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
-                                <Flex key={idx} zIndex={1}>
+                                <Flex key={idx}>
                                     <ProductCard product={item} />
                                 </Flex>
                             )
                         }
                     })
-                    : 
-                        <Spinner mt={20}/>
+                    : !loading ?
+                        <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                            <Box textAlign="center" py={6} px={3}>
+                                <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
+                                <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
+                                    Oops!
+                                </Heading>
+                                <Text fontSize="sm" color={"gray.500"}>
+                                    Lo sentimos, no se encontraron productos, <br/>
+                                    intenta con otra categoría.
+                                </Text>
+                            </Box>
+                        </Stack> : null
                     }
                 </Grid>
-                {products && !isLoading ? 
+                {products.length > 0 && !isLoading ? 
                     <Flex mt={10} pl={10}>
-                        <ArticlesPerPage setArtPerPage={setArtPerPage} />
-                        <OrderBy setOrder={setOrder} />
+                        <ArticlesPerPage />
+                        <OrderBy />
                     </Flex>
                 : null}
             </Flex>
