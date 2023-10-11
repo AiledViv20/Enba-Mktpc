@@ -109,22 +109,6 @@ const CategoriesMb = () => {
         }
     },[colorSelected, state]);
 
-    useEffect(() => {
-        if (products.length > 0) {
-            if (colorSelected !== "") {
-                let filterProductsByOptions = productsDefault.filter((element) => element.color === colorSelected);
-                filterProductsByOptions = filterProductsByOptions.slice(0, state.artPerPage);
-                filterProductsByOptions = filterProductsByOptions.filter((element) => element.stock !== "0");
-                setProducts(filterProductsByOptions);
-            } else {
-                
-            }
-        }
-        if (state.artPerPage === 1) {
-            setProducts(productsDefault);
-        }
-    }, [state, colorSelected]);
-
     return ( 
         <>
             <Flex flexDirection={"column"}>
