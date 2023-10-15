@@ -15,7 +15,9 @@ import imgDefault from '../assets/images/productsT/none-product.png';
 const ProductCard = ({ product }) => {
     const [img, setImg] = useState(null);
     const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "");
-    const price = product?.retail_price || product?.items[0]?.retail_price;
+    let price = product?.retail_price || product?.items[0]?.retail_price;
+    price = parseFloat(price);
+    price = price.toFixed(2);
 
     useEffect(() => {
         if (image) {

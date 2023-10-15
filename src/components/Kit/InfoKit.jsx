@@ -14,6 +14,8 @@ import { useGetKitQuery } from '../../hooks/enbaapi';
 import KitIncludes from './KitIncludes';
 import AddProductsKit from './AddProductsKit';
 
+import TablePrice from '../TablePrice';
+
 const InfoKit = () => {
     const params_url = useParams();
     const [images, setImages] = useState(null);
@@ -162,6 +164,14 @@ const InfoKit = () => {
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes}
                         kit={kit}/>
+                )
+            }
+            {
+                product && (
+                    <Flex>
+                        <TablePrice
+                            pdt={product.products[0]} />
+                    </Flex>
                 )
             }
             {

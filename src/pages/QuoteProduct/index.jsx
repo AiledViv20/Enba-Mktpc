@@ -18,8 +18,8 @@ const QuoteProduct = ({ props }) => {
         <>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"} position="relative">
                 <Flex>
-                    <Text fontSize={"16px"} fontWeight={400}>
-                        {`Home / Cotizar`}
+                    <Text fontSize={"16px"} fontWeight={400} display={"flex"}>
+                        <Text _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} mr={2}>{"Inicio /"}</Text>{`Cotizar`}
                     </Text>
                 </Flex>
             </Box>

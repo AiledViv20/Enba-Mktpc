@@ -9,6 +9,7 @@ import {
     Image
 } from '@chakra-ui/react';
 import iconEmail from '../../assets/icons/footer/email.svg';
+import iconTel from '../../assets/icons/footer/tel.svg';
 import logo from '../../assets/icons/logo.svg';
 import iconLk from '../../assets/icons/footer/icon-lk.svg';
 import iconIg from '../../assets/icons/footer/icon-ig.svg';
@@ -25,11 +26,19 @@ const Footer = () => {
                 <Flex color={"#424242"} padding={"3rem"} pt={"1.5rem"}>
                     <Flex width={isGreaterThanMd ? "33%" : "100% !important"} justifyContent={isGreaterThanMd ? "start" : "center"} height={"fit-content"}>
                         <Stack direction='column'>
-                            <Flex mr={"1rem"} alignItems={"center"}>
-                                <Image src={iconEmail} width={"25px"} height={"25px"} alt='correo'/>
-                                <Link zIndex={1} pl={2} textDecoration={"revert"} display={"flex"} flexDirection={"column"} alignItems={"center"} href='mailto:marketplace@enba.mx' isExternal>
-                                    <Text>marketplace@enba.mx</Text>
-                                </Link>
+                            <Flex>
+                                <Flex mr={"1rem"} alignItems={"center"}>
+                                    <Image src={iconEmail} width={"25px"} height={"25px"} alt='correo'/>
+                                    <Link zIndex={1} pl={2} textDecoration={"revert"} display={"flex"} flexDirection={"column"} alignItems={"center"} href='mailto:marketplace@enba.mx' isExternal>
+                                        <Text>marketplace@enba.mx</Text>
+                                    </Link>
+                                </Flex>
+                                <Flex mr={"1rem"} alignItems={"center"}>
+                                    <Image src={iconTel} width={"25px"} height={"25px"} alt='correo'/>
+                                    <Link zIndex={1} pl={2} display={"flex"} flexDirection={"column"} alignItems={"center"} href="tel:+3333050000" isExternal>
+                                        <Text>T. 33 3305 0000</Text>
+                                    </Link>
+                                </Flex>
                             </Flex>
                             <Flex>
                                 <Text fontSize={"14px"} fontWeight={500}>

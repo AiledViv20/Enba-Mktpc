@@ -38,7 +38,6 @@ const ListSubCategoriesMaster = ({ selectedCategoryMaster }) => {
                             mb={2} key={idx}
                             fontWeight={600}
                             fontSize={"14px"}
-                            
                             _hover={{
                                 cursor: "default"
                             }}>

@@ -35,7 +35,7 @@ const SwitchRouter = () => {
                 <Route path='/contacto' element={<Contacto/>} />
                 <Route path='/nosotros' element={<Nosotros />} />
                 <Route path='/proyectos-especiales' element={<ProyectosEspeciales />} />
-                <Route path='/categorias-populares' element={<PopularCategories />} />
+                <Route path='/temporalidades' element={<PopularCategories />} />
                 <Route path='/cotizar' element={<Cotizar />} />
                 <Route path='/kit/:product' element={<Kit/>} />
                 <Route path='/terminos-condiciones' element={<Terms/>} />

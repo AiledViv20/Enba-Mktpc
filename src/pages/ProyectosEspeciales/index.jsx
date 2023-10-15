@@ -66,13 +66,13 @@ const ProyectosEspeciales = ({ props }) => {
             key: "hero3",
             imageUrl: img3,
             title: "TORNEO DE TENIS ATP ACAPULCO",
-            description: `Estamos encantados de haber colaborado con la marca Scribe en la creación<br />de una campaña promocional para su evento anual de 60 aniversario.`
+            description: `Colaboramos en el Torneo Abierto de Tenis de Acapulco año con año con<br />diferentes patrocinadores como Telcel, Samsung y Oppo.`
         },
         {
             key: "hero4",
             imageUrl: img4,
             title: "RENATOS TELCEL EN NAVIDAD",
-            description: `Estamos encantados de haber colaborado con la marca Scribe en la creación<br />de una campaña promocional para su evento anual de 60 aniversario.`
+            description: `Cada año, en la temporada navideña, tenemos el gusto de colaborar con Telcel en el desarrollo de<br />conceptos y propuestas de diferentes peluches temáticos, mismos que se convierten en regalos<br />especiales que se entregan durante esta época del año.`
         },
         {
             key: "hero5",
@@ -172,12 +172,14 @@ const ProyectosEspeciales = ({ props }) => {
                                 justifyContent={"center"}
                                 position="absolute">
                                 <Flex flexDirection="column" alignItems={"center"}>
-                                    <Text mb={5} textAlign={"center"} fontWeight={600} fontSize={'28px'}>
-                                        {slide.title}
-                                    </Text>
-                                    <Text mb={10} lineHeight={1.2} textAlign={"center"} fontWeight={400} fontSize={'18px'}>
-                                        <MarkDownSection>{slide.description}</MarkDownSection>
-                                    </Text>
+                                    <Flex flexDirection={"column"} backgroundColor={"#0000004e"} p={5} pt={2} mb={5}>
+                                        <Text mb={5} textAlign={"center"} fontWeight={600} fontSize={'28px'}>
+                                            {slide.title}
+                                        </Text>
+                                        <Text mb={5} lineHeight={1.2} textAlign={"center"} fontWeight={400} fontSize={'18px'}>
+                                            <MarkDownSection>{slide.description}</MarkDownSection>
+                                        </Text>
+                                    </Flex>
                                     <Button w={"280px"} h={"44px"} _hover={{ bg: "#F8F8F8" }} bg={"#FFF"} color={"accent.500"} fontSize={"14px"} fontWeight={500}>
                                         Ver mas
                                     </Button>
@@ -238,10 +240,7 @@ const ProyectosEspeciales = ({ props }) => {
                 </Flex>
             </Box>
             <Flex pt={10} justifyContent={"center"} mb={2} color={"#000"}>
-                <Text fontSize={"26px"} fontWeight={500}>Aquí estará tu proyecto</Text>
-            </Flex>
-            <Flex justifyContent={"center"} mb={5} color={"#000"}>
-                <Text fontSize={"18px"} fontWeight={400}>Envíanos un mensaje</Text>
+                <Text fontSize={"26px"} fontWeight={500}>Compártenos tu idea y lo hacemos realidad</Text>
             </Flex>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 5%"} pb={20} position="relative">
                 <Flex w="100%" justifyContent={"center"}>

@@ -51,8 +51,8 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
             </Flex>
             <Flex mt={10} mb={3} zIndex={1}>
                 <Flex flexDirection={"column"} justifyContent={"center"}>
-                    <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb (Logotipo en formato .ai o en vectores)</Text>
-                    <Input name='logo' type='file' accept='.svg, .eps, .pdf' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} placeholder='Seleccionar archivo' />
+                    <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb (Logotipo en formato .ai, cdr o PDF)</Text>
+                    <Input name='logo' type='file' accept='.ai, .cdr, .pdf' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} placeholder='Seleccionar archivo' />
                 </Flex>
                 <Flex display={showPreview ? "flex" : "none"}>
                     <Button onClick={onOpen} type='button' fontWeight={500} fontSize={"14px"} color={"accent.500"} border={"1px solid"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>

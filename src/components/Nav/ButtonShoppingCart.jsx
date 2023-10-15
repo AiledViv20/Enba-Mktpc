@@ -39,7 +39,6 @@ const ButtonShoppingCart = () => {
                 fontSize='26px'
                 icon={<FaShoppingCart />}
             />
-            <Text display={isGreaterThanMd ? "flex" : "none"} ml={2} fontSize={"16px"} fontWeight={500} color={"#424242"}>Carrito</Text>
         </Flex>
     );
 }

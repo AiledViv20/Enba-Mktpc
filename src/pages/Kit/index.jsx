@@ -39,8 +39,8 @@ const Kit = ({ props }) => {
         <>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 5%"} pb={0} position="relative">
                 <Flex display={isGreaterThanMd ? "flex" : "none"}>
-                    <Text fontSize={"16px"} fontWeight={400}>
-                        {`Home / ${params_url.product}`}
+                    <Text fontSize={"16px"} fontWeight={400} display={"flex"}>
+                        <Text _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} mr={2}>{"Inicio /"}</Text>{`${params_url.product}`}
                     </Text>
                 </Flex>
             </Box>

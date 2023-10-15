@@ -14,7 +14,7 @@ const ProductCardSp = ({ product }) => {
                 <Image src={product.image} width={"106px"} height={"80px"} alt='img' />
             </Flex>
             <Flex w={"70%"}>
-                <Flex w={"80%"} flexDirection={"column"} h={"100%"}>
+                <Flex w={"75%"} flexDirection={"column"} h={"100%"}>
                     <Flex w={"100%"} height={"100%"}>
                         <Text lineHeight={1.2} w={"90%"} color={"#212121"} fontSize={"16px"} fontWeight={600}>{capitalizeFirstLetter(product.name)}</Text>
                     </Flex>
@@ -22,7 +22,7 @@ const ProductCardSp = ({ product }) => {
                         <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>Quantity:  {product.quantity}</Text>
                     </Flex>
                 </Flex>
-                <Flex w={"20%"} flexDirection={"column"} h={"100%"}>
+                <Flex w={"25%"} flexDirection={"column"} h={"100%"}>
                     <Flex>
                         <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.total_price)}</Text>
                     </Flex>

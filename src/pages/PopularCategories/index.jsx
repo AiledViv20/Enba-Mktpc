@@ -42,7 +42,9 @@ const PopularCategories = ({ props }) => {
         <>
             <Flex width={"100%"} flexDirection={"column"} position={"relative"}>
                 <Flex pt={10} color={"#424242"} fontWeight={400} flexDirection={"column"} padding={"2rem 5%"}>
-                    <Text mb={10} fontSize={"16px"}>Home / Categoría popular</Text>
+                    <Text fontSize={"16px"} fontWeight={400} display={"flex"}>
+                        <Text _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} mr={2}>{"Inicio /"}</Text>{`Categoría popular`}
+                    </Text>
                 </Flex>
                 <Box w="full" mx="auto" maxW="3x1" {...props} padding={"0px 5%"} pb={20} position="relative">
                     <Flex
