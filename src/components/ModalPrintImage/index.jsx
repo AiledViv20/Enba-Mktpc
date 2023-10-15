@@ -122,7 +122,7 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                 <ModalBody>
                     <Flex display={nextStepImg ? "none" : "flex"} fontWeight={400} mt={2} flexDirection={"column"}>
                         <Flex mb={5} justifyContent={isGreaterThanMd ? "initial" : "center"}>
-                            <Text textAlign={isGreaterThanMd ? "initial" : "center"} fontSize={isGreaterThanMd ? "18px" : "16px"} color={"#002B49"}>Sube tu logotipo para tener una<br />previsualizacion de la impresión</Text>
+                            <Text textAlign={isGreaterThanMd ? "initial" : "center"} fontSize={isGreaterThanMd ? "18px" : "16px"} color={"#002B49"}>Sube tu logotipo para tener una previsualizacion de la impresión</Text>
                         </Flex>
                         <Flex mb={10} h={"178px"} bg={"#F6F6F6"} justifyContent={"center"} alignItems={"center"} border={"1px solid #D9D9D9"} flexDirection={"column"}>
                             <Text fontFamily={"Montserrat, sans-serif"} color={"#000"} fontSize={isGreaterThanMd ? "18px" : "16px"}>Carga tu logotipo en formato PNG</Text>

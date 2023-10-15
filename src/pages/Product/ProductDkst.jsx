@@ -104,8 +104,8 @@ const ProductDkst = () => {
     return ( 
         <>
             <Flex>
-                <Text fontSize={"16px"} fontWeight={400}>
-                    {`Home / ${params_url.product}`}
+                <Text fontSize={"16px"} fontWeight={400} display={"flex"}>
+                    <Text _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} mr={2}>{"Inicio /"}</Text>{`${params_url.product}`}
                 </Text>
             </Flex>
             {

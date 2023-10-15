@@ -105,13 +105,3 @@ const ProductMb = () => {
 }
 
 export default ProductMb;
-
-/*
-<>
-    <Flex>
-        <Text fontSize={"16px"} fontWeight={400}>
-            {`Home / ${params_url.product}`}
-        </Text>
-    </Flex>
-</>
-*/

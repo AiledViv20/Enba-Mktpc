@@ -9,7 +9,9 @@ import {
     Image,
     Tooltip,
     useDisclosure,
-    Input
+    Input,
+    Alert,
+    AlertIcon
 } from '@chakra-ui/react';
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
@@ -177,6 +179,10 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
                         icon={<FaPlus />}/>
                 </Flex>
             </Flex>
+            <Alert status='info' mt={4} display={selectColor ? "none" : "flex"}>
+                <AlertIcon />
+                Selecciona un color para agregar al carrito de compra
+            </Alert>
             <Flex mt={5} h={"66px"} border={"1px solid"} borderTopColor={"#CCCCCC"} borderBottomColor={"#CCCCCC"} borderLeftColor={"transparent"} borderRightColor={"transparent"}>
                 <Flex alignItems={"center"} mr={10}>
                     <Image src={icon1} width={"32px"} height={"42px"} alt='icon'/>

@@ -93,6 +93,11 @@ const Presentacion = (props) => {
     return ( 
         <>
             <Box id='proyecto' w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"2rem 5%"}  position="relative">
+                <Flex mt={5} mb={10} flexDirection="column" alignItems={"center"}>
+                    <Text color={"accent.500"} textAlign={"center"} fontWeight={700} fontSize={isGreaterThanMd ? '39px' : '36px'}>
+                        {"“Hecho por ti y para ti.“"}
+                    </Text>
+                </Flex>
                 <Carousel current={current}>
                     { slides.map((slide, idx) => (
                         <Flex
@@ -109,34 +114,9 @@ const Presentacion = (props) => {
                             p="0"
                             color={"#FFFFFF"}
                             borderRadius="20px">
-                            <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000004e"}></Flex>
-                            <Flex
-                                height="100vh"
-                                width={"100%"}
-                                top={"20"}
-                                justifyContent={"center"}
-                                position="absolute">
-                                <Flex flexDirection="column" alignItems={"center"}>
-                                    <Text textAlign={"center"} fontWeight={700} fontSize={isGreaterThanMd ? '39px' : '36px'}>
-                                        {"“Hecho por ti y para ti.“"}
-                                    </Text>
-                                </Flex>
-                            </Flex>
                         </Flex>
                     ))}
                 </Carousel>
-                <Flex
-                    justifyContent="center"
-                    alignItems="end"
-                    height="100vh"
-                    position="absolute"
-                    bottom={isGreaterThanMd ? "60" : "40"}
-                    w="100%"
-                    left="0"
-                    right="0"
-                >
-                    <SearchBar />
-                </Flex>
                 <Flex
                     display={isGreaterThanMd ? "flex" : "none"}
                     justifyContent="flex-start"
@@ -216,6 +196,17 @@ const Presentacion = (props) => {
                     ))}
                 </Flex>
             </Box>
+            <Flex
+                justifyContent="center"
+                bottom={isGreaterThanMd ? "60" : "40"}
+                w="100%"
+                left="0"
+                right="0"
+            >
+                <Flex border={"1px solid #C3C3C3"} borderRadius={"0px 10px 10px 10px"}>
+                    <SearchBar />
+                </Flex>      
+            </Flex>
         </>
     );
 }

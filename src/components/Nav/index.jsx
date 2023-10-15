@@ -67,6 +67,7 @@ export default function Nav() {
             fontWeight={500}
             variant={'link'}
             bg={"#FFF"}
+            ml={2}
             color={"#000"}
             border={"1px solid #064A73"}
             as='a'
@@ -251,8 +252,8 @@ const NAV_ITEMS = [
     href: '/proyectos-especiales',
   },
   {
-    label: 'Categorías populares',
-    href: '/categorias-populares',
+    label: 'Temporalidades',
+    href: '/temporalidades',
   },
   {
     label: 'Nosotros',

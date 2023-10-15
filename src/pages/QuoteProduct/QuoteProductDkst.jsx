@@ -322,6 +322,16 @@ const QuoteProductDkts = ({ props }) => {
         })
     }
 
+    const calculateSend = () => {
+        if (totalAmountStore <= 3000) {
+            return 199;
+        } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
+            return 99;   
+        } else if (totalAmountStore > 10000) {
+            return 0;
+        }
+    }
+
     return ( 
         <>
             <Flex w={"50%"} flexDirection={"column"}>
@@ -365,7 +375,7 @@ const QuoteProductDkts = ({ props }) => {
                     sendOrder={sendOrder} />
             </Flex>
             <Flex w={"50%"} pl={20} >
-                <Flex w={"100%"} height={"fit-content"} bg={"#F8F8F8"} border={"1px solid #E2E2E2"} borderRadius={"8px"} p={10} flexDirection={"column"}>
+                <Flex w={"100%"} height={"fit-content"} bg={"#F8F8F8"} border={"1px solid #E2E2E2"} borderRadius={"8px"} p={5} flexDirection={"column"}>
                     <Flex mb={8}>
                         <Text fontSize={"20px"} as={"b"}>Mi orden</Text>
                     </Flex>
@@ -383,12 +393,20 @@ const QuoteProductDkts = ({ props }) => {
                             <Text fontSize={"20px"} fontWeight={600}>{formatterValue(totalAmountStore)}</Text>
                         </Flex>
                     </Flex>
-                    <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
+                    <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} pb={3}>
                         <Flex w={"50%"}>
                             <Text fontSize={"16px"} fontWeight={400} color={"#828282"}>{"IVA (16%)"}</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
                             <Text fontSize={"16px"} fontWeight={500}>$1.45</Text>
+                        </Flex>
+                    </Flex>
+                    <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
+                        <Flex w={"50%"}>
+                            <Text fontSize={"16px"} fontWeight={400} color={"#828282"}>Costo de envio</Text>
+                        </Flex>
+                        <Flex w={"50%"} justifyContent={"end"}>
+                            <Text fontSize={"16px"} fontWeight={500}>${calculateSend()}.00</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} pb={3}>

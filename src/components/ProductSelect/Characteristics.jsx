@@ -87,6 +87,11 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
         }
     }, [values]);
 
+    const filterTypePrint = (str) => {
+        const listStr = str.split(" ");
+        return listStr[0];
+    }
+
     return ( 
         <Flex color={"#424242"} fontSize={"16px"} mt={10} flexDirection={"column"} pl={10} pr={20}>
             <Flex flexDirection={"column"}>
@@ -142,7 +147,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>
-                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>{" "}Serigrafia</Text>
+                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>{" "}{filterTypePrint(data.printing.printing_technique)}</Text>
                                     </Flex>
                                 </Flex>
                                 <Flex mt={5} width={"100%"} justifyContent={"end"}>
@@ -182,11 +187,11 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                         </TabPanel>
                         <TabPanel>
                             <Flex flexDirection={"column"}>
-                                <Text mt={5}><Text as={"b"} mr={5}>Peso neto</Text>{data.package.net_weight} {data.package.weight_unit}</Text>
-                                <Text mt={5}><Text as={"b"} mr={5}>Peso bruto</Text>{data.package.gross_weight} {data.package.weight_unit}</Text>
-                                <Text mt={5}><Text as={"b"} mr={5}>Alto</Text>{data.package.height}</Text>
-                                <Text mt={5}><Text as={"b"} mr={5}>Largo</Text>{data.package.length}</Text>
-                                <Text mt={5}><Text as={"b"} mr={5}>Ancho</Text>{data.package.width}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Peso neto</Text>{data.package.net_weight} {data.package.weight_unit.toLowerCase()}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Peso bruto</Text>{data.package.gross_weight} {data.package.weight_unit.toLowerCase()}</Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Alto</Text>{data.package.height} cm<sup>3</sup></Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Largo</Text>{data.package.length} cm<sup>3</sup></Text>
+                                <Text mt={5}><Text as={"b"} mr={5}>Ancho</Text>{data.package.width} cm<sup>3</sup></Text>
                             </Flex>
                         </TabPanel>
                     </TabPanels>
