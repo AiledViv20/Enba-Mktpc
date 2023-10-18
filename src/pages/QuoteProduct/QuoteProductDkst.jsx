@@ -418,10 +418,10 @@ const QuoteProductDkts = ({ props }) => {
                         </Flex>
                     </Flex>
                     <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 1 || num === 2 ? "flex" : "none"}>
-                        {totalAmountStore < 3000 ? 
+                        {totalAmountStore < 1500 ? 
                             <Alert mb={5} status='error' lineHeight={1.2}>
                                 <AlertIcon />
-                                No es posible realizar el proceso, el mínimo de compra debe ser $3,000.00 MXN
+                                No es posible realizar el proceso, el mínimo de compra debe ser $1,500.00 MXN
                             </Alert>
                             : 
                             <Button display={steps.step2 ? "none" : "flex"} mb={5} _hover={{ bg: "#063D5F"}} 

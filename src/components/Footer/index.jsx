@@ -64,13 +64,13 @@ const Footer = () => {
                 </Flex>
                 <Flex bg={"#EBEBEB"} w={"100%"} h={"56px"} p={"0px 3rem"}>
                     <Flex w={"50%"} alignItems={"center"}>
-                        <Text>&#xa9;ENBA 2023 Todos los Derechos Reservados.</Text>
+                        <Text>&#xa9;ENBA 2023 Todos los derechos reservados.</Text>
                     </Flex>
                     <Flex w={"50%"} justifyContent={"end"} alignItems={"center"}>
                         <Text fontWeight={500} fontSize={"14px"} zIndex={1}>
-                            <Link textDecoration={"revert"} href='/terminos-condiciones'>TÉRMINOS Y CONDICIONES</Link>
+                            <Link textDecoration={"revert"} href='/terminos-condiciones'>Términos y condiciones</Link>
                             {" "}|{" "}
-                            <Link textDecoration={"revert"} href='/aviso-privacidad'>AVISO DE PRIVACIDAD</Link>
+                            <Link textDecoration={"revert"} href='/aviso-privacidad'>Aviso de privacidad</Link>
                         </Text>
                     </Flex>
                 </Flex>

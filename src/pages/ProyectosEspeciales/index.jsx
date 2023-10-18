@@ -6,7 +6,8 @@ import {
     Input,
     Textarea,
     Button,
-    IconButton
+    IconButton,
+    useDisclosure
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 
@@ -23,10 +24,12 @@ import img5 from '../../assets/images/banner/proyectosesp/img5.png';
 import { usePostLeadMutation } from '../../hooks/enbaapi';
 
 import { toast } from 'react-toastify';
+import Gallery from '../../components/Gallery';
 
 const ProyectosEspeciales = ({ props }) => {
     const [current, setCurrent] = useState(0);
     const [dotClicked, setDotClicked] = useState(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [values, setValues] = useState({
         name: "",
         last_name: "",
@@ -180,7 +183,12 @@ const ProyectosEspeciales = ({ props }) => {
                                             <MarkDownSection>{slide.description}</MarkDownSection>
                                         </Text>
                                     </Flex>
-                                    <Button w={"280px"} h={"44px"} _hover={{ bg: "#F8F8F8" }} bg={"#FFF"} color={"accent.500"} fontSize={"14px"} fontWeight={500}>
+                                    <Button 
+                                        w={"280px"} h={"44px"} 
+                                        _hover={{ bg: "#F8F8F8" }} 
+                                        bg={"#FFF"} color={"accent.500"} 
+                                        fontSize={"14px"} fontWeight={500}
+                                        onClick={onOpen}>
                                         Ver mas
                                     </Button>
                                 </Flex>
@@ -273,6 +281,12 @@ const ProyectosEspeciales = ({ props }) => {
                     </form>
                 </Flex>
             </Box>
+            {isOpen ?
+                <Gallery
+                    isOpen={isOpen}
+                    onClose={onClose}
+                    />
+            : null}
             <Footer />
         </>
     );

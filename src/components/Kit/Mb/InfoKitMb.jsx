@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-    Flex, 
-    Box, 
-    Image
+    Flex
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import MiniatureMb from './MiniatureMb';
 import DescriptionMb from './DescriptionMb';
 import DescriptionKitMb from './DescriptionKitMb';
 import CharacteristicsMb from './CharacteristicsMb';
@@ -13,6 +10,7 @@ import { colors_dict } from '../../../resource';
 import { useGetKitQuery } from '../../../hooks/enbaapi';
 import KitIncludesMb from './KitIncludesMb';
 import AddProductsKitMb from './AddProductsKitMb';
+import GalleryMb from './GalleryMb';
 
 const InfoKitMb = () => {
     const params_url = useParams();
@@ -137,7 +135,8 @@ const InfoKitMb = () => {
                 {
                     product && (
                         <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
-                            <MiniatureMb data={product.products[0]}  images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                            <GalleryMb 
+                                showKitIncludes={showKitIncludes} />
                             <DescriptionMb 
                                 previewImage={img}
                                 images={images}

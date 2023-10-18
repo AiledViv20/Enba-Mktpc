@@ -32,6 +32,16 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
         unitPrice: null
     });
 
+    useEffect(() => {
+        if (data) {
+            let unitRetailPrice = data.items[0]?.retail_price ? data.items[0]?.retail_price : 0;
+            setValues({
+                ...values,
+                unitPrice: parseFloat(unitRetailPrice).toFixed(2)
+            });
+        }
+    }, []);
+
     const handleSwitchChange = () => {
         setIsSwitchOn(!isSwitchOn);
     };
@@ -141,7 +151,7 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                                     <Input 
                                         name='unitPrice' type='number' 
                                         onChange={handleChange} value={values.unitPrice} fontSize={"14px"} 
-                                        width={"366px"} height={"56px"} placeholder='Precio unitario' ml={5}/>
+                                        width={"366px"} height={"56px"} placeholder='Precio unitario' ml={5} disabled/>
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>

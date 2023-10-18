@@ -12,7 +12,6 @@ import {
     PopoverContent,
     useColorModeValue,
     useDisclosure,
-    Image,
     Button,
     useTheme,
     useMediaQuery
@@ -43,11 +42,12 @@ export default function Nav() {
         color={useColorModeValue('gray.600', 'gray.600')}
         boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
         minH={'60px'}
-        py={{ base: 2 }}
+        py={{ base: 6 }}
         px={{ base: 10 }}
-        align={'center'}>
-        <Image zIndex={1} _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} src={logo} boxSize='80px' alt="logo" />
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
+        align={'center'}
+        >
+        <img style={{ zIndex: 1 }} onClick={() => window.location.href = "/"} src={logo} width='100px' height='56px' alt="logo" />
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'center' }}>
           <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }} ml={20}>
             <DesktopNav />
           </Flex>
@@ -105,6 +105,7 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue('#424242', '#424242');
   const linkHoverColor = useColorModeValue('#424242', '#424242');
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
+  const { breakpoints } = useTheme();
   
   return (
     <Stack direction={'row'} spacing={4} alignItems='center'>
@@ -118,7 +119,7 @@ const DesktopNav = () => {
                 fontSize={"16px"}
                 fontWeight={500}
                 color={linkColor}
-                pr={10}
+                mr={8}
                 _hover={{
                   textDecoration: 'none',
                   color: linkHoverColor,

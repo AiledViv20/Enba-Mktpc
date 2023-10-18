@@ -143,7 +143,7 @@ export const categoriesList =  [
                         category: "PORTA NOTAS"
                     },
                     {
-                        category: "PARTAGAFETE"
+                        category: "PORTAGAFETE"
                     },
                     {
                         category: "SETS PARA ESCRITORIO Y ORGANIZADORES"

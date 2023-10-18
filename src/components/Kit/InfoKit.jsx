@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { 
-    Flex, 
-    Box, 
-    Image
+    Flex
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import Miniature from '../ProductSelect/Miniature';
@@ -15,6 +13,7 @@ import KitIncludes from './KitIncludes';
 import AddProductsKit from './AddProductsKit';
 
 import TablePrice from '../TablePrice';
+import Gallery from './Gallery';
 
 const InfoKit = () => {
     const params_url = useParams();
@@ -139,8 +138,9 @@ const InfoKit = () => {
                 product && (
                     <Flex p={10} justifyContent={"space-between"}>
                         <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                        <Flex pl={10}>
-                            <Image src={img} width={"442"} height={"442"} alt='image product'/>
+                        <Flex pl={10} width={"442px"} height={"442px"}>
+                            <Gallery 
+                                showKitIncludes={showKitIncludes} />
                         </Flex>
                         <Description 
                             previewImage={img}

@@ -51,7 +51,7 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
             </Flex>
             <Flex mt={10} mb={3} zIndex={1}>
                 <Flex flexDirection={"column"} justifyContent={"center"}>
-                    <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb (Logotipo en formato .ai, cdr o PDF)</Text>
+                    <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb (Logotipo en formato .ai, .cdr o PDF)</Text>
                     <Input name='logo' type='file' accept='.ai, .cdr, .pdf' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} placeholder='Seleccionar archivo' />
                 </Flex>
                 <Flex display={showPreview ? "flex" : "none"}>

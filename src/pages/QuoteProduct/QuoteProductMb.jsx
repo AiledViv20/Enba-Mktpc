@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectProducts, selectKits, selectTotalAmount, setProducts, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
-    Flex, 
-    Box, 
+    Flex,
     Text,
     Button,
     IconButton,
@@ -15,9 +14,7 @@ import Step2 from '../../components/ShoppingCart/Steps/Step2';
 import Step3 from '../../components/ShoppingCart/Steps/Step3';
 import ThanksForPayment from '../../components/ShoppingCart/Steps/ThanksForPayment';
 import ElectronicBill from '../../components/ShoppingCart/Steps/ElectronicBill';
-import ListProductCard from '../../components/ShoppingCart/ListProductCard';
 import { ArrowBackIcon } from '@chakra-ui/icons';
-import { formatterValue } from '../../resource/validate';
 import { usePostCalculateOrderMutation, usePostCreateOrderMutation } from '../../hooks/enbaapi';
 
 import { toast } from 'react-toastify';
@@ -374,10 +371,10 @@ const QuoteProductMb = ({ props }) => {
                     isDisabled={num <= 1 ? true : false}/>
             </Flex>
             <Flex mt={5} w={"100%"} flexDirection={"column"} display={num === 1 || num === 2 ? "flex" : "none"}>
-                {totalAmountStore < 3000 ? 
+                {totalAmountStore < 1500 ? 
                     <Alert mb={5} status='error' lineHeight={1.2}>
                         <AlertIcon />
-                        No es posible realizar el proceso, el mínimo de compra debe ser $3,000.00 MXN
+                        No es posible realizar el proceso, el mínimo de compra debe ser $1,500.00 MXN
                     </Alert>
                     : 
                     <Button display={steps.step2 ? "none" : "flex"} mb={5} _hover={{ bg: "#063D5F"}} 

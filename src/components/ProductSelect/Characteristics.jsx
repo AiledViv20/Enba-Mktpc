@@ -89,7 +89,13 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
 
     const filterTypePrint = (str) => {
         const listStr = str.split(" ");
-        return listStr[0];
+        let newStr = '';
+        if (listStr.length === 3) {
+            newStr = `${listStr[0]} y ${listStr[2]}`
+        } else {
+            newStr = listStr[0];
+        }
+        return newStr;
     }
 
     return ( 
