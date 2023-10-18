@@ -16,6 +16,7 @@ const Fondo = ({ bg, bgmb }) => {
             width={"100%"} height={isGreaterThanMd ? "312px" : "350px"} 
             borderRadius={"20px"} backgroundImage={`url(${isGreaterThanMd ? bg : bgmb})`} 
             backgroundSize="cover" mb={10}
+            
             backgroundPosition="center center"
             backgroundRepeat="no-repeat">
         </Flex>

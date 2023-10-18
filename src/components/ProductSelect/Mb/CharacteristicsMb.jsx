@@ -43,6 +43,16 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
         unitPrice: null
     });
 
+    useEffect(() => {
+        if (data) {
+            let unitRetailPrice = data.items[0]?.retail_price ? data.items[0]?.retail_price : 0;
+            setValues({
+                ...values,
+                unitPrice: parseFloat(unitRetailPrice).toFixed(2)
+            });
+        }
+    }, []);
+
     const handleChange = (e) => {
         setValues({
             ...values,
@@ -140,7 +150,7 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
     return ( 
         <Flex color={"#424242"} fontSize={"16px"} mt={10} flexDirection={"column"} width={"100%"}>
             <Flex flexDirection={"column"}>
-                <Text as={"b"} mb={4}>DESCRIPCIÓN Y CARACTERÍSTICAS</Text>
+                <Text as={"b"} mb={4}>Descripción y características</Text>
                 <Text lineHeight={1.2}>
                     {data.description}
                 </Text>
@@ -185,7 +195,7 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
                                             }
                                     </Select>
                                     <Input mt={3} name='amount' type='number' onChange={handleChange} value={values.amount} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Cantidad' />
-                                    <Input mt={3} name='unitPrice' type='number' onChange={handleChange} value={values.unitPrice} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Precio unitario' />
+                                    <Input mt={3} name='unitPrice' type='number' onChange={handleChange} value={values.unitPrice} fontSize={"14px"} width={"100%"} height={"56px"} placeholder='Precio unitario' disabled/>
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>
