@@ -29,7 +29,7 @@ const SwitchRouter = () => {
             }>
             <Routes>
                 <Route path='/' element={<Home/>} />
-                <Route path='/categoria/:category/:product_name?' element={<Categories/>} />
+                <Route path='/categoria/:category/:name?' element={<Categories/>} />
                 <Route path='/producto/:product' element={<Product/>} />
                 <Route path='/productos/cotizar' element={<QuoteProduct/>} />
                 <Route path='/contacto' element={<Contacto/>} />

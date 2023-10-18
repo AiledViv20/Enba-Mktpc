@@ -185,10 +185,6 @@ const DescriptionMb = ({ previewImage, images, data, colors, colorsProduct }) =>
                 Selecciona un color para agregar al carrito de compra
             </Alert>
             <Flex mt={5} h={"66px"} border={"1px solid"} borderTopColor={"#CCCCCC"} borderBottomColor={"#CCCCCC"} borderLeftColor={"transparent"} borderRightColor={"transparent"}>
-                <Flex alignItems={"center"} mr={10}>
-                    <Image src={icon1} width={"32px"} height={"42px"} alt='icon'/>
-                    <Text ml={2}>Envío gratis</Text>
-                </Flex>
                 <Flex  alignItems={"center"}>
                     <Image src={icon2} width={"32px"} height={"32px"} alt='icon'/>
                     <Text ml={2}>{itemSelected.stock} en stock</Text>

@@ -18,7 +18,7 @@ const TablePrice = ({ pdt }) => {
             <Table variant='simple'>
                 <Thead bg={"accent.500"}>
                     <Tr>
-                        <Th color={"#FFF"} fontSize={"14px"} textTransform={"none"}>Volumen de Compra</Th>
+                        <Th color={"#FFF"} fontSize={"14px"} textTransform={"none"}>Volumen de compra</Th>
                         <Th color={"#FFF"} fontSize={"14px"} textTransform={"none"}>Precio unitario</Th>
                     </Tr>
                 </Thead>

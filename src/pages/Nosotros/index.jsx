@@ -9,16 +9,11 @@ import Footer from '../../components/Footer';
 
 import banner from '../../assets/images/banner/banner-nosotros.png';
 
-import icon1 from '../../assets/icons/nosotros/telcel.svg';
-import icon2 from '../../assets/icons/nosotros/inbursa.svg';
-import icon3 from '../../assets/icons/nosotros/oxxo.svg';
-import icon4 from '../../assets/icons/nosotros/scribe.svg';
-import icon5 from '../../assets/icons/nosotros/bayer.svg';
-
 import vIcon1 from '../../assets/icons/nosotros/valores/honestidad.svg';
 import vIcon2 from '../../assets/icons/nosotros/valores/calidad.svg';
 import vIcon3 from '../../assets/icons/nosotros/valores/competitividad.svg';
 import vIcon4 from '../../assets/icons/nosotros/valores/puntualidad.svg';
+import CarouselOurWork from '../../components/CarouselOurWork';
 
 const Nosotros = ({ props }) => {
 
@@ -61,17 +56,8 @@ const Nosotros = ({ props }) => {
                     <Text mb={20} textAlign={"center"}>Lo hacemos por ti.</Text>
                     <Text textAlign={"center"} fontSize={"32px"} as={"b"}>Nuestros clientes</Text>
                 </Flex>
-                <Flex pt={10} alignItems={"center"} justifyContent={"center"}>
-                    <Image src={icon1} mr={20} />
-                    <Image src={icon2} mr={20} />
-                    <Image src={icon3} mr={20} />
-                    <Image src={icon4} mr={20}/>
-                    <Image src={icon5} />
-                </Flex>
-                <Flex justifyContent={"center"} pt={10}>
-                    <Text fontWeight={400} fontSize={"24px"}>Y cientos más...</Text>
-                </Flex>
             </Box>
+            <CarouselOurWork />
             <Flex w={"100%"} fontWeight={400} fontSize={"18px"} h={"200px"} mb={10}>
                 <Flex w={"50%"} bg={"#F2F2F2"} justifyContent={"center"} alignItems={"center"}>
                     <Flex flexDirection={"column"}>

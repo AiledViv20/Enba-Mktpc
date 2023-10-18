@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Menu,
-  MenuButton,
-  MenuList,
-  Button,
-  Flex,
-  Text
+    Menu,
+    MenuButton,
+    MenuList,
+    Button,
+    Flex,
+    Text,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 import { FaBorderAll } from 'react-icons/fa';
 import { ChevronDownIcon } from '@chakra-ui/icons';
@@ -17,6 +19,8 @@ const ButtonCategories = () => {
     const [categories, setCategories] = useState(null);
     const [selectedCategoryGeneral, setSelectedCategoryGeneral] = useState('');
     const [selectedCategoryMaster, setSelectedCategoryMaster] = useState(null);
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     
     useEffect(() => {
         if(categoriesList){
@@ -39,7 +43,7 @@ const ButtonCategories = () => {
         <>
             <Menu>
                 <MenuButton 
-                    color={"#FFF"} fontWeight={500}
+                    color={"#FFF"} fontWeight={500} width={isGreaterThanMd ? '164px' : '-webkit-fill-available'}
                     fontSize={"14px"} pl={8} border={"transparent"}
                     as={Button} rightIcon={<ChevronDownIcon />} leftIcon={<FaBorderAll />}
                     _hover={{

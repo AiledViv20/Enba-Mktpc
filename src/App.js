@@ -10,10 +10,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { persistStore } from 'redux-persist';
 import 'react-toastify/dist/ReactToastify.css';
 
-import iconWpp from './assets/icons/wpp.svg';
-import { redirectToWhatsApp } from './resource/validate';
-
 import Nav from './components/Nav';
+import ButtonWhatsApp from './components/ButtonWhatsApp';
 
 const persistor = persistStore(store);
 
@@ -25,14 +23,9 @@ function App() {
         <CardFilterProvider>
           <ChakraProvider theme={lightTheme}>
               <Flex width={"100%"} flexDirection={"column"}>
-                <Flex zIndex={-1} p={8} position={"fixed"} width={"100%"} height={"100%"} justifyContent={"end"} alignItems={"end"}>
-                  <Flex _hover={{ cursor: "pointer" }} 
-                    onClick={() => redirectToWhatsApp()}>
-                    <img src={iconWpp} width="50" height="50" alt='icon'/>
-                  </Flex>
-                </Flex>
                 <Nav />
                 <Router />
+                <ButtonWhatsApp />
               </Flex>
             <ToastContainer />
           </ChakraProvider>

@@ -13,10 +13,10 @@ import KitsProduct from '../../components/KitsProduct';
 
 import { categoriesTemplate } from '../../resource';
 
-import logo from '../../assets/icons/logo.svg';
-import logoW from '../../assets/icons/logo-blanco.svg';
-import img1 from '../../assets/images/fondo/img-fd1.png';
-import img2 from '../../assets/images/fondo/img-fd2.png';
+import img1 from '../../assets/images/fondo/bg1.png';
+import img2 from '../../assets/images/fondo/bg2.png';
+import img1Mb from '../../assets/images/fondo/bg1-mb.png';
+import img2Mb from '../../assets/images/fondo/bg2-mb.png';
 
 import { useGetFavoritesQuery } from '../../hooks/enbaapi';
 
@@ -39,19 +39,15 @@ const Home = () => {
         <RecommendedProducts 
           titleSection={"Productos destacados"}
           data={productsData} />
-        <Fondo 
-          space={10}
-          bg={"#31689C"} fontColor={"#FFF"} icon={logoW}
-          title={"“Hecho por ti y para ti.”"}
-          img={img1} />
+        <Fondo
+          bg={img1}
+          bgmb={img1Mb} />
         <FeaturedCategories 
           titleSection={"Categorias destacadas"}
           data={categoriesTemplate} />
-        <Fondo 
-          soace={0}
-          bg={"#DFD8D1"} fontColor={"#064A73"} icon={logo}
-          title={"“Hecho por ti y para ti.”"}
-          img={img2} />
+        <Fondo
+          bg={img2}
+          bgmb={img2Mb} />
         <KitsProduct 
           titleSection={"Kits"} />
       </Flex>
