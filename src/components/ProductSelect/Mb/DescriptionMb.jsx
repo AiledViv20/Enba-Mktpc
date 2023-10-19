@@ -25,7 +25,7 @@ import { formatterValue, capitalizeFirstLetter } from '../../../resource/validat
 
 import { toast } from 'react-toastify';
 
-const DescriptionMb = ({ previewImage, images, data, colors, colorsProduct }) => {
+const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
     const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
@@ -65,6 +65,14 @@ const DescriptionMb = ({ previewImage, images, data, colors, colorsProduct }) =>
         setItemSelected(item)
         setPrice(item.retail_price);
     }
+
+    useEffect(() => {
+        if(selectColor) {
+            const filterProductColors = data?.items.filter(item => item.color === selectColor);
+            const imgUrl = filterProductColors[0].images?.images_item[0];
+            setImg(imgUrl)
+        }
+    }, [selectColor]);
 
     const validateData = () => {
         if (itemSelected.stock !== "0") {

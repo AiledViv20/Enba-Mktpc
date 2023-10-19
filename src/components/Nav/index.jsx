@@ -14,7 +14,9 @@ import {
     useDisclosure,
     Button,
     useTheme,
-    useMediaQuery
+    useMediaQuery,
+    Grid,
+    GridItem
   } from '@chakra-ui/react';
   import {
     HamburgerIcon,
@@ -47,7 +49,7 @@ export default function Nav() {
         align={'center'}
         >
         <img style={{ zIndex: 1 }} onClick={() => window.location.href = "/"} src={logo} width='100px' height='56px' alt="logo" />
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'center' }}>
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'end' }}>
           <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }} ml={20}>
             <DesktopNav />
           </Flex>
@@ -105,47 +107,53 @@ const DesktopNav = () => {
   const linkColor = useColorModeValue('#424242', '#424242');
   const linkHoverColor = useColorModeValue('#424242', '#424242');
   const popoverContentBgColor = useColorModeValue('white', 'gray.800');
-  const { breakpoints } = useTheme();
   
   return (
     <Stack direction={'row'} spacing={4} alignItems='center'>
-      <ButtonCategories />
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label} alignItems='center'>
-          <Popover trigger={'hover'} placement={'bottom-start'}>
-            <PopoverTrigger id="popover" textAlign={"center"}>
-              <Link
-                href={navItem.href ?? '#'}
-                fontSize={"16px"}
-                fontWeight={500}
-                color={linkColor}
-                mr={8}
-                _hover={{
-                  textDecoration: 'none',
-                  color: linkHoverColor,
-                }}>
-                {navItem.label}
-              </Link>
-            </PopoverTrigger>
+      <Grid templateColumns='repeat(6, 1fr)' gap={2}>
+        <GridItem>
+          <ButtonCategories />
+        </GridItem>
+        {NAV_ITEMS.map((navItem) => (
+          <Box key={navItem.label} alignItems='center'>
+            <Popover trigger={'hover'} placement={'bottom-start'}>
+              <GridItem h={"100%"} pt={2.5}>
+                <PopoverTrigger id="popover" textAlign={"center"}>
+                    <Link
+                      
+                      textAlign={"end"}
+                      href={navItem.href ?? '#'}
+                      fontSize={"16px"}
+                      fontWeight={500}
+                      color={linkColor}
+                      _hover={{
+                        textDecoration: 'none',
+                        color: linkHoverColor,
+                      }}>
+                      {navItem.label}
+                    </Link>
+                </PopoverTrigger>
+              </GridItem>
 
-            {navItem.children && (
-              <PopoverContent
-                border={0}
-                boxShadow={'xl'}
-                bg={popoverContentBgColor}
-                p={4}
-                rounded={'xl'}
-                minW={'sm'}>
-                <Stack>
-                  {navItem.children.map((child) => (
-                    <DesktopSubNav key={child.label} {...child} />
-                  ))}
-                </Stack>
-              </PopoverContent>
-            )}
-          </Popover>
-        </Box>
-      ))}
+              {navItem.children && (
+                <PopoverContent
+                  border={0}
+                  boxShadow={'xl'}
+                  bg={popoverContentBgColor}
+                  p={4}
+                  rounded={'xl'}
+                  minW={'sm'}>
+                  <Stack>
+                    {navItem.children.map((child) => (
+                      <DesktopSubNav key={child.label} {...child} />
+                    ))}
+                  </Stack>
+                </PopoverContent>
+              )}
+            </Popover>
+          </Box>
+        ))}
+      </Grid>
     </Stack>
   );
 };

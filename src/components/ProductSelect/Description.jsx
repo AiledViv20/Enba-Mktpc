@@ -15,7 +15,6 @@ import {
 } from '@chakra-ui/react';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
-import icon1 from '../../assets/icons/fast-delivery.svg';
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
@@ -23,7 +22,7 @@ import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 
 import { toast } from 'react-toastify';
 
-const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
+const Description = ({ previewImage, setImg, images, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
     const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
@@ -63,6 +62,14 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
         setItemSelected(item)
         setPrice(item.retail_price);
     }
+
+    useEffect(() => {
+        if(selectColor) {
+            const filterProductColors = data?.items.filter(item => item.color === selectColor);
+            const imgUrl = filterProductColors[0].images?.images_item[0];
+            setImg(imgUrl)
+        }
+    }, [selectColor]);
 
     const validateData = () => {
         if (itemSelected.stock !== "0") {

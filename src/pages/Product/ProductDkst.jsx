@@ -18,8 +18,9 @@ const ProductDkst = () => {
     const [images, setImages] = useState(null);
     const [colors, setColors] = useState([]);
     const [colorsProduct, setColorsProduct] = useState([]);
+    const [changeFirst, setChangeFirst] = useState(true);
     const [idx, setIdx] = useState(0);
-    const [img, setImg] = useState(null);
+    const [img, setImg] = useState('');
     const [product, setProduct] = useState(null);
     const [productRecommended, setProductRecommended] = useState(null);
     const params = {
@@ -54,7 +55,7 @@ const ProductDkst = () => {
                     name: "",
                     order: 'DESC'
             })
-            setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
+            //setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];
             if(data?.images?.product_images[0])
@@ -92,14 +93,21 @@ const ProductDkst = () => {
             }
             colors_ar.push(color_[0])
         });
+        if (colors_ar.length > 0 && changeFirst) {
+            const imgPreviewColor = colors_ar.slice(0, 1);
+            const filterProductColors = product?.items.filter(item => item.color === imgPreviewColor[0].color);
+            const imgUrl = filterProductColors[0].images?.images_item[0];
+            setImg(imgUrl)
+            setChangeFirst(false);
+        }
         setColorsProduct(colors_ar);
     },[colors]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         if(images){
             setImg(images[idx]);
         }
-    },[idx])
+    },[idx]) */
 
     return ( 
         <>
@@ -117,6 +125,7 @@ const ProductDkst = () => {
                         </Flex>
                         <Description 
                             previewImage={img}
+                            setImg={setImg}
                             images={images} 
                             data={product} 
                             colors={colors}
