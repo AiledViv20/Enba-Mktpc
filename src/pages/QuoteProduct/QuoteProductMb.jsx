@@ -19,7 +19,7 @@ import { usePostCalculateOrderMutation, usePostCreateOrderMutation } from '../..
 
 import { toast } from 'react-toastify';
 
-const QuoteProductMb = ({ props }) => {
+const QuoteProductMb = () => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
     const totalAmountStore = useSelector(selectTotalAmount);
@@ -136,10 +136,27 @@ const QuoteProductMb = ({ props }) => {
         setNum(numStep);
     }
 
+    const calculateSend = () => {
+        if (totalAmountStore <= 3000) {
+            return 199;
+        } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
+            return 99;   
+        } else if (totalAmountStore > 10000) {
+            return 0;
+        }
+    }
+
     useEffect(() => {
         setProductsQuote(productsStore);
         if (kitsStore.length > 0) {
             setKits(productsStore);
+        }
+        if (totalAmountStore > 0) {
+            let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
+            sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
+            dispatch(
+                setTotalAmount({totalAmount: sumTempCalculate})
+            )
         }
     }, []);
 

@@ -16,6 +16,7 @@ import KitCard from './KitCard';
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
 import { useGetKitsQuery } from '../hooks/enbaapi';
+import axios from 'axios';
 
 const CardsRenderer = (products, status) => {
     const { breakpoints } = useTheme();
@@ -87,10 +88,25 @@ export const KitsProduct = ({ titleSection, props }) => {
 
     const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({
         take: 4,
-        page: 0,
+        page: page,
         category: "",
         name: ""
     });
+
+    /* const getKits = async () => {
+        const body = {
+            take: 4,
+            page: page,
+            category: "",
+            name: ""
+        }
+        const {data} = await axios.post('https://api.enba.mx//inventory/kit', body, {
+            headers: {
+              'Content-Type': 'application/json'
+            }
+        });
+        console.log(data)
+    } */
 
     useEffect(() => {
         if (kits) {
@@ -102,6 +118,7 @@ export const KitsProduct = ({ titleSection, props }) => {
                 setStatus('loaded');
             }
         }
+        //getKits();
     },[kits])
 
     useEffect(() => {
@@ -112,6 +129,7 @@ export const KitsProduct = ({ titleSection, props }) => {
                 setProducts(kits.slice(page * 1, (page + 1) * 4));   
             }
         }
+
     },[page])
 
     return (

@@ -21,7 +21,7 @@ import { usePostCalculateOrderMutation, usePostCreateOrderMutation } from '../..
 
 import { toast } from 'react-toastify';
 
-const QuoteProductDkts = ({ props }) => {
+const QuoteProductDkts = () => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
     const totalAmountStore = useSelector(selectTotalAmount);
@@ -138,10 +138,27 @@ const QuoteProductDkts = ({ props }) => {
         setNum(numStep);
     }
 
+    const calculateSend = () => {
+        if (totalAmountStore <= 3000) {
+            return 199;
+        } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
+            return 99;   
+        } else if (totalAmountStore > 10000) {
+            return 0;
+        }
+    }
+
     useEffect(() => {
         setProductsQuote(productsStore);
         if (kitsStore.length > 0) {
             setKits(productsStore);
+        }
+        if (totalAmountStore > 0) {
+            let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
+            sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
+            dispatch(
+                setTotalAmount({totalAmount: sumTempCalculate})
+            )
         }
     }, []);
 
@@ -322,16 +339,6 @@ const QuoteProductDkts = ({ props }) => {
         })
     }
 
-    const calculateSend = () => {
-        if (totalAmountStore <= 3000) {
-            return 199;
-        } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
-            return 99;   
-        } else if (totalAmountStore > 10000) {
-            return 0;
-        }
-    }
-
     return ( 
         <>
             <Flex w={"50%"} flexDirection={"column"}>
@@ -398,7 +405,7 @@ const QuoteProductDkts = ({ props }) => {
                             <Text fontSize={"16px"} fontWeight={400} color={"#828282"}>{"IVA (16%)"}</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"16px"} fontWeight={500}>$1.45</Text>
+                            <Text fontSize={"16px"} fontWeight={500}>{totalAmountStore > 0 ?  formatterValue((totalAmountStore * 0.16).toFixed(2)): 1.45}</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
