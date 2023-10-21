@@ -87,7 +87,7 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
             const product = {
                 sku: filterItem[0].sku,
                 code_item: filterItem[0].code,
-                unit_price: parseFloat(filterItem[0].price),
+                unit_price: parseFloat(filterItem[0].retail_price),
                 total_price: parseFloat(calcTotalPrice),
                 quantity: values.num,
                 name: data.name,

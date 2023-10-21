@@ -121,7 +121,7 @@ const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedP
                                 >
                                     Desde
                                     <Text fontSize={"20px"} fontWeight={500} color={"#1A6EA0"}>
-                                        <br />{formatterValue(product.items[0]?.price)}
+                                        <br />{formatterValue(product.items[0]?.retail_price)}
                                     </Text>
                             </Text>
                         </HStack>

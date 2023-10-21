@@ -13,6 +13,7 @@ import Cotizar from "./pages/Cotizar";
 import Kit from "./pages/Kit";
 import Terms from "./pages/Tyc/Terms";
 import Privacy from "./pages/Tyc/Privacy";
+import PDFQuoteProducts from "./pages/PDFQuoteProducts";
 
 const SwitchRouter = () => {
     return (
@@ -40,6 +41,7 @@ const SwitchRouter = () => {
                 <Route path='/kit/:product' element={<Kit/>} />
                 <Route path='/terminos-condiciones' element={<Terms/>} />
                 <Route path='/aviso-privacidad' element={<Privacy/>} />
+                <Route path='/download' element={<PDFQuoteProducts/>} />
             </Routes>
         </Suspense>    
     );

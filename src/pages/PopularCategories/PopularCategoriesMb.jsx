@@ -36,7 +36,7 @@ const PopularCategoriesMb = () => {
     const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
-    const [inputSearch, setInputSearch] = useState(params_url.product_name);
+    const [inputSearch, setInputSearch] = useState(params_url.name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
     const [page, setPage] = useState(0);
     const [filterList, setFilterList] = useState(null);
@@ -47,7 +47,7 @@ const PopularCategoriesMb = () => {
         page: page,
         color: colorSelected,
         category: param_category,
-        name: inputSearch,
+        name: inputSearch ? inputSearch : param_category,
         order: state.order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);

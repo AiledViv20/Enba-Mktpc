@@ -64,8 +64,8 @@ const InfoKit = () => {
                         ...item,
                         sku: item.sku ? item.sku : "",
                         code_item: item.code ? item.code : "",
-                        unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
-                        total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
+                        unit_price: parseFloat(item.items.length > 0 ? item.items[0].retail_price : 0),
+                        total_price: parseFloat(item.items.length > 0 ? item.items[0].retail_price : 0),
                         quantity: 1,
                         name: item.name,
                         category: item.category,
@@ -87,8 +87,8 @@ const InfoKit = () => {
                         ...item,
                         sku: item.sku ? item.sku : "",
                         code_item: item.code ? item.code : "",
-                        unit_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
-                        total_price: parseFloat(item.items.length > 0 ? item.items[0].price : 0),
+                        unit_price: parseFloat(item.items.length > 0 ? item.items[0].retail_price : 0),
+                        total_price: parseFloat(item.items.length > 0 ? item.items[0].retail_price : 0),
                         quantity: 1,
                         name: item.name,
                         category: item.category,
@@ -197,59 +197,3 @@ const InfoKit = () => {
 }
  
 export default InfoKit;
-
-/*
-
-<>
-    {
-        product && (
-            <Flex p={10} justifyContent={"space-between"}>
-                <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                <Flex pl={10}>
-                    <Image src={img} width={"442"} height={"442"} alt='image product'/>
-                </Flex>
-                <Description 
-                    previewImage={img}
-                    images={images}
-                    data={product.products[0]} 
-                    colors={colors}
-                    colorsProduct={colorsProduct}/>
-            </Flex>
-        )
-    }
-    {
-        product && (
-            <DescriptionKit 
-                data={product.products[0]}/>
-        )
-    }
-    {
-        showKitIncludes.length > 0 && (
-            <KitIncludes 
-                titleSection={"Tu kit incluye:"}
-                showKitIncludes={showKitIncludes}
-                setShowKitIncludes={setShowKitIncludes}
-                kit={kit}/>
-        )
-    }
-    {
-        showAddOthersKits.length > 0 && (
-            <AddProductsKit 
-                titleSection={"Agrega otros productos a tu kit"}
-                data={showAddOthersKits}
-                showKitIncludes={showKitIncludes}
-                setShowKitIncludes={setShowKitIncludes} />
-        )
-    }
-    {
-        product && (
-            <Characteristics 
-                kit={true} 
-                data={product.products[0]}
-                colorsProduct={colorsProduct}
-                previewImage={img} />
-        )
-    }
-</>
-
-*/

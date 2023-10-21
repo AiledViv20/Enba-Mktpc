@@ -85,28 +85,26 @@ export const KitsProduct = ({ titleSection, props }) => {
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
+    const [kits, setKits] = useState([]);
 
-    const { data: kits, isLoading: isKitsLoading, error: kitsError } = useGetKitsQuery({
-        take: 4,
-        page: page,
-        category: "",
-        name: ""
-    });
-
-    /* const getKits = async () => {
+    const getKits = async () => {
         const body = {
-            take: 4,
-            page: page,
+            take: 10,
+            page: 0,
             category: "",
             name: ""
         }
-        const {data} = await axios.post('https://api.enba.mx//inventory/kit', body, {
+        const {data} = await axios.post('https://api.enba.mx/inventory/kit/search', body, {
             headers: {
               'Content-Type': 'application/json'
             }
         });
-        console.log(data)
-    } */
+        setKits(data);
+    }
+
+    useEffect(() => {
+        getKits();
+    }, [])
 
     useEffect(() => {
         if (kits) {
@@ -118,7 +116,6 @@ export const KitsProduct = ({ titleSection, props }) => {
                 setStatus('loaded');
             }
         }
-        //getKits();
     },[kits])
 
     useEffect(() => {
@@ -129,7 +126,7 @@ export const KitsProduct = ({ titleSection, props }) => {
                 setProducts(kits.slice(page * 1, (page + 1) * 4));   
             }
         }
-
+        getKits();
     },[page])
 
     return (
