@@ -76,7 +76,7 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
         const product = {
             sku: filterItem[0].sku,
             code_item: filterItem[0].code,
-            unit_price: parseFloat(filterItem[0].price),
+            unit_price: parseFloat(filterItem[0].retail_price),
             total_price: total.toFixed(2),
             quantity: values.amount,
             name: data.name,

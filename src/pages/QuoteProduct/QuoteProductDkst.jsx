@@ -52,6 +52,8 @@ const QuoteProductDkts = () => {
     const [logoInfo, setLogoInfo] = useState();
     const [isLoadingStep1, setIsLoadingStep1] = useState(false);
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
+    const [subTotalSum, setSubTotalSum] = useState(0);
+    const [notFirstSum, setNotFirstSum] = useState(true);
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -153,12 +155,14 @@ const QuoteProductDkts = () => {
         if (kitsStore.length > 0) {
             setKits(productsStore);
         }
-        if (totalAmountStore > 0) {
+        if (totalAmountStore > 0 && notFirstSum) {
+            setSubTotalSum(totalAmountStore);
             let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
             dispatch(
                 setTotalAmount({totalAmount: sumTempCalculate})
             )
+            setNotFirstSum(false)
         }
     }, []);
 
@@ -339,6 +343,13 @@ const QuoteProductDkts = () => {
         })
     }
 
+    const validateMinShop = () => {
+        if (totalAmountStore < 1500) {
+            return true;
+        } 
+        return false;
+    }
+
     return ( 
         <>
             <Flex w={"50%"} flexDirection={"column"}>
@@ -397,7 +408,7 @@ const QuoteProductDkts = () => {
                             <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"20px"} fontWeight={600}>{formatterValue(totalAmountStore)}</Text>
+                            <Text fontSize={"20px"} fontWeight={600}>{formatterValue(subTotalSum)}</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} pb={3}>
@@ -425,7 +436,7 @@ const QuoteProductDkts = () => {
                         </Flex>
                     </Flex>
                     <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 1 || num === 2 ? "flex" : "none"}>
-                        {totalAmountStore < 1500 ? 
+                        {validateMinShop() ? 
                             <Alert mb={5} status='error' lineHeight={1.2}>
                                 <AlertIcon />
                                 No es posible realizar el proceso, el mínimo de compra debe ser $1,500.00 MXN
@@ -444,6 +455,13 @@ const QuoteProductDkts = () => {
                             height={"48px"} variant={"outline"}
                             onClick={() => window.location.href = '/categoria/Todas'}>
                             Agregar artículos
+                        </Button>
+                        <Button borderColor={"accent.500"} marginTop={5}
+                            fontWeight={600} fontSize={"18px"} 
+                            height={"48px"} variant={"outline"}
+                            onClick={() => window.location.href = '/download'}
+                            isDisabled={validateMinShop() ? true : false}>
+                            Descargar cotización
                         </Button>
                     </Flex>
                     <Flex mt={5} zIndex={1} display={num === 1 || num === 2 ? "flex" : "none"}>
