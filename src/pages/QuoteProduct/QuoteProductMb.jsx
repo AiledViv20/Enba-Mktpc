@@ -388,7 +388,7 @@ const QuoteProductMb = () => {
                     isDisabled={num <= 1 ? true : false}/>
             </Flex>
             <Flex mt={5} w={"100%"} flexDirection={"column"} display={num === 1 || num === 2 ? "flex" : "none"}>
-                {totalAmountStore < 1500 ? 
+                {totalAmountStore < 1 ? 
                     <Alert mb={5} status='error' lineHeight={1.2}>
                         <AlertIcon />
                         No es posible realizar el proceso, el mínimo de compra debe ser $1,500.00 MXN
