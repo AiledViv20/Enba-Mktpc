@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { 
-    Flex
+    Flex,
+    Text
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import DescriptionMb from './DescriptionMb';
@@ -132,6 +133,13 @@ const InfoKitMb = () => {
     return ( 
         <>
             <Flex flexDirection={"column"} width={"100%"}>
+                <Flex>
+                    <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
+                </Flex>
+                <Flex mt={10} mb={2} fontSize={"14px"} fontWeight={400} color={"#424242"} flexDirection={"column"}>
+                    <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{product?.products[0]?.sku}</Text>
+                    <Text mt={2}><Text as={"b"}>Categoría:</Text>{" "}{product?.products[0]?.category.toUpperCase()}</Text>
+                </Flex>
                 {
                     product && (
                         <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>

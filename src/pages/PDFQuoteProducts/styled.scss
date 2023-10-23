@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    height: 100vh;
 }
 
 .grid-header {
@@ -89,4 +90,31 @@ table {
 
 td {
     text-align: center;
+}
+
+.grid-footer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.content-footer {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    background-image: url('../../assets/images/pdf/fondo.png');
+    background-size: cover;
+    justify-content: end;
+    padding-right: 2.5rem;
+}
+
+.grid-footer p {
+    line-height: 1.2;
+}
+
+.grid-footer a {
+    text-decoration: underline;
+    color: #2D70A7;
 }

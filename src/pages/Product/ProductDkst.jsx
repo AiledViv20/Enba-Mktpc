@@ -22,39 +22,14 @@ const ProductDkst = () => {
     const [idx, setIdx] = useState(0);
     const [img, setImg] = useState('');
     const [product, setProduct] = useState(null);
-    const [productRecommended, setProductRecommended] = useState(null);
     const params = {
         sku: params_url.product
     }
     const {data, isLoading, error} = useGetProductQuery(params);
-    const [paaramsRecommended, setParamsRecommended] = useState({
-        take: 12,
-        page: 0,
-        color: "",
-        category: "",
-        name: "",
-        order: 'DESC'
-    });
-    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetSearchQuery(paaramsRecommended);
-    
-    useEffect(() => {
-        if(dataRecommended){
-            let products_ = dataRecommended.filter((item)=>item.product_sku !== params_url.product)
-            setProductRecommended(products_);
-        }
-    },[dataRecommended])
 
     useEffect(() => {
         if(data){
             setProduct(data);
-            setParamsRecommended({
-                    take: 12,
-                    page: 0,
-                    color: "",
-                    category: data.category,
-                    name: "",
-                    order: 'DESC'
-            })
             //setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];

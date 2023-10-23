@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 
 import { useParams } from 'react-router-dom';
-import { useGetProductQuery, useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetProductQuery, useGetSearchRecomendationsQuery } from '../../hooks/enbaapi';
 
 import RecommendedProducts from '../../components/RecommendedProducts';
 import Footer from '../../components/Footer';
@@ -32,7 +32,7 @@ const Product = ({ props }) => {
         name: "",
         order: 'DESC'
     });
-    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetSearchQuery(paaramsRecommended);
+    const {data: dataRecommended, isLoading: isLoadingRecommended, error: errorRecommended} = useGetSearchRecomendationsQuery(paaramsRecommended);
     
     useEffect(() => {
         if(dataRecommended){

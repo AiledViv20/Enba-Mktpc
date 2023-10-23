@@ -155,7 +155,10 @@ const QuoteProductDkts = () => {
         if (kitsStore.length > 0) {
             setKits(productsStore);
         }
-        if (totalAmountStore > 0 && notFirstSum) {
+        if (totalAmountStore > 0) {
+            setSubTotalSum(totalAmountStore);
+        }
+        /* if (totalAmountStore > 0 && notFirstSum) {
             setSubTotalSum(totalAmountStore);
             let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
@@ -163,7 +166,7 @@ const QuoteProductDkts = () => {
                 setTotalAmount({totalAmount: sumTempCalculate})
             )
             setNotFirstSum(false)
-        }
+        } */
     }, []);
 
     const validateSteps = () => {

@@ -13,7 +13,10 @@ import {
     Input,
     Switch,
     Button,
-    Select
+    Select,
+    Radio, 
+    RadioGroup,
+    Stack
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
@@ -30,6 +33,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
     const [total, setTotal] = useState(0);
     const [selectedColor, setSelectedColor] = useState('');
+    const [radioBtnValue, setRadioBtnValue] = useState('1')
     const [values, setValues] = useState({
         amount: null,
         unitPrice: null
@@ -98,14 +102,14 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
     }, [values]);
 
     const filterTypePrint = (str) => {
-        const listStr = str.split(" ");
-        let newStr = '';
-        if (listStr.length === 3) {
-            newStr = `${listStr[0]} y ${listStr[2]}`
-        } else {
-            newStr = listStr[0];
+        const listStr = str.split("/");
+        const listStrMap = listStr.map((element) => {
+            return element.replace(/\s/g, '');
+        })
+        if (listStrMap.includes('Láser') && listStrMap.includes('Serigrafía')) {
+            return "";
         }
-        return newStr;
+        return listStr[0];
     }
 
     return ( 
@@ -163,7 +167,17 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>
-                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>{" "}{filterTypePrint(data.printing.printing_technique)}</Text>
+                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>
+                                            {" "}{filterTypePrint(data.printing.printing_technique)}
+                                        </Text>
+                                        {filterTypePrint(data.printing.printing_technique) === "" ?
+                                            <RadioGroup mt={5} onChange={setRadioBtnValue} value={radioBtnValue}>
+                                                <Stack direction='column'>
+                                                    <Radio value='1'>Láser</Radio>
+                                                    <Radio value='2'>Serigrafía</Radio>
+                                                </Stack>
+                                            </RadioGroup>
+                                        : null}
                                     </Flex>
                                 </Flex>
                                 <Flex mt={5} width={"100%"} justifyContent={"end"}>

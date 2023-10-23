@@ -6,13 +6,12 @@ import {
     Input,
     Textarea,
     Button,
-    IconButton,
-    useDisclosure
+    useDisclosure,
+    Grid, 
+    GridItem
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 
-import { Carousel } from '../../components/Carousel/Carousel';
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { MarkDownSection } from '../../components/Section';
 
 import img1 from '../../assets/images/banner/proyectosesp/img1.png';
@@ -27,8 +26,6 @@ import { toast } from 'react-toastify';
 import Gallery from '../../components/Gallery';
 
 const ProyectosEspeciales = ({ props }) => {
-    const [current, setCurrent] = useState(0);
-    const [dotClicked, setDotClicked] = useState(false);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [values, setValues] = useState({
         name: "",
@@ -39,6 +36,7 @@ const ProyectosEspeciales = ({ props }) => {
         channel: "Formulario Proyectos Especiales"
     });
     const [postLead] = usePostLeadMutation();
+    const [selectGallery, setSelectGallery] = useState(0);
 
     const [screenSize, getDimension] = useState({
         winWidth: window.innerWidth,
@@ -57,47 +55,33 @@ const ProyectosEspeciales = ({ props }) => {
             key: "hero1",
             imageUrl: img1,
             title: "F1 GP MÉXICO",
-            description: `Para este proyecto en Enba, nos enorgullece haber trabajado en colaboración<br />con Mobil para llevar a cabo una campaña promocional en el GP de México.`
+            description: `Para este proyecto en Enba, nos enorgullece haber<br />trabajado en colaboración con Mobil para llevar a cabo<br />una campaña promocional en el GP de México.`
         },
         {
             key: "hero2",
             imageUrl: img2,
             title: "SCRIBE",
-            description: `Estamos encantados de haber colaborado con la marca Scribe en la creación<br />de una campaña promocional para su evento anual de 60 aniversario.`
+            description: `Estamos encantados de haber colaborado con la<br />marca Scribe en la creación de una campaña<br />promocional para su evento anual de 60 aniversario.`
         },
         {
             key: "hero3",
             imageUrl: img3,
             title: "TORNEO DE TENIS ATP ACAPULCO",
-            description: `Colaboramos en el Torneo Abierto de Tenis de Acapulco año con año con<br />diferentes patrocinadores como Telcel, Samsung y Oppo.`
+            description: `Colaboramos en el Torneo Abierto de Tenis de Acapulco<br />año con año con diferentes patrocinadores como Telcel,<br />Samsung y Oppo.`
         },
         {
             key: "hero4",
             imageUrl: img4,
             title: "RENATOS TELCEL EN NAVIDAD",
-            description: `Cada año, en la temporada navideña, tenemos el gusto de colaborar con Telcel en el desarrollo de<br />conceptos y propuestas de diferentes peluches temáticos, mismos que se convierten en regalos<br />especiales que se entregan durante esta época del año.`
+            description: `Cada año, en la temporada navideña, tenemos el gusto de<br />colaborar con Telcel en el desarrollo de conceptos y<br />propuestas de diferentes peluches temáticos, mismos que<br />se convierten en regalos especiales que se entregan<br />durante esta época del año.`
         },
         {
             key: "hero5",
             imageUrl: img5,
             title: "Snowball para bayer",
-            description: `En una colaboración especial con la farmacéutica Bayer, desarrollamos un proyecto único que consistió en<br />crear "snowballs" incluyendo elementos flotantes de los medicamentos de sus marcas más icónicas.`
+            description: `En una colaboración especial con la farmacéutica Bayer,<br />desarrollamos un proyecto único que consistió en crear<br />"snowballs" incluyendo elementos flotantes de los<br />medicamentos de sus marcas más icónicas.`
         }
     ];
-
-    useEffect(() => {
-        if (!dotClicked) {
-          const intervalId = setInterval(() => {
-            if (current === slides.length-1) {
-              setCurrent(0);
-            } else {
-              setCurrent(current + 1);
-            }
-          }, 5000);
-        
-          return () => clearInterval(intervalId);
-        }
-    }, [dotClicked, current, slides.length]);
 
     useEffect(() => {
         window.addEventListener("resize", setDimensions);
@@ -135,118 +119,226 @@ const ProyectosEspeciales = ({ props }) => {
         })
     }
 
-    const changeBanner = (num) => {
-        if (num > 2) {
-            setCurrent(0);
-        } else if (num < 0) {
-            setCurrent(2);
-        }
-         else {
-            setCurrent(num);
-        }
-    }
-
     return ( 
         <>
             <Flex pt={10} justifyContent={"center"} mb={10} color={"accent.500"}>
                 <Text fontSize={"34px"} as={"b"}>Proyectos Especiales</Text>
             </Flex>
-            <Box w="full" mx="auto" maxW="3x1" {...props} position="relative">
-                <Carousel current={current}>
-                    { slides.map((slide, idx) => (
+            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+                <GridItem>
+                    <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
+                        <Flex flexDirection={"column"}>
+                            <Text
+                                mb={2}
+                                fontWeight={600}
+                                fontSize={"26px"}>
+                                {slides[0].title}
+                            </Text>
+                            <Text
+                                mb={5}
+                                fontWeight={400}
+                                fontSize={"16px"}
+                                lineHeight={1.2}>
+                                <MarkDownSection>{slides[0].description}</MarkDownSection>
+                            </Text>
+                            <Button 
+                                w={"280px"} h={"44px"} 
+                                _hover={{ bg: "#F8F8F8" }} 
+                                variant={'outline'}
+                                borderColor={"#064A73"}
+                                bg={"#FFF"} color={"accent.500"} 
+                                fontSize={"14px"} fontWeight={500}
+                                onClick={() => { onOpen(); setSelectGallery(0); }}>
+                                Ver proyecto
+                            </Button>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+                <GridItem>
+                    <Flex>
                         <Flex
-                            w="100%"
-                            h="570px"
-                            key={idx}
-                            id="fondo"
-                            backgroundImage={`url(${slide.imageUrl})`}
+                            width={"658px"}
+                            height={"414px"}
+                            backgroundImage={`url(${slides[0].imageUrl})`}
                             backgroundSize="cover"
                             backgroundPosition="center center"
-                            backgroundRepeat="no-repeat"
-                            backgroundColor="gray.100"
-                            position="relative"
-                            p="0"
-                            color={"#FFFFFF"}>
-                            <Flex height='100%' w='100%' backgroundColor={"#0000004e"}></Flex>
-                            <Flex
-                                height="100vh"
-                                width={"100%"}
-                                alignItems={"center"}
-                                justifyContent={"center"}
-                                position="absolute">
-                                <Flex flexDirection="column" alignItems={"center"}>
-                                    <Flex flexDirection={"column"} backgroundColor={"#0000004e"} p={5} pt={2} mb={5}>
-                                        <Text mb={5} textAlign={"center"} fontWeight={600} fontSize={'28px'}>
-                                            {slide.title}
-                                        </Text>
-                                        <Text mb={5} lineHeight={1.2} textAlign={"center"} fontWeight={400} fontSize={'18px'}>
-                                            <MarkDownSection>{slide.description}</MarkDownSection>
-                                        </Text>
-                                    </Flex>
-                                    <Button 
-                                        w={"280px"} h={"44px"} 
-                                        _hover={{ bg: "#F8F8F8" }} 
-                                        bg={"#FFF"} color={"accent.500"} 
-                                        fontSize={"14px"} fontWeight={500}
-                                        onClick={onOpen}>
-                                        Ver mas
-                                    </Button>
-                                </Flex>
-                            </Flex>
+                            backgroundRepeat="no-repeat">
                         </Flex>
-                    ))}
-                </Carousel>
-                <Flex
-                    justifyContent="flex-start"
-                    alignItems="center"
-                    position="absolute"
-                    pl={"6%"}
-                    top={"50%"}
-                    w="100%"
-                    left="0"
-                    right="0"
-                >
-                    <IconButton
-                        icon={<ChevronLeftIcon color={"#919292"} />}
-                        rounded="full"
-                        border="0"
-                        colorScheme="brand"
-                        shadow="md"
-                        transitionDuration=".3s"
-                        _hover={{ shadow: "lg" }}
-                        onClick={() => changeBanner(current - 1)}
-                        position="relative"
-                        right={{ base: "-6", md: 0 }}
-                        bg="#FFF"
-                        zIndex="2"
-                    />
-                </Flex>
-                <Flex
-                    justifyContent="flex-end"
-                    alignItems="center"
-                    position="absolute"
-                    pr={"6%"}
-                    top={"50%"}
-                    w="100%"
-                    left="0"
-                    right="0"
-                >
-                    <IconButton
-                        icon={<ChevronRightIcon color={"#919292"} />}
-                        rounded="full"
-                        border="0"
-                        colorScheme="brand"
-                        shadow="md"
-                        transitionDuration=".3s"
-                        _hover={{ shadow: "lg" }}
-                        onClick={() => changeBanner(current + 1)}
-                        position="relative"
-                        right={{ base: "-6", md: 0 }}
-                        bg="#FFF"
-                        zIndex="2"
-                    />
-                </Flex>
-            </Box>
+                    </Flex>
+                </GridItem>
+            </Grid>
+            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+                <GridItem>
+                    <Flex justifyContent={"end"}>
+                        <Flex
+                            width={"658px"}
+                            height={"414px"}
+                            backgroundImage={`url(${slides[1].imageUrl})`}
+                            backgroundSize="cover"
+                            backgroundPosition="center center"
+                            backgroundRepeat="no-repeat">
+                        </Flex>
+                    </Flex>
+                </GridItem>
+                <GridItem>
+                    <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
+                        <Flex flexDirection={"column"}>
+                            <Text
+                                mb={2}
+                                fontWeight={600}
+                                fontSize={"26px"}>
+                                {slides[1].title}
+                            </Text>
+                            <Text
+                                mb={5}
+                                fontWeight={400}
+                                fontSize={"16px"}
+                                lineHeight={1.2}>
+                                <MarkDownSection>{slides[1].description}</MarkDownSection>
+                            </Text>
+                            <Button 
+                                w={"280px"} h={"44px"} 
+                                _hover={{ bg: "#F8F8F8" }} 
+                                variant={'outline'}
+                                borderColor={"#064A73"}
+                                bg={"#FFF"} color={"accent.500"} 
+                                fontSize={"14px"} fontWeight={500}
+                                onClick={() => { onOpen(); setSelectGallery(1); }}>
+                                Ver proyecto
+                            </Button>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+            </Grid>
+            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+                <GridItem>
+                    <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
+                        <Flex flexDirection={"column"}>
+                            <Text
+                                mb={2}
+                                fontWeight={600}
+                                fontSize={"26px"}>
+                                {slides[2].title}
+                            </Text>
+                            <Text
+                                mb={5}
+                                fontWeight={400}
+                                fontSize={"16px"}
+                                lineHeight={1.2}>
+                                <MarkDownSection>{slides[2].description}</MarkDownSection>
+                            </Text>
+                            <Button 
+                                w={"280px"} h={"44px"} 
+                                _hover={{ bg: "#F8F8F8" }} 
+                                variant={'outline'}
+                                borderColor={"#064A73"}
+                                bg={"#FFF"} color={"accent.500"} 
+                                fontSize={"14px"} fontWeight={500}
+                                onClick={() => { onOpen(); setSelectGallery(2); }}>
+                                Ver proyecto
+                            </Button>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+                <GridItem>
+                    <Flex>
+                        <Flex
+                            width={"658px"}
+                            height={"414px"}
+                            backgroundImage={`url(${slides[2].imageUrl})`}
+                            backgroundSize="cover"
+                            backgroundPosition="center center"
+                            backgroundRepeat="no-repeat">
+                        </Flex>
+                    </Flex>
+                </GridItem>
+            </Grid>
+            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+                <GridItem>
+                    <Flex justifyContent={"end"}>
+                        <Flex
+                            width={"658px"}
+                            height={"414px"}
+                            backgroundImage={`url(${slides[3].imageUrl})`}
+                            backgroundSize="cover"
+                            backgroundPosition="center center"
+                            backgroundRepeat="no-repeat">
+                        </Flex>
+                    </Flex>
+                </GridItem>
+                <GridItem>
+                    <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
+                        <Flex flexDirection={"column"}>
+                            <Text
+                                mb={2}
+                                fontWeight={600}
+                                fontSize={"26px"}>
+                                {slides[3].title}
+                            </Text>
+                            <Text
+                                mb={5}
+                                fontWeight={400}
+                                fontSize={"16px"}
+                                lineHeight={1.2}>
+                                <MarkDownSection>{slides[3].description}</MarkDownSection>
+                            </Text>
+                            <Button 
+                                w={"280px"} h={"44px"} 
+                                _hover={{ bg: "#F8F8F8" }} 
+                                variant={'outline'}
+                                borderColor={"#064A73"}
+                                bg={"#FFF"} color={"accent.500"} 
+                                fontSize={"14px"} fontWeight={500}
+                                onClick={() => { onOpen(); setSelectGallery(3); }}>
+                                Ver proyecto
+                            </Button>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+            </Grid>
+            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+                <GridItem>
+                    <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
+                        <Flex flexDirection={"column"}>
+                            <Text
+                                mb={2}
+                                fontWeight={600}
+                                fontSize={"26px"}>
+                                {slides[4].title}
+                            </Text>
+                            <Text
+                                mb={5}
+                                fontWeight={400}
+                                fontSize={"16px"}
+                                lineHeight={1.2}>
+                                <MarkDownSection>{slides[4].description}</MarkDownSection>
+                            </Text>
+                            <Button 
+                                w={"280px"} h={"44px"} 
+                                _hover={{ bg: "#F8F8F8" }} 
+                                variant={'outline'}
+                                borderColor={"#064A73"}
+                                bg={"#FFF"} color={"accent.500"} 
+                                fontSize={"14px"} fontWeight={500}
+                                onClick={() => { onOpen(); setSelectGallery(4); }}>
+                                Ver proyecto
+                            </Button>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+                <GridItem>
+                    <Flex>
+                        <Flex
+                            width={"658px"}
+                            height={"414px"}
+                            backgroundImage={`url(${slides[4].imageUrl})`}
+                            backgroundSize="cover"
+                            backgroundPosition="center center"
+                            backgroundRepeat="no-repeat">
+                        </Flex>
+                    </Flex>
+                </GridItem>
+            </Grid>
             <Flex pt={10} justifyContent={"center"} mb={2} color={"#000"}>
                 <Text fontSize={"26px"} fontWeight={500}>Compártenos tu idea y lo hacemos realidad</Text>
             </Flex>
@@ -285,7 +377,7 @@ const ProyectosEspeciales = ({ props }) => {
                 <Gallery
                     isOpen={isOpen}
                     onClose={onClose}
-                    />
+                    selectGallery={selectGallery} />
             : null}
             <Footer />
         </>

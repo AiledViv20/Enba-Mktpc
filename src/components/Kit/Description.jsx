@@ -16,13 +16,16 @@ import {
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
-import icon1 from '../../assets/icons/fast-delivery.svg';
+
 import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
 import { toast } from 'react-toastify';
 
-const Description = ({ kit = false, previewImage, images, data, colors, colorsProduct }) => {
+import { useParams } from 'react-router-dom';
+
+const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
+    const params_url = useParams();
     const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
@@ -99,7 +102,7 @@ const Description = ({ kit = false, previewImage, images, data, colors, colorsPr
     return ( 
         <Flex flexDirection={"column"}>
             <Flex>
-                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data.name.toUpperCase()}</Text>
+                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
             </Flex>
             <Flex mt={10} fontSize={"14px"} fontWeight={400} color={"#424242"}>
                 <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{data.sku}</Text>
