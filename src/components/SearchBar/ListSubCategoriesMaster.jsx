@@ -7,7 +7,7 @@ import {
 
 import { capitalizeFirstLetter } from '../../resource/validate';
 
-const ListSubCategoriesMaster = ({ selectedCategoryMaster }) => {
+const ListSubCategoriesMaster = ({ selectedCategoryMaster, setSelectedCategory }) => {
 
     const ListSubCategories = (props) => {
         const categoriesList = props.categoriesList;
@@ -18,7 +18,7 @@ const ListSubCategoriesMaster = ({ selectedCategoryMaster }) => {
                         <Text 
                             lineHeight={1.2} fontSize={"13px"} 
                             fontWeight={400} mt={2}
-                            onClick={() => window.location.href = `/categoria/${item.category}`}
+                            onClick={() => setSelectedCategory(item.category)}
                             _hover={{
                                 cursor: "pointer",
                                 color: "#064A73"

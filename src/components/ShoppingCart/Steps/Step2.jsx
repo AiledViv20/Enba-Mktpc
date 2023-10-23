@@ -33,7 +33,7 @@ import StripeForm from '../StripeForm';
 import { usePostDiscountCodeMutation } from '../../../hooks/enbaapi';
 import { toast } from 'react-toastify';
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_SECRET_KEY);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
 const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
     const { breakpoints } = useTheme();

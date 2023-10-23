@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -11,37 +11,71 @@ import {
     useTheme,
     useMediaQuery
 } from '@chakra-ui/react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import { galleryList } from '../../resource/validate';
-import { useEffect } from 'react';
 
-const Gallery = ({ isOpen, onClose }) => {
-    const [current, setCurrent] = useState(0);
+import { Carousel } from '../Carousel/Carousel';
+import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+
+const Gallery = ({ isOpen, onClose, selectGallery }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
-    const [img, setImg] = useState(galleryList[0].imgUrl);
+    const [current, setCurrent] = useState(0);
+    const [dotClicked, setDotClicked] = useState(false);
+    const [slides, setSlides] = useState([]);
+
+    useEffect(() => {
+        if (slides.length === 0) {
+            const filterSlides = galleryList.filter(item => item.id === selectGallery);
+            setSlides(filterSlides[0].images);
+        }
+    }, []);
+
+    const [screenSize, getDimension] = useState({
+        winWidth: window.innerWidth,
+        winHeight: window.innerHeight,
+    });
+    
+    const setDimensions = () => {
+        getDimension({
+            winWidth: window.innerWidth,
+            winHeight: window.innerHeight,
+        });
+    };
+
+    useEffect(() => {
+        if (!dotClicked) {
+          const intervalId = setInterval(() => {
+            if (current === slides.length-1) {
+              setCurrent(0);
+            } else {
+              setCurrent(current + 1);
+            }
+          }, 5000);
+        
+          return () => clearInterval(intervalId);
+        }
+    }, [dotClicked, current, slides.length]);
+
+    useEffect(() => {
+        window.addEventListener("resize", setDimensions);
+    
+        return () => {
+            window.removeEventListener("resize", setDimensions);
+        };
+    }, [screenSize]);
 
     const changeBanner = (num) => {
-        let filterImg = [];
-        if (num > 8) {
-            filterImg = galleryList.filter(item => item.id === (current - 1));
-            setImg(filterImg[0].imgUrl);
+        const numLimit = selectGallery === 4 ? 1 : 2;
+        if (num > numLimit) {
             setCurrent(0);
         } else if (num < 0) {
-            filterImg = galleryList.filter(item => item.id === 8);
-            setImg(filterImg[0].imgUrl);
-            setCurrent(8);
-        } else {
-            filterImg = galleryList.filter(item => item.id === current);
-            setImg(filterImg[0].imgUrl);
+            setCurrent(numLimit);
+        }
+         else {
             setCurrent(num);
         }
     }
-
-    useEffect(() => {
-        changeBanner(current);
-    }, [current]);
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} size='4xl'>
@@ -70,14 +104,20 @@ const Gallery = ({ isOpen, onClose }) => {
                                 shadow="md"
                                 transitionDuration=".3s"
                                 _hover={{ shadow: "lg" }}
-                                onClick={() => setCurrent(current - 1)}
+                                onClick={() => changeBanner(current - 1)}
                                 position="relative"
                                 right={14}
                                 bg="#FFF"
                                 zIndex="2"
                             />
                         </Flex>
-                        <img src={img} width='96%' height='534px' alt='img' />
+                        <Flex justifyContent={"center"}>
+                            <Carousel current={current}>
+                                { slides.map((slide, idx) => (
+                                    <img key={idx} src={slide.imgUrl} width='100%' height='534px' alt='img' />
+                                ))}
+                            </Carousel>
+                        </Flex>
                         <Flex
                             display={isGreaterThanMd ? "flex" : "none"}
                             justifyContent="flex-end"
@@ -97,7 +137,7 @@ const Gallery = ({ isOpen, onClose }) => {
                                 shadow="md"
                                 transitionDuration=".3s"
                                 _hover={{ shadow: "lg" }}
-                                onClick={() => setCurrent(current + 1)}
+                                onClick={() => changeBanner(current + 1)}
                                 position="relative"
                                 right={-14}
                                 bg="#FFF"

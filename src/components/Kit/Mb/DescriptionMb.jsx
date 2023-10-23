@@ -16,13 +16,13 @@ import { formatterValue, capitalizeFirstLetter } from '../../../resource/validat
 import { selectKitsList, setKitsList } from '../../../hooks/slices/counterSlice';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
-import icon1 from '../../../assets/icons/fast-delivery.svg';
+
 import icon2 from '../../../assets/icons/package.svg';
 import ModalPrintImage from '../../ModalPrintImage';
 
 import { toast } from 'react-toastify';
 
-const Description = ({ kit = false, previewImage, images, data, colors, colorsProduct }) => {
+const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
     const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 

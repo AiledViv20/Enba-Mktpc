@@ -151,13 +151,13 @@ const QuoteProductMb = () => {
         if (kitsStore.length > 0) {
             setKits(productsStore);
         }
-        if (totalAmountStore > 0) {
+        /* if (totalAmountStore > 0) {
             let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
             dispatch(
                 setTotalAmount({totalAmount: sumTempCalculate})
             )
-        }
+        } */
     }, []);
 
     const validateSteps = () => {

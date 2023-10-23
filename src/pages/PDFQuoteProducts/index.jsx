@@ -1,8 +1,8 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { selectProducts, selectTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts } from '../../hooks/slices/counterSlice';
 import { Flex, IconButton } from '@chakra-ui/react';
 import logo from '../../assets/icons/logo.svg';
 import iconLk from '../../assets/icons/footer/icon-lk.svg';
@@ -18,14 +18,21 @@ import { FaFileDownload } from "react-icons/fa";
 import './styled.scss';
 
 const PDFQuoteProducts = () => {
-    const [showBtn, setShowBtn] = useState(true);
     const pdfRef = useRef();
     const productsStore = useSelector(selectProducts);
-    const totalAmountStore = useSelector(selectTotalAmount);
+
+    function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+        var dataURL = canvas.toDataURL("image/png");
+        return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
+    }
 
     const downloadPDF = () => {
         const input = pdfRef.current;
-        console.log(input);
     
         if (input) {
             html2canvas(input).then((canvas) => {
@@ -39,7 +46,7 @@ const PDFQuoteProducts = () => {
                 const imgX = (pdfWidth - imgWidth * ratio) / 2;
                 const imgY = 30;
                 pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save('invoice.pdf');
+                pdf.save('cotizacion.pdf');
             });
         }
     }
@@ -99,7 +106,7 @@ const PDFQuoteProducts = () => {
                                 <th>Precio Unitario</th>
                                 <th>Total</th>
                             </tr>
-                            {productsStore.length ? productsStore.map((item, idx) => {
+                            {productsStore.length > 0 ? productsStore.map((item, idx) => {
                                 return (
                                     <tr key={idx} className='init-row-img'>
                                         <td className='row-img'>
@@ -114,13 +121,22 @@ const PDFQuoteProducts = () => {
                                 )
                             }) : null}
                         </table>
-                        {console.log(productsStore)}
                     </div>
                 </div>
                 <div class="grid-alert">
                     <div class="alert">
                         <img src={iconInfo} style={{ marginRight: "8px" }} width="24" height="24" alt="icon info" />
-                        <p>Vigencia de la cotización: 15 Días naturales a partir de la fecha de expedición</p>
+                        <p><span style={{ fontWeight: "700" }}>Vigencia de la cotización:</span> 15 Días naturales a partir de la fecha de expedición</p>
+                    </div>
+                </div>
+                <div className='grid-footer'>
+                    <div className='content-footer'>
+                        <p>
+                            Precios vigentes al día en que consulta o descarga esta cotización, los precios se encuentran 
+                            <br />sujetos a cambio sin previo aviso, se sugiere revise la página web frecuentemente. Sujeto a disponibilidad.
+                            <br />
+                            Consulte <a href='/terminos-condiciones'>Términos y Condiciones</a>
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 const express = require('express');
-const stripe = require('stripe')(process.env.TEST_STRIPE_SECRET_KEY);
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
