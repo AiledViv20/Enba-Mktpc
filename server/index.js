@@ -23,6 +23,7 @@ app.post('/api-stripe/procesar-pago', async (req, res) => {
             confirmation_method: 'manual',
             confirm: true,
         });
+        await stripe.paymentIntents.confirm(paymentIntent.id);
         // Responde con el estado del pago
         res.json({ success: true, paymentIntent });
     } catch (error) {
