@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -21,14 +21,14 @@ const PDFQuoteProducts = () => {
     const pdfRef = useRef();
     const productsStore = useSelector(selectProducts);
 
-    function getBase64Image(img) {
-        var canvas = document.createElement("canvas");
+    function getBase64Image(img, idImg) {
+        var canvas = document.getElementById(idImg);
         canvas.width = img.width;
         canvas.height = img.height;
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0);
         var dataURL = canvas.toDataURL("image/png");
-        return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
+        return dataURL;
     }
 
     const downloadPDF = () => {
@@ -47,9 +47,15 @@ const PDFQuoteProducts = () => {
                 const imgY = 30;
                 pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
                 pdf.save('cotizacion.pdf');
+
+                window.close();
             });
         }
     }
+
+    useEffect(() => {
+        downloadPDF();
+    }, []);
     
     return ( 
         <>
@@ -110,7 +116,7 @@ const PDFQuoteProducts = () => {
                                 return (
                                     <tr key={idx} className='init-row-img'>
                                         <td className='row-img'>
-                                            <img src={item.image} width='104px' height='80px' alt='img'/>
+                                            <canvas id={`myCanvas-id${idx}`} width='104px' height='80px' ></canvas>
                                         </td>
                                         <td>{item.quantity}</td>
                                         <td>{capitalizeFirstLetter(item.name)}</td>

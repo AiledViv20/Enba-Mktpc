@@ -462,7 +462,7 @@ const QuoteProductDkts = () => {
                         <Button borderColor={"accent.500"} marginTop={5}
                             fontWeight={600} fontSize={"18px"} 
                             height={"48px"} variant={"outline"}
-                            onClick={() => window.location.href = '/download'}
+                            onClick={() => window.open('/download', '_blank')}
                             isDisabled={validateMinShop() ? true : false}>
                             Descargar cotización
                         </Button>
