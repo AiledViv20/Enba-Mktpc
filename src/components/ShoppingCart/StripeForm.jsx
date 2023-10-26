@@ -15,6 +15,7 @@ import { api } from '../../service';
 
 import { toast } from 'react-toastify';
 
+const API_SECRET_STRIPE = process.env.REACT_APP_STRIPE_SECRET_KEY;
 const StripeForm = () => {
     const totalAmountStore = useSelector(selectTotalAmount);
 
@@ -42,7 +43,10 @@ const StripeForm = () => {
                 const response = await api({
                     method: "post",
                     url: "/api-stripe/procesar-pago",
-                    data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore }
+                    data: { payment_method_id: paymentMethod.id, amount_total: totalAmountStore },
+                    headers: {
+                        'Authorization': `Bearer ${API_SECRET_STRIPE}`
+                    }
                 });
                 const { data, status } = response;
                 if (status === 200 || status === 201) {
@@ -58,7 +62,7 @@ const StripeForm = () => {
                 console.error('Error en la solicitud:', error);
             }
         }
-    };      
+    };
 
     return (
         <form onSubmit={(e) => {

@@ -1,7 +1,10 @@
 const express = require('express');
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const dontev = require('dotenv');
+dontev.config();
+
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 app.use(bodyParser.json());
@@ -23,7 +26,9 @@ app.post('/api-stripe/procesar-pago', async (req, res) => {
             confirmation_method: 'manual',
             confirm: true,
         });
-        await stripe.paymentIntents.confirm(paymentIntent.id);
+        console.log(paymentIntent)
+        const paymentConfirm = await stripe.paymentIntents.confirm(paymentIntent.id);
+        console.log(paymentConfirm)
         // Responde con el estado del pago
         res.json({ success: true, paymentIntent });
     } catch (error) {
