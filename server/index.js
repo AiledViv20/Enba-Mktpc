@@ -25,6 +25,7 @@ app.post('/api-stripe/procesar-pago', async (req, res) => {
             currency: 'MXN',
             confirmation_method: 'manual',
             confirm: true,
+            return_url: 'https://enba.mx/productos/cotizar'
         });
         console.log(paymentIntent)
         const paymentConfirm = await stripe.paymentIntents.confirm(paymentIntent.id);
