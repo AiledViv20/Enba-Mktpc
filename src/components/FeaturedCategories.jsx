@@ -197,6 +197,7 @@ const FeaturedCategories = ({ titleSection, data, props }) => {
                             bg="#E2E2E2"
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page + 1}`}
+                            isDisabled={page >= 1 ? true : false}
                         />
                     </Flex>
                 </Box>

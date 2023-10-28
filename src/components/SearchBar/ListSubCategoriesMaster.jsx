@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Flex,
     Grid,
     GridItem,
     Text
@@ -7,7 +8,7 @@ import {
 
 import { capitalizeFirstLetter } from '../../resource/validate';
 
-const ListSubCategoriesMaster = ({ selectedCategoryMaster, setSelectedCategory }) => {
+const ListSubCategoriesMaster = ({ selectedCategoryMaster, setSelectedCategory, onClose }) => {
 
     const ListSubCategories = (props) => {
         const categoriesList = props.categoriesList;
@@ -18,7 +19,10 @@ const ListSubCategoriesMaster = ({ selectedCategoryMaster, setSelectedCategory }
                         <Text 
                             lineHeight={1.2} fontSize={"13px"} 
                             fontWeight={400} mt={2}
-                            onClick={() => setSelectedCategory(item.category)}
+                            onClick={() => { 
+                                setSelectedCategory(item.category);
+                                
+                            }}
                             _hover={{
                                 cursor: "pointer",
                                 color: "#064A73"
@@ -34,16 +38,22 @@ const ListSubCategoriesMaster = ({ selectedCategoryMaster, setSelectedCategory }
             <Grid templateColumns='repeat(3, 2fr)' gap={5}>
                 {selectedCategoryMaster ? selectedCategoryMaster.master_category.map((element, idx) => (
                     <GridItem w='100%'>
-                        <Text 
-                            mb={2} key={idx}
-                            fontWeight={600}
-                            fontSize={"14px"}
-                            _hover={{
-                                cursor: "default"
-                            }}>
-                            <Text as={"span"}>{capitalizeFirstLetter(element.master_category)}</Text>
+                        <Flex flexDirection={"column"}>
+                            <Text 
+                                mb={2} key={idx}
+                                fontWeight={600}
+                                fontSize={"14px"}
+                                onClick={() => { 
+                                    setSelectedCategory(element.master_category);
+                                    
+                                }}
+                                _hover={{
+                                    cursor: "pointer"
+                                }}>
+                                {capitalizeFirstLetter(element.master_category)}
+                            </Text>
                             <ListSubCategories categoriesList={element.categories}/>
-                        </Text>
+                        </Flex>
                     </GridItem>
                 )) : null}
             </Grid>

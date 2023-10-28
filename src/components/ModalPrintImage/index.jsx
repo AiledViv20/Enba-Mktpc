@@ -21,7 +21,7 @@ import icon3 from '../../assets/icons/printproduct/namelogo.svg';
 import icon4 from '../../assets/icons/printproduct/letterlogo.svg';
 import icon5 from '../../assets/icons/printproduct/creativelogo.svg';
 
-const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
+const ModalPrintImage = ({ isOpen, onClose, category, product = null }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [img, setImg] = useState();
@@ -110,6 +110,18 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                 return icon4;
             default:
                 return icon5;
+        }
+    }
+
+    const ImageProduct = () => {
+        if (category.includes("BOLÍGRAFOS")) {
+            return (
+                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} width={"20px"} height={"10px"} alt='logo'/>
+            )
+        } else {
+            return (
+                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} alt='logo'/>
+            )
         }
     }
 
@@ -242,7 +254,7 @@ const ModalPrintImage = ({ isOpen, onClose, product = null }) => {
                             <Image src={product ? product : ""} alt='img'/>
                         </Flex>
                         <Flex position={"absolute"} justifyContent={"center"}>
-                            <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} alt='logo'/>
+                            <ImageProduct />
                         </Flex>
                     </Flex>
                 </ModalBody>

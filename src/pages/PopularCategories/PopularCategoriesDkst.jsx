@@ -199,7 +199,7 @@ const PopularCategoriesDkst = () => {
                         }
                     })
                     : !loading ?
-                        <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                        <Stack display={"none"} direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
                             <Box textAlign="center" py={6} px={3}>
                                 <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
                                 <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>

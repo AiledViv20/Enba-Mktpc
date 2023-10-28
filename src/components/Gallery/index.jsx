@@ -66,7 +66,15 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
     }, [screenSize]);
 
     const changeBanner = (num) => {
-        const numLimit = selectGallery === 4 ? 1 : 2;
+        let numLimit = selectGallery === 4 ? 1 : 2;
+        if (selectGallery === 0) {
+            numLimit = 6;
+        }
+        else if (selectGallery === 4) {
+            numLimit = 1;
+        } else if (selectGallery !== 4 && selectGallery === 0) {
+            numLimit = 2;
+        }
         if (num > numLimit) {
             setCurrent(0);
         } else if (num < 0) {
@@ -114,7 +122,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
                         <Flex justifyContent={"center"}>
                             <Carousel current={current}>
                                 { slides.map((slide, idx) => (
-                                    <img key={idx} src={slide.imgUrl} width='100%' height='534px' alt='img' />
+                                    <img key={idx} src={slide.imgUrl} style={{ width: "100%", height: "534px" }} alt='img' />
                                 ))}
                             </Carousel>
                         </Flex>
