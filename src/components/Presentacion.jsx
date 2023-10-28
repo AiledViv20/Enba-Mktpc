@@ -23,6 +23,7 @@ import icon1 from '../assets/icons/circle-on.svg';
 import icon2 from '../assets/icons/circle-off.svg';
 
 import SearchBar from './SearchBar';
+import SearchBarResponsive from './SearchBar/SearchBarResponsive';
 
 const Presentacion = (props) => {
     const { breakpoints } = useTheme();
@@ -197,15 +198,28 @@ const Presentacion = (props) => {
                 </Flex>
             </Box>
             <Flex
+                display={isGreaterThanMd ? "flex" : "none"}
                 justifyContent="center"
-                bottom={isGreaterThanMd ? "60" : "40"}
+                bottom={"60"}
                 w="100%"
                 left="0"
                 right="0"
             >
                 <Flex border={"1px solid #C3C3C3"} borderRadius={"0px 10px 10px 10px"}>
                     <SearchBar />
-                </Flex>      
+                </Flex>
+            </Flex>
+            <Flex
+                display={isGreaterThanMd ? "none" : "flex"}
+                justifyContent="center"
+                bottom={"40"}
+                w="100%"
+                left="0"
+                right="0"
+            >
+                <Flex border={"1px solid #C3C3C3"} borderRadius={"0px 10px 10px 10px"}>
+                    <SearchBarResponsive />
+                </Flex>
             </Flex>
         </>
     );

@@ -9,7 +9,8 @@ import {
     Input,
     IconButton,
     useTheme,
-    useMediaQuery
+    useMediaQuery,
+    useDisclosure 
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { capitalizeFirstLetter } from '../../resource/validate';
@@ -18,6 +19,7 @@ import ListSubCategoriesMaster from './ListSubCategoriesMaster';
 
 const SearchBar = () => {
     const { breakpoints } = useTheme();
+    const { isOpen, onClose } = useDisclosure();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
     const [categories, setCategories] = useState(null);
@@ -53,42 +55,48 @@ const SearchBar = () => {
         <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
             <Flex width={isGreaterThanMd ? "30%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} ml={"12px"} borderRadius={"10px 0px 0px 10px"}>
                 <Menu>
-                    <MenuButton 
-                        color={"#000"} fontWeight={500} width={"100%"}
-                        fontSize={"12px"} pl={8} border={"transparent"} bg={"transparent"}
-                        as={Button} margin={0}
-                        _hover={{
-                            cursor: "pointer"
-                        }}>
-                        {capitalizeFirstLetter(categoryLabel)}
-                    </MenuButton>
-                    <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"830px"} p={0}>
-                        <Flex width={"100%"} h={"100%"}>
-                            <Flex width={"30%"} h={"100%"} flexDirection={"column"}>
-                                {categories && categories.map((e, idx) => (
-                                    <Flex pt={2} border={"1px solid #AFAFAF"} pl={3} 
-                                        borderTopColor={"transparent"}
-                                        borderLeftColor={"transparent"}>
-                                        <Text 
-                                            key={idx}
-                                            mb={2} 
-                                            fontSize={"14px"}
-                                            _hover={{
-                                                cursor: "pointer"
-                                            }}
-                                            onClick={() => setSelectedCategoryGeneral(e.general_category)}>
-                                            {capitalizeFirstLetter(e.general_category)}
-                                        </Text>
+                    {({ isOpen }) => (
+                        <>
+                            <MenuButton 
+                                isActive={isOpen}
+                                color={"#000"} fontWeight={500} width={"100%"}
+                                fontSize={"12px"} pl={8} border={"transparent"} bg={"transparent"}
+                                as={Button} margin={0}
+                                _hover={{
+                                    cursor: "pointer"
+                                }}>
+                                {capitalizeFirstLetter(categoryLabel)}
+                            </MenuButton>
+                                <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"830px"} p={0}>
+                                <Flex width={"100%"} h={"100%"}>
+                                    <Flex width={"30%"} h={"100%"} flexDirection={"column"}>
+                                        {categories && categories.map((e, idx) => (
+                                            <Flex pt={2} border={"1px solid #AFAFAF"} pl={3} 
+                                                borderTopColor={"transparent"}
+                                                borderLeftColor={"transparent"}>
+                                                <Text 
+                                                    key={idx}
+                                                    mb={2} 
+                                                    fontSize={"14px"}
+                                                    _hover={{
+                                                        cursor: "pointer"
+                                                    }}
+                                                    onClick={() => setSelectedCategoryGeneral(e.general_category)}>
+                                                    {capitalizeFirstLetter(e.general_category)}
+                                                </Text>
+                                            </Flex>
+                                        ))}
                                     </Flex>
-                                ))}
-                            </Flex>
-                            <Flex width={"70%"} zIndex={1} pt={2} pl={3}>
-                                <ListSubCategoriesMaster 
-                                    selectedCategoryMaster={selectedCategoryMaster}
-                                    setSelectedCategory={setSelectedCategory} />
-                            </Flex>
-                        </Flex>
-                    </MenuList>
+                                    <Flex width={"70%"} zIndex={1} pt={2} pl={3}>
+                                        <ListSubCategoriesMaster 
+                                            onClose={onClose}
+                                            selectedCategoryMaster={selectedCategoryMaster}
+                                            setSelectedCategory={setSelectedCategory} />
+                                    </Flex>
+                                </Flex>
+                            </MenuList>
+                        </>
+                    )}
                 </Menu>
             </Flex>
             <Flex width={"1%"} bg={"#EFEFEF"} margin={"10px 0px"}>
@@ -120,27 +128,3 @@ const SearchBar = () => {
 }
  
 export default SearchBar;
-
-
-/*
-
-<Select 
-    fontSize={"12px"}
-    placeholder={isGreaterThanMd ? 'Todas las categorías' : 'Categorías'}
-    value={selectedCategory}
-    border={"transparent"}
-    focusBorderColor="transparent"
-    onChange={e => setSelectedCategory(e.target.value)}
-    icon={<ChevronDownIcon />}>
-        {
-            categories && (
-                categories.map((e, idx) => {
-                    return (
-                        <option key={idx} value={e.category}>{capitalizeFirstLetter(e.category)}</option>
-                    )  
-                })
-            )
-        }
-</Select>
-
-*/
