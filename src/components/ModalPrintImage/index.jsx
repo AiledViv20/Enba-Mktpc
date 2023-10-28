@@ -114,7 +114,7 @@ const ModalPrintImage = ({ isOpen, onClose, category, product = null }) => {
     }
 
     const ImageProduct = () => {
-        if (category.includes("BOLÍGRAFOS")) {
+        if (category.includes("BOLÍGRAFO")) {
             return (
                 <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} width={"20px"} height={"10px"} alt='logo'/>
             )
