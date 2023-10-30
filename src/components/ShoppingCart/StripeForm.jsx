@@ -40,7 +40,8 @@ const StripeForm = () => {
         } else {
             // Envía el ID del método de pago a tu servidor para completar la transacción
             try {
-                const amountCents = totalAmountStore * 100;
+                let amountCents = totalAmountStore * 100;
+                amountCents = parseInt(amountCents);
                 const response = await api({
                     method: "post",
                     url: "/api-stripe/procesar-pago",
