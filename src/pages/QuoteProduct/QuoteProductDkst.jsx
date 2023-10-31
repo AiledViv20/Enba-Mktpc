@@ -37,6 +37,7 @@ const QuoteProductDkts = () => {
         postal_code: "",
         external_number: "",
         internal_number: "",
+        address: "",
         max_delivery_date: "",
         comments: "",
         pay_method: "",
@@ -66,7 +67,7 @@ const QuoteProductDkts = () => {
         if (createOrder.name === "" || createOrder.last_name === "" || 
             createOrder.email === "" || createOrder.phone === "" || 
             createOrder.state === "" || createOrder.city === "" ||
-            createOrder.postal_code === "" || createOrder.external_number === "" ||
+            createOrder.postal_code === "" || createOrder.address === "" || createOrder.external_number === "" ||
             createOrder.max_delivery_date === "" || createOrder.comments === "") {
             toast.error("¡Es necesario llenar todos los campos antes de continuar!", {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -374,7 +375,8 @@ const QuoteProductDkts = () => {
                     setLogoInfo={setLogoInfo}
                     validateStep1={validateStep1}
                     isLoadingStep1={isLoadingStep1}
-                    handleSubmit={handleSubmit} />
+                    handleSubmit={handleSubmit}
+                    categoryPrintImg={productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
                     step2={steps.step2}
                     value={value}

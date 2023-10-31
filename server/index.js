@@ -1,6 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const axios = require('axios');
+const fs = require('fs');
+const { promisify } = require('util');
+const readFile = promisify(fs.readFile);
 const dontev = require('dotenv');
 dontev.config();
 
@@ -36,6 +40,20 @@ app.post('/api-stripe/procesar-pago', async (req, res) => {
         console.error(error);
         res.json({ success: false, error: error.message });
     }
+});
+
+app.post('/api-img-convert', async (req, res) => {
+    const { imgUrl } = req.body;
+  
+      try {
+            const response = await axios.get(imgUrl, { responseType: 'arraybuffer' });
+            const imageBuffer = Buffer.from(response.data, 'binary');
+            const base64Image = imageBuffer.toString('base64');
+            res.json({ success: true, base64Image });
+      } catch (error) {
+          console.error(error);
+          res.json({ success: false, error: error.message });
+      }
 });
 
 app.listen(3001, () => {

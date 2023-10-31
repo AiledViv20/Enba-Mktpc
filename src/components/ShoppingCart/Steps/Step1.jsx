@@ -9,7 +9,7 @@ import {
 } from '@chakra-ui/react';
 import ModalPrintImage from '../../ModalPrintImage';
 
-const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, validateStep1, isLoadingStep1, handleSubmit }) => {
+const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, validateStep1, isLoadingStep1, handleSubmit, categoryPrintImg }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleChange = (e) => {
@@ -43,11 +43,12 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
             </Flex>
             <Flex mb={3} zIndex={1}>
                 <Input name='postal_code' onChange={handleChange} value={createOrder.postal_code} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Código postal' mr={5} />
-                <Input name='internal_number' onChange={handleChange} value={createOrder.internal_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Interior' mr={2} />
-                <Input name='external_number' onChange={handleChange} value={createOrder.external_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Exterior' />
+                <Input name='external_number' onChange={handleChange} value={createOrder.external_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Exterior' mr={2} />
+                <Input name='internal_number' onChange={handleChange} value={createOrder.internal_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Interior'  />
             </Flex>
             <Flex zIndex={1}>
-                <Input name='max_delivery_date' onChange={handleChange} value={createOrder.max_delivery_date} fontSize={"14px"} width={"100%"} height={"48px"} placeholder='Fecha máxima de entrega (¿Cuándo necesita el pedido?)' />
+                <Input name='address' onChange={handleChange} value={createOrder.address} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Calle' mr={5} />
+                <Input name='max_delivery_date' onChange={handleChange} value={createOrder.max_delivery_date} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Fecha máxima de entrega' />
             </Flex>
             <Flex mt={10} mb={3} zIndex={1}>
                 <Flex flexDirection={"column"} justifyContent={"center"}>
@@ -65,6 +66,7 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
                 <ModalPrintImage 
                     isOpen={isOpen}
                     onClose={onClose}
+                    category={categoryPrintImg}
                     product={productsStore[0]?.productsPreview[0]?.images?.images_item[0]} />
                 : null
             }

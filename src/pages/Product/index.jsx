@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { 
     Box,
     useTheme,
-    useMediaQuery,
-    Flex
+    useMediaQuery
 } from '@chakra-ui/react';
 
 import { useParams } from 'react-router-dom';

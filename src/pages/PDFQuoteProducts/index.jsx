@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
@@ -16,45 +16,67 @@ import { capitalizeFirstLetter, formatterValue } from '../../resource/validate';
 import { FaFileDownload } from "react-icons/fa";
 
 import './styled.scss';
+import { api } from '../../service';
 
-const PDFQuoteProducts = () => {
+const PDFQuoteProducts =  () => {
     const pdfRef = useRef();
     const productsStore = useSelector(selectProducts);
+    const [products, setProducts] = useState([]);
 
-    function getBase64Image(img, idImg) {
-        var canvas = document.getElementById(idImg);
-        canvas.width = img.width;
-        canvas.height = img.height;
-        var ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        var dataURL = canvas.toDataURL("image/png");
-        return dataURL;
-    }
-
-    const downloadPDF = () => {
+    const downloadPDF = async () => {
         const input = pdfRef.current;
     
         if (input) {
-            html2canvas(input).then((canvas) => {
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF('p', 'mm', 'a4', true);
-                const pdfWidth = pdf.internal.pageSize.getWidth();
-                const pdfHeight = pdf.internal.pageSize.getHeight();
-                const imgWidth = canvas.width;
-                const imgHeight = canvas.height;
-                const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
-                const imgX = (pdfWidth - imgWidth * ratio) / 2;
-                const imgY = 30;
-                pdf.addImage(imgData, 'PNG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
-                pdf.save('cotizacion.pdf');
-
-                window.close();
-            });
+            const canvas = await html2canvas(input);
+            const imgData = canvas.toDataURL('image/jpeg');
+            const pdf = new jsPDF('p', 'mm', 'a4', true);
+            const pdfWidth = pdf.internal.pageSize.getWidth();
+            const pdfHeight = pdf.internal.pageSize.getHeight();
+            const imgWidth = canvas.width;
+            const imgHeight = canvas.height;
+            const ratio = Math.min(pdfWidth / imgWidth, pdfHeight / imgHeight);
+            const imgX = (pdfWidth - imgWidth * ratio) / 2;
+            const imgY = 30;
+            pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
+            pdf.save('cotizacion.pdf');
         }
     }
 
+    const imgB64 = async (url) => {
+        try {
+            const response = await api({
+                method: "post",
+                url: "/api-img-convert",
+                data: { imgUrl: url }
+            });
+            const { data } = response;
+            if (data) {
+                return data.base64Image;
+            } else {
+                return 'https://cdn.pixabay.com/photo/2022/01/17/22/20/subtract-6945896_1280.png';
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
+    };
+
     useEffect(() => {
-        downloadPDF();
+        const updateProductsWithImages = async () => {
+            let imageB64 = '';
+            if (productsStore.length > 0) {
+                const imgPromises = productsStore.map(async (element) => {
+                    imageB64 = await imgB64(element.image);
+                    return {
+                        ...element,
+                        imageB64
+                    };
+                });
+                const productsWithImages = await Promise.all(imgPromises);
+                setProducts(productsWithImages);
+            }
+        };
+        updateProductsWithImages();
+        //downloadPDF();
     }, []);
     
     return ( 
@@ -112,20 +134,22 @@ const PDFQuoteProducts = () => {
                                 <th>Precio Unitario</th>
                                 <th>Total</th>
                             </tr>
-                            {productsStore.length > 0 ? productsStore.map((item, idx) => {
+                            {productsStore.length > 0 && products.length > 0 ? productsStore.map((item, idx) => {
                                 return (
                                     <tr key={idx} className='init-row-img'>
                                         <td className='row-img'>
-                                            <canvas id={`myCanvas-id${idx}`} width='104px' height='80px' ></canvas>
+                                            {console.log(products[idx].imageB64)}
+                                            <img src={`data:image/jpeg;base64,${products[idx].imageB64}`} width='104px' height='80px' alt='img' />
                                         </td>
                                         <td>{item.quantity}</td>
                                         <td>{capitalizeFirstLetter(item.name)}</td>
-                                        <td>{item.color}</td>
+                                        <td>{capitalizeFirstLetter(item.color)}</td>
                                         <td>{formatterValue(item.unit_price)}</td>
                                         <td>{formatterValue(item.total_price)}</td>
                                     </tr>
                                 )
                             }) : null}
+                            {}
                         </table>
                     </div>
                 </div>

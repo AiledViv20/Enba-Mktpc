@@ -168,52 +168,284 @@ export const listSearchCategories = [
 
 export const colors_dict = [
     {
-        color: 'AZUL MARINO',
-        hex: "#064A73",
-    },
-    {
-        color: 'VERDE',
-        hex: "#6ACC47",
-    },
-    {
         color: 'AMARILLO',
         hex: "#FFD200",
     },
     {
-        color: 'NARANJA',
-        hex: "#FE983D",
+        color: 'AMARILLO METALICO',
+        hex: "#FFFF00",
     },
     {
-        color: 'ROSA',
-        hex: "#FE5F5E",
+        color: 'AMARILLO PASTEL',
+        hex: "#FDFD96",
     },
     {
-        color:'ROJO',
-        hex: "#E40000",
+        color: 'AMARILLO TRASLUCIDO',
+        hex: "#FFFF00",
     },
     {
-        color: 'MORADO', 
-        hex: "#800080",
+        color: 'AZUL',
+        hex: "#1A6EA0",
+    },
+    {
+        color: 'AZUL CIELO',
+        hex: "#0CB7F2",
+    },
+    {
+        color: 'AZUL CON VERDE',
+        hex: "#009C8C",
+    },
+    {
+        color: 'AZUL MARINO',
+        hex: "#000080",
+    },
+    {
+        color: 'AZUL METALICO',
+        hex: "#5391C7",
+    },
+    {
+        color: 'AZUL PASTEL',
+        hex: "#B2DAFA",
+    },
+    {
+        color: 'AZUL REY',
+        hex: "#051F61",
+    },
+    {
+        color: 'AZUL TRASLUCIDO',
+        hex: "#58CCE9",
+    },
+    {
+        color: 'BEIGE',
+        hex: "#FFDFC9",
+    },
+    {
+        color: 'BICOLOR',
+        hex: "#3D5B81",
+    },
+    {
+        color: 'BLANCO',
+        hex: "#F7F7F7",
+    },
+    {
+        color: 'BLANCO CON AMARILLO',
+        hex: "#F3F2DA",
+    },
+    {
+        color: 'BLANCO CON AZUL',
+        hex: "#C6DBF0",
+    },
+    {
+        color: 'BLANCO CON GRIS',
+        hex: "#DCDCDC",
+    },
+    {
+        color: 'BLANCO CON NEGRO',
+        hex: "#262626",
+    },
+    {
+        color: 'BLANCO FIESTA',
+        hex: "#E6E6E6",
+    },
+    {
+        color: 'BLANCO FROSTY',
+        hex: "#F2EEEB",
+    },
+    {
+        color: 'BLANCO TRASLUCIDO',
+        hex: "#F7F7F7",
     },
     {
         color: 'CAFE',
         hex: "#C19A6B",
     },
     {
-        color: 'BLANCO',
-        hex: "#FFFFFF",
+        color: 'CASAS',
+        hex: "#444444",
     },
     {
-        color: 'NEGRO',
-        hex: "#000000",
+        color: 'CIRCULOS',
+        hex: "#444444",
+    },
+    {
+        color: 'CIRCULOS AZULES',
+        hex: "#1A6EA0",
+    },
+    {
+        color: 'CUADROS',
+        hex: "#444444",
+    },
+    {
+        color: 'FLORES',
+        hex: "#444444",
     },
     {
         color: 'GRIS',
         hex: "#A4A4A4",
     },
     {
-        color: 'AZUL',
-        hex: "#1A6EA0",
+        color: 'GRIS METALICO',
+        hex: "#E3E4E5",
+    },
+    {
+        color: 'GRIS OXFORD',
+        hex: "#393D42",
+    },
+    {
+        color: 'GRIS TRASLUCIDO',
+        hex: "#A4A4A4",
+    },
+    {
+        color: 'HOJAS',
+        hex: "#B6D23E",
+    },
+    {
+        color: 'HUESO',
+        hex: "#DCBAA4",
+    },
+    {
+        color: 'KAKI',
+        hex: "#D8BD86",
+    },
+    {
+        color: 'MADERA',
+        hex: "#804000",
+    },
+    {
+        color: 'MARMOL',
+        hex: "#FFFCF0",
+    },
+    {
+        color: 'MORADO',
+        hex: "#800080",
+    },
+    {
+        color: 'MORADO PASTEL',
+        hex: "#CCA9DD",
+    },
+    {
+        color: 'MORADO TRASLUCIDO',
+        hex: "#7C369C",
+    },
+    {
+        color: 'MULTICOLOR',
+        hex: "#444444",
+    },
+    {
+        color: 'NARANJA',
+        hex: "#FE983D",
+    },
+    {
+        color: 'NARANJA NEON',
+        hex: "#FE983D",
+    },
+    {
+        color: 'NARANJA TRASLUCIDO',
+        hex: "#FF8B24",
+    },
+    {
+        color: 'NEGRO',
+        hex: "#000000",
+    },
+    {
+        color: 'NEGRO CON PLATA',
+        hex: "#2E2E2E",
+    },
+    {
+        color: 'NEGRO METALICO',
+        hex: "#2D2D2E",
+    },
+    {
+        color: 'NEGRO TRASLUCIDO',
+        hex: "#000000",
+    },
+    {
+        color: 'NULL',
+        hex: "#444444",
+    },
+    {
+        color: 'ORO',
+        hex: "#E8B20F",
+    },
+    {
+        color: 'PLATA',
+        hex: "#DCDDDE",
+    },
+    {
+        color: 'PLATA MATE',
+        hex: "#DCDDDE",
+    },
+    {
+        color: 'PLATA TRASLUCIDO',
+        hex: "#DCDDDE",
+    },
+    {
+        color: 'ROJO',
+        hex: "#E40000",
+    },
+    {
+        color: 'ROJO METALICO',
+        hex: "#E40000",
+    },
+    {
+        color: 'ROJO TRASLUCIDO',
+        hex: "#E40000",
+    },
+    {
+        color: 'ROSA',
+        hex: "#FF91AE",
+    },
+    {
+        color: 'ROSA METALICO',
+        hex: "#FF91AE",
+    },
+    {
+        color: 'ROSA NEON',
+        hex: "#FF91AE",
+    },
+    {
+        color: 'ROSA PASTEL',
+        hex: "#F7BAC5",
+    },
+    {
+        color: 'ROSA TRASLUCIDO',
+        hex: "#FE5F5E",
+    },
+    {
+        color: 'ROSE GOLD',
+        hex: "#B16B75",
+    },
+    {
+        color: 'TINTO',
+        hex: "#5B2028",
+    },
+    {
+        color: 'TORNASOL',
+        hex: "#542261",
+    },
+    {
+        color: 'TRANSPARENTE',
+        hex: "#F7F7F7",
+    },
+    {
+        color: 'VERDE',
+        hex: "#6ACC47",
+    },
+    {
+        color: 'VERDE METALICO',
+        hex: "#6ACC47",
+    },
+    {
+        color: 'VERDE NEON',
+        hex: "#6ACC47",
+    },
+    {
+        color: 'VERDE  PASTEL',
+        hex: "#B7E5B0",
+    },
+    {
+        color: 'VERDE TRASLUCIDO',
+        hex: "#6ACC47",
     },
 ];
 

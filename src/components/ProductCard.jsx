@@ -30,7 +30,7 @@ const ProductCard = ({ product }) => {
     return ( 
         <Container key={product.id} margin="0" gap="0" padding="0">
             <Box
-                w="294px"
+                w="280px"
                 h="410px"
                 m="2"
                 bg={"#FFF"}
