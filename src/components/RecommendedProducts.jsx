@@ -127,7 +127,7 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
                         {titleSection}
                     </Text>
                 </Flex>
-                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={1} color={"accent.500"}>
+                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={-1} color={"accent.500"}>
                     <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
                 </Flex>
                 <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={"absolute"}>
@@ -196,7 +196,7 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
                             onClick={() => setPage(page + 1)}
                             position="relative"
                             left={{ base: "-6", md: 0 }}
-                            isDisabled={products.length < 4 ? true : false}
+                            isDisabled={page >= 3 ? true : false}
                             bg="#E2E2E2"
                             zIndex="2"
                             aria-label={`Mostrar productos página: ${page + 1}`}

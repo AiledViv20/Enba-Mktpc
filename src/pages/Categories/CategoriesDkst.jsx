@@ -9,7 +9,8 @@ import {
     Grid,
     Spinner,
     Stack,
-    Heading
+    Heading,
+    GridItem
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
@@ -106,129 +107,133 @@ const CategoriesDkst = () => {
 
     return ( 
         <>
-            <Flex width={"25%"} flexDirection={"column"}>
-                <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
-                    {params_url.category}
-                </Text>
-                <InputGroup border={"transparent"} mt={8}>
-                    <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
-                        placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
-                        _placeholder={{
-                            color: "#383838"
-                        }} 
-                        onChange={(e) => setInputSearch(e.target.value)}
-                    />
-                    <InputRightElement h={"100%"} mr={2}>
-                        <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
-                            onClick={(e) => {
-                                e.preventDefault();
-                                window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
-                            }}>
-                            <SearchIcon color='#FFF' />
+            <Grid
+                templateColumns='repeat(2, 1fr)'
+                gap={4}> 
+                <GridItem>
+                    <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
+                        {params_url.category}
+                    </Text>
+                    <InputGroup border={"transparent"} mt={8} w={"344px"}>
+                        <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
+                            placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
+                            _placeholder={{
+                                color: "#383838"
+                            }} 
+                            onChange={(e) => setInputSearch(e.target.value)}
+                        />
+                        <InputRightElement h={"100%"} mr={2}>
+                            <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
+                                }}>
+                                <SearchIcon color='#FFF' />
+                            </Flex>
+                        </InputRightElement>
+                    </InputGroup>
+                    <Flex mt={8} flexDirection={"column"} w={"344px"}>
+                        <Flex p={"15px"} bg={"#EFEFEF"} borderRadius={"5px 5px 0px 0px"} border={"1px solid #B9B9B9"}>
+                            <Text fontSize={"14px"} fontWeight={600}>Filtros</Text>
                         </Flex>
-                    </InputRightElement>
-                </InputGroup>
-                <Flex mt={8} flexDirection={"column"}>
-                    <Flex p={"15px"} bg={"#EFEFEF"} borderRadius={"5px 5px 0px 0px"} border={"1px solid #B9B9B9"}>
-                        <Text fontSize={"14px"} fontWeight={600}>Filtros</Text>
-                    </Flex>
-                    <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
-                        <Flex flexDirection={"column"} pl={"15px"}>
-                            <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
-                            {filterList && filterList.map((element, idx) => (
-                                <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        window.location.href = `/categoria/${element.category.toUpperCase()}`;
-                                    }}>{capitalizeFirstLetter(element.category)}</Text>
-                            ))}
-                            <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
-                        </Flex>
-                        <Flex
-                            justifyContent="center"
-                            w="100%">
-                            {colors.map((item, index) => (
-                            <Text
-                                key={`color-${index}`}
-                                marginRight={"2px"}
-                                cursor="pointer"
-                                fontSize={"55px"}
-                                color={item.hex}
-                                onClick={() => {
-                                    setColorSelected(item.color);
-                                }}
-                            >
-                                &#9679;
-                            </Text>
-                            ))}
-                        </Flex>
-                        <Flex
-                            justifyContent="center"
-                            w="100%">
-                            {colors_complement.map((item, index) => (
-                            <Text
-                                key={`color-${index}`}
-                                marginRight={"2px"}
-                                cursor="pointer"
-                                fontSize={"55px"}
-                                color={item.hex}
-                                onClick={() => {
-                                    setColorSelected(item.color);
-                                }}
-                            >
-                                &#9679;
-                            </Text>
-                            ))}
-                        </Flex>
-                        <Flex mt={3} display={colorSelected !== "" ? "flex" : "none"} pl={5} >
-                            <Text fontSize={"14px"} fontWeight={600}>Búsqueda en:</Text>
-                            <Text fontWeight={400} ml={2}>{capitalizeFirstLetter(colorSelected)}</Text>
-                        </Flex>
-                    </Flex>
-                </Flex>
-            </Flex>
-            <Flex width={"75%"} flexDirection={"column"}>
-                <Flex pl={10} pb={10}>
-                    <ArticlesPerPage />
-                    <OrderBy />
-                </Flex>
-                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {loading ?
-                        <Spinner mt={20} /> : null
-                    }
-                </Grid>
-                <Grid templateColumns={products.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products.length > 0 && !loading ? products.map((item, idx) => {
-                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
-                            return(
-                                <Flex key={idx}>
-                                    <ProductCard product={item} />
-                                </Flex>
-                            )
-                        }
-                    })
-                    : !loading ?
-                        <Stack display={"none"} direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
-                            <Box textAlign="center" py={6} px={3}>
-                                <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                                <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                                    Oops!
-                                </Heading>
-                                <Text fontSize="sm" color={"gray.500"}>
-                                    Lo sentimos, no se encontraron productos, <br/>
-                                    intenta con otra categoría.
+                        <Flex flexDirection={"column"} bg={"#EFEFEF"} pb={"15px"} pt={"25px"} borderRadius={"0px 0px 5px 5px"} border={"1px solid #B9B9B9"}>
+                            <Flex flexDirection={"column"} pl={"15px"}>
+                                <Text fontSize={"14px"} fontWeight={600} mb={5}>Tipo de producto</Text>
+                                {filterList && filterList.map((element, idx) => (
+                                    <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            window.location.href = `/categoria/${element.category.toUpperCase()}`;
+                                        }}>{capitalizeFirstLetter(element.category)}</Text>
+                                ))}
+                                <Text fontSize={"14px"} fontWeight={600} mt={2} cursor={'pointer'}>Color</Text>
+                            </Flex>
+                            <Flex
+                                justifyContent="center"
+                                w="100%">
+                                {colors.map((item, index) => (
+                                <Text
+                                    key={`color-${index}`}
+                                    marginRight={"2px"}
+                                    cursor="pointer"
+                                    fontSize={"55px"}
+                                    color={item.hex}
+                                    onClick={() => {
+                                        setColorSelected(item.color);
+                                    }}
+                                >
+                                    &#9679;
                                 </Text>
-                            </Box>
-                        </Stack> : null
-                    }
-                </Grid>
-                {products.length > 0 && !isLoading ? 
-                    <Flex mt={10} pl={10}>
+                                ))}
+                            </Flex>
+                            <Flex
+                                justifyContent="center"
+                                w="100%">
+                                {colors_complement.map((item, index) => (
+                                <Text
+                                    key={`color-${index}`}
+                                    marginRight={"2px"}
+                                    cursor="pointer"
+                                    fontSize={"55px"}
+                                    color={item.hex}
+                                    onClick={() => {
+                                        setColorSelected(item.color);
+                                    }}
+                                >
+                                    &#9679;
+                                </Text>
+                                ))}
+                            </Flex>
+                            <Flex mt={3} display={colorSelected !== "" ? "flex" : "none"} pl={5} >
+                                <Text fontSize={"14px"} fontWeight={600}>Búsqueda en:</Text>
+                                <Text fontWeight={400} ml={2}>{capitalizeFirstLetter(colorSelected)}</Text>
+                            </Flex>
+                        </Flex>
+                    </Flex>
+                </GridItem>
+                <GridItem>
+                    <Flex pl={10} pb={10}>
                         <ArticlesPerPage />
                         <OrderBy />
                     </Flex>
-                : null}
-            </Flex>
+                    <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
+                        {loading ?
+                            <Spinner mt={20} /> : null
+                        }
+                    </Grid>
+                    <Grid templateColumns={products.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}>
+                        {products.length > 0 && !loading ? products.map((item, idx) => {
+                            if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                                return(
+                                    <GridItem key={idx}>
+                                        <ProductCard product={item} />
+                                    </GridItem>
+                                )
+                            }
+                        })
+                        : !loading ?
+                            <Stack display={"none"} direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                                <Box textAlign="center" py={6} px={3}>
+                                    <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
+                                    <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
+                                        Oops!
+                                    </Heading>
+                                    <Text fontSize="sm" color={"gray.500"}>
+                                        Lo sentimos, no se encontraron productos, <br/>
+                                        intenta con otra categoría.
+                                    </Text>
+                                </Box>
+                            </Stack> : null
+                        }
+                    </Grid>
+                    {products.length > 0 && !isLoading ? 
+                        <Flex mt={10} pl={10}>
+                            <ArticlesPerPage />
+                            <OrderBy />
+                        </Flex>
+                    : null}
+                </GridItem>
+            </Grid>
         </>
     );
 }

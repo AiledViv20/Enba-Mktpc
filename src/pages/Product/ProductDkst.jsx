@@ -9,7 +9,7 @@ import { colors_dict } from '../../resource';
 import Miniature from '../../components/ProductSelect/Miniature';
 import Description from '../../components/ProductSelect/Description';
 import { useParams } from 'react-router-dom';
-import { useGetProductQuery, useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetProductQuery } from '../../hooks/enbaapi';
 
 import Characteristics from '../../components/ProductSelect/Characteristics';
 

@@ -2,6 +2,7 @@ import React from 'react';
 import {
     Grid,
     GridItem,
+    Flex,
     Text
 } from '@chakra-ui/react';
 
@@ -34,16 +35,21 @@ const ListSubCategoriesMaster = ({ selectedCategoryMaster }) => {
             <Grid templateColumns='repeat(3, 2fr)' gap={5}>
                 {selectedCategoryMaster ? selectedCategoryMaster.master_category.map((element, idx) => (
                     <GridItem w='100%'>
-                        <Text 
-                            mb={2} key={idx}
-                            fontWeight={600}
-                            fontSize={"14px"}
-                            _hover={{
-                                cursor: "default"
-                            }}>
-                            <Text as={"span"}>{capitalizeFirstLetter(element.master_category)}</Text>
+                        <Flex flexDirection={"column"}>
+                            <Text 
+                                mb={2} key={idx}
+                                fontWeight={600}
+                                fontSize={"14px"}
+                                onClick={() => {
+                                    window.location.href = `/categoria/${element.master_category}`
+                                }}
+                                _hover={{
+                                    cursor: "pointer"
+                                }}>
+                                {capitalizeFirstLetter(element.master_category)}
+                            </Text>
                             <ListSubCategories categoriesList={element.categories}/>
-                        </Text>
+                        </Flex>
                     </GridItem>
                 )) : null}
             </Grid>

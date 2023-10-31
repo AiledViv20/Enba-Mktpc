@@ -27,9 +27,9 @@ export const  capitalizeFirstLetter = (text) => {
 }
 
 export const galleryList = [
-    { id: 0, images: [ { id: 1, imgUrl: g1 }, { id: 2, imgUrl: g6 }, { id: 3, imgUrl: g10 }, { id: 4, imgUrl: g11 }, { id: 5, imgUrl: g12 }, { id: 6, imgUrl: g13 } ] },
+    { id: 0, images: [ { id: 1, imgUrl: g1 }, { id: 2, imgUrl: g6 }, { id: 3, imgUrl: g10 }, { id: 4, imgUrl: g11 }, { id: 5, imgUrl: g12 } ] },
     { id: 1, images: [ { id: 1, imgUrl: g2 }, { id: 2, imgUrl: g7 } ]  },
-    { id: 2, images: [ { id: 1, imgUrl: g3 }, { id: 2, imgUrl: g8 } ]  },
+    { id: 2, images: [ { id: 1, imgUrl: g3 }, { id: 2, imgUrl: g8 }, { id: 3, imgUrl: g13 } ]  },
     { id: 3, images: [ { id: 1, imgUrl: g4 }, { id: 2, imgUrl: g9 } ] },
     { id: 4, images: [ { id: 1, imgUrl: g5 } ] }
 ]

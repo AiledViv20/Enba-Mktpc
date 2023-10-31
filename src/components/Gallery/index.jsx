@@ -66,9 +66,26 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
     }, [screenSize]);
 
     const changeBanner = (num) => {
-        let numLimit = selectGallery === 4 ? 1 : 2;
+        let numLimit = 0;
+        switch (selectGallery) {
+            case 0:
+                numLimit = 5;
+                break;
+            case 1:
+            case 3:
+                numLimit = 2;
+                break;
+            case 2:
+                numLimit = 3;
+                break;
+            case 4:
+                numLimit = 1;
+                break;
+            default:
+                break;
+        }
         if (selectGallery === 0) {
-            numLimit = 6;
+            
         }
         else if (selectGallery === 4) {
             numLimit = 1;

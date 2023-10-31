@@ -67,7 +67,7 @@ const SearchBar = () => {
                                 }}>
                                 {capitalizeFirstLetter(categoryLabel)}
                             </MenuButton>
-                                <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"830px"} p={0}>
+                                <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"800px"} p={0}>
                                 <Flex width={"100%"} h={"100%"}>
                                     <Flex width={"30%"} h={"100%"} flexDirection={"column"}>
                                         {categories && categories.map((e, idx) => (
