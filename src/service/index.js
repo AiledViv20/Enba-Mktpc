@@ -13,13 +13,3 @@ export const api = ({ data, method, url, responseType }) => {
         },
     })
 }
-
-export const apiB64 = ({ data, method, url, responseType }) => {
-    return axios({
-        baseURL: "https://enba.mx/",
-        data,
-        method,
-        url,
-        responseType
-    })
-}
