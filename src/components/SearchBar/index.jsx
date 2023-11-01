@@ -19,7 +19,7 @@ import ListSubCategoriesMaster from './ListSubCategoriesMaster';
 
 const SearchBar = () => {
     const { breakpoints } = useTheme();
-    const { isOpen, onClose } = useDisclosure();
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
     const [categories, setCategories] = useState(null);
@@ -29,6 +29,10 @@ const SearchBar = () => {
     const [selectedCategory, setSelectedCategory] = useState('Todas');
     const [categoryLabel, setCategoryLabel] = useState('Todas las categorías');
     const [keySearch, setKeySearch] = useState('');
+
+    const closeMenu = () => {
+        onClose();
+    };
 
     useEffect(() => {
         if(categoriesList){
@@ -54,11 +58,12 @@ const SearchBar = () => {
     return ( 
         <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
             <Flex width={isGreaterThanMd ? "30%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} ml={"12px"} borderRadius={"10px 0px 0px 10px"}>
-                <Menu>
-                    {({ isOpen }) => (
+                <Menu isOpen={isOpen}>
+                    {() => (
                         <>
                             <MenuButton 
                                 isActive={isOpen}
+                                onClick={isOpen ? onClose : onOpen}
                                 color={"#000"} fontWeight={500} width={"100%"}
                                 fontSize={"12px"} pl={8} border={"transparent"} bg={"transparent"}
                                 as={Button} margin={0}
@@ -89,7 +94,7 @@ const SearchBar = () => {
                                     </Flex>
                                     <Flex width={"70%"} zIndex={1} pt={2} pl={3}>
                                         <ListSubCategoriesMaster 
-                                            onClose={onClose}
+                                            closeMenu={closeMenu}
                                             selectedCategoryMaster={selectedCategoryMaster}
                                             setSelectedCategory={setSelectedCategory} />
                                     </Flex>

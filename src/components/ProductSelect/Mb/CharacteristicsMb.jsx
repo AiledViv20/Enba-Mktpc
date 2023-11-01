@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import { useSelector, useDispatch } from 'react-redux';
 import { 
     Flex,
@@ -13,16 +12,22 @@ import {
     Input,
     Switch,
     Button,
-    Select
+    Select,
+    Radio, 
+    RadioGroup,
+    Stack
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { formatterValue, capitalizeFirstLetter } from '../../../resource/validate';
-import { selectProducts, 
+import { 
+    selectProducts, 
     setProducts, 
     selectTotalAmount, 
     setTotalAmount 
 } from '../../../hooks/slices/counterSlice';
 import './styled.scss';
+
+import { toast } from 'react-toastify';
 
 const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
     const [selectTab, setSelectTab] = useState({
@@ -37,7 +42,10 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
 
     const [isSwitchOn, setIsSwitchOn] = useState(false);
     const [total, setTotal] = useState(0);
+    const [sumPrint, setSumPrint] = useState(0);
+    const [typeSumPrint, setTypeSumPrint] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
+    const [radioBtnValue, setRadioBtnValue] = useState('1');
     const [values, setValues] = useState({
         amount: null,
         unitPrice: null
@@ -72,38 +80,170 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
     }
     
     const handleSubmit = () => {
-        const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
-        const product = {
-            sku: filterItem[0].sku,
-            code_item: filterItem[0].code,
-            unit_price: parseFloat(filterItem[0].retail_price),
-            total_price: total.toFixed(2),
-            quantity: values.amount,
-            name: data.name,
-            category: data.category,
-            color: selectedColor.toUpperCase(),
-            image: previewImage,
-            productsPreview: filterItem
+        if (isSwitchOn) {
+            if (values.amount >= 50) {
+                if (filterTypePrint(data.printing.printing_technique) === "") {
+                    if (radioBtnValue === "1") {
+                        setTypeSumPrint('Láser');
+                        if (values.amount >= 50 && values.amount <= 99) {
+                            setSumPrint(25);
+                        } else if (values.amount >= 100) {
+                            setSumPrint(15);
+                        }
+                    } else {
+                        setTypeSumPrint('Serigrafía');
+                        if (values.amount >= 50 && values.amount <= 99) {
+                            setSumPrint(8);
+                        } else if (values.amount >= 100 && values.amount <= 149) {
+                            setSumPrint(5);
+                        } else if (values.amount >= 150) {
+                            setSumPrint(3);
+                        }
+                    }
+                } else {
+                    const listStrTemp = data.printing.printing_technique.split(" ");
+                    if (listStrTemp.includes('Láser')) {
+                        setTypeSumPrint('Láser');
+                        if (values.amount >= 50 && values.amount <= 99) {
+                            setSumPrint(25);
+                        } else if (values.amount >= 100) {
+                            setSumPrint(15);
+                        }
+                    } else if (listStrTemp.includes('Serigrafía')) {
+                        setTypeSumPrint('Serigrafía');
+                        if (values.amount >= 50 && values.amount <= 99) {
+                            setSumPrint(8);
+                        } else if (values.amount >= 100 && values.amount <= 149) {
+                            setSumPrint(5);
+                        } else if (values.amount >= 150) {
+                            setSumPrint(3);
+                        }
+                    }
+                }
+                const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
+                const product = {
+                    sku: filterItem[0].sku,
+                    code_item: filterItem[0].code,
+                    unit_price: parseFloat(filterItem[0].retail_price),
+                    total_price: total.toFixed(2) + (sumPrint * values.amount),
+                    quantity: values.amount,
+                    name: data.name,
+                    category: data.category,
+                    color: selectedColor.toUpperCase(),
+                    image: previewImage,
+                    productsPreview: filterItem,
+                    printing: { type: typeSumPrint, price:  sumPrint }
+                }
+                dispatch(
+                    setProducts({products: [
+                        ...productsStore, product
+                    ]})
+                );
+                dispatch(
+                    setTotalAmount({totalAmount: totalAmountStore + total})
+                );
+                toast.success("¡Se ha agregado correctamente el nuevo producto!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            } else {
+                toast.error("¡Para productos con personalización, el mínimo de compra debe ser de 50 piezas!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
+        } else {
+            const filterItem = data.items?.filter(element => element.color === selectedColor.toUpperCase());
+            const product = {
+                sku: filterItem[0].sku,
+                code_item: filterItem[0].code,
+                unit_price: parseFloat(filterItem[0].retail_price),
+                total_price: total.toFixed(2),
+                quantity: values.amount,
+                name: data.name,
+                category: data.category,
+                color: selectedColor.toUpperCase(),
+                image: previewImage,
+                productsPreview: filterItem
+            }
+            dispatch(
+                setProducts({products: [
+                    ...productsStore, product
+                ]})
+            );
+            dispatch(
+                setTotalAmount({totalAmount: totalAmountStore + total})
+            );
+            toast.success("¡Se ha agregado correctamente el nuevo producto!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
         }
-        dispatch(
-            setProducts({products: [
-                ...productsStore, product
-            ]})
-        );
-        dispatch(
-            setTotalAmount({totalAmount: totalAmountStore + total})
-        );
-        toast.success("¡Se ha agregado correctamente el nuevo producto!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
     }
 
     useEffect(() => {
         if (values.amount > 0 && values.unitPrice > 0) {
-            let sumTotalProduct = values.amount * values.unitPrice;
-            setTotal(sumTotalProduct);
+            var temp2 = 0;
+            if (isSwitchOn) {
+                if (values.amount >= 50) {
+                    if (filterTypePrint(data.printing.printing_technique) === "") {
+                        if (radioBtnValue === "1") {
+                            setTypeSumPrint('Láser');
+                            if (values.amount >= 50 && values.amount <= 99) {
+                                setSumPrint(25);
+                                temp2 = 25;
+                            } else if (values.amount >= 100) {
+                                setSumPrint(15);
+                                temp2 = 15;
+                            }
+                        } else {
+                            setTypeSumPrint('Serigrafía');
+                            if (values.amount >= 50 && values.amount <= 99) {
+                                setSumPrint(8);
+                                temp2 = 8;
+                            } else if (values.amount >= 100 && values.amount <= 149) {
+                                setSumPrint(5);
+                                temp2 = 5;
+                            } else if (values.amount >= 150) {
+                                setSumPrint(3);
+                                temp2 = 3;
+                            }
+                        }
+                    } else {
+                        const listStrTemp = data.printing.printing_technique.split(" ");
+                        if (listStrTemp.includes('Láser')) {
+                            setTypeSumPrint('Láser');
+                            if (values.amount >= 50 && values.amount <= 99) {
+                                setSumPrint(25);
+                                temp2 = 25;
+                            } else if (values.amount >= 100) {
+                                setSumPrint(15);
+                                temp2 = 15;
+                            }
+                        } else if (listStrTemp.includes('Serigrafía')) {
+                            setTypeSumPrint('Serigrafía');
+                            if (values.amount >= 50 && values.amount <= 99) {
+                                setSumPrint(8);
+                                temp2 = 8;
+                            } else if (values.amount >= 100 && values.amount <= 149) {
+                                setSumPrint(5);
+                                temp2 = 5;
+                            } else if (values.amount >= 150) {
+                                setSumPrint(3);
+                                temp2 = 3;
+                            }
+                        }
+                    }
+                    let sumTotalProduct = values.amount * values.unitPrice + (temp2 * values.amount);
+                    setTotal(sumTotalProduct);
+                } else {
+                    toast.error("¡Para productos con personalización, el mínimo de compra debe ser de 50 piezas!", {
+                        position: toast.POSITION.BOTTOM_RIGHT
+                    });
+                }
+            } else {
+                let sumTotalProduct = values.amount * values.unitPrice;
+                setTotal(sumTotalProduct);
+            }
         }
-    }, [values]);
+    }, [values, isSwitchOn, radioBtnValue]);
 
     const handleChangeTab = (num) => {
         switch (num) {
@@ -143,7 +283,13 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
     }
 
     const filterTypePrint = (str) => {
-        const listStr = str.split(" ");
+        const listStr = str.split("/");
+        const listStrMap = listStr.map((element) => {
+            return element.replace(/\s/g, '');
+        })
+        if (listStrMap.includes('Láser') && listStrMap.includes('Serigrafía')) {
+            return "";
+        }
         return listStr[0];
     }
 
@@ -199,7 +345,17 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
                                 </Flex>
                                 <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"}>
-                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>{" "}{filterTypePrint(data.printing.printing_technique)}</Text>
+                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>
+                                            {" "}{filterTypePrint(data.printing.printing_technique)}
+                                        </Text>
+                                        {filterTypePrint(data.printing.printing_technique) === "" ?
+                                            <RadioGroup mt={5} onChange={setRadioBtnValue} value={radioBtnValue}>
+                                                <Stack direction='column'>
+                                                    <Radio value='1'>Láser</Radio>
+                                                    <Radio value='2'>Serigrafía</Radio>
+                                                </Stack>
+                                            </RadioGroup>
+                                        : null}
                                     </Flex>
                                 </Flex>
                                 <Flex mt={5} width={"100%"} justifyContent={"end"}>

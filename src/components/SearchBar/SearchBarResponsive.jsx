@@ -8,8 +8,10 @@ import {
     useMediaQuery
 } from '@chakra-ui/react';
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
-import { useGetCategoriesQuery } from '../../hooks/enbaapi';
 import { capitalizeFirstLetter } from '../../resource/validate';
+
+import { categoriesList } from '../../resource/save';
+import SearchBarMasterResponsive from './SearchBarMasterResponsive';
 
 const SearchBarResponsive = () => {
     const { breakpoints } = useTheme();
@@ -17,13 +19,12 @@ const SearchBarResponsive = () => {
     const [selectedCategory, setSelectedCategory] = useState('Todas');
     const [keySearch, setKeySearch] = useState('');
     const [categories, setCategories] = useState(null);
-    const {data, isLoading, error} = useGetCategoriesQuery();
-    useEffect(() => {
-        if(data){
-            setCategories(data);
-        }
 
-    },[data]);
+    useEffect(() => {
+        if(categoriesList){
+            setCategories(categoriesList);
+        }
+    },[categoriesList]);
     
     return ( 
         <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
@@ -44,7 +45,10 @@ const SearchBarResponsive = () => {
                             categories && (
                                 categories.map((e, idx) => {
                                     return (
-                                        <option key={idx} value={e.category}>{capitalizeFirstLetter(e.category)}</option>
+                                        <>
+                                            <option key={idx} value={e.general_category} disabled>{capitalizeFirstLetter(e.general_category)}</option>
+                                            <SearchBarMasterResponsive categoriesMaster={e.master_category} />
+                                        </>
                                     )  
                                 })
                             )

@@ -10,7 +10,6 @@ import {
     TabPanel,
     TabIndicator,
     Input,
-    Switch,
     Button,
     Select
 } from '@chakra-ui/react';
@@ -30,7 +29,6 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
         tab3: false,
         tab4: false
     });
-    const [isSwitchOn, setIsSwitchOn] = useState(false);
     const [total, setTotal] = useState("");
     const [selectedColor, setSelectedColor] = useState('');
     const [values, setValues] = useState({
@@ -47,10 +45,6 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             });
         }
     }, []);
-
-    const handleSwitchChange = () => {
-        setIsSwitchOn(!isSwitchOn);
-    };
 
     const validateData = () => {
         if (selectedColor !== "" && values.amount > 0 && values.unitPrice > 0) {
@@ -79,7 +73,8 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
             category: data.category,
             color: selectedColor,
             image: previewImage,
-            productsPreview: filterItem
+            productsPreview: filterItem,
+            printing: { type: "ninguno", price:  0 }
         }
         dispatch(
             setKitsList({kitsList: [
@@ -135,11 +130,6 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
         }
     }
 
-    const filterTypePrint = (str) => {
-        const listStr = str.split(" ");
-        return listStr[0];
-    }
-
     return ( 
         <Flex color={"#424242"} fontSize={"16px"} flexDirection={"column"} mb={10} width={"100%"}>
             <Flex flexDirection={"column"} display={kit ? "none" : "flex"}>
@@ -193,11 +183,6 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                                         name='unitPrice' type='number' 
                                         onChange={handleChange} value={values.unitPrice} fontSize={"14px"} 
                                         width={"100%"} height={"56px"} placeholder='Precio unitario' disabled/>
-                                </Flex>
-                                <Flex mt={6} display={isSwitchOn ? "flex" : "none"} width={"100%"} justifyContent={"end"}>
-                                    <Flex flexDirection={"column"}>
-                                        <Text fontWeight={400}><Text as={"b"}>Tipo de impresión:</Text>{" "}{filterTypePrint(data.printing.printing_technique)}</Text>
-                                    </Flex>
                                 </Flex>
                                 <Flex mt={5} width={"100%"} justifyContent={"end"}>
                                     <Flex flexDirection={"column"} textAlign={"end"} width={"100%"}>

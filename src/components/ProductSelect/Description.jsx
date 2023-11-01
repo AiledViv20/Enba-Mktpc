@@ -94,7 +94,8 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
                 category: data.category,
                 color: selectColor.toUpperCase(),
                 image: previewImage,
-                productsPreview: filterItem
+                productsPreview: filterItem,
+                printing: { type: "ninguno", price:  0 }
             }
             dispatch(
                 setProducts({products: [

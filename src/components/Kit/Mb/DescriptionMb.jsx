@@ -84,7 +84,8 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
             category: data.category,
             color: selectColor,
             image: previewImage,
-            productsPreview: filterItem
+            productsPreview: filterItem,
+            printing: { type: "ninguno", price:  0 }
         }
         dispatch(
             setKitsList({kitsList: [

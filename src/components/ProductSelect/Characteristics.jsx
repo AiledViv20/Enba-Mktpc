@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -20,7 +19,12 @@ import {
 } from '@chakra-ui/react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
-
+import { 
+    selectProducts, 
+    setProducts, 
+    selectTotalAmount, 
+    setTotalAmount 
+} from '../../hooks/slices/counterSlice';
 import TablePrice from '../TablePrice';
 
 import { toast } from 'react-toastify';
@@ -33,8 +37,9 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
     const [total, setTotal] = useState(0);
     const [sumPrint, setSumPrint] = useState(0);
+    const [typeSumPrint, setTypeSumPrint] = useState('');
     const [selectedColor, setSelectedColor] = useState('');
-    const [radioBtnValue, setRadioBtnValue] = useState('1')
+    const [radioBtnValue, setRadioBtnValue] = useState('1');
     const [values, setValues] = useState({
         amount: null,
         unitPrice: null
@@ -73,12 +78,14 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
             if (values.amount >= 50) {
                 if (filterTypePrint(data.printing.printing_technique) === "") {
                     if (radioBtnValue === "1") {
+                        setTypeSumPrint('Láser');
                         if (values.amount >= 50 && values.amount <= 99) {
                             setSumPrint(25);
                         } else if (values.amount >= 100) {
                             setSumPrint(15);
                         }
                     } else {
+                        setTypeSumPrint('Serigrafía');
                         if (values.amount >= 50 && values.amount <= 99) {
                             setSumPrint(8);
                         } else if (values.amount >= 100 && values.amount <= 149) {
@@ -90,12 +97,14 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                 } else {
                     const listStrTemp = data.printing.printing_technique.split(" ");
                     if (listStrTemp.includes('Láser')) {
+                        setTypeSumPrint('Láser');
                         if (values.amount >= 50 && values.amount <= 99) {
                             setSumPrint(25);
                         } else if (values.amount >= 100) {
                             setSumPrint(15);
                         }
                     } else if (listStrTemp.includes('Serigrafía')) {
+                        setTypeSumPrint('Serigrafía');
                         if (values.amount >= 50 && values.amount <= 99) {
                             setSumPrint(8);
                         } else if (values.amount >= 100 && values.amount <= 149) {
@@ -116,9 +125,9 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                     category: data.category,
                     color: selectedColor.toUpperCase(),
                     image: previewImage,
-                    productsPreview: filterItem
+                    productsPreview: filterItem,
+                    printing: { type: typeSumPrint, price:  sumPrint }
                 }
-                console.log(product);
                 dispatch(
                     setProducts({products: [
                         ...productsStore, product
@@ -167,10 +176,10 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
         if (values.amount > 0 && values.unitPrice > 0) {
             var temp2 = 0;
             if (isSwitchOn) {
-                console.log("cambio de valor a on");
                 if (values.amount >= 50) {
                     if (filterTypePrint(data.printing.printing_technique) === "") {
                         if (radioBtnValue === "1") {
+                            setTypeSumPrint('Láser');
                             if (values.amount >= 50 && values.amount <= 99) {
                                 setSumPrint(25);
                                 temp2 = 25;
@@ -179,6 +188,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                                 temp2 = 15;
                             }
                         } else {
+                            setTypeSumPrint('Serigrafía');
                             if (values.amount >= 50 && values.amount <= 99) {
                                 setSumPrint(8);
                                 temp2 = 8;
@@ -193,6 +203,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                     } else {
                         const listStrTemp = data.printing.printing_technique.split(" ");
                         if (listStrTemp.includes('Láser')) {
+                            setTypeSumPrint('Láser');
                             if (values.amount >= 50 && values.amount <= 99) {
                                 setSumPrint(25);
                                 temp2 = 25;
@@ -201,6 +212,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                                 temp2 = 15;
                             }
                         } else if (listStrTemp.includes('Serigrafía')) {
+                            setTypeSumPrint('Serigrafía');
                             if (values.amount >= 50 && values.amount <= 99) {
                                 setSumPrint(8);
                                 temp2 = 8;
