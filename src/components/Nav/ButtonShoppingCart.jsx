@@ -1,29 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { selectProducts } from '../../hooks/slices/counterSlice';
+import { selectProducts, selectKits } from '../../hooks/slices/counterSlice';
 import { 
     IconButton,
     Text,
-    Flex,
-    useTheme,
-    useMediaQuery
+    Flex
 } from '@chakra-ui/react';
 import { FaShoppingCart } from 'react-icons/fa';
 
 const ButtonShoppingCart = () => {
-    const { breakpoints } = useTheme();
-    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const productsStore = useSelector(selectProducts);
+    const kitsStore = useSelector(selectKits);
 
     const [numShoppingCart, setNumShoppingCart] = useState(0);
 
     useEffect(() => {
-        setNumShoppingCart(productsStore?.length);
+        setNumShoppingCart(productsStore?.length + kitsStore?.length);
     }, []);
 
     useEffect(() => {
-        setNumShoppingCart(productsStore?.length);
-    }, [productsStore]);
+        setNumShoppingCart(productsStore?.length + kitsStore?.length);
+    }, [productsStore, kitsStore]);
 
     return (
         <Flex alignItems={"center"} position={"relative"}>
