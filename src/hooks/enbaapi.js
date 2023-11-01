@@ -4,6 +4,7 @@ export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
         baseUrl: 'https://api.enba.mx/',
+        // baseUrl: 'http://localhost:4005/',
     }),
     tagTypes: [
         "search",
@@ -190,6 +191,15 @@ export const enbaApi = createApi({
               };
           },
         }),
+        postTransformImage: build.mutation({
+          query: (body) => {
+              return {
+                  url: `inventory/images/transform`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        })
     }),
 })
 
@@ -210,5 +220,6 @@ export const {
     usePostCreateInvoiceMutation,
     usePostProofMutation,
     usePostDiscountCodeMutation,
+    usePostTransformImageMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi
