@@ -110,7 +110,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                     sku: filterItem[0].sku,
                     code_item: filterItem[0].code,
                     unit_price: parseFloat(filterItem[0].retail_price),
-                    total_price: total.toFixed(2) + sumPrint,
+                    total_price: total.toFixed(2) + (sumPrint * values.amount),
                     quantity: values.amount,
                     name: data.name,
                     category: data.category,
@@ -213,7 +213,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                             }
                         }
                     }
-                    let sumTotalProduct = values.amount * values.unitPrice + temp2;
+                    let sumTotalProduct = values.amount * values.unitPrice + (temp2 * values.amount);
                     setTotal(sumTotalProduct);
                 } else {
                     toast.error("¡Para productos con personalización, el mínimo de compra debe ser de 50 piezas!", {
