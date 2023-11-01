@@ -43,7 +43,7 @@ const CategoriesDkst = () => {
         page: page,
         color: colorSelected,
         category: param_category,
-        name: inputSearch ? inputSearch : param_category,
+        name: inputSearch ? inputSearch : "",
         order: state.order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);

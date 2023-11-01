@@ -15,7 +15,6 @@ import KitCard from './KitCard';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 import { WarningTwoIcon } from "@chakra-ui/icons";
-import { useGetKitsQuery } from '../hooks/enbaapi';
 import axios from 'axios';
 
 const CardsRenderer = (products, status) => {

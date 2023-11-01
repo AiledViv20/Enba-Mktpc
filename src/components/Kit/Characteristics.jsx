@@ -122,10 +122,6 @@ const Characteristics = ({ kit = false, data, colorsProduct, previewImage }) => 
                     <TabPanels>
                         <TabPanel>
                             <Flex width={"100%"} flexDirection={"column"}>
-                                <Flex width={"100%"} alignItems={"center"} justifyContent={"end"}>
-                                    <Text fontWeight={400}>Agregar impresión</Text>
-                                    <Switch ml={3} size='lg' isChecked={isSwitchOn} onChange={handleSwitchChange}/>
-                                </Flex>
                                 <Flex mt={5} justifyContent={"end"}>
                                     <Select 
                                         fontSize={"14px"} mr={5}

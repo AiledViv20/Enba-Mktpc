@@ -31,7 +31,11 @@ const InfoKitMb = () => {
     useEffect(() => {
         if(kit){
             setProduct(kit);
-            setShowKitIncludes(kit.products);
+            if (kit.products.length <= 3) {
+                setShowKitIncludes(kit.replacements);
+            } else {
+                setShowKitIncludes(kit.products);
+            }
             if (kit.replacements) {
                 setShowAddOthersKits(kit.replacements);
             }
