@@ -22,7 +22,7 @@ const Footer = () => {
     return (
         <>
             <FooterMb />
-            <Flex display={isGreaterThanMd ? "flex" : "none"} flexDirection={"column"} borderTop={"1px solid #E3E3E3"}>
+            <Flex display={isGreaterThanMd ? "flex" : "none"} w={"100%"} flexDirection={"column"} borderTop={"1px solid #E3E3E3"}>
                 <Flex color={"#424242"} padding={"3rem"} pt={"1.5rem"}>
                     <Flex width={isGreaterThanMd ? "33%" : "100% !important"} justifyContent={isGreaterThanMd ? "start" : "center"} height={"fit-content"}>
                         <Stack direction='column'>
