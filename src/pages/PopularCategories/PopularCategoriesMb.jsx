@@ -30,6 +30,8 @@ import { WarningTwoIcon } from "@chakra-ui/icons";
 
 import { CardFilterContext } from '../../context';
 
+import iconNotFound from '../../assets/icons/design.svg';
+
 const PopularCategoriesMb = () => {
     const params_url = useParams();
     const [products, setProducts] = useState([]);
@@ -209,18 +211,17 @@ const PopularCategoriesMb = () => {
                         }
                     })
                     : 
-                        <Stack display={"none"} direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
-                            <Box textAlign="center" py={6} px={3}>
-                                <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                                <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                                    Oops!
-                                </Heading>
-                                <Text fontSize="sm" color={"gray.500"}>
-                                    Lo sentimos, no se encontraron productos, <br/>
-                                    intenta con otra categoría.
-                                </Text>
-                            </Box>
-                        </Stack>
+                    <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                        <Box textAlign="center" py={6} px={3}>
+                            <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
+                            <Heading as="h2" size="lg" mt={6} mb={2} color={"accent.500"}>
+                                Página no encontrada
+                            </Heading>
+                            <Text fontSize="sm" color={"gray.500"}>
+                                No hemos podido encontrar la pagina que buscas
+                            </Text>
+                        </Box>
+                    </Stack>
                     }
                 </Grid>
             </Flex>

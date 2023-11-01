@@ -52,6 +52,7 @@ const StripeForm = () => {
                 });
                 const { data, status } = response;
                 if (status === 200 || status === 201) {
+                    window.open('/pago-completado', '_blank');
                     toast.success("¡Tu pago se ha realizado correctamente!", {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });

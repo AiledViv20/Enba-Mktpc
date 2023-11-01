@@ -1,15 +1,12 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { 
-    Flex, 
-    Box, 
+    Flex,
     Text,
     InputGroup,
     Input,
     InputRightElement,
     Grid,
-    Spinner,
-    Stack,
-    Heading
+    Spinner
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
@@ -21,9 +18,9 @@ import OrderBy from '../../components/filters/OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
-import { WarningTwoIcon } from "@chakra-ui/icons";
-
 import { CardFilterContext } from '../../context';
+
+import iconNotFound from '../../assets/icons/design.svg';
 
 const PopularCategoriesDkst = () => {
     const params_url = useParams();
@@ -199,20 +196,23 @@ const PopularCategoriesDkst = () => {
                         }
                     })
                     : !loading ?
-                        <Stack display={"none"} direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
-                            <Box textAlign="center" py={6} px={3}>
-                                <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                                <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                                    Oops!
-                                </Heading>
-                                <Text fontSize="sm" color={"gray.500"}>
-                                    Lo sentimos, no se encontraron productos, <br/>
-                                    intenta con otra categoría.
-                                </Text>
-                            </Box>
-                        </Stack> : null
+                        <></> : null
                     }
                 </Grid>
+                {!loading ?
+                    <Flex w={"840px"}>
+                        <Flex>
+                            <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
+                        </Flex>
+                        <Flex flexDirection={"column"}>
+                            <Text lineHeight={1.2} fontSize={"25px"}>
+                                <Text as={"b"}>Página no encontrada</Text><br />
+                                No hemos podido encontrar la pagina que buscas
+                            </Text>
+                        </Flex>
+                    </Flex>
+                    : null
+                }
                 {products.length > 0 && !isLoading ? 
                     <Flex mt={10} pl={10}>
                         <ArticlesPerPage />

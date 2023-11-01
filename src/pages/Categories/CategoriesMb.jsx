@@ -26,9 +26,9 @@ import OrderBy from '../../components/filters/OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
-import { WarningTwoIcon } from "@chakra-ui/icons";
-
 import { CardFilterContext } from '../../context';
+
+import iconNotFound from '../../assets/icons/design.svg';
 
 const CategoriesMb = () => {
     const params_url = useParams();
@@ -221,15 +221,14 @@ const CategoriesMb = () => {
                         }
                     })
                     : 
-                        <Stack display={"none"} direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                        <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
                             <Box textAlign="center" py={6} px={3}>
-                                <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                                <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                                    Oops!
+                                <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
+                                <Heading as="h2" size="lg" mt={6} mb={2} color={"accent.500"}>
+                                    Página no encontrada
                                 </Heading>
                                 <Text fontSize="sm" color={"gray.500"}>
-                                    Lo sentimos, no se encontraron productos, <br/>
-                                    intenta con otra categoría.
+                                    No hemos podido encontrar la pagina que buscas
                                 </Text>
                             </Box>
                         </Stack>

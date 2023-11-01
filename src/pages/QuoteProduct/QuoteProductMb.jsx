@@ -222,7 +222,8 @@ const QuoteProductMb = () => {
                     sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
                     code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
                     total_kits: kitsStore.length,
-                    items: itemsCalculate
+                    items: itemsCalculate,
+                    printing: productsQuote[0].printing
                 }
             } else {
                 calculateOrder = {
@@ -231,7 +232,8 @@ const QuoteProductMb = () => {
                     code_kit: null,
                     total_kits: null,
                     discount_code: createOrder.discount_code,
-                    items: itemsCalculate
+                    items: itemsCalculate,
+                    printing: productsQuote[0].printing
                 }
             }
             postCalculateOrder(calculateOrder).then(res => {
