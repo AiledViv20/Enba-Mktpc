@@ -17,7 +17,6 @@ import { capitalizeFirstLetter, formatterValue } from '../../resource/validate';
 import { FaFileDownload } from "react-icons/fa";
 
 import './styled.scss';
-import { apiB64 } from '../../service';
 
 const PDFQuoteProducts =  () => {
     const pdfRef = useRef();
