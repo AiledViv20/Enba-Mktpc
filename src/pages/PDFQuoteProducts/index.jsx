@@ -28,7 +28,6 @@ const PDFQuoteProducts =  () => {
 
     const downloadPDF = async () => {
         const input = pdfRef.current;
-        console.log(input)
         if (input) {
             const canvas = await html2canvas(input);
             const imgData = canvas.toDataURL('image/jpeg');
@@ -42,6 +41,7 @@ const PDFQuoteProducts =  () => {
             const imgY = 30;
             pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
             pdf.save('cotizacion.pdf');
+            window.close();
             setOnClosePdf(true);
         }
     }
@@ -73,9 +73,7 @@ const PDFQuoteProducts =  () => {
                     imageB64
                 };
             });
-            console.log(imgPromises)
             const productsWithImages = await Promise.all(imgPromises);
-            console.log(productsWithImages)
             setProducts(productsWithImages);
             setIsLoading(false);
         }else{
@@ -84,10 +82,9 @@ const PDFQuoteProducts =  () => {
     };
 
     useEffect(()=>{
-        if(pdfRef.current){
-            downloadPDF()
-        }
-    },[pdfRef.current])
+        console.log(pdfRef)
+        downloadPDF()
+    },[isLoading])
 
     useEffect(() => {
         if (onClosePdf) {
