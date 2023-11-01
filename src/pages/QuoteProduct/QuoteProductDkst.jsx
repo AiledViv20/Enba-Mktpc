@@ -304,6 +304,7 @@ const QuoteProductDkts = () => {
         formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : null);
         formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : null);
         formData.append("items", JSON.stringify(itemsCalculate));
+        formData.append("printing", JSON.stringify(productsQuote[0].printing));
         postCreateOrder(formData).then(res => {
             if (res.data) {
                 toast.success("¡Tus orden de compra fue creada correctamente!", {

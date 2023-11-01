@@ -8,8 +8,9 @@ import {
     useMediaQuery
 } from '@chakra-ui/react';
 import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
-import { useGetCategoriesQuery } from '../../hooks/enbaapi';
 import { capitalizeFirstLetter } from '../../resource/validate';
+
+import { categoriesList } from '../../resource/save';
 
 const SearchBarResponsive = () => {
     const { breakpoints } = useTheme();
@@ -17,13 +18,12 @@ const SearchBarResponsive = () => {
     const [selectedCategory, setSelectedCategory] = useState('Todas');
     const [keySearch, setKeySearch] = useState('');
     const [categories, setCategories] = useState(null);
-    const {data, isLoading, error} = useGetCategoriesQuery();
-    useEffect(() => {
-        if(data){
-            setCategories(data);
-        }
 
-    },[data]);
+    useEffect(() => {
+        if(categoriesList){
+            setCategories(categoriesList);
+        }
+    },[categoriesList]);
     
     return ( 
         <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
@@ -40,6 +40,7 @@ const SearchBarResponsive = () => {
                         maxH: "50px", // Establece la altura máxima que desees
                         overflowY: "auto", // Agrega desplazamiento vertical si es necesario
                       }}>
+                        {console.log(categories)}
                         {
                             categories && (
                                 categories.map((e, idx) => {
