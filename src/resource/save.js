@@ -258,7 +258,7 @@ export const categoriesList =  [
             {
                 categories: [
                     {
-                        category: "PARAGUAS E IMPERMEABLES"
+                        category: "PARAGUAS E IMPERMEABLE"
                     }
                 ],
                 master_category: "PARAGUAS"

@@ -71,30 +71,17 @@ const KitCard = ({ product }) => {
                 >
                     -5% en la compra del kit
                 </Tag>
-                {imgList.length >= 4 && (
-                    <Grid templateColumns='repeat(2, 2fr)'w={"100%"} h={"196px"}>
-                        <GridItem>
+                <Grid templateColumns='repeat(2, 2fr)' w={"100%"} h={"196px"}>
+                    {imgList.length >= 4 && imgList.map((item, idx) => (
+                        item.imgUrl ? (
+                        <GridItem key={idx}>
                             <Flex w={"100%"} justifyContent={"center"}>
-                                <Image w={"96px"} h={"96px"} src={imgList[0].imgUrl} alt={"kit1"} />
+                            <Image w={"96px"} h={"96px"} src={item.imgUrl} alt={"kit1"} />
                             </Flex>
                         </GridItem>
-                        <GridItem>
-                            <Flex w={"100%"} justifyContent={"center"}>
-                                <Image w={"96px"} h={"96px"} src={imgList[1].imgUrl} alt={"kit2"} />
-                            </Flex>
-                        </GridItem>
-                        <GridItem>
-                            <Flex w={"100%"} justifyContent={"center"}>
-                                <Image w={"96px"} h={"96px"} src={imgList[2].imgUrl} alt={"kit3"} />
-                            </Flex>
-                        </GridItem>
-                        <GridItem>
-                            <Flex w={"100%"} justifyContent={"center"}>
-                                <Image w={"96px"} h={"96px"} src={imgList[3].imgUrl} alt={"kit4"} />
-                            </Flex>
-                        </GridItem>
-                    </Grid>
-                )}
+                        ) : null
+                    ))}
+                </Grid>
                 <Flex direction="column" px="4" pt="5" pb="1">
                     <Box
                         title={product.name.toLowerCase()} textAlign={"center"}>

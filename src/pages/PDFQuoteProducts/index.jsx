@@ -16,12 +16,13 @@ import { capitalizeFirstLetter, formatterValue } from '../../resource/validate';
 import { FaFileDownload } from "react-icons/fa";
 
 import './styled.scss';
-import { api } from '../../service';
+import { apiB64 } from '../../service';
 
 const PDFQuoteProducts =  () => {
     const pdfRef = useRef();
     const productsStore = useSelector(selectProducts);
     const [products, setProducts] = useState([]);
+    const [onClosePdf, setOnClosePdf] = useState(false);
 
     const downloadPDF = async () => {
         const input = pdfRef.current;
@@ -39,12 +40,13 @@ const PDFQuoteProducts =  () => {
             const imgY = 30;
             pdf.addImage(imgData, 'JPEG', imgX, imgY, imgWidth * ratio, imgHeight * ratio);
             pdf.save('cotizacion.pdf');
+            setOnClosePdf(true);
         }
     }
 
     const imgB64 = async (url) => {
         try {
-            const response = await api({
+            const response = await apiB64({
                 method: "post",
                 url: "/api-img-convert",
                 data: { imgUrl: url }
@@ -78,6 +80,12 @@ const PDFQuoteProducts =  () => {
         updateProductsWithImages();
         //downloadPDF();
     }, []);
+
+    useEffect(() => {
+        if (onClosePdf) {
+            //window.close();
+        }
+    }, [onClosePdf])
     
     return ( 
         <>

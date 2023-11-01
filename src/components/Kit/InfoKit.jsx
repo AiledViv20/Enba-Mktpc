@@ -3,7 +3,7 @@ import {
     Flex
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
-import Miniature from '../ProductSelect/Miniature';
+import Miniature from './Miniature';
 import Description from './Description';
 import DescriptionKit from './DescriptionKit';
 import Characteristics from './Characteristics';
@@ -33,7 +33,11 @@ const InfoKit = () => {
     useEffect(() => {
         if(kit){
             setProduct(kit);
-            setShowKitIncludes(kit.products);
+            if (kit.products.length <= 3) {
+                setShowKitIncludes(kit.replacements);
+            } else {
+                setShowKitIncludes(kit.products);
+            }
             if (kit.replacements) {
                 setShowAddOthersKits(kit.replacements);
             }
@@ -137,7 +141,7 @@ const InfoKit = () => {
             {
                 product && (
                     <Flex p={10} justifyContent={"space-between"}>
-                        <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                        <Miniature images={showKitIncludes} setImg={setImg} setIdx={setIdx} idx={idx}/>
                         <Flex pl={10} width={"442px"} height={"442px"}>
                             <Gallery 
                                 showKitIncludes={showKitIncludes} />

@@ -54,7 +54,7 @@ const QuoteProductDkts = () => {
     const [isLoadingStep1, setIsLoadingStep1] = useState(false);
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
     const [subTotalSum, setSubTotalSum] = useState(0);
-    const [notFirstSum, setNotFirstSum] = useState(true);
+    const [sumTotalOrder, setSumTotalOrder] = useState(0);
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -145,7 +145,7 @@ const QuoteProductDkts = () => {
         if (totalAmountStore <= 3000) {
             return 199;
         } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
-            return 99;   
+            return 99;
         } else if (totalAmountStore > 10000) {
             return 0;
         }
@@ -158,16 +158,10 @@ const QuoteProductDkts = () => {
         }
         if (totalAmountStore > 0) {
             setSubTotalSum(totalAmountStore);
-        }
-        /* if (totalAmountStore > 0 && notFirstSum) {
-            setSubTotalSum(totalAmountStore);
             let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
-            dispatch(
-                setTotalAmount({totalAmount: sumTempCalculate})
-            )
-            setNotFirstSum(false)
-        } */
+            setSumTotalOrder(sumTempCalculate);
+        }
     }, []);
 
     const validateSteps = () => {
@@ -437,7 +431,7 @@ const QuoteProductDkts = () => {
                             <Text fontSize={"20px"} fontWeight={600}>Total</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"20px"} fontWeight={600}>{formatterValue(totalAmountStore)}</Text>
+                            <Text fontSize={"20px"} fontWeight={600}>{formatterValue(sumTotalOrder)}</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} flexDirection={"column"} zIndex={1} display={num === 1 || num === 2 ? "flex" : "none"}>
