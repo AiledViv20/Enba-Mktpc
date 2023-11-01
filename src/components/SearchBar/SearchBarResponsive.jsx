@@ -11,6 +11,7 @@ import { ChevronDownIcon, SearchIcon } from '@chakra-ui/icons';
 import { capitalizeFirstLetter } from '../../resource/validate';
 
 import { categoriesList } from '../../resource/save';
+import SearchBarMasterResponsive from './SearchBarMasterResponsive';
 
 const SearchBarResponsive = () => {
     const { breakpoints } = useTheme();
@@ -40,12 +41,14 @@ const SearchBarResponsive = () => {
                         maxH: "50px", // Establece la altura máxima que desees
                         overflowY: "auto", // Agrega desplazamiento vertical si es necesario
                       }}>
-                        {console.log(categories)}
                         {
                             categories && (
                                 categories.map((e, idx) => {
                                     return (
-                                        <option key={idx} value={e.category}>{capitalizeFirstLetter(e.category)}</option>
+                                        <>
+                                            <option key={idx} value={e.general_category} disabled>{capitalizeFirstLetter(e.general_category)}</option>
+                                            <SearchBarMasterResponsive categoriesMaster={e.master_category} />
+                                        </>
                                     )  
                                 })
                             )
