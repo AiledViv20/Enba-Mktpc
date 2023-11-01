@@ -1,37 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectKitsList, setKitsList } from '../../hooks/slices/counterSlice';
+import { selectKits, setKits, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
     Button,
     IconButton,
-    Image,
-    Tooltip,
     useDisclosure,
     Input,
-    Alert,
-    AlertIcon
 } from '@chakra-ui/react';
-import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
+import { formatterValue } from '../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 
-import icon2 from '../../assets/icons/package.svg';
 import ModalPrintImage from '../ModalPrintImage';
 
 import { toast } from 'react-toastify';
 
 import { useParams } from 'react-router-dom';
+import ButtonOpenModalKit from './ButtonOpenModalKit';
 
-const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
+const Description = ({ kit, showKitIncludes, images }) => {
     const params_url = useParams();
-    const kitsListStore = useSelector(selectKitsList);
+    const kitsStore = useSelector(selectKits);
+    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectColor, setSelectColor] = useState(null);
-    const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
     const [values, setValues] = useState({
         num: 0
@@ -43,6 +38,16 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
         }) 
     }
 
+    useEffect(() => {
+        if (values.num === 0) {
+            let sumTotalKit = 0;
+            showKitIncludes.forEach((item) => {
+                sumTotalKit = parseFloat(item?.items[0]?.retail_price) + sumTotalKit
+            })
+            setPrice(sumTotalKit.toFixed(2));
+        }
+    }, [values]);
+
     const handleChange = (e) => {
         setValues({
             ...values,
@@ -50,52 +55,34 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
         })
     }
 
-    useEffect(() => {
-        const prices = []
-        data.items.map((item)=>{
-            prices.push(item.retail_price)
-        })
-        setPrice(Math.min(...prices));
-    },[colors])
-
-    const handleChangeSelected = (color, sku) => {
-        setSelectColor(color);
-        const item = data.items.filter((item)=>item.sku === sku)[0]
-        setItemSelected(item)
-        setPrice(item.retail_price)
-    }
-
     const validateData = () => {
-        if (itemSelected.stock !== "0") {
-            if (selectColor && values.num !== 0) {
-                return false;
-            }
+        if (values.num !== 0) {
+            return false;
         }
         return true;
     }
 
     const addKitShoppingCart = () => {
         let sumTotal = price * values.num;
-        const filterItem = data.items?.filter(element => element.color === selectColor);
-        const productSelect = {
-            sku: filterItem[0].sku,
-            code_item: filterItem[0].code,
-            unit_price: parseFloat(filterItem[0].retail_price),
-            total_price: parseFloat(sumTotal),
-            quantity: values.num,
-            name: data.name,
-            category: data.category,
-            color: selectColor,
-            image: previewImage,
-            productsPreview: filterItem,
-            printing: { type: "ninguno", price:  0 }
+        sumTotal = sumTotal + totalAmountStore;
+        const kitAdd = {
+            discount_code: "4UAEPO55L",
+            is_kit: true,
+            sku_kit: kit?.sku,
+            code_kit: kit?.code,
+            total_kits: values.num,
+            items: showKitIncludes
         }
+        const counterKits = [...kitsStore, 
+            kitAdd
+        ];
         dispatch(
-            setKitsList({kitsList: [
-                ...kitsListStore, productSelect
-            ]})
+            setKits({kits: counterKits})
         );
-        toast.success("¡Se ha modificado kit correctamente!", {
+        dispatch(
+            setTotalAmount({totalAmount: sumTotal})
+        );
+        toast.success("¡Se han agregado exitosamente los productos al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
     }
@@ -106,40 +93,10 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
                 <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
             </Flex>
             <Flex mt={10} fontSize={"14px"} fontWeight={400} color={"#424242"}>
-                <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{data.sku}</Text>
-                <Text><Text as={"b"}>Categoría:</Text>{" "}{data.category.toUpperCase()}</Text>
-            </Flex>
-            <Flex fontSize={"14px"} fontWeight={400} color={"#424242"} alignItems={"center"}>
-                <Text as={"b"}>Colores:</Text>
-                <Flex
-                    w="100%"
-                    pl={2}>
-                    {colorsProduct.map((item, index) => (
-                        <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
-                            <Text
-                                key={`color-${index}`}
-                                marginRight={"1px"}
-                                cursor="pointer"
-                                fontSize={"50px"}
-                                color={item.hex}
-                                onClick={() => {
-                                    handleChangeSelected(item.color, item.sku)
-                                }}
-                            >
-                                &#9679;
-                            </Text>
-                        </Tooltip>
-                    ))}
-                </Flex>
+                <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{kit.sku}</Text>
+                <Text><Text as={"b"}>Categoría:</Text>{" "}{kit.category.toUpperCase()}</Text>
             </Flex>
             <Flex mt={5} flexDirection={"column"}>
-                {selectColor ?
-                    <Flex>
-                        <Text as={"b"}>Color seleccionado:</Text>
-                        <Text ml={2}>{capitalizeFirstLetter(selectColor)}</Text>
-                    </Flex>
-                    : null
-                }
                 <Flex mt={2} mb={1}>
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
@@ -149,13 +106,10 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
             </Flex>
             <Flex mt={10}>
                 <Flex>
-                    <Button w={"176px"} fontSize={"14px"} fontWeight={500}
-                        _hover={{
-                            bg: "#063D5F"
-                        }}
-                        onClick={() => addKitShoppingCart()}
-                        isDisabled={validateData()}>Agregar al carrito
-                    </Button>
+                    <ButtonOpenModalKit 
+                        validateData={validateData}
+                        showKitIncludes={showKitIncludes}
+                        addKitShoppingCart={addKitShoppingCart} />
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
                     <IconButton
@@ -181,16 +135,6 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
                             bg: '#24437E'
                         }}
                         icon={<FaPlus />}/>
-                </Flex>
-            </Flex>
-            <Alert status='info' mt={4} display={selectColor ? "none" : "flex"}>
-                <AlertIcon />
-                Selecciona un color para agregar al carrito de compra
-            </Alert>
-            <Flex mt={5} h={"66px"} border={"1px solid"} borderTopColor={"#CCCCCC"} borderBottomColor={"#CCCCCC"} borderLeftColor={"transparent"} borderRightColor={"transparent"}>
-                <Flex  alignItems={"center"}>
-                    <Image src={icon2} width={"32px"} height={"32px"} alt='icon'/>
-                    <Text ml={2}>{itemSelected.stock} en stock</Text>
                 </Flex>
             </Flex>
             <Flex mt={5}>

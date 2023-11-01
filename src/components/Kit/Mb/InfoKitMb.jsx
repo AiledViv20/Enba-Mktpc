@@ -182,15 +182,6 @@ const InfoKitMb = () => {
                             setShowKitIncludes={setShowKitIncludes} />
                     )
                 }
-                {
-                    product && (
-                        <CharacteristicsMb 
-                            kit={true} 
-                            data={product.products[0]}
-                            colorsProduct={colorsProduct}
-                            previewImage={img} />
-                    )
-                }
             </Flex>
         </>
     );

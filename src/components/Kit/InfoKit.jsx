@@ -147,18 +147,16 @@ const InfoKit = () => {
                                 showKitIncludes={showKitIncludes} />
                         </Flex>
                         <Description 
-                            previewImage={img}
-                            images={images}
-                            data={product.products[0]} 
-                            colors={colors}
-                            colorsProduct={colorsProduct}/>
+                            kit={kit}
+                            showKitIncludes={showKitIncludes}
+                            images={images}/>
                     </Flex>
                 )
             }
             {
                 product && (
                     <DescriptionKit 
-                        data={product.products[0]}/>
+                        showKitIncludes={showKitIncludes}/>
                 )
             }
             {
@@ -185,15 +183,6 @@ const InfoKit = () => {
                         data={showAddOthersKits}
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes} />
-                )
-            }
-            {
-                product && (
-                    <Characteristics 
-                        kit={true} 
-                        data={product.products[0]}
-                        colorsProduct={colorsProduct}
-                        previewImage={img} />
                 )
             }
         </>

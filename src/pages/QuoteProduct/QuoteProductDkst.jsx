@@ -401,9 +401,9 @@ const QuoteProductDkts = () => {
                     </Flex>
                     {productsStore.length > 1 ?
                         <Flex maxHeight={"200px"} overflowY={"auto"}>
-                            <ListProductCard data={productsStore}/>
+                            <ListProductCard data={productsStore} setSubTotalSum={setSubTotalSum} setSumTotalOrder={setSumTotalOrder} />
                         </Flex> : 
-                        <ListProductCard data={productsStore}/>
+                        <ListProductCard data={productsStore} setSubTotalSum={setSubTotalSum} setSumTotalOrder={setSumTotalOrder} />
                     }
                     <Flex mt={10} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
                         <Flex w={"50%"}>
