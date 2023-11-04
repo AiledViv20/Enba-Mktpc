@@ -12,7 +12,7 @@ const DescriptionKit = ({ showKitIncludes }) => {
                 <Text as={"b"} mb={4}>Descripción y características</Text>
                 <Text lineHeight={1.2}>
                     Kit completo de 4 productos
-                    {` ${showKitIncludes[0].name.toLowerCase()}, ${showKitIncludes[1].name.toLowerCase()} 
+                    {` ${showKitIncludes[0].name.toLowerCase()}, ${showKitIncludes[1].name.toLowerCase()},  
                     ${showKitIncludes[2].name.toLowerCase()} y ${showKitIncludes[3].name.toLowerCase()}`}.
                 </Text>
             </Flex>

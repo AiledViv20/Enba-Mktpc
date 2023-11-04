@@ -23,7 +23,7 @@ const Gallery = ({ showKitIncludes }) => {
                 return (
                     <GridItem key={idx}>
                         <Flex justifyContent={"center"}>
-                            <img src={item.image ? item.image : ""} width='218px' height='218px' alt='img'/>
+                            <img src={item ? item?.items[0]?.images?.images_item[0] : ""} width='218px' height='218px' alt='img'/>
                         </Flex>
                     </GridItem>
                 )

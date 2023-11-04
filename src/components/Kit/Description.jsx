@@ -13,20 +13,17 @@ import { formatterValue } from '../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 
-import ModalPrintImage from '../ModalPrintImage';
-
 import { toast } from 'react-toastify';
 
 import { useParams } from 'react-router-dom';
 import ButtonOpenModalKit from './ButtonOpenModalKit';
 
-const Description = ({ kit, showKitIncludes, images }) => {
+const Description = ({ kit, showKitIncludes }) => {
     const params_url = useParams();
     const kitsStore = useSelector(selectKits);
     const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
     const [price, setPrice] = useState(0);
     const [values, setValues] = useState({
         num: 0
@@ -137,16 +134,6 @@ const Description = ({ kit, showKitIncludes, images }) => {
                         icon={<FaPlus />}/>
                 </Flex>
             </Flex>
-            <Flex mt={5}>
-                <Button onClick={onOpen} type='button' w={"430px"} fontSize={"14px"} fontWeight={500} color={"accent.500"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
-            </Flex>
-            {isOpen ?
-                    <ModalPrintImage
-                        isOpen={isOpen}
-                        onClose={onClose}
-                        product={images[2]} />
-                : null
-            }
         </Flex>
     );
 }

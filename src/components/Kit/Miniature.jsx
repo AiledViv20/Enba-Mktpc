@@ -20,9 +20,9 @@ const Miniature = ({images, setImg, setIdx, idx}) => {
                 onClick={() => setIdx(idx - 1)}
             />
             <Flex flexDirection={"column"}>
-                <Image src={images[idx].image} width={"100"} height={"100"} mb={3} onClick={() => setImg(images[idx])} cursor={"pointer"}/>
-                <Image src={images[idx+1].image} width={"100"} height={"100"} mb={3} onClick={() => setImg(images[idx+1])} cursor={"pointer"}/>
-                <Image src={images[idx+2].image} width={"100"} height={"100"} onClick={() => setImg(images[idx+2])} cursor={"pointer"}/>
+                <Image src={images[idx]?.items[0]?.images?.images_item[0]} width={"100"} height={"100"} mb={3} onClick={() => setImg(images[idx])} cursor={"pointer"}/>
+                <Image src={images[idx+1]?.items[0]?.images?.images_item[0]} width={"100"} height={"100"} mb={3} onClick={() => setImg(images[idx+1])} cursor={"pointer"}/>
+                <Image src={images[idx+2]?.items[0]?.images?.images_item[0]} width={"100"} height={"100"} onClick={() => setImg(images[idx+2])} cursor={"pointer"}/>
             </Flex>
             <IconButton
                 w={"48px"} h={"48px"}
