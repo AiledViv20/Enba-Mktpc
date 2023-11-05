@@ -35,9 +35,9 @@ const QuoteProductMb = () => {
         postal_code: "",
         external_number: "",
         internal_number: "",
+        address: "",
         max_delivery_date: "",
         comments: "",
-        address: "",
         pay_method: "",
         pay_details: "",
         discount_code: "",
@@ -51,6 +51,8 @@ const QuoteProductMb = () => {
     const [logoInfo, setLogoInfo] = useState();
     const [isLoadingStep1, setIsLoadingStep1] = useState(false);
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
+    const [subTotalSum, setSubTotalSum] = useState(0);
+    const [sumTotalOrder, setSumTotalOrder] = useState(0);
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -63,7 +65,7 @@ const QuoteProductMb = () => {
         if (createOrder.name === "" || createOrder.last_name === "" || 
             createOrder.email === "" || createOrder.phone === "" || 
             createOrder.state === "" || createOrder.city === "" ||
-            createOrder.postal_code === "" || createOrder.external_number === "" ||
+            createOrder.postal_code === "" || createOrder.address === "" || createOrder.external_number === "" ||
             createOrder.max_delivery_date === "" || createOrder.comments === "") {
             toast.error("¡Es necesario llenar todos los campos antes de continuar!", {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -141,24 +143,27 @@ const QuoteProductMb = () => {
         if (totalAmountStore <= 3000) {
             return 199;
         } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
-            return 99;   
+            return 99;
         } else if (totalAmountStore > 10000) {
             return 0;
         }
     }
 
     useEffect(() => {
+        calculateSend();
+    }, [subTotalSum]);
+
+    useEffect(() => {
         setProductsQuote(productsStore);
         if (kitsStore.length > 0) {
             setKits(productsStore);
         }
-        /* if (totalAmountStore > 0) {
+        if (totalAmountStore > 0) {
+            setSubTotalSum(totalAmountStore);
             let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
-            dispatch(
-                setTotalAmount({totalAmount: sumTempCalculate})
-            )
-        } */
+            setSumTotalOrder(sumTempCalculate);
+        }
     }, []);
 
     const validateSteps = () => {
@@ -192,7 +197,7 @@ const QuoteProductMb = () => {
     }
 
     useEffect(() => {
-        if (productsQuote.length > 0) {
+        if (productsQuote && productsQuote.length > 0) {
             let newListItems = [];
             productsQuote.forEach(element => {
                 newListItems = [
@@ -217,11 +222,11 @@ const QuoteProductMb = () => {
             let calculateOrder = {}
             if (kitsStore.length > 0) {
                 calculateOrder = {
-                    discount_code: createOrder.discount_code,
+                    discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     is_kit: "true",
-                    sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : "",
-                    code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : "",
-                    total_kits: kitsStore.length,
+                    sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : null,
+                    code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : null,
+                    total_kits: kitsStore.length > 0 ? kitsStore.length : null,
                     items: itemsCalculate,
                     printing: productsQuote[0].printing
                 }
@@ -231,7 +236,7 @@ const QuoteProductMb = () => {
                     sku_kit: null,
                     code_kit: null,
                     total_kits: null,
-                    discount_code: createOrder.discount_code,
+                    discount_code: null,
                     items: itemsCalculate,
                     printing: productsQuote[0].printing
                 }
@@ -296,12 +301,12 @@ const QuoteProductMb = () => {
         formData.append("files", logo);
         formData.append("comments", createOrder.comments);
         formData.append("pay_method", typePayMethod(value));
-        formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : "");
-        formData.append("discount_code", createOrder.discount_code);
-        formData.append("is_kit", kitsStore[0]?.sku_kit ? "true" : "");
-        formData.append("sku_kit", kitsStore[0]?.sku_kit ? kitsStore[0].sku_kit : "");
-        formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : "");
-        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : "");
+        formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : null);
+        formData.append("discount_code", createOrder.discount_code !== "" ? createOrder.discount_code : null);
+        formData.append("is_kit", kitsStore[0]?.sku_kit ? "true" : null);
+        formData.append("sku_kit", kitsStore[0]?.sku_kit ? kitsStore[0].sku_kit : null);
+        formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : null);
+        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : null);
         formData.append("items", JSON.stringify(itemsCalculate));
         formData.append("printing", JSON.stringify(productsQuote[0].printing));
         postCreateOrder(formData).then(res => {
@@ -341,6 +346,13 @@ const QuoteProductMb = () => {
         })
     }
 
+    const validateMinShop = () => {
+        if (totalAmountStore < 1) {
+            return true;
+        } 
+        return false;
+    }
+
     return ( 
         <>
             <Flex w={"100%"} flexDirection={"column"}>
@@ -352,7 +364,7 @@ const QuoteProductMb = () => {
                     }
                 </Flex>
                 <Step1 
-                    showPreview={productsQuote.length === 1 ? true : false}
+                    showPreview={productsQuote && productsQuote.length === 1 ? true : false}
                     productsStore={productsStore}
                     step1={steps.step1}
                     createOrder={createOrder}

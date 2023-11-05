@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, setTotalAmount } from '../../hooks/slices/counterSlice';
 import {
     Flex,
     Image,
@@ -28,7 +28,10 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
 
     useEffect(() => {
         if (values.num === 0) {
-            
+            const filterProductsShopping = productsStore.filter(it => it.sku !== product.sku);
+            dispatch(
+                setProducts({products: filterProductsShopping })
+            );
         } else {
             let filterDataNotModificate = productsStore.filter(item => item.sku !== product.sku);
             let filterModificate = productsStore.filter(item => item.sku === product.sku);
@@ -60,21 +63,21 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
     useEffect(() => {
         if (newArray) {
             let sumTotalKit2 = 0;
-            console.log(newArray)
             newArray.forEach((item) => {
                 sumTotalKit2 = item.total_price + sumTotalKit2
             })
             setSubTotalSum(sumTotalKit2);
             let sumTempCalculate = (sumTotalKit2 * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend(sumTotalKit2) + sumTotalKit2;
-            console.log(sumTempCalculate);
-            //setSumTotalOrder(sumTempCalculate);
-            /* dispatch(
-                setProducts({products: newArray })
-            );
-            dispatch(
-                setTotalAmount({totalAmount: sumTotalKit2})
-            ); */
+            setSumTotalOrder(sumTempCalculate);
+            if (newArray.length > 0) {
+                dispatch(
+                    setProducts({products: newArray })
+                );
+                dispatch(
+                    setTotalAmount({totalAmount: sumTempCalculate})
+                );
+            }
         }
     }, [newArray]);
 
@@ -96,7 +99,7 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                     <Flex>
                         <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(values.num * product.unit_price)}</Text>
                     </Flex>
-                    <Flex alignItems={"end"} h={"100%"} justifyContent={"center"} a>
+                    <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
                         <IconButton
                             w={"10px"} h={"28px"}
                             bg={"#D0D0D2"}

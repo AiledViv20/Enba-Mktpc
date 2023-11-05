@@ -62,6 +62,7 @@ const Description = ({ kit, showKitIncludes }) => {
             is_kit: true,
             sku_kit: kit?.sku,
             code_kit: kit?.code,
+            name_kit: kit?.name,
             total_kits: values.num,
             items: showKitIncludes
         }

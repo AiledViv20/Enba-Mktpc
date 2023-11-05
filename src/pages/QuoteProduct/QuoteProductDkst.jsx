@@ -20,6 +20,7 @@ import { formatterValue } from '../../resource/validate';
 import { usePostCalculateOrderMutation, usePostCreateOrderMutation } from '../../hooks/enbaapi';
 
 import { toast } from 'react-toastify';
+import ListKitCard from '../../components/ShoppingCart/ListKitCard';
 
 const QuoteProductDkts = () => {
     const productsStore = useSelector(selectProducts);
@@ -55,6 +56,8 @@ const QuoteProductDkts = () => {
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
     const [subTotalSum, setSubTotalSum] = useState(0);
     const [sumTotalOrder, setSumTotalOrder] = useState(0);
+    const [priceSend, setPriceSend] = useState(0);
+    const [priceIva, setPriceIva] = useState(1.45);
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -143,13 +146,25 @@ const QuoteProductDkts = () => {
 
     const calculateSend = () => {
         if (totalAmountStore <= 3000) {
+            setPriceSend(199);
             return 199;
         } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
+            setPriceSend(99);
             return 99;
         } else if (totalAmountStore > 10000) {
+            setPriceSend(0);
             return 0;
         }
     }
+
+    useEffect(() => {
+        calculateSend();
+        if (totalAmountStore > 0) {
+            setPriceIva(formatterValue((totalAmountStore * 0.16).toFixed(2))) 
+        } else {
+            setPriceIva(1.45);
+        }
+    }, [subTotalSum]);
 
     useEffect(() => {
         setProductsQuote(productsStore);
@@ -195,7 +210,7 @@ const QuoteProductDkts = () => {
     }
 
     useEffect(() => {
-        if (productsQuote.length > 0) {
+        if (productsQuote && productsQuote.length > 0) {
             let newListItems = [];
             productsQuote.forEach(element => {
                 newListItems = [
@@ -362,7 +377,7 @@ const QuoteProductDkts = () => {
                     }
                 </Flex>
                 <Step1 
-                    showPreview={productsQuote.length === 1 ? true : false}
+                    showPreview={productsQuote && productsQuote.length === 1 ? true : false}
                     productsStore={productsStore}
                     step1={steps.step1}
                     createOrder={createOrder}
@@ -373,7 +388,7 @@ const QuoteProductDkts = () => {
                     validateStep1={validateStep1}
                     isLoadingStep1={isLoadingStep1}
                     handleSubmit={handleSubmit}
-                    categoryPrintImg={productsStore.length > 0 ? productsStore[0]?.name : ""} />
+                    categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
                     step2={steps.step2}
                     value={value}
@@ -399,11 +414,33 @@ const QuoteProductDkts = () => {
                     <Flex mb={8}>
                         <Text fontSize={"20px"} as={"b"}>Mi orden</Text>
                     </Flex>
-                    {productsStore.length > 1 ?
+                    {productsStore && productsStore.length > 1 ?
                         <Flex maxHeight={"200px"} overflowY={"auto"}>
-                            <ListProductCard data={productsStore} setSubTotalSum={setSubTotalSum} setSumTotalOrder={setSumTotalOrder} />
+                            <ListProductCard 
+                                data={productsStore} 
+                                subTotalSum={subTotalSum} 
+                                setSubTotalSum={setSubTotalSum} 
+                                setSumTotalOrder={setSumTotalOrder} />
                         </Flex> : 
-                        <ListProductCard data={productsStore} setSubTotalSum={setSubTotalSum} setSumTotalOrder={setSumTotalOrder} />
+                        <ListProductCard 
+                            data={productsStore}
+                            subTotalSum={subTotalSum}
+                            setSubTotalSum={setSubTotalSum} 
+                            setSumTotalOrder={setSumTotalOrder} />
+                    }
+                    {kitsStore && kitsStore.length > 1 ?
+                        <Flex maxHeight={"200px"} overflowY={"auto"}>
+                            <ListKitCard 
+                                data={kitsStore} 
+                                subTotalSum={subTotalSum} 
+                                setSubTotalSum={setSubTotalSum} 
+                                setSumTotalOrder={setSumTotalOrder} />
+                        </Flex> : 
+                        <ListKitCard 
+                            data={kitsStore}
+                            subTotalSum={subTotalSum}
+                            setSubTotalSum={setSubTotalSum} 
+                            setSumTotalOrder={setSumTotalOrder} />
                     }
                     <Flex mt={10} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
                         <Flex w={"50%"}>
@@ -418,7 +455,7 @@ const QuoteProductDkts = () => {
                             <Text fontSize={"16px"} fontWeight={400} color={"#828282"}>{"IVA (16%)"}</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"16px"} fontWeight={500}>{totalAmountStore > 0 ?  formatterValue((totalAmountStore * 0.16).toFixed(2)): 1.45}</Text>
+                            <Text fontSize={"16px"} fontWeight={500}>{priceIva}</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>
@@ -426,7 +463,7 @@ const QuoteProductDkts = () => {
                             <Text fontSize={"16px"} fontWeight={400} color={"#828282"}>Costo de envio</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"16px"} fontWeight={500}>${calculateSend()}.00</Text>
+                            <Text fontSize={"16px"} fontWeight={500}>${priceSend}.00</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} pb={3}>
