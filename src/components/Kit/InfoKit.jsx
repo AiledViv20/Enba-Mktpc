@@ -26,12 +26,25 @@ const InfoKit = () => {
     useEffect(() => {
         if(kit){
             setProduct(kit);
-            const filterKitIncludesNotNull = kit.products.filter(item => item !== null);
+            let filterKitIncludesNotNull = kit.products.filter(item => item !== null);
+            let kitIncludesNull = kit.products;
             const filterOthersKitsNotNull = kit.replacements.filter(item => item !== null);
-            setShowKitIncludes(filterKitIncludesNotNull);
+            let newfilterKitIncludesNotNull = [];
+            if (filterKitIncludesNotNull.length <= 3 && filterOthersKitsNotNull.length === 4) {
+                kitIncludesNull.forEach((element, idx) => {
+                    if (element !== null) {
+                        newfilterKitIncludesNotNull.push(element);
+                    } else {
+                        newfilterKitIncludesNotNull.push(filterOthersKitsNotNull[idx]);
+                    }
+                });
+                setShowKitIncludes(newfilterKitIncludesNotNull);
+            } else {
+                setShowKitIncludes(filterKitIncludesNotNull);
+            }
             setShowAddOthersKits(filterOthersKitsNotNull);
         }
-    }, []);
+    }, [kit]);
 
     useEffect(() => {
         if (showAddOthersKits.length > 0) {
@@ -91,7 +104,8 @@ const InfoKit = () => {
                         </Flex>
                         <Description 
                             kit={kit}
-                            showKitIncludes={showKitIncludes} />
+                            showKitIncludes={showKitIncludes}
+                            setShowKitIncludes={setShowKitIncludes} />
                     </Flex>
                 )
             }

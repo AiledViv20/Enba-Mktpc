@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
     Flex,
-    Box, 
-    Text,
-    Image
+    Text
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
 import Miniature from '../../components/ProductSelect/Miniature';
