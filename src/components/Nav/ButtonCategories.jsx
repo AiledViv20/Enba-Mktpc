@@ -55,11 +55,10 @@ const ButtonCategories = () => {
                     <Flex width={"100%"} h={"100%"}>
                         <Flex width={"30%"} h={"100%"} flexDirection={"column"}>
                             {categories && categories.map((e, idx) => (
-                                <Flex pt={2} border={"1px solid #AFAFAF"} pl={3} 
+                                <Flex key={idx} pt={2} border={"1px solid #AFAFAF"} pl={3} 
                                     borderTopColor={"transparent"}
                                     borderLeftColor={"transparent"}>
                                     <Text 
-                                        key={idx}
                                         mb={2} 
                                         fontSize={"14px"}
                                         _hover={{

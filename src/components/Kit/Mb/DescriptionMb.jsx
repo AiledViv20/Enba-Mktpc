@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { selectKits, setKits, selectTotalAmount, setTotalAmount } from '../../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -13,16 +14,15 @@ import {
     AlertIcon
 } from '@chakra-ui/react';
 import { formatterValue, capitalizeFirstLetter } from '../../../resource/validate';
-import { selectKitsList, setKitsList } from '../../../hooks/slices/counterSlice';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
+
+import { toast } from 'react-toastify';
 
 import icon2 from '../../../assets/icons/package.svg';
 import ModalPrintImage from '../../ModalPrintImage';
 
-import { toast } from 'react-toastify';
-
-const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
+const Description = ({ kit, showKitIncludes }) => {
     const kitsListStore = useSelector(selectKitsList);
     const dispatch = useDispatch();
 
@@ -99,37 +99,7 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
 
     return ( 
         <Flex flexDirection={"column"}>
-            <Flex fontSize={"14px"} fontWeight={400} color={"#424242"} alignItems={"center"}>
-                <Text as={"b"}>Colores:</Text>
-                <Flex
-                    w="100%"
-                    pl={2}>
-                    {colorsProduct.map((item, index) => (
-                        <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
-                            <Text
-                                key={`color-${index}`}
-                                marginRight={"1px"}
-                                cursor="pointer"
-                                fontSize={"50px"}
-                                color={item.hex}
-                                onClick={() => {
-                                    handleChangeSelected(item.color, item.sku)
-                                }}
-                            >
-                                &#9679;
-                            </Text>
-                        </Tooltip>
-                    ))}
-                </Flex>
-            </Flex>
             <Flex mt={5} flexDirection={"column"}>
-                {selectColor ?
-                    <Flex>
-                        <Text as={"b"}>Color seleccionado:</Text>
-                        <Text ml={2}>{capitalizeFirstLetter(selectColor)}</Text>
-                    </Flex>
-                    : null
-                }
                 <Flex mt={2} mb={1}>
                     <Text fontSize={"12px"} fontWeight={400} color={"#383838"}>Desde</Text>
                 </Flex>
@@ -168,31 +138,11 @@ const Description = ({ previewImage, images, data, colors, colorsProduct }) => {
                         _hover={{
                             bg: "#063D5F"
                         }}
-                        onClick={() => addKitShoppingCart()}
+                        onClick={() => console.log("Abrir modal colores")}
                         isDisabled={validateData()}>Agregar al carrito
                     </Button>
                 </Flex>
             </Flex>
-            <Alert status='info' mt={4} display={selectColor ? "none" : "flex"}>
-                <AlertIcon />
-                Selecciona un color para agregar al carrito de compra
-            </Alert>
-            <Flex mt={5} h={"66px"} border={"1px solid"} borderTopColor={"#CCCCCC"} borderBottomColor={"#CCCCCC"} borderLeftColor={"transparent"} borderRightColor={"transparent"}>
-                <Flex  alignItems={"center"}>
-                    <Image src={icon2} width={"32px"} height={"32px"} alt='icon'/>
-                    <Text ml={2}>{itemSelected.stock} en stock</Text>
-                </Flex>
-            </Flex>
-            <Flex mt={5} justifyContent={"center"}>
-                <Button onClick={onOpen} type='button' w={"430px"} fontSize={"14px"} fontWeight={500} color={"accent.500"} borderColor={"accent.500"} variant='outline'>Ver previsualización de impresión</Button>
-            </Flex>
-            {isOpen ?
-                    <ModalPrintImage
-                        isOpen={isOpen}
-                        onClose={onClose}
-                        product={images[2]} />
-                : null
-            }
         </Flex>
     );
 }

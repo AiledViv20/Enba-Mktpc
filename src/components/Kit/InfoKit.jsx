@@ -6,22 +6,15 @@ import { useParams } from 'react-router-dom';
 import Miniature from './Miniature';
 import Description from './Description';
 import DescriptionKit from './DescriptionKit';
-import Characteristics from './Characteristics';
-import { colors_dict } from '../../resource';
 import { useGetKitQuery } from '../../hooks/enbaapi';
 import KitIncludes from './KitIncludes';
 import AddProductsKit from './AddProductsKit';
 
-import TablePrice from '../TablePrice';
 import Gallery from './Gallery';
 
 const InfoKit = () => {
     const params_url = useParams();
-    const [images, setImages] = useState(null);
-    const [colors, setColors] = useState([]);
-    const [colorsProduct, setColorsProduct] = useState([]);
     const [idx, setIdx] = useState(0);
-    const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
     const params = {
         sku: params_url.product
@@ -33,31 +26,12 @@ const InfoKit = () => {
     useEffect(() => {
         if(kit){
             setProduct(kit);
-            if (kit.products.length <= 3) {
-                setShowKitIncludes(kit.replacements);
-            } else {
-                setShowKitIncludes(kit.products);
-            }
-            if (kit.replacements) {
-                setShowAddOthersKits(kit.replacements);
-            }
-            setImg(kit?.products[0]?.images?.product_images[0] || kit?.products[0]?.images?.vector_images[0]);
-            const images_ = [];
-            const colors_ = [];
-            if(kit?.products[0]?.images?.product_images[0]) {
-                images_.push(kit?.products[0]?.images?.product_images[0]);
-            }
-            if(kit?.products[0]?.images?.vector_images[0]) {
-                images_.push(kit?.products[0]?.images?.vector_images[0]);
-                kit.products[0].items.map((item)=>{
-                    images_.push(...item.images.images_item)
-                    colors_.push({sku: item.sku, color: item.color})
-                })
-            }
-            setColors(colors_);
-            setImages(images_);
+            const filterKitIncludesNotNull = kit.products.filter(item => item !== null);
+            const filterOthersKitsNotNull = kit.replacements.filter(item => item !== null);
+            setShowKitIncludes(filterKitIncludesNotNull);
+            setShowAddOthersKits(filterOthersKitsNotNull);
         }
-    },[kit]);
+    }, []);
 
     useEffect(() => {
         if (showAddOthersKits.length > 0) {
@@ -80,7 +54,7 @@ const InfoKit = () => {
             })
             setShowAddOthersKits(filterDataOthersKits);
         }
-    }, [showAddOthersKits]);
+    }, [showAddOthersKits.length]);
 
     useEffect(() => {
         if (showKitIncludes.length > 0) {
@@ -103,53 +77,21 @@ const InfoKit = () => {
             })
             setShowKitIncludes(filterDataIncludesKits);
         }
-    }, [showKitIncludes]);
+    }, [showKitIncludes.length]);
 
-    useEffect(() => {
-        const colors_ar = []
-        colors.map((item)=>{
-            let color_ = ''
-            colors_dict.filter((color)=>{
-                if(item.color.includes(color.color)){
-                    color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: color.hex
-                    }]
-                }
-            })
-            if(!color_[0]){
-                color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: '#444444'
-                }]
-            }
-            colors_ar.push(color_[0])
-        });
-        setColorsProduct(colors_ar);
-    },[colors]);
-
-    useEffect(() => {
-        if(images){
-            setImg(images[idx]);
-        }
-    },[idx]);
-
-    return ( 
+    return (
         <>
             {
                 product && (
                     <Flex p={10} justifyContent={"space-between"}>
-                        <Miniature images={showKitIncludes} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                        <Miniature images={showKitIncludes} setIdx={setIdx} idx={idx}/>
                         <Flex pl={10} width={"442px"} height={"442px"}>
                             <Gallery 
                                 showKitIncludes={showKitIncludes} />
                         </Flex>
                         <Description 
                             kit={kit}
-                            showKitIncludes={showKitIncludes}
-                            images={images}/>
+                            showKitIncludes={showKitIncludes}/>
                     </Flex>
                 )
             }
@@ -166,14 +108,6 @@ const InfoKit = () => {
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes}
                         kit={kit}/>
-                )
-            }
-            {
-                product && (
-                    <Flex>
-                        <TablePrice
-                            pdt={product.products[0]} />
-                    </Flex>
                 )
             }
             {

@@ -11,15 +11,13 @@ const Gallery = ({ showKitIncludes }) => {
     const [status, setStatus] = useState('loading');//loading, loaded
 
     useEffect(() => {
-        if (showKitIncludes) {
-            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
-            setStatus('loaded');
-        }
-    },[showKitIncludes]);
+        setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
+        setStatus('loaded');
+    }, [showKitIncludes.length]);
 
     return (
         <Grid templateColumns='repeat(2, 2fr)' gap={6}>
-            {productsIncludes && productsIncludes.length > 0 ? productsIncludes.map((item, idx) => {
+            {productsIncludes && productsIncludes.map((item, idx) => {
                 return (
                     <GridItem key={idx}>
                         <Flex justifyContent={"center"}>
@@ -27,7 +25,7 @@ const Gallery = ({ showKitIncludes }) => {
                         </Flex>
                     </GridItem>
                 )
-            }) : null}
+            })}
         </Grid>
     );
 }

@@ -4,9 +4,7 @@ import { selectKits, setKits, selectTotalAmount, setTotalAmount } from '../../ho
 import { 
     Flex,
     Text,
-    Button,
     IconButton,
-    useDisclosure,
     Input,
 } from '@chakra-ui/react';
 import { formatterValue } from '../../resource/validate';

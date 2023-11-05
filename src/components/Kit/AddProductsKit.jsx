@@ -9,6 +9,8 @@ import {
     Heading,
     useTheme,
     useMediaQuery,
+    Grid, 
+    GridItem
 } from "@chakra-ui/react";
 import AddKitCard from './AddKitCard';
 
@@ -41,6 +43,7 @@ const CardsRenderer = (products, status, showKitIncludes, setShowKitIncludes) =>
         return products.map((element, idx) => (
             <AddKitCard key={idx} product={element} showKitIncludes={showKitIncludes} setShowKitIncludes={setShowKitIncludes} />
         ));
+        //
     } else {
         return isGreaterThanMd ? (
             <Stack direction="row" alignItems="center" mx="2">
