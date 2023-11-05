@@ -24,7 +24,7 @@ const CardsRenderer = (products, status) => {
         return (
             <Stack direction="row" alignItems="center">
                 <Box textAlign="center" py={6} px={3}>
-                    <img src={logoGif} width={"600px"} height={"150px"} alt="Cargando" />
+                    <img src={logoGif} width={"400px"} height={"150px"} alt="Cargando" />
                 </Box>
             </Stack>
         );
