@@ -40,8 +40,8 @@ const CardsRenderer = (products, status) => {
         if (!isGreaterThanMd) {
             return <KitCard product={products[0]} />;
         }
-        return products.map((element) => (
-            <KitCard key={element.id} product={element} />
+        return products.map((element, idx) => (
+            <KitCard key={idx} product={element} />
         ));
     } else {
         return isGreaterThanMd ? (
@@ -183,6 +183,7 @@ export const KitsProduct = ({ titleSection, props }) => {
                         bg="#E2E2E2"
                         zIndex="2"
                         aria-label={`Mostrar productos página: ${page + 1}`}
+                        isDisabled={page >= 9 ? true : false}
                     />
                 </Flex>
             </Flex>

@@ -31,7 +31,7 @@ const InfoKitMb = () => {
             setShowKitIncludes(filterKitIncludesNotNull);
             setShowAddOthersKits(filterOthersKitsNotNull);
         }
-    }, []);
+    }, [kit]);
 
     useEffect(() => {
         if (showAddOthersKits.length > 0) {
