@@ -9,7 +9,8 @@ import {
     Flex,
     IconButton,
     useTheme,
-    useMediaQuery
+    useMediaQuery,
+    Image
 } from '@chakra-ui/react';
 
 import { galleryList } from '../../resource/validate';
@@ -103,7 +104,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size='4xl'>
+        <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader></ModalHeader>
@@ -139,7 +140,14 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
                         <Flex justifyContent={"center"}>
                             <Carousel current={current}>
                                 { slides.map((slide, idx) => (
-                                    <img key={idx} src={slide.imgUrl} style={{ width: "100%", height: "534px" }} alt='img' />
+                                    <Flex justifyContent={"center"}>
+                                        <Image
+                                            key={idx}
+                                            boxSize='534px'
+                                            objectFit='cover'
+                                            src={slide.imgUrl}
+                                            alt='img' />
+                                    </Flex>
                                 ))}
                             </Carousel>
                         </Flex>

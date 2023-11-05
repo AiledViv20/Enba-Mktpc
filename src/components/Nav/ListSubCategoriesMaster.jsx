@@ -34,10 +34,10 @@ const ListSubCategoriesMaster = ({ selectedCategoryMaster }) => {
         <>
             <Grid templateColumns='repeat(3, 2fr)' gap={5}>
                 {selectedCategoryMaster ? selectedCategoryMaster.master_category.map((element, idx) => (
-                    <GridItem w='100%'>
+                    <GridItem w='100%' key={idx}>
                         <Flex flexDirection={"column"}>
                             <Text 
-                                mb={2} key={idx}
+                                mb={2}
                                 fontWeight={600}
                                 fontSize={"14px"}
                                 onClick={() => {

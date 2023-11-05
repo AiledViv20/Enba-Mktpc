@@ -11,11 +11,9 @@ const GalleryMb = ({ showKitIncludes }) => {
     const [status, setStatus] = useState('loading');//loading, loaded
 
     useEffect(() => {
-        if (showKitIncludes) {
-            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
-            setStatus('loaded');
-        }
-    },[showKitIncludes]);
+        setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
+        setStatus('loaded');
+    }, []);
     
     return (
         <>
@@ -24,7 +22,7 @@ const GalleryMb = ({ showKitIncludes }) => {
                     return (
                         <GridItem key={idx}>
                             <Flex justifyContent={"center"}>
-                                <img src={item.image ? item.image : ""} width='120px' height='120px' alt='img'/>
+                                <img src={item ? item?.items[0]?.images?.images_item[0] : ""} width='120px' height='120px' alt='img'/>
                             </Flex>
                         </GridItem>
                     )

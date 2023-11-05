@@ -29,6 +29,20 @@ export const enbaApi = createApi({
             providesTags: (result, error, arg) =>
                 result ? [{ type: "search" }] : [],
         }),
+        getSearchTemporality: build.query({
+          query: (body) => {
+              return {
+                url: `inventory/temporality`,
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers:{
+                  'Content-Type': 'application/json'
+                }
+              };
+            },
+          providesTags: (result, error, arg) =>
+              result ? [{ type: "search" }] : [],
+      }),
         getSearchRecomendations: build.query({
           query: (body) => {
               return {
@@ -205,6 +219,7 @@ export const enbaApi = createApi({
 
 export const { 
     useGetSearchQuery,
+    useGetSearchTemporalityQuery,
     useGetSearchRecomendationsQuery,
     useGetProductQuery,
     useGetCategoriesQuery,

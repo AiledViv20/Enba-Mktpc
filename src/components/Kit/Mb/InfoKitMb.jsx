@@ -6,20 +6,15 @@ import {
 import { useParams } from 'react-router-dom';
 import DescriptionMb from './DescriptionMb';
 import DescriptionKitMb from './DescriptionKitMb';
-import CharacteristicsMb from './CharacteristicsMb';
-import { colors_dict } from '../../../resource';
 import { useGetKitQuery } from '../../../hooks/enbaapi';
 import KitIncludesMb from './KitIncludesMb';
 import AddProductsKitMb from './AddProductsKitMb';
+
 import GalleryMb from './GalleryMb';
 
 const InfoKitMb = () => {
     const params_url = useParams();
-    const [images, setImages] = useState(null);
-    const [colors, setColors] = useState([]);
-    const [colorsProduct, setColorsProduct] = useState([]);
     const [idx, setIdx] = useState(0);
-    const [img, setImg] = useState(null);
     const [product, setProduct] = useState(null);
     const params = {
         sku: params_url.product
@@ -29,33 +24,14 @@ const InfoKitMb = () => {
     const [showAddOthersKits, setShowAddOthersKits] = useState([]);
 
     useEffect(() => {
-        if(kit){
+        if(kit) {
             setProduct(kit);
-            if (kit.products.length <= 3) {
-                setShowKitIncludes(kit.replacements);
-            } else {
-                setShowKitIncludes(kit.products);
-            }
-            if (kit.replacements) {
-                setShowAddOthersKits(kit.replacements);
-            }
-            setImg(kit?.products[0]?.images?.product_images[0] || kit?.products[0]?.images?.vector_images[0]);
-            const images_ = [];
-            const colors_ = [];
-            if(kit?.products[0]?.images?.product_images[0]) {
-                images_.push(kit?.products[0]?.images?.product_images[0]);
-            }
-            if(kit?.products[0]?.images?.vector_images[0]) {
-                images_.push(kit?.products[0]?.images?.vector_images[0]);
-                kit.products[0].items.map((item)=>{
-                    images_.push(...item.images.images_item)
-                    colors_.push({sku: item.sku, color: item.color})
-                })
-            }
-            setColors(colors_);
-            setImages(images_);
+            const filterKitIncludesNotNull = kit.products.filter(item => item !== null);
+            const filterOthersKitsNotNull = kit.replacements.filter(item => item !== null);
+            setShowKitIncludes(filterKitIncludesNotNull);
+            setShowAddOthersKits(filterOthersKitsNotNull);
         }
-    },[kit]);
+    }, []);
 
     useEffect(() => {
         if (showAddOthersKits.length > 0) {
@@ -103,37 +79,6 @@ const InfoKitMb = () => {
         }
     }, [showKitIncludes]);
 
-    useEffect(() => {
-        const colors_ar = []
-        colors.map((item)=>{
-            let color_ = ''
-            colors_dict.filter((color)=>{
-                if(item.color.includes(color.color)){
-                    color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: color.hex
-                    }]
-                }
-            })
-            if(!color_[0]){
-                color_ = [{
-                        sku: item.sku,
-                        color: item.color,
-                        hex: '#444444'
-                }]
-            }
-            colors_ar.push(color_[0])
-        });
-        setColorsProduct(colors_ar);
-    },[colors]);
-
-    useEffect(() => {
-        if(images){
-            setImg(images[idx]);
-        }
-    },[idx]);
-
     return ( 
         <>
             <Flex flexDirection={"column"} width={"100%"}>
@@ -141,8 +86,8 @@ const InfoKitMb = () => {
                     <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
                 </Flex>
                 <Flex mt={10} mb={2} fontSize={"14px"} fontWeight={400} color={"#424242"} flexDirection={"column"}>
-                    <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{product?.products[0]?.sku}</Text>
-                    <Text mt={2}><Text as={"b"}>Categoría:</Text>{" "}{product?.products[0]?.category.toUpperCase()}</Text>
+                    <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{kit?.sku}</Text>
+                    <Text mt={2}><Text as={"b"}>Categoría:</Text>{" "}{kit?.category.toUpperCase()}</Text>
                 </Flex>
                 {
                     product && (
@@ -150,18 +95,15 @@ const InfoKitMb = () => {
                             <GalleryMb 
                                 showKitIncludes={showKitIncludes} />
                             <DescriptionMb 
-                                previewImage={img}
-                                images={images}
-                                data={product.products[0]} 
-                                colors={colors}
-                                colorsProduct={colorsProduct}/>
+                                kit={kit}
+                                showKitIncludes={showKitIncludes} />
                         </Flex>
                     )
                 }
                 {
                     product && (
                         <DescriptionKitMb 
-                            data={product.products[0]}/>
+                            showKitIncludes={showKitIncludes} />
                     )
                 }
                 {

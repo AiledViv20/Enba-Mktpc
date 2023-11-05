@@ -15,7 +15,7 @@ import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
-import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchTemporalityQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import { CardFilterContext } from '../../context';
@@ -30,19 +30,18 @@ const PopularCategoriesDkst = () => {
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.name);
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
-    const [page, setPage] = useState(0);
     const [filterList, setFilterList] = useState(null);
     const [loading, setLoading] = useState(false);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
-        take: "",
-        page: page,
-        color: colorSelected,
-        category: param_category,
-        name: inputSearch ? inputSearch : "",
-        order: state.order
+        take: 25,
+        page: 0,
+        color: "",
+        temporality: "HALLOWEEN",
+        name: "",
+        order: "ASC"
     });
-    const {data, isLoading, error} = useGetSearchQuery(params);
+    const {data, isLoading, error} = useGetSearchTemporalityQuery(params);
 
     useEffect(() => {
         if (params_url.category) {
@@ -195,24 +194,20 @@ const PopularCategoriesDkst = () => {
                             )
                         }
                     })
-                    : !loading ?
-                        <></> : null
+                    : 
+                        <Flex w={"840px"}>
+                            <Flex>
+                                <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
+                            </Flex>
+                            <Flex flexDirection={"column"}>
+                                <Text lineHeight={1.2} fontSize={"25px"}>
+                                    <Text as={"b"}>Página no encontrada</Text><br />
+                                    No hemos podido encontrar la pagina que buscas
+                                </Text>
+                            </Flex>
+                        </Flex>
                     }
                 </Grid>
-                {!loading ?
-                    <Flex w={"840px"}>
-                        <Flex>
-                            <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
-                        </Flex>
-                        <Flex flexDirection={"column"}>
-                            <Text lineHeight={1.2} fontSize={"25px"}>
-                                <Text as={"b"}>Página no encontrada</Text><br />
-                                No hemos podido encontrar la pagina que buscas
-                            </Text>
-                        </Flex>
-                    </Flex>
-                    : null
-                }
                 {products.length > 0 && !isLoading ? 
                     <Flex mt={10} pl={10}>
                         <ArticlesPerPage />

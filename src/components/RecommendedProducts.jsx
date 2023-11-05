@@ -39,8 +39,8 @@ const CardsRenderer = (products, status) => {
         if (!isGreaterThanMd) {
             return <ProductCard product={products[0]} />;
         }
-        return products.map((element) => (
-            <ProductCard key={element.id} product={element} />
+        return products.map((element, idx) => (
+            <ProductCard key={idx} product={element} />
         ));
     } else {
         return isGreaterThanMd ? (

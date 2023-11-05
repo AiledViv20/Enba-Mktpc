@@ -11,23 +11,21 @@ const Gallery = ({ showKitIncludes }) => {
     const [status, setStatus] = useState('loading');//loading, loaded
 
     useEffect(() => {
-        if (showKitIncludes) {
-            setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
-            setStatus('loaded');
-        }
-    },[showKitIncludes]);
+        setProductsIncludes(showKitIncludes.slice(page * 4, (page + 1) * 4));
+        setStatus('loaded');
+    }, [showKitIncludes.length]);
 
     return (
         <Grid templateColumns='repeat(2, 2fr)' gap={6}>
-            {productsIncludes && productsIncludes.length > 0 ? productsIncludes.map((item, idx) => {
+            {productsIncludes && productsIncludes.map((item, idx) => {
                 return (
                     <GridItem key={idx}>
                         <Flex justifyContent={"center"}>
-                            <img src={item.image ? item.image : ""} width='218px' height='218px' alt='img'/>
+                            <img src={item ? item?.items[0]?.images?.images_item[0] : ""} width='218px' height='218px' alt='img'/>
                         </Flex>
                     </GridItem>
                 )
-            }) : null}
+            })}
         </Grid>
     );
 }
