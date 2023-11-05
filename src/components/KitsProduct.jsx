@@ -6,7 +6,6 @@ import {
     IconButton,
     Stack,
     Skeleton,
-    Heading,
     useTheme,
     useMediaQuery,
     Link
@@ -14,7 +13,9 @@ import {
 import KitCard from './KitCard';
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { WarningTwoIcon } from "@chakra-ui/icons";
+
+import logoGif from '../assets/icons/logo.gif';
+
 import axios from 'axios';
 
 const CardsRenderer = (products, status) => {
@@ -25,14 +26,7 @@ const CardsRenderer = (products, status) => {
         return (
             <Stack direction="row" alignItems="center">
                 <Box textAlign="center" py={6} px={3}>
-                    <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                    <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                        Oops!
-                    </Heading>
-                    <Text fontSize="sm" color={"gray.500"}>
-                        Lo sentimos, no pudimos comunicarnos con el servicio de productos,
-                        intenta de nuevo mientras lo restablecemos.
-                    </Text>
+                    <img src={logoGif} width={"600px"} height={"150px"} alt="Cargando" />
                 </Box>
             </Stack>
         );

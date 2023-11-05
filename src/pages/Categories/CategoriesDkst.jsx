@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { 
     Flex,
-    Box,
-    Container, 
     Text,
     InputGroup,
     Input,
     InputRightElement,
     Grid,
-    Spinner,
+    Stack,
+    Box,
     GridItem
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
@@ -23,7 +22,7 @@ import { useParams } from 'react-router-dom';
 
 import { CardFilterContext } from '../../context';
 
-import iconNotFound from '../../assets/icons/design.svg';
+import logoGif from '../../assets/icons/logo.gif';
 
 const CategoriesDkst = () => {
     const params_url = useParams();
@@ -35,7 +34,7 @@ const CategoriesDkst = () => {
     const  param_category = params_url.category === 'Todas' ? "" : params_url.category;
     const [page, setPage] = useState(0);
     const [filterList, setFilterList] = useState(null);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
         take: "",
@@ -195,13 +194,8 @@ const CategoriesDkst = () => {
                         <ArticlesPerPage />
                         <OrderBy />
                     </Flex>
-                    <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                        {loading ?
-                            <Spinner mt={20} /> : null
-                        }
-                    </Grid>
                     <Grid templateColumns={products.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}>
-                        {products.length > 0 && !loading ? products.map((item, idx) => {
+                        {products.length > 0 ? products.map((item, idx) => {
                             if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                                 return(
                                     <GridItem key={idx}>
@@ -211,18 +205,12 @@ const CategoriesDkst = () => {
                             }
                         })
                         : 
-                            <Flex w={"840px"}>
-                                <Flex>
-                                    <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
-                                </Flex>
-                                <Flex flexDirection={"column"}>
-                                    <Text lineHeight={1.2} fontSize={"25px"}>
-                                        <Text as={"b"}>Página no encontrada</Text><br />
-                                        No hemos podido encontrar la pagina que buscas
-                                    </Text>
-                                </Flex>
-                            </Flex>
-                        }
+                        <Stack direction="row" alignItems="center">
+                            <Box textAlign="center" py={6} px={3}>
+                                <img src={logoGif} width={"600px"} height={"150px"} alt="Cargando" />
+                            </Box>
+                        </Stack>
+                    }
                     </Grid>
                     {products.length > 0 && !isLoading ? 
                         <Flex mt={10} pl={10}>

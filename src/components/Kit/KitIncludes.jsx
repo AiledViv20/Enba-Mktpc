@@ -7,7 +7,6 @@ import {
     Text,
     Stack,
     Skeleton,
-    Heading,
     useTheme,
     useMediaQuery,
     Button,
@@ -17,7 +16,9 @@ import {
 import KitCard from './KitCard';
 
 import { FaTrashAlt } from "react-icons/fa";
-import { WarningTwoIcon } from "@chakra-ui/icons";
+
+import logoGif from '../../assets/icons/logo.gif';
+
 import ModalTrashProduct from './ModalTrashProduct';
 
 import { toast } from 'react-toastify';
@@ -30,14 +31,7 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
         return (
             <Stack direction="row" alignItems="center">
                 <Box textAlign="center" py={6} px={3}>
-                    <WarningTwoIcon boxSize={"50px"} color={"orange.300"} />
-                    <Heading as="h2" size="xl" mt={6} mb={2} color={"accent.500"}>
-                        Oops!
-                    </Heading>
-                    <Text fontSize="sm" color={"gray.500"}>
-                        Lo sentimos, no pudimos comunicarnos con el servicio de productos,
-                        intenta de nuevo mientras lo restablecemos.
-                    </Text>
+                    <img src={logoGif} width={"600px"} height={"150px"} alt="Cargando" />
                 </Box>
             </Stack>
         );
