@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { 
-    Flex, 
+    Flex,
     Box, 
     Text,
     Image
@@ -10,6 +10,8 @@ import Miniature from '../../components/ProductSelect/Miniature';
 import Description from '../../components/ProductSelect/Description';
 import { useParams } from 'react-router-dom';
 import { useGetProductQuery } from '../../hooks/enbaapi';
+
+import ZoomImage from '../../components/ProductSelect/ZoomImage';
 
 import Characteristics from '../../components/ProductSelect/Characteristics';
 
@@ -30,7 +32,6 @@ const ProductDkst = () => {
     useEffect(() => {
         if(data){
             setProduct(data);
-            //setImg(data?.images?.product_images[0] || data?.images?.vector_images[0]);
             const images_ = [];
             const colors_ = [];
             if(data?.images?.product_images[0])
@@ -78,12 +79,6 @@ const ProductDkst = () => {
         setColorsProduct(colors_ar);
     },[colors]);
 
-    /* useEffect(() => {
-        if(images){
-            setImg(images[idx]);
-        }
-    },[idx]) */
-
     return ( 
         <>
             <Flex>
@@ -95,10 +90,10 @@ const ProductDkst = () => {
                 product && (
                     <Flex p={10} justifyContent={"space-between"}>
                         <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                        <Flex pl={10}>
-                            <Image src={img} width={"442"} height={"442"} alt='image product'/>
+                        <Flex pl={10} width={"442px"} height={"442px"}>
+                            <ZoomImage src={img} alt={'image product'} />
                         </Flex>
-                        <Description 
+                        <Description
                             previewImage={img}
                             setImg={setImg}
                             images={images} 

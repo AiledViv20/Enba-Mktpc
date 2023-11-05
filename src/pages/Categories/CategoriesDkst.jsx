@@ -210,24 +210,20 @@ const CategoriesDkst = () => {
                                 )
                             }
                         })
-                        : !loading ?
-                            <></> : null
+                        : 
+                            <Flex w={"840px"}>
+                                <Flex>
+                                    <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
+                                </Flex>
+                                <Flex flexDirection={"column"}>
+                                    <Text lineHeight={1.2} fontSize={"25px"}>
+                                        <Text as={"b"}>Página no encontrada</Text><br />
+                                        No hemos podido encontrar la pagina que buscas
+                                    </Text>
+                                </Flex>
+                            </Flex>
                         }
                     </Grid>
-                    {!loading ?
-                        <Flex w={"840px"}>
-                            <Flex>
-                                <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
-                            </Flex>
-                            <Flex flexDirection={"column"}>
-                                <Text lineHeight={1.2} fontSize={"25px"}>
-                                    <Text as={"b"}>Página no encontrada</Text><br />
-                                    No hemos podido encontrar la pagina que buscas
-                                </Text>
-                            </Flex>
-                        </Flex>
-                        : null
-                    }
                     {products.length > 0 && !isLoading ? 
                         <Flex mt={10} pl={10}>
                             <ArticlesPerPage />

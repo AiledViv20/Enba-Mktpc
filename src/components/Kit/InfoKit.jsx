@@ -54,7 +54,7 @@ const InfoKit = () => {
             })
             setShowAddOthersKits(filterDataOthersKits);
         }
-    }, [showAddOthersKits.length]);
+    }, [showAddOthersKits]);
 
     useEffect(() => {
         if (showKitIncludes.length > 0) {
@@ -77,7 +77,7 @@ const InfoKit = () => {
             })
             setShowKitIncludes(filterDataIncludesKits);
         }
-    }, [showKitIncludes.length]);
+    }, [showKitIncludes]);
 
     return (
         <>

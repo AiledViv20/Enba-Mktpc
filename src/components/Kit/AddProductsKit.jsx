@@ -152,6 +152,7 @@ const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitInclude
                             bg="#E2E2E2"
                             zIndex="2"
                             aria-label={`Mostrar categorias página: ${page + 1}`}
+                            isDisabled={page <= 0 ? true : false}
                         />
                     </Flex>
                 </Box>

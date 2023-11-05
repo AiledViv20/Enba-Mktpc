@@ -45,12 +45,12 @@ const PopularCategoriesMb = () => {
     const [loading, setLoading] = useState(false);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
-        take: "",
-        page: page,
-        color: colorSelected,
-        category: param_category,
-        name: inputSearch ? inputSearch : "",
-        order: state.order
+        take: 25,
+        page: 0,
+        color: "",
+        temporality: "HALLOWEEN",
+        name: "",
+        order: "ASC"
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
 
@@ -211,17 +211,17 @@ const PopularCategoriesMb = () => {
                         }
                     })
                     : 
-                    <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
-                        <Box textAlign="center" py={6} px={3}>
-                            <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
-                            <Heading as="h2" size="lg" mt={6} mb={2} color={"accent.500"}>
-                                Página no encontrada
-                            </Heading>
-                            <Text fontSize="sm" color={"gray.500"}>
-                                No hemos podido encontrar la pagina que buscas
-                            </Text>
-                        </Box>
-                    </Stack>
+                        <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                            <Box textAlign="center" py={6} px={3}>
+                                <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
+                                <Heading as="h2" size="lg" mt={6} mb={2} color={"accent.500"}>
+                                    Página no encontrada
+                                </Heading>
+                                <Text fontSize="sm" color={"gray.500"}>
+                                    No hemos podido encontrar la pagina que buscas
+                                </Text>
+                            </Box>
+                        </Stack>
                     }
                 </Grid>
             </Flex>
