@@ -7,9 +7,7 @@ import {
     Input,
     InputRightElement,
     Grid,
-    Spinner,
     Stack,
-    Heading,
     Accordion,
     AccordionItem,
     AccordionButton,
@@ -206,7 +204,7 @@ const PopularCategoriesMb = () => {
                     : 
                         <Stack direction="row" alignItems="center">
                             <Box textAlign="center" py={6} px={3}>
-                                <img src={logoGif} width={"600px"} height={"150px"} alt="Cargando" />
+                                <img src={logoGif} width={"400px"} height={"150px"} alt="Cargando" />
                             </Box>
                         </Stack>
                     }

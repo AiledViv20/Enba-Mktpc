@@ -67,13 +67,14 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
             setSubTotalSum(sumTotalKit2);
             let sumTempCalculate = (sumTotalKit2 * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend(sumTotalKit2) + sumTotalKit2;
-            setSumTotalOrder(sumTempCalculate);
-            dispatch(
+            console.log(sumTempCalculate);
+            //setSumTotalOrder(sumTempCalculate);
+            /* dispatch(
                 setProducts({products: newArray })
             );
             dispatch(
                 setTotalAmount({totalAmount: sumTotalKit2})
-            );
+            ); */
         }
     }, [newArray]);
 
