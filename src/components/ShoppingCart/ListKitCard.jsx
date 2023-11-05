@@ -2,15 +2,15 @@ import React from 'react';
 import { 
     Flex 
 } from '@chakra-ui/react';
-import ProductCardSp from './ProductCardSp';
+import KitCardSp from './KitCardSp';
 
-const ListProductCard = ({ data, subTotalSum, setSubTotalSum, setSumTotalOrder }) => {
+const ListKitCard = ({ data, subTotalSum, setSubTotalSum, setSumTotalOrder }) => {
     
     return ( 
         <Flex flexDirection={"column"} w={"100%"} pr={0}>
             {data ? data.map((item, idx) => {
                 return (
-                    <ProductCardSp 
+                    <KitCardSp 
                         key={idx} 
                         product={item} 
                         subTotalSum={subTotalSum}
@@ -22,4 +22,4 @@ const ListProductCard = ({ data, subTotalSum, setSubTotalSum, setSumTotalOrder }
     );
 }
 
-export default ListProductCard;
+export default ListKitCard;

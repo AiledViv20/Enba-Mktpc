@@ -144,6 +144,7 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             is_kit: true,
             sku_kit: kit?.sku,
             code_kit: kit?.code,
+            name_kit: kit?.name,
             total_kits: 1,
             items: showKitIncludes
         }
