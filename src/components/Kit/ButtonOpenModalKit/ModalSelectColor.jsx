@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Modal,
     ModalOverlay,
@@ -9,16 +9,22 @@ import {
     Text,
     Button,
     Flex,
-    Select
+    Select,
+    Spinner
 } from '@chakra-ui/react';
 import { capitalizeFirstLetter } from '../../../resource/validate';
 
-const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart }) => {
+const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes, addKitShoppingCart }) => {
+    const [loading, setLoading] = useState(false);
+    const [colors1, setColors1] = useState([]);
+    const [colors2, setColors2] = useState([]);
+    const [colors3, setColors3] = useState([]);
+    const [colors4, setColors4] = useState([]);
     const [values, setValues] = useState({
         colorp1: "",
         colorp2: "",
         colorp3: "",
-        colorp4: "",
+        colorp4: ""
     });
 
     const validateValues = () => {
@@ -27,6 +33,49 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart
         }
         return true;
     }
+
+    const handleChangeSelected = (e) => {
+        setValues({
+            ...values,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const filterObjShoppingCart = () => {
+        setLoading(true);
+        const listColors = [values.colorp1, values.colorp2, values.colorp3, values.colorp4];
+        const selectsOptionsColorKit = showKitIncludes.map((item, idx) => {
+            return {
+                ...item,
+                color: listColors[idx]
+            }
+        })
+        setShowKitIncludes(selectsOptionsColorKit);
+        setTimeout(() => {
+            setLoading(false);
+            addKitShoppingCart();
+            onClose();
+        }, 1000);
+    }
+
+    const renderOptionColors = (product) => {
+        const colors_ = [];
+        product.items.forEach((elmnt) => {
+            colors_.push({sku: elmnt.sku, color: elmnt.color})
+        })
+        return colors_;
+    }
+
+    useEffect(() => {
+        const select1 = renderOptionColors(showKitIncludes[0]);
+        setColors1(select1);
+        const select2 = renderOptionColors(showKitIncludes[1]);
+        setColors2(select2);
+        const select3 = renderOptionColors(showKitIncludes[2]);
+        setColors3(select3);
+        const select4 = renderOptionColors(showKitIncludes[3]);
+        setColors4(select4);
+    }, [showKitIncludes]);
 
     return ( 
         <Modal isOpen={isOpen} onClose={onClose} size={'2xl'}>
@@ -43,10 +92,10 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart
                             <Text>{capitalizeFirstLetter(showKitIncludes[0]?.name)}</Text>
                         </Flex>
                         <Flex w={"60%"}>
-                            <Select placeholder='Color'>
-                                <option value='option1'>Option 1</option>
-                                <option value='option2'>Option 2</option>
-                                <option value='option3'>Option 3</option>
+                            <Select name='colorp1' onChange={handleChangeSelected} placeholder='Color'>
+                                {colors1 && colors1.map((clr, idx) => (
+                                    <option key={idx} value={clr.color}>{capitalizeFirstLetter(clr.color)}</option>
+                                ))}
                             </Select>
                         </Flex>
                     </Flex>
@@ -55,10 +104,10 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart
                             <Text>{capitalizeFirstLetter(showKitIncludes[1]?.name)}</Text>
                         </Flex>
                         <Flex w={"60%"}>
-                            <Select placeholder='Color'>
-                                <option value='option1'>Option 1</option>
-                                <option value='option2'>Option 2</option>
-                                <option value='option3'>Option 3</option>
+                            <Select name='colorp2' onChange={handleChangeSelected} placeholder='Color'>
+                                {colors2 && colors2.map((clr2, idx2) => (
+                                    <option key={idx2} value={clr2.color}>{capitalizeFirstLetter(clr2.color)}</option>
+                                ))}
                             </Select>
                         </Flex>
                     </Flex>
@@ -67,10 +116,10 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart
                             <Text>{capitalizeFirstLetter(showKitIncludes[2]?.name)}</Text>
                         </Flex>
                         <Flex w={"60%"}>
-                            <Select placeholder='Color'>
-                                <option value='option1'>Option 1</option>
-                                <option value='option2'>Option 2</option>
-                                <option value='option3'>Option 3</option>
+                            <Select name='colorp3' onChange={handleChangeSelected} placeholder='Color'>
+                                {colors3 && colors3.map((clr3, idx3) => (
+                                    <option key={idx3} value={clr3.color}>{capitalizeFirstLetter(clr3.color)}</option>
+                                ))}
                             </Select>
                         </Flex>
                     </Flex>
@@ -80,10 +129,10 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart
                         </Flex>
                         <Flex w={"60%"} flexDirection={"column"}>
                             <Flex>
-                                <Select placeholder='Color'>
-                                    <option value='option1'>Option 1</option>
-                                    <option value='option2'>Option 2</option>
-                                    <option value='option3'>Option 3</option>
+                                <Select name='colorp4' onChange={handleChangeSelected} placeholder='Color'>
+                                    {colors4 && colors4.map((clr4, idx4) => (
+                                        <option key={idx4} value={clr4.color}>{capitalizeFirstLetter(clr4.color)}</option>
+                                    ))}
                                 </Select>
                             </Flex>
                             <Flex w={"100%"} justifyContent={"center"}>
@@ -95,9 +144,11 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, addKitShoppingCart
                                     w={"176px"} 
                                     fontSize={"14px"} 
                                     fontWeight={500}
-                                    onClick={() => addKitShoppingCart()}
+                                    onClick={() => filterObjShoppingCart()}
                                     isDisabled={validateValues()}>
-                                    Agregar al carrito
+                                    {loading ?
+                                        <Spinner /> : "Agregar al carrito"
+                                    }
                                 </Button>
                             </Flex>
                         </Flex>

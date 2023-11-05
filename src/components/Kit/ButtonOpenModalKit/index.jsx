@@ -5,7 +5,7 @@ import {
 } from '@chakra-ui/react';
 import ModalSelectColor from './ModalSelectColor';
 
-const ButtonOpenModalKit = ({ validateData, showKitIncludes, addKitShoppingCart }) => {
+const ButtonOpenModalKit = ({ validateData, showKitIncludes, setShowKitIncludes, addKitShoppingCart }) => {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     return ( 
@@ -22,6 +22,7 @@ const ButtonOpenModalKit = ({ validateData, showKitIncludes, addKitShoppingCart 
                     isOpen={isOpen} 
                     onClose={onClose}
                     showKitIncludes={showKitIncludes}
+                    setShowKitIncludes={setShowKitIncludes}
                     addKitShoppingCart={addKitShoppingCart} />
                 : null
             }

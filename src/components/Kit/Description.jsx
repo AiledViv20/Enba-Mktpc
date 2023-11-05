@@ -16,7 +16,7 @@ import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import ButtonOpenModalKit from './ButtonOpenModalKit';
 
-const Description = ({ kit, showKitIncludes }) => {
+const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
     const params_url = useParams();
     const kitsStore = useSelector(selectKits);
     const totalAmountStore = useSelector(selectTotalAmount);
@@ -82,6 +82,12 @@ const Description = ({ kit, showKitIncludes }) => {
         });
     }
 
+    const checkSelectColorKit = () => {
+        toast.success("¡Se han agregado exitosamente los productos al kit!", {
+            position: toast.POSITION.BOTTOM_RIGHT
+        });
+    }
+
     return ( 
         <Flex flexDirection={"column"}>
             <Flex>
@@ -104,6 +110,7 @@ const Description = ({ kit, showKitIncludes }) => {
                     <ButtonOpenModalKit 
                         validateData={validateData}
                         showKitIncludes={showKitIncludes}
+                        setShowKitIncludes={setShowKitIncludes}
                         addKitShoppingCart={addKitShoppingCart} />
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>

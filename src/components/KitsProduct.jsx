@@ -98,7 +98,35 @@ export const KitsProduct = ({ titleSection, props }) => {
               'Content-Type': 'application/json'
             }
         });
-        setKits(data);
+        let filterKitIncludesNotNull = [];
+        let kitIncludesNull = [];
+        let filterOthersKitsNotNull = [];
+        let newfilterKitIncludesNotNull = [];
+        let newsubProductsTemp = [];
+        if (data) {
+            data.forEach((element) => {
+                filterKitIncludesNotNull = element.products.filter(item => item.images.length > 0);
+                kitIncludesNull = element.products;
+                filterOthersKitsNotNull = element.replacements.filter(item => item.images.length > 0);
+                if (filterKitIncludesNotNull.length <= 3 && filterOthersKitsNotNull.length === 4) {
+                    kitIncludesNull.forEach((elem, idx1) => {
+                        if (elem.images.length > 0) {
+                            newsubProductsTemp.push(elem);
+                        } else {
+                            newsubProductsTemp.push(filterOthersKitsNotNull[idx1]);
+                        }
+                    });
+                    newfilterKitIncludesNotNull.push({
+                        ...element,
+                        products: newsubProductsTemp
+                    });
+                    newsubProductsTemp = [];
+                } else {
+                    newfilterKitIncludesNotNull.push(element);
+                }
+            })
+        }
+        setKits(newfilterKitIncludesNotNull);
     }
 
     useEffect(() => {
@@ -125,7 +153,6 @@ export const KitsProduct = ({ titleSection, props }) => {
                 setProducts(kits.slice(page * 1, (page + 1) * 4));   
             }
         }
-        getKits();
     },[page])
 
     return (
