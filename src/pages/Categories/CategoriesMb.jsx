@@ -7,9 +7,7 @@ import {
     Input,
     InputRightElement,
     Grid,
-    Spinner,
     Stack,
-    Heading,
     Accordion,
     AccordionItem,
     AccordionButton,
@@ -28,7 +26,7 @@ import { useParams } from 'react-router-dom';
 
 import { CardFilterContext } from '../../context';
 
-import iconNotFound from '../../assets/icons/design.svg';
+import logoGif from '../../assets/icons/logo.gif';
 
 const CategoriesMb = () => {
     const params_url = useParams();
@@ -206,12 +204,7 @@ const CategoriesMb = () => {
                     <OrderBy />
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {loading ?
-                        <Spinner mt={20} /> : null
-                    }
-                </Grid>
-                <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products.length > 0 && !loading ? products.map((item, idx) => {
+                    {products.length > 0 ? products.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -221,15 +214,9 @@ const CategoriesMb = () => {
                         }
                     })
                     : 
-                        <Stack direction="row" alignItems="center" w={"100%"} justifyContent={"center"}>
+                        <Stack direction="row" alignItems="center">
                             <Box textAlign="center" py={6} px={3}>
-                                <img src={iconNotFound} width={"658px"} height={"374px"} alt='icon'/>
-                                <Heading as="h2" size="lg" mt={6} mb={2} color={"accent.500"}>
-                                    Página no encontrada
-                                </Heading>
-                                <Text fontSize="sm" color={"gray.500"}>
-                                    No hemos podido encontrar la pagina que buscas
-                                </Text>
+                                <img src={logoGif} width={"600px"} height={"150px"} alt="Cargando" />
                             </Box>
                         </Stack>
                     }
