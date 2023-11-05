@@ -6,29 +6,19 @@ import {
     Text,
     Button,
     IconButton,
-    Image,
-    Tooltip,
-    useDisclosure,
-    Input,
-    Alert,
-    AlertIcon
+    Input
 } from '@chakra-ui/react';
-import { formatterValue, capitalizeFirstLetter } from '../../../resource/validate';
+import { formatterValue } from '../../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 
 import { toast } from 'react-toastify';
 
-import icon2 from '../../../assets/icons/package.svg';
-import ModalPrintImage from '../../ModalPrintImage';
-
 const Description = ({ kit, showKitIncludes }) => {
-    const kitsListStore = useSelector(selectKitsList);
+    const kitsStore = useSelector(selectKits);
+    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectColor, setSelectColor] = useState(null);
-    const [itemSelected, setItemSelected] = useState(data.items[0]);
     const [price, setPrice] = useState(0);
     const [values, setValues] = useState({
         num: 0
@@ -40,6 +30,16 @@ const Description = ({ kit, showKitIncludes }) => {
         }) 
     }
 
+    useEffect(() => {
+        if (values.num === 0) {
+            let sumTotalKit = 0;
+            showKitIncludes.forEach((item) => {
+                sumTotalKit = parseFloat(item?.items[0]?.retail_price) + sumTotalKit
+            })
+            setPrice(sumTotalKit.toFixed(2));
+        }
+    }, [values]);
+
     const handleChange = (e) => {
         setValues({
             ...values,
@@ -47,52 +47,34 @@ const Description = ({ kit, showKitIncludes }) => {
         })
     }
 
-    useEffect(() => {
-        const prices = []
-        data.items.map((item)=>{
-            prices.push(item.retail_price)
-        })
-        setPrice(Math.min(...prices));
-    },[colors])
-
-    const handleChangeSelected = (color, sku) => {
-        setSelectColor(color);
-        const item = data.items.filter((item)=>item.sku === sku)[0]
-        setItemSelected(item)
-        setPrice(item.retail_price)
-    }
-
     const validateData = () => {
-        if (itemSelected.stock !== "0") {
-            if (selectColor && values.num !== 0) {
-                return false;
-            }
+        if (values.num !== 0) {
+            return false;
         }
         return true;
     }
 
     const addKitShoppingCart = () => {
         let sumTotal = price * values.num;
-        const filterItem = data.items?.filter(element => element.color === selectColor);
-        const productSelect = {
-            sku: filterItem[0].sku,
-            code_item: filterItem[0].code,
-            unit_price: parseFloat(filterItem[0].retail_price),
-            total_price: parseFloat(sumTotal),
-            quantity: values.num,
-            name: data.name,
-            category: data.category,
-            color: selectColor,
-            image: previewImage,
-            productsPreview: filterItem,
-            printing: { type: "ninguno", price:  0 }
+        sumTotal = sumTotal + totalAmountStore;
+        const kitAdd = {
+            discount_code: "4UAEPO55L",
+            is_kit: true,
+            sku_kit: kit?.sku,
+            code_kit: kit?.code,
+            total_kits: values.num,
+            items: showKitIncludes
         }
+        const counterKits = [...kitsStore, 
+            kitAdd
+        ];
         dispatch(
-            setKitsList({kitsList: [
-                ...kitsListStore, productSelect
-            ]})
+            setKits({kits: counterKits})
         );
-        toast.success("¡Se ha modificado kit correctamente!", {
+        dispatch(
+            setTotalAmount({totalAmount: sumTotal})
+        );
+        toast.success("¡Se han agregado exitosamente los productos al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
     }

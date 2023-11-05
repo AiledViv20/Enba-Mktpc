@@ -11,7 +11,7 @@ import Footer from '../../components/Footer';
 import { useParams } from 'react-router-dom';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import InfoKit from '../../components/Kit/InfoKit';
-//import InfoKitMb from '../../components/Kit/Mb/InfoKitMb';
+import InfoKitMb from '../../components/Kit/Mb/InfoKitMb';
 
 const Kit = ({ props }) => {
     const { breakpoints } = useTheme();
@@ -47,9 +47,9 @@ const Kit = ({ props }) => {
             <Box flexDirection={"column"} display={isGreaterThanMd ? "flex" : "none"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"0px 5%"} position="relative">
                 <InfoKit />
             </Box>
-            {/* <Box width={"100%"} display={isGreaterThanMd ? "none" : "flex"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"0px 5%"} position="relative">
+            <Box width={"100%"} display={isGreaterThanMd ? "none" : "flex"} color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} borderRadius={"8px"} padding={"0px 5%"} position="relative">
                 <InfoKitMb />
-            </Box> */}
+            </Box>
             {
                 productRecommended && (
                     <RecommendedProducts 

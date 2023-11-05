@@ -91,14 +91,14 @@ const InfoKit = () => {
                         </Flex>
                         <Description 
                             kit={kit}
-                            showKitIncludes={showKitIncludes}/>
+                            showKitIncludes={showKitIncludes} />
                     </Flex>
                 )
             }
             {
                 product && (
                     <DescriptionKit 
-                        showKitIncludes={showKitIncludes}/>
+                        showKitIncludes={showKitIncludes} />
                 )
             }
             {
@@ -107,7 +107,7 @@ const InfoKit = () => {
                         titleSection={"Tu kit incluye:"}
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes}
-                        kit={kit}/>
+                        kit={kit} />
                 )
             }
             {
