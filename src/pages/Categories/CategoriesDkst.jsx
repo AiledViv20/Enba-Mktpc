@@ -40,7 +40,7 @@ const CategoriesDkst = () => {
         take: "",
         page: page,
         color: colorSelected,
-        category: param_category,
+        category: param_category ? param_category : "",
         name: inputSearch ? inputSearch : "",
         order: state.order
     });

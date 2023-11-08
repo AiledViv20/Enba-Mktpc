@@ -55,6 +55,18 @@ const SearchBar = () => {
         setCategoryLabel(selectedCategory);
     }, [selectedCategory])
 
+    const searchMkt = () => {
+        var searchKeyboard = ""
+        if (selectedCategory === "Todas" && keySearch !== "") {
+            searchKeyboard = `/code/${keySearch}`;
+        } else if (selectedCategory !== "Todas" && keySearch === "") {
+            searchKeyboard = `/search/${selectedCategory}`;
+        } else if (selectedCategory !== "Todas" && keySearch !== "") {
+            searchKeyboard = `/${selectedCategory}/${keySearch}`;
+        }
+        window.location.href = `/categoria${searchKeyboard}`;
+    }
+
     return ( 
         <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
             <Flex width={isGreaterThanMd ? "30%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} ml={"12px"} borderRadius={"10px 0px 0px 10px"}>
@@ -123,9 +135,7 @@ const SearchBar = () => {
                         bg: "#063D5F"
                     }}
                     aria-label='Search category' icon={<SearchIcon />} 
-                    onClick={(e) => {
-                        window.location.href = `/categoria${selectedCategory === "Todas" ? "" :  `/${selectedCategory}`}/${keySearch === "" && selectedCategory === "Todas"  ? "Todas" : keySearch}`
-                    }}
+                    onClick={() => searchMkt()}
                 />
             </Flex>
         </Flex>

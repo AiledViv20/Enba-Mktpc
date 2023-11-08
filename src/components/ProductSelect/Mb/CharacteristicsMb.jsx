@@ -363,11 +363,6 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
                                         <Text fontWeight={400}><Text as={"b"}>Total:</Text>{" "}{formatterValue(total)}</Text>
                                         <Flex mt={5} flexDirection={"column"} alignItems={"center"}>
                                             <Button 
-                                                w={"100%"} fontSize={"14px"} 
-                                                fontWeight={500} color={"#000"} 
-                                                borderColor={"accent.500"} variant='outline'
-                                                isDisabled={validateData()}>Imprimir cotización</Button>
-                                            <Button 
                                                 mt={5}
                                                 w={"100%"} 
                                                 fontSize={"14px"} 
