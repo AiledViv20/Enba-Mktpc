@@ -116,7 +116,7 @@ const PopularCategoriesDkst = () => {
                         <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
                             onClick={(e) => {
                                 e.preventDefault();
-                                window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
+                                window.location.href = `/categoria/code/${inputSearch.toUpperCase()}`;
                             }}>
                             <SearchIcon color='#FFF' />
                         </Flex>

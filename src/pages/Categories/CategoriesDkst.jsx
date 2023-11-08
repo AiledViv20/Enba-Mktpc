@@ -37,7 +37,7 @@ const CategoriesDkst = () => {
     const [loading, setLoading] = useState(true);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
-        take: "",
+        take: 250,
         page: page,
         color: colorSelected,
         category: param_category ? param_category : "",
@@ -110,7 +110,7 @@ const CategoriesDkst = () => {
                 gap={4}> 
                 <GridItem>
                     <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
-                        {params_url.category}
+                        {params_url.category ? params_url.category : capitalizeFirstLetter(inputSearch)}
                     </Text>
                     <InputGroup border={"transparent"} mt={8} w={"344px"}>
                         <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
@@ -124,7 +124,7 @@ const CategoriesDkst = () => {
                             <Flex _hover={{ cursor: "pointer" }} w={"35px"} h={"35px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
+                                    window.location.href = `/categoria/code/${inputSearch.toUpperCase()}`;
                                 }}>
                                 <SearchIcon color='#FFF' />
                             </Flex>

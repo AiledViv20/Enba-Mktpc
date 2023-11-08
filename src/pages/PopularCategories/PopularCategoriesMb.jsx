@@ -131,7 +131,7 @@ const PopularCategoriesMb = () => {
                                     <Flex _hover={{ cursor: "pointer" }} w={"25px"} h={"25px"} bg={"#064A73"} borderRadius={"25px"} justifyContent={"center"} alignItems={"center"} 
                                         onClick={(e) => {
                                             e.preventDefault();
-                                            window.location.href = `/categoria/${inputSearch.toUpperCase()}`;
+                                            window.location.href = `/categoria/code/${inputSearch.toUpperCase()}`;
                                         }}>
                                         <SearchIcon w={"15px"} h={"15px"} color='#FFF' />
                                     </Flex>
