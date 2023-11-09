@@ -30,7 +30,7 @@ export const colors = [
     },
     {
         id: 1,
-        hex: "#D9D9D9",
+        hex: "#A4A4A4",
         color: "GRIS"
     },
     {
@@ -45,7 +45,7 @@ export const colors = [
     },
     {
         id: 4,
-        hex: "#064A73",
+        hex: "#000080",
         color: "AZUL MARINO"
     },
     {
@@ -68,7 +68,7 @@ export const colors_complement = [
     },
     {
         id: 7,
-        hex: "#FE5F5E",
+        hex: "#FF91AE",
         color: "ROSA"
     },
     {
