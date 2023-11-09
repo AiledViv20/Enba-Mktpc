@@ -26,6 +26,7 @@ import { useParams } from 'react-router-dom';
 import { CardFilterContext } from '../../context';
 
 import logoGif from '../../assets/icons/logo.gif';
+import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
 const CategoriesMb = () => {
     const params_url = useParams();
@@ -63,11 +64,12 @@ const CategoriesMb = () => {
 
     useEffect(() => {
         if (data && changeFirstValue) {
-            setLoading(true);
             setProducts(data);
             setProductsDefault(data);
-            setLoading(false);
             setChangeFirstValue(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 8000);
         }
     },[data]);
 
@@ -82,25 +84,14 @@ const CategoriesMb = () => {
         if (productsDefault.length > 0) {
             setLoading(true);
             if (colorSelected !== "") {
-                let filterProductsByColor = productsDefault.filter((element) => element.color === colorSelected);
-                filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
-                if (filterProductsByColor.length > 0) {
-                    if (state.artPerPage !== "" && state.artPerPage !== 1) {
-                        filterProductsByColor = filterProductsByColor.slice(0, state.artPerPage);
-                    } else  if (state.artPerPage === 1) {
-                        setProducts(filterProductsByColor);
+                let filterProductsByColor = productsDefault.filter((element) => {
+                    if (element.color.includes(colorSelected)) {
+                        return element;
                     }
-                } else {
-                    setProducts(filterProductsByColor);
-                }
-            } else {
-                let filterProductsByOptions = productsDefault.filter((element) => element.stock !== "0");
-                if (state.artPerPage !== "" && state.artPerPage !== 1) {
-                    filterProductsByOptions = productsDefault.slice(0, state.artPerPage);
-                    setProducts(filterProductsByOptions);
-                } else if (state.artPerPage === 1) {
-                    setProducts(filterProductsByOptions);
-                }
+                });
+                console.log(filterProductsByColor);
+                filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
+                setProducts(filterProductsByColor);
             }
             setLoading(false);
         }
@@ -146,7 +137,7 @@ const CategoriesMb = () => {
                                         <Text key={idx} fontSize={"14px"} fontWeight={400} mb={5} cursor={'pointer'} 
                                         onClick={(e) => {
                                             e.preventDefault(); 
-                                            window.location.href = `/categoria/${element.category.toUpperCase()}`;
+                                            window.location.href = `/categoria/search/${element.category.toUpperCase()}`;
                                         }}>{capitalizeFirstLetter(element.category)}
                                         </Text>
                                     ))}
@@ -211,12 +202,28 @@ const CategoriesMb = () => {
                             )
                         }
                     })
-                    : 
+                        : null
+                    }
+                    {loading && products.length === 0 ?
                         <Stack direction="row" alignItems="center">
                             <Box textAlign="center" py={6} px={3}>
                                 <img src={logoGif} width={"400px"} height={"150px"} alt="Cargando" />
                             </Box>
                         </Stack>
+                        : null
+                    }
+                    {!loading && products.length === 0 ? 
+                        <Flex w={"840px"} flexDirection={"column"}>
+                                <Flex justifyContent={"center"} mb={5}>
+                                <img src={iconNotFound} width={"102px"} height={"100px"} alt='icon'/>
+                            </Flex>
+                            <Flex flexDirection={"column"} textAlign={"center"}>
+                                <Text lineHeight={1.2} fontSize={"25px"}>
+                                    <Text as={"b"}>¡Lo sentimos!</Text><br />
+                                    No encontramos lo que estas buscando, Intenta de nuevo
+                                </Text>
+                            </Flex>
+                        </Flex> : null
                     }
                 </Grid>
             </Flex>
