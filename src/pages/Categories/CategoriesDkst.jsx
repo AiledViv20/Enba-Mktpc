@@ -108,19 +108,15 @@ const CategoriesDkst = () => {
 
     useEffect(() => {
         if (products.length > 0) {
-            let filterProducts = products.filter((element) => element.stock !== "0");
-            setProducts(filterProducts);
-            if (products.length > 0) {
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                const currentProductsTemp = products.slice(startIndex, endIndex);
-                const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
-                setCurrentProducts(currentProductsTemp);
-                setTotalPages(totalPagesTemp);
-                setTimeout(() => {
-                    setLoading(false);
-                }, 8000);
-            }
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentProductsTemp = products.slice(startIndex, endIndex);
+            const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+            setCurrentProducts(currentProductsTemp);
+            setTotalPages(totalPagesTemp);
+            setTimeout(() => {
+                setLoading(false);
+            }, 8000);
         }
     }, [products]);
 

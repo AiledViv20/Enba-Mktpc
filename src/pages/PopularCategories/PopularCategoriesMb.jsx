@@ -16,12 +16,10 @@ import {
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
-import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
-import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchTemporalityQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import { CardFilterContext } from '../../context';
@@ -29,8 +27,14 @@ import { CardFilterContext } from '../../context';
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
+import './styled.css';
+
 const PopularCategoriesMb = () => {
     const params_url = useParams();
+    const itemsPerPage = 9;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentProducts, setCurrentProducts] = useState([]);
+    const [totalPages, setTotalPages] = useState(0);
     const [products, setProducts] = useState([]);
     const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
@@ -46,16 +50,30 @@ const PopularCategoriesMb = () => {
         name: "",
         order: "ASC"
     });
-    const {data, isLoading, error} = useGetSearchQuery(params);
+    const {data, isLoading, error} = useGetSearchTemporalityQuery(params);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    useEffect(() => {
+        setLoading(true);
+        if (products.length > 0) {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentProductsTemp = products.slice(startIndex, endIndex);
+            setCurrentProducts(currentProductsTemp);
+        }
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }, [currentPage]);
 
     useEffect(() => {
         if (data && changeFirstValue) {
             setProducts(data);
             setProductsDefault(data);
             setChangeFirstValue(false);
-            setTimeout(() => {
-                setLoading(false);
-            }, 8000);
         }
     },[data]);
 
@@ -63,8 +81,33 @@ const PopularCategoriesMb = () => {
         if (productsDefault.length > 0) {
             let filterProducts = productsDefault.filter((element) => element.stock !== "0");
             setProducts(filterProducts);
+            if (products.length > 0) {
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentProductsTemp = products.slice(startIndex, endIndex);
+                const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+                setCurrentProducts(currentProductsTemp);
+                setTotalPages(totalPagesTemp);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 8000);
+            }
         }
     }, [productsDefault]);
+
+    useEffect(() => {
+        if (products.length > 0) {
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentProductsTemp = products.slice(startIndex, endIndex);
+            const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+            setCurrentProducts(currentProductsTemp);
+            setTotalPages(totalPagesTemp);
+            setTimeout(() => {
+                setLoading(false);
+            }, 8000);
+        }
+    }, [products]);
 
     useEffect(() => {
         if (productsDefault.length > 0) {
@@ -76,7 +119,9 @@ const PopularCategoriesMb = () => {
                     }
                 });
                 filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
-                setProducts(filterProductsByColor);
+                if (filterProductsByColor.length > 0) {
+                    setProducts(filterProductsByColor);
+                }
             }
             setLoading(false);
         }
@@ -162,11 +207,22 @@ const PopularCategoriesMb = () => {
                 </Accordion>
             </Flex>
             <Flex flexDirection={"column"}>
-                <Flex pt={5} pb={10} zIndex={1}>
+                <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy />
+                    <Flex w={"100%"}>
+                        {totalPages > 0 ? (
+                            <ul className="pagination">
+                                {Array.from({ length: totalPages }, (_, i) => (
+                                <li key={i} className={i + 1 === currentPage ? "active" : ""}>
+                                    <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
+                                </li>
+                                ))}
+                            </ul>
+                        ) : null}
+                    </Flex>
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
-                    {products.length > 0 && !loading ? products.map((item, idx) => {
+                    {currentProducts.length > 0 && !loading ? currentProducts.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
@@ -177,7 +233,7 @@ const PopularCategoriesMb = () => {
                     })
                         : null
                     }
-                    {loading && products.length === 0 ?
+                    {loading && currentProducts.length === 0 ?
                         <Stack direction="row" alignItems="center">
                             <Box textAlign="center" py={6} px={3}>
                                 <img src={logoGif} width={"400px"} height={"150px"} alt="Cargando" />
@@ -185,7 +241,7 @@ const PopularCategoriesMb = () => {
                         </Stack>
                         : null
                     }
-                    {!loading && products.length === 0 ? 
+                    {!loading && currentProducts.length === 0 ? 
                         <Flex w={"840px"} flexDirection={"column"}>
                                 <Flex justifyContent={"center"} mb={5}>
                                 <img src={iconNotFound} width={"102px"} height={"100px"} alt='icon'/>

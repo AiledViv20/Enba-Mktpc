@@ -112,19 +112,15 @@ const CategoriesMb = () => {
 
     useEffect(() => {
         if (products.length > 0) {
-            let filterProducts = products.filter((element) => element.stock !== "0");
-            setProducts(filterProducts);
-            if (products.length > 0) {
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                const currentProductsTemp = products.slice(startIndex, endIndex);
-                const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
-                setCurrentProducts(currentProductsTemp);
-                setTotalPages(totalPagesTemp);
-                setTimeout(() => {
-                    setLoading(false);
-                }, 8000);
-            }
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentProductsTemp = products.slice(startIndex, endIndex);
+            const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+            setCurrentProducts(currentProductsTemp);
+            setTotalPages(totalPagesTemp);
+            setTimeout(() => {
+                setLoading(false);
+            }, 8000);
         }
     }, [products]);
 
@@ -238,9 +234,9 @@ const CategoriesMb = () => {
                 </Accordion>
             </Flex>
             <Flex flexDirection={"column"}>
-                <Flex pt={5} pb={10} zIndex={1}>
+                <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy />
-                    <Flex w={"100%"} justifyContent={"end"}>
+                    <Flex w={"100%"}>
                         {totalPages > 0 ? (
                             <ul className="pagination">
                                 {Array.from({ length: totalPages }, (_, i) => (
