@@ -75,7 +75,6 @@ const PopularCategoriesMb = () => {
                         return element;
                     }
                 });
-                console.log(filterProductsByColor);
                 filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
                 setProducts(filterProductsByColor);
             }
