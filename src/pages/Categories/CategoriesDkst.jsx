@@ -55,7 +55,6 @@ const CategoriesDkst = () => {
         setCurrentPage(pageNumber);
     };
 
-
     useEffect(() => {
         if (params_url.category) {
             const urlCategory = params_url.category.split(" ");
@@ -108,22 +107,35 @@ const CategoriesDkst = () => {
     }, [productsDefault]);
 
     useEffect(() => {
-        if (currentProducts.length > 0) {
+        if (products.length > 0) {
+            let filterProducts = products.filter((element) => element.stock !== "0");
+            setProducts(filterProducts);
+            if (products.length > 0) {
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentProductsTemp = products.slice(startIndex, endIndex);
+                const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+                setCurrentProducts(currentProductsTemp);
+                setTotalPages(totalPagesTemp);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 8000);
+            }
+        }
+    }, [products]);
+
+    useEffect(() => {
+        if (productsDefault.length > 0) {
             setLoading(true);
             if (colorSelected !== "") {
-                let filterProductsByColor = currentProducts.filter((element) => {
+                let filterProductsByColor = productsDefault.filter((element) => {
                     if (element.color.includes(colorSelected)) {
                         return element;
                     }
                 });
                 filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
                 if (filterProductsByColor.length > 0) {
-                    const startIndex = (1 - 1) * itemsPerPage;
-                    const endIndex = startIndex + itemsPerPage;
-                    const currentProductsTemp = filterProductsByColor.slice(startIndex, endIndex);
-                    const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
-                    setCurrentProducts(currentProductsTemp);
-                    setTotalPages(totalPagesTemp);
+                    setProducts(filterProductsByColor);
                 }
             }
             setLoading(false);
@@ -220,7 +232,7 @@ const CategoriesDkst = () => {
                     <Flex pb={10}>
                         <OrderBy />
                         <Flex w={"100%"} justifyContent={"end"}>
-                            {totalPages > 1 ? (
+                            {totalPages > 0 ? (
                                 <ul className="pagination">
                                     {Array.from({ length: totalPages }, (_, i) => (
                                     <li key={i} className={i + 1 === currentPage ? "active" : ""}>
