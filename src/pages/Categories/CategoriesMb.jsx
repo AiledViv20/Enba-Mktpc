@@ -19,7 +19,6 @@ import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
@@ -200,7 +199,6 @@ const CategoriesMb = () => {
             </Flex>
             <Flex flexDirection={"column"}>
                 <Flex pt={5} pb={10} zIndex={1}>
-                    <ArticlesPerPage />
                     <OrderBy />
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>

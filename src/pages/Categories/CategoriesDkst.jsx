@@ -15,7 +15,6 @@ import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-import ArticlesPerPage from '../../components/filters/ArticlesPerPage';
 import OrderBy from '../../components/filters/OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
@@ -190,8 +189,7 @@ const CategoriesDkst = () => {
                     </Flex>
                 </GridItem>
                 <GridItem>
-                    <Flex pl={10} pb={10}>
-                        <ArticlesPerPage />
+                    <Flex pb={10}>
                         <OrderBy />
                     </Flex>
                     <Grid templateColumns={products.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}>
@@ -213,8 +211,7 @@ const CategoriesDkst = () => {
                     }
                     </Grid>
                     {products.length > 0 && !isLoading ? 
-                        <Flex mt={10} pl={10}>
-                            <ArticlesPerPage />
+                        <Flex mt={10}>
                             <OrderBy />
                         </Flex>
                     : null}
