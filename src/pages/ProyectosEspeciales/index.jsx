@@ -59,7 +59,8 @@ const ProyectosEspeciales = ({ props }) => {
             key: "hero1",
             imageUrl: img1,
             title: "F1 GP MÉXICO",
-            description: `Para este proyecto en Enba, nos enorgullece haber<br />trabajado en colaboración con Mobil para llevar a cabo<br />una campaña promocional en el GP de México.`
+            description: `Para este proyecto en Enba, nos enorgullece haber<br />trabajado en colaboración con Mobil para llevar a cabo<br />una campaña promocional en el GP de México.`,
+            descriptionMb: `Para este proyecto en Enba, nos enorgullece<br />haber trabajado en colaboración con Mobil<br />para llevar a cabo una campaña promocional<br />en el GP de México.`
         },
         {
             key: "hero2",
@@ -126,16 +127,16 @@ const ProyectosEspeciales = ({ props }) => {
     return ( 
         <>
             <Flex pt={10} justifyContent={"center"} mb={10} color={"accent.500"}>
-                <Text fontSize={"34px"} as={"b"}>Proyectos Especiales</Text>
+                <Text fontSize={isGreaterThanMd ? "34px" : "26px"} as={"b"}>Proyectos Especiales</Text>
             </Flex>
             <Grid templateColumns={isGreaterThanMd ? 'repeat(2, 1fr)' : 'repeat(1, 2fr)'} m={5}>
                 <GridItem>
                     <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
-                        <Flex flexDirection={"column"}>
+                        <Flex flexDirection={"column"} textAlign={isGreaterThanMd ? "start" : "center"}>
                             <Text
                                 mb={2}
                                 fontWeight={600}
-                                fontSize={"26px"}>
+                                fontSize={isGreaterThanMd ? "26px" : "22px"}>
                                 {slides[0].title}
                             </Text>
                             <Text
@@ -143,7 +144,7 @@ const ProyectosEspeciales = ({ props }) => {
                                 fontWeight={400}
                                 fontSize={"16px"}
                                 lineHeight={1.2}>
-                                <MarkDownSection>{slides[0].description}</MarkDownSection>
+                                <MarkDownSection>{isGreaterThanMd ? slides[0].description : slides[0].descriptionMb}</MarkDownSection>
                             </Text>
                             <Button 
                                 w={"280px"} h={"44px"} 
@@ -175,8 +176,8 @@ const ProyectosEspeciales = ({ props }) => {
                 <GridItem>
                     <Flex justifyContent={"end"}>
                         <Flex
-                            width={"658px"}
-                            height={"414px"}
+                            width={isGreaterThanMd ? "658px" : "346px"}
+                            height={isGreaterThanMd ? "414px" : "218px"}
                             backgroundImage={`url(${slides[1].imageUrl})`}
                             backgroundSize="cover"
                             backgroundPosition="center center"
@@ -247,8 +248,8 @@ const ProyectosEspeciales = ({ props }) => {
                 <GridItem>
                     <Flex>
                         <Flex
-                            width={"658px"}
-                            height={"414px"}
+                            width={isGreaterThanMd ? "658px" : "346px"}
+                            height={isGreaterThanMd ? "414px" : "218px"}
                             backgroundImage={`url(${slides[2].imageUrl})`}
                             backgroundSize="cover"
                             backgroundPosition="center center"
@@ -261,8 +262,8 @@ const ProyectosEspeciales = ({ props }) => {
                 <GridItem>
                     <Flex justifyContent={"end"}>
                         <Flex
-                            width={"658px"}
-                            height={"414px"}
+                            width={isGreaterThanMd ? "658px" : "346px"}
+                            height={isGreaterThanMd ? "414px" : "218px"}
                             backgroundImage={`url(${slides[3].imageUrl})`}
                             backgroundSize="cover"
                             backgroundPosition="center center"
@@ -333,8 +334,8 @@ const ProyectosEspeciales = ({ props }) => {
                 <GridItem>
                     <Flex>
                         <Flex
-                            width={"658px"}
-                            height={"414px"}
+                            width={isGreaterThanMd ? "658px" : "346px"}
+                            height={isGreaterThanMd ? "414px" : "218px"}
                             backgroundImage={`url(${slides[4].imageUrl})`}
                             backgroundSize="cover"
                             backgroundPosition="center center"
