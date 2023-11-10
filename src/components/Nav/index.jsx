@@ -211,6 +211,7 @@ const MobileNavItem = ({ label, children, href }) => {
   return (
     <Stack spacing={4} onClick={children && onToggle}>
       <Flex
+        zIndex={1}
         py={2}
         as={Link}
         href={href ?? '#'}

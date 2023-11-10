@@ -25,6 +25,18 @@ const SearchBarResponsive = () => {
             setCategories(categoriesList);
         }
     },[categoriesList]);
+
+    const searchMkt = () => {
+        var searchKeyboard = ""
+        if (selectedCategory === "Todas" && keySearch !== "") {
+            searchKeyboard = `/code/${keySearch}`;
+        } else if (selectedCategory !== "Todas" && keySearch === "") {
+            searchKeyboard = `/search/${selectedCategory}`;
+        } else if (selectedCategory !== "Todas" && keySearch !== "") {
+            searchKeyboard = `/${selectedCategory}/${keySearch}`;
+        }
+        window.location.href = `/categoria${searchKeyboard}`;
+    }
     
     return ( 
         <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
@@ -38,8 +50,8 @@ const SearchBarResponsive = () => {
                     onChange={e => setSelectedCategory(e.target.value)}
                     icon={<ChevronDownIcon />}
                     menuListProps={{
-                        maxH: "50px", // Establece la altura máxima que desees
-                        overflowY: "auto", // Agrega desplazamiento vertical si es necesario
+                        maxH: "50px",
+                        overflowY: "auto",
                       }}>
                         {
                             categories && (
@@ -74,9 +86,7 @@ const SearchBarResponsive = () => {
                         bg: "#063D5F"
                     }}
                     aria-label='Search category' icon={<SearchIcon />} 
-                    onClick={(e) => {
-                        window.location.href = `/categoria${selectedCategory === "Todas" ? "" :  `/${selectedCategory}`}/${keySearch === "" && selectedCategory === "Todas"  ? "Todas" : keySearch}`
-                    }}
+                    onClick={() => searchMkt()}
                 />
             </Flex>
         </Flex>

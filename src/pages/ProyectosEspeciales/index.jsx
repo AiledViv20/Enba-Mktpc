@@ -8,7 +8,9 @@ import {
     Button,
     useDisclosure,
     Grid, 
-    GridItem
+    GridItem,
+    useTheme,
+    useMediaQuery,
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 
@@ -26,6 +28,8 @@ import { toast } from 'react-toastify';
 import Gallery from '../../components/Gallery';
 
 const ProyectosEspeciales = ({ props }) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [values, setValues] = useState({
         name: "",
@@ -124,7 +128,7 @@ const ProyectosEspeciales = ({ props }) => {
             <Flex pt={10} justifyContent={"center"} mb={10} color={"accent.500"}>
                 <Text fontSize={"34px"} as={"b"}>Proyectos Especiales</Text>
             </Flex>
-            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+            <Grid templateColumns={isGreaterThanMd ? 'repeat(2, 1fr)' : 'repeat(1, 2fr)'} m={5}>
                 <GridItem>
                     <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
                         <Flex flexDirection={"column"}>
@@ -155,10 +159,10 @@ const ProyectosEspeciales = ({ props }) => {
                     </Flex>
                 </GridItem>
                 <GridItem>
-                    <Flex>
+                    <Flex justifyContent={"center"}>
                         <Flex
-                            width={"658px"}
-                            height={"414px"}
+                            width={isGreaterThanMd ? "658px" : "346px"}
+                            height={isGreaterThanMd ? "414px" : "218px"}
                             backgroundImage={`url(${slides[0].imageUrl})`}
                             backgroundSize="cover"
                             backgroundPosition="center center"
@@ -167,7 +171,7 @@ const ProyectosEspeciales = ({ props }) => {
                     </Flex>
                 </GridItem>
             </Grid>
-            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+            <Grid templateColumns={isGreaterThanMd ? 'repeat(2, 1fr)' : 'repeat(1, 2fr)'} m={5}>
                 <GridItem>
                     <Flex justifyContent={"end"}>
                         <Flex
@@ -210,7 +214,7 @@ const ProyectosEspeciales = ({ props }) => {
                     </Flex>
                 </GridItem>
             </Grid>
-            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+            <Grid templateColumns={isGreaterThanMd ? 'repeat(2, 1fr)' : 'repeat(1, 2fr)'} m={5}>
                 <GridItem>
                     <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
                         <Flex flexDirection={"column"}>
@@ -253,7 +257,7 @@ const ProyectosEspeciales = ({ props }) => {
                     </Flex>
                 </GridItem>
             </Grid>
-            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+            <Grid templateColumns={isGreaterThanMd ? 'repeat(2, 1fr)' : 'repeat(1, 2fr)'} m={5}>
                 <GridItem>
                     <Flex justifyContent={"end"}>
                         <Flex
@@ -296,7 +300,7 @@ const ProyectosEspeciales = ({ props }) => {
                     </Flex>
                 </GridItem>
             </Grid>
-            <Grid templateColumns='repeat(2, 1fr)' m={5}>
+            <Grid templateColumns={isGreaterThanMd ? 'repeat(2, 1fr)' : 'repeat(1, 2fr)'} m={5}>
                 <GridItem>
                     <Flex justifyContent={"center"} alignItems={"center"} height={"100%"}>
                         <Flex flexDirection={"column"}>
