@@ -121,6 +121,8 @@ const PopularCategoriesMb = () => {
                 filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
                 if (filterProductsByColor.length > 0) {
                     setProducts(filterProductsByColor);
+                } else {
+                    setCurrentProducts([]);
                 }
             }
             setLoading(false);
@@ -249,7 +251,7 @@ const PopularCategoriesMb = () => {
                             <Flex flexDirection={"column"} textAlign={"center"}>
                                 <Text lineHeight={1.2} fontSize={"25px"}>
                                     <Text as={"b"}>¡Lo sentimos!</Text><br />
-                                    No encontramos lo que estas buscando, Intenta de nuevo
+                                    No encontramos lo que estas buscando, intenta de nuevo
                                 </Text>
                             </Flex>
                         </Flex> : null
