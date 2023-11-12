@@ -23,7 +23,7 @@ const Nosotros = ({ props }) => {
 
     return ( 
         <>
-            <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={isGreaterThanMd ? "2rem 5%" : "10px 5%"} pt={isGreaterThanMd ? 0 : 10} pb={isGreaterThanMd ? 20 : 10} position="relative">
+            <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={isGreaterThanMd ? "2rem 5%" : "10px 5%"} pt={10} pb={isGreaterThanMd ? 20 : 10} position="relative">
                 <Flex
                     w="100%"
                     h="354px"

@@ -5,7 +5,9 @@ import {
     Text,
     Input,
     Textarea,
-    Button
+    Button,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 import Footer from '../../components/Footer';
 import banner from '../../assets/images/banner/banner-contactanos.png';
@@ -14,6 +16,8 @@ import { usePostLeadMutation } from '../../hooks/enbaapi';
 import { toast } from 'react-toastify';
 
 const Contacto = ({ props }) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [values, setValues] = useState({
         name: "",
         last_name: "",
@@ -81,29 +85,28 @@ const Contacto = ({ props }) => {
                         </Flex>
                     </Flex>
                 </Flex>
-                <Flex w="100%" justifyContent={"center"} pt={20}>
+                <Flex w="100%" justifyContent={"center"} pt={isGreaterThanMd ? 20 : 10}>
                     <form
-                        style={{ width: "70%" }}
+                        style={{ width: isGreaterThanMd ? "70%" : "100%" }}
                         onSubmit={(e) => {
                             e.preventDefault();
                             handleSubmit();
                         }}>
                         <Flex w={"100%"} flexDirection={"column"}>
-                            <Flex mb={3} justifyContent={"center"} zIndex={1}>
-                                <Input name='name' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Nombre(s)' mr={5} />
-                                <Input name='last_name' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Apellido' />
+                            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mb={3} justifyContent={"center"} zIndex={1}>
+                                <Input name='name' onChange={handleChange} fontSize={"14px"} width={isGreaterThanMd ? "366px" : "100%"} height={"56px"} placeholder='Nombre(s)' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                                <Input name='last_name' onChange={handleChange} fontSize={"14px"} width={isGreaterThanMd ? "366px" : "100%"} height={"56px"} placeholder='Apellido' />
                             </Flex>
-                            <Flex mb={3} justifyContent={"center"} zIndex={1}>
-                                <Input name='email' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Email' mr={5} />
-                                <Input name='phone' type='number' onChange={handleChange} fontSize={"14px"} width={"366px"} height={"56px"} placeholder='Teléfono' />
+                            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mb={3} justifyContent={"center"} zIndex={1}>
+                                <Input name='email' onChange={handleChange} fontSize={"14px"} width={isGreaterThanMd ? "366px" : "100%"} height={"56px"} placeholder='Email' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                                <Input name='phone' type='number' onChange={handleChange} fontSize={"14px"} width={isGreaterThanMd ? "366px" : "100%"} height={"56px"} placeholder='Teléfono' />
                             </Flex>
                             <Flex mb={10} justifyContent={"center"} zIndex={1}>
                                 <Textarea name='message' onChange={handleChange} w={"756px"} height={"180px"} fontSize={"14px"} placeholder='Mensaje' />
                             </Flex>
                             <Flex justifyContent={"center"} zIndex={1}>
                                 <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}
-                                    isDisabled = {values.name === "" || values.last_name === "" || values.email === "" || values.phone === ""}
-                                >
+                                    isDisabled = {values.name === "" || values.last_name === "" || values.email === "" || values.phone === ""}>
                                     Enviar mensaje
                                 </Button>
                             </Flex>
