@@ -126,7 +126,7 @@ const ModalPrintImage = ({ isOpen, onClose, category, product = null }) => {
     }
 
     return ( 
-        <Modal size={"2xl"} isOpen={isOpen} onClose={onClose}>
+        <Modal size={isGreaterThanMd ? "2xl" : "xs"} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader color={"transparent"}>Modal Title</ModalHeader>
@@ -138,7 +138,7 @@ const ModalPrintImage = ({ isOpen, onClose, category, product = null }) => {
                         </Flex>
                         <Flex mb={10} h={"178px"} bg={"#F6F6F6"} justifyContent={"center"} alignItems={"center"} border={"1px solid #D9D9D9"} flexDirection={"column"}>
                             <Text fontFamily={"Montserrat, sans-serif"} color={"#000"} fontSize={isGreaterThanMd ? "18px" : "16px"}>Carga tu logotipo en formato PNG</Text>
-                            <Input name='img' type='file' accept='.png' mt={2} w={"auto"} onChange={handleChangeFile} border={"transparent"} pl={0}/>
+                            <Input name='img' type='file' accept='.png' mt={2} w={isGreaterThanMd ? "auto" : "100%"} onChange={handleChangeFile} border={"transparent"} pl={0}/>
                         </Flex>
                         <Flex mb={5} justifyContent={isGreaterThanMd ? "initial" : "center"}>
                             <Text textAlign={isGreaterThanMd ? "initial" : "center"} fontSize={"16px"} color={"#002B49"}>O escoge un logotipo de nuestra biblioteca, para observar un ejemplo de impresión</Text>

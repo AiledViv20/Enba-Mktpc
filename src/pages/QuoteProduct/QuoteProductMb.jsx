@@ -372,9 +372,7 @@ const QuoteProductMb = () => {
                     setLogo={setLogo}
                     logoInfo={logoInfo}
                     setLogoInfo={setLogoInfo}
-                    validateStep1={validateStep1}
-                    isLoadingStep1={isLoadingStep1}
-                    handleSubmit={handleSubmit} />
+                    categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
                     step2={steps.step2}
                     value={value}
@@ -404,7 +402,7 @@ const QuoteProductMb = () => {
                     isDisabled={num <= 1 ? true : false}/>
             </Flex>
             <Flex mt={5} w={"100%"} flexDirection={"column"} display={num === 1 || num === 2 ? "flex" : "none"}>
-                {totalAmountStore < 1 ? 
+                {validateMinShop() ? 
                     <Alert mb={5} status='error' lineHeight={1.2}>
                         <AlertIcon />
                         No es posible realizar el proceso, el mínimo de compra debe ser $1,500.00 MXN

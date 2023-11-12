@@ -206,6 +206,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
                     <ModalPrintImage
                         isOpen={isOpen}
                         onClose={onClose}
+                        category={data.name.toUpperCase()}
                         product={images[2]} />
                 : null
             }
