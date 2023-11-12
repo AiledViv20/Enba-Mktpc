@@ -13,11 +13,10 @@ import {
     AlertIcon
 } from '@chakra-ui/react';
 
-import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../../hooks/slices/counterSlice';
+import { selectProducts, setProducts } from '../../../hooks/slices/counterSlice';
 
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
-import icon1 from '../../../assets/icons/fast-delivery.svg';
 import icon2 from '../../../assets/icons/package.svg';
 import ModalPrintImage from '../../ModalPrintImage';
 
@@ -27,7 +26,6 @@ import { toast } from 'react-toastify';
 
 const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
-    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -104,9 +102,6 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
                 setProducts({products: [
                     ...productsStore, product
                 ]})
-            );
-            dispatch(
-                setTotalAmount({totalAmount: totalAmountStore + calcTotalPrice})
             );
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT

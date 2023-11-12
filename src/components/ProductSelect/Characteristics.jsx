@@ -21,9 +21,7 @@ import { ChevronDownIcon } from '@chakra-ui/icons';
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 import { 
     selectProducts, 
-    setProducts, 
-    selectTotalAmount, 
-    setTotalAmount 
+    setProducts
 } from '../../hooks/slices/counterSlice';
 import TablePrice from '../TablePrice';
 
@@ -31,7 +29,6 @@ import { toast } from 'react-toastify';
 
 const Characteristics = ({ data, colorsProduct, previewImage }) => {
     const productsStore = useSelector(selectProducts);
-    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -133,9 +130,6 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                         ...productsStore, product
                     ]})
                 );
-                dispatch(
-                    setTotalAmount({totalAmount: totalAmountStore + total})
-                );
                 toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
@@ -162,9 +156,6 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                 setProducts({products: [
                     ...productsStore, product
                 ]})
-            );
-            dispatch(
-                setTotalAmount({totalAmount: totalAmountStore + total})
             );
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT

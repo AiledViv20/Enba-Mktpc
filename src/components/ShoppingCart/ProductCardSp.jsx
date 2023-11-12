@@ -66,18 +66,18 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
             newArray.forEach((item) => {
                 sumTotalKit2 = item.total_price + sumTotalKit2
             })
-            setSubTotalSum(sumTotalKit2);
+            //setSubTotalSum(sumTotalKit2);
             let sumTempCalculate = (sumTotalKit2 * 0.16).toFixed(2);
             sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend(sumTotalKit2) + sumTotalKit2;
-            setSumTotalOrder(sumTempCalculate);
-            if (newArray.length > 0) {
+            //setSumTotalOrder(sumTempCalculate);
+            /* if (newArray.length > 0) {
                 dispatch(
                     setProducts({products: newArray })
                 );
                 dispatch(
                     setTotalAmount({totalAmount: sumTempCalculate})
                 );
-            }
+            } */
         }
     }, [newArray]);
 

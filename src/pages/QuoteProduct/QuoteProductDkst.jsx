@@ -168,9 +168,6 @@ const QuoteProductDkts = () => {
 
     useEffect(() => {
         setProductsQuote(productsStore);
-        if (kitsStore.length > 0) {
-            setKits(productsStore);
-        }
         if (totalAmountStore > 0) {
             setSubTotalSum(totalAmountStore);
             let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
