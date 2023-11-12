@@ -1,3 +1,14 @@
+import kit1 from '../assets/images/kits/kit-expo.png';
+import kit2 from '../assets/images/kits/kit-corporativo.png';
+import kit3 from '../assets/images/kits/kit-oficina.png';
+import kit4 from '../assets/images/kits/kit-deportivo.png';
+import kit5 from '../assets/images/kits/kit-hombre.png';
+import kit6 from '../assets/images/kits/kit-mujer.png';
+import kit7 from '../assets/images/kits/kit-viaje.png';
+import kit8 from '../assets/images/kits/kit-escolar.png';
+import kit9 from '../assets/images/kits/kit-tecnologico.png';
+import kit10 from '../assets/images/kits/kit-children.png';
+
 export const categoriesList =  [
     {
         general_category: "BEBIDAS",
@@ -368,4 +379,57 @@ export const categoriesList =  [
             }
         ]
     }
-]
+];
+
+export const kitGroup = [
+    {
+        id: 1,
+        name: "EXPO",
+        imgUrl: kit1
+    },
+    {
+        id: 2,
+        name: "CORPORATIVO",
+        imgUrl: kit2
+    },
+    {
+        id: 3,
+        name: "OFICINA",
+        imgUrl: kit3
+    },
+    {
+        id: 4,
+        name: "DEPORTIVO",
+        imgUrl: kit4
+    },
+    {
+        id: 5,
+        name: "HOMBRE",
+        imgUrl: kit5
+    },
+    {
+        id: 6,
+        name: "MUJER",
+        imgUrl: kit6
+    },
+    {
+        id: 7,
+        name: "VIAJE",
+        imgUrl: kit7
+    },
+    {
+        id: 8,
+        name: "ESCOLAR",
+        imgUrl: kit8
+    },
+    {
+        id: 9,
+        name: "TECNOLOGICO",
+        imgUrl: kit9
+    },
+    {
+        id: 10,
+        name: "NIÑOS",
+        imgUrl: kit10
+    },
+];

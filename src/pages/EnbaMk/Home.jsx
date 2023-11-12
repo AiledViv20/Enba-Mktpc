@@ -34,7 +34,6 @@ const Home = () => {
 
   return (
     <>
-      <Presentacion />
       <Flex flexDirection={"column"} justifyContent={"space-between"} alignItems={"center"} padding={isGreaterThanMd ? "3rem 6rem" : "1rem 0.8rem"} minHeight={"100vh"}>
         <RecommendedProducts 
           titleSection={"Productos destacados"}

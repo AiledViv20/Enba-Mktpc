@@ -10,11 +10,12 @@ import { useGetKitQuery } from '../../hooks/enbaapi';
 import KitIncludes from './KitIncludes';
 import AddProductsKit from './AddProductsKit';
 
-import Gallery from './Gallery';
+import ZoomImage from '../ProductSelect/ZoomImage';
 
 const InfoKit = () => {
     const params_url = useParams();
     const [idx, setIdx] = useState(0);
+    const [img, setImg] = useState('');
     const [product, setProduct] = useState(null);
     const params = {
         sku: params_url.product
@@ -97,10 +98,9 @@ const InfoKit = () => {
             {
                 product && (
                     <Flex p={10} justifyContent={"space-between"}>
-                        <Miniature images={showKitIncludes} setIdx={setIdx} idx={idx}/>
+                        <Miniature images={showKitIncludes} setImg={setImg} setIdx={setIdx} idx={idx}/>
                         <Flex pl={10} width={"442px"} height={"442px"}>
-                            <Gallery 
-                                showKitIncludes={showKitIncludes} />
+                            <ZoomImage src={img} alt={'image product'} />
                         </Flex>
                         <Description 
                             kit={kit}
