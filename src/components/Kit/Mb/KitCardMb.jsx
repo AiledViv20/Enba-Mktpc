@@ -97,7 +97,7 @@ const KitCard = ({ product, showIconPlus, isSelectedProductTrash, setIsSelectedP
                         </Flex>
                     </Flex>
                     <Flex justifyContent={"center"} pt={5}>
-                        <Image width={"192px"} height={"192px"} src={product.images?.product_images[0]} alt={product.name} />
+                        <Image width={"192px"} height={"192px"} src={product.items[0]?.images?.images_item[0]} alt={product.name} />
                     </Flex>
                     <Flex direction="column" px="4" pt="10" pb="1">
                         <Box

@@ -104,7 +104,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
     }
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size='2xl'>
+        <Modal isOpen={isOpen} onClose={onClose} size={isGreaterThanMd ? '2xl' : 'xs'}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader></ModalHeader>
@@ -143,7 +143,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
                                     <Flex justifyContent={"center"}>
                                         <Image
                                             key={idx}
-                                            boxSize='534px'
+                                            boxSize={isGreaterThanMd ? '534px' : "225px"}
                                             objectFit='cover'
                                             src={slide.imgUrl}
                                             alt='img' />
