@@ -102,7 +102,7 @@ const Contacto = ({ props }) => {
                                 <Input name='phone' type='number' onChange={handleChange} fontSize={"14px"} width={isGreaterThanMd ? "366px" : "100%"} height={"56px"} placeholder='Teléfono' />
                             </Flex>
                             <Flex mb={10} justifyContent={"center"} zIndex={1}>
-                                <Textarea name='message' onChange={handleChange} w={"756px"} height={"180px"} fontSize={"14px"} placeholder='Mensaje' />
+                                <Textarea name='message' onChange={handleChange} w={isGreaterThanMd ? "756px" : "100%"} height={"180px"} fontSize={"14px"} placeholder='Mensaje' />
                             </Flex>
                             <Flex justifyContent={"center"} zIndex={1}>
                                 <Button type='submit' _hover={{ bg: "#063D5F"}} w={"174px"} fontWeight={500} fontSize={"14px"}
