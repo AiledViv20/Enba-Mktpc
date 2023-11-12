@@ -272,9 +272,5 @@ const NAV_ITEMS = [
   {
     label: 'Contacto',
     href: '/contacto',
-  },
-  {
-    label: 'Cotizar',
-    href: '/cotizar',
   }
 ];
