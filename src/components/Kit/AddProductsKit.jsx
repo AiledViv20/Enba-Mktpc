@@ -112,39 +112,7 @@ const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitInclude
             <Flex direction="column" align="center">
                 <Box mt={"2rem"}>
                     <Flex direction="row" alignItems="center">
-                        <IconButton
-                            icon={<ChevronLeftIcon color={"#888888"} />}
-                            rounded="full"
-                            border="0"
-                            colorScheme="brand"
-                            shadow="md"
-                            transitionDuration=".3s"
-                            _hover={{ shadow: "lg" }}
-                            isDisabled={page <= 0 ? true : false}
-                            onClick={() => setPage(page - 1)}
-                            position="relative"
-                            right={{ base: "-6", md: 0 }}
-                            bg="#E2E2E2"
-                            zIndex="2"
-                            aria-label={`Mostrar categorias página: ${page - 1}`}
-                        />
                         {CardsRenderer(products, status, showKitIncludes, setShowKitIncludes)}
-                        <IconButton
-                            icon={<ChevronRightIcon color={"#888888"} />}
-                            rounded="full"
-                            border="0"
-                            colorScheme="brand"
-                            shadow="md"
-                            transitionDuration=".3s"
-                            _hover={{ shadow: "lg" }}
-                            onClick={() => setPage(page + 1)}
-                            position="relative"
-                            left={{ base: "-6", md: 0 }}
-                            bg="#E2E2E2"
-                            zIndex="2"
-                            aria-label={`Mostrar categorias página: ${page + 1}`}
-                            isDisabled={page <= 0 ? true : false}
-                        />
                     </Flex>
                 </Box>
             </Flex>
