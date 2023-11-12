@@ -10,7 +10,7 @@ import { useGetKitQuery } from '../../../hooks/enbaapi';
 import KitIncludesMb from './KitIncludesMb';
 import AddProductsKitMb from './AddProductsKitMb';
 
-import GalleryMb from './GalleryMb';
+import MiniatureMb from './MiniatureMb';
 
 const InfoKitMb = () => {
     const params_url = useParams();
@@ -96,17 +96,16 @@ const InfoKitMb = () => {
         <>
             <Flex flexDirection={"column"} width={"100%"}>
                 <Flex>
-                    <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
+                    <Text fontSize={"26px"} lineHeight={1.2} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
                 </Flex>
                 <Flex mt={10} mb={2} fontSize={"14px"} fontWeight={400} color={"#424242"} flexDirection={"column"}>
                     <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{kit?.sku}</Text>
-                    <Text mt={2}><Text as={"b"}>Categoría:</Text>{" "}{kit?.category.toUpperCase()}</Text>
+                    <Text mt={2} lineHeight={1.2}><Text as={"b"}>Categoría:</Text>{" "}{kit?.category.toUpperCase()}</Text>
                 </Flex>
                 {
                     product && (
                         <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
-                            <GalleryMb 
-                                showKitIncludes={showKitIncludes} />
+                            <MiniatureMb images={showKitIncludes} setIdx={setIdx} idx={idx} />
                             <DescriptionMb 
                                 kit={kit}
                                 showKitIncludes={showKitIncludes} />
