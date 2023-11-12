@@ -108,7 +108,8 @@ const InfoKitMb = () => {
                             <MiniatureMb images={showKitIncludes} setIdx={setIdx} idx={idx} />
                             <DescriptionMb 
                                 kit={kit}
-                                showKitIncludes={showKitIncludes} />
+                                showKitIncludes={showKitIncludes}
+                                setShowKitIncludes={setShowKitIncludes} />
                         </Flex>
                     )
                 }

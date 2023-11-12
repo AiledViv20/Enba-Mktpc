@@ -14,7 +14,9 @@ import { FaPlus } from "react-icons/fa";
 
 import { toast } from 'react-toastify';
 
-const Description = ({ kit, showKitIncludes }) => {
+import ButtonOpenModalKit from '../ButtonOpenModalKit';
+
+const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
     const kitsStore = useSelector(selectKits);
     const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
@@ -63,6 +65,7 @@ const Description = ({ kit, showKitIncludes }) => {
             sku_kit: kit?.sku,
             code_kit: kit?.code,
             name_kit: kit?.name,
+            sum_total_kit: sumTotal,
             total_kits: values.num,
             items: showKitIncludes
         }
@@ -117,13 +120,11 @@ const Description = ({ kit, showKitIncludes }) => {
                         icon={<FaPlus />}/>
                 </Flex>
                 <Flex justifyContent={"center"} mt={5}>
-                    <Button w={"430px"} fontSize={"14px"} fontWeight={500}
-                        _hover={{
-                            bg: "#063D5F"
-                        }}
-                        onClick={() => console.log("Abrir modal colores")}
-                        isDisabled={validateData()}>Agregar al carrito
-                    </Button>
+                    <ButtonOpenModalKit 
+                        validateData={validateData}
+                        showKitIncludes={showKitIncludes}
+                        setShowKitIncludes={setShowKitIncludes}
+                        addKitShoppingCart={addKitShoppingCart} />
                 </Flex>
             </Flex>
         </Flex>

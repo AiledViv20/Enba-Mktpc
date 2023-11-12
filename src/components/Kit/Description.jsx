@@ -66,6 +66,7 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
             sku_kit: kit?.sku,
             code_kit: kit?.code,
             name_kit: kit?.name,
+            sum_total_kit: sumTotal,
             total_kits: values.num,
             items: showKitIncludes
         }
@@ -78,12 +79,6 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
         dispatch(
             setTotalAmount({totalAmount: sumTotal})
         );
-        toast.success("¡Se han agregado exitosamente los productos al kit!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
-    }
-
-    const checkSelectColorKit = () => {
         toast.success("¡Se han agregado exitosamente los productos al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
