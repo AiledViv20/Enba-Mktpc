@@ -8,10 +8,11 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 const MiniatureMb = ({ data, images, setImg, setIdx, idx }) => {
+    
     return (
         <>
             <Flex>
-                <Text fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data ? data.name.toUpperCase() : ""}</Text>
+                <Text lineHeight={1.2} fontSize={"26px"} fontWeight={600} color={"accent.500"}>{data ? data.name.toUpperCase() : ""}</Text>
             </Flex>
             <Flex mt={10} mb={10} fontSize={"14px"} fontWeight={400} color={"#424242"}>
                 <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{data ? data.sku : ""}</Text>

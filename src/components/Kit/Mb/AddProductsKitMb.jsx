@@ -129,6 +129,7 @@ const AddProductsKit = ({ titleSection, data, showKitIncludes, setShowKitInclude
                         onClick={() => setPage(page + 1)}
                         position="relative"
                         left={230}
+                        isDisabled={products.length < 4 || page === 3 ? true : false}
                         bg="#E2E2E2"
                         zIndex="2"
                         aria-label={`Mostrar categorias página: ${page + 1}`}

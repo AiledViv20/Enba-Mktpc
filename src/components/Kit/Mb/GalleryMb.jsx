@@ -5,7 +5,7 @@ import {
     GridItem
 } from '@chakra-ui/react';
 
-const GalleryMb = ({ showKitIncludes }) => {
+const GalleryMb = ({ showKitIncludes, setImg, setIdx, idx }) => {
     const [page, setPage] = useState(0);
     const [productsIncludes, setProductsIncludes] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded

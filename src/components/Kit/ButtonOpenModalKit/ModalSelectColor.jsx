@@ -10,11 +10,15 @@ import {
     Button,
     Flex,
     Select,
-    Spinner
+    Spinner,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 import { capitalizeFirstLetter } from '../../../resource/validate';
 
 const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes, addKitShoppingCart }) => {
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [loading, setLoading] = useState(false);
     const [colors1, setColors1] = useState([]);
     const [colors2, setColors2] = useState([]);
@@ -78,20 +82,20 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
     }, [showKitIncludes]);
 
     return ( 
-        <Modal isOpen={isOpen} onClose={onClose} size={'2xl'}>
+        <Modal isOpen={isOpen} onClose={onClose} size={isGreaterThanMd ? '2xl' : "xs"}>
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader>Agregar al carrito</ModalHeader>
+                <ModalHeader textAlign={isGreaterThanMd ? "start" : "center"}>Agregar al carrito</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
                     <Flex>
-                        <Text>Selecciona un color para agregar al carrito de compra</Text>
+                        <Text lineHeight={1.2} textAlign={isGreaterThanMd ? "start" : "center"}>Selecciona un color para agregar al carrito de compra</Text>
                     </Flex>
-                    <Flex mt={10}>
-                        <Flex w={"40%"}>
+                    <Flex mt={10}  w={"100%"} flexDirection={isGreaterThanMd ? "row" : "column"}>
+                        <Flex w={isGreaterThanMd? "40%" : "100%"}>
                             <Text>{capitalizeFirstLetter(showKitIncludes[0]?.name)}</Text>
                         </Flex>
-                        <Flex w={"60%"}>
+                        <Flex w={isGreaterThanMd ? "60%" : "100%"} mt={isGreaterThanMd ? 0 : 3}>
                             <Select name='colorp1' onChange={handleChangeSelected} placeholder='Color'>
                                 {colors1 && colors1.map((clr, idx) => (
                                     <option key={idx} value={clr.color}>{capitalizeFirstLetter(clr.color)}</option>
@@ -99,11 +103,11 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
                             </Select>
                         </Flex>
                     </Flex>
-                    <Flex mt={5} w={"100%"}>
-                        <Flex w={"40%"}>
+                    <Flex mt={5} w={"100%"} flexDirection={isGreaterThanMd ? "row" : "column"}>
+                        <Flex w={isGreaterThanMd? "40%" : "100%"}>
                             <Text>{capitalizeFirstLetter(showKitIncludes[1]?.name)}</Text>
                         </Flex>
-                        <Flex w={"60%"}>
+                        <Flex w={isGreaterThanMd ? "60%" : "100%"} mt={isGreaterThanMd ? 0 : 3}>
                             <Select name='colorp2' onChange={handleChangeSelected} placeholder='Color'>
                                 {colors2 && colors2.map((clr2, idx2) => (
                                     <option key={idx2} value={clr2.color}>{capitalizeFirstLetter(clr2.color)}</option>
@@ -111,11 +115,11 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
                             </Select>
                         </Flex>
                     </Flex>
-                    <Flex mt={5} w={"100%"}>
-                        <Flex w={"40%"}>
+                    <Flex mt={5} w={"100%"} flexDirection={isGreaterThanMd ? "row" : "column"}>
+                        <Flex w={isGreaterThanMd? "40%" : "100%"}>
                             <Text>{capitalizeFirstLetter(showKitIncludes[2]?.name)}</Text>
                         </Flex>
-                        <Flex w={"60%"}>
+                        <Flex w={isGreaterThanMd ? "60%" : "100%"} mt={isGreaterThanMd ? 0 : 3}>
                             <Select name='colorp3' onChange={handleChangeSelected} placeholder='Color'>
                                 {colors3 && colors3.map((clr3, idx3) => (
                                     <option key={idx3} value={clr3.color}>{capitalizeFirstLetter(clr3.color)}</option>
@@ -123,11 +127,11 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
                             </Select>
                         </Flex>
                     </Flex>
-                    <Flex mt={5} mb={10} w={"100%"}>
-                        <Flex w={"40%"}>
+                    <Flex mt={5} mb={10} w={"100%"} flexDirection={isGreaterThanMd ? "row" : "column"}>
+                        <Flex w={isGreaterThanMd? "40%" : "100%"}>
                             <Text>{capitalizeFirstLetter(showKitIncludes[3]?.name)}</Text>
                         </Flex>
-                        <Flex w={"60%"} flexDirection={"column"}>
+                        <Flex w={isGreaterThanMd ? "60%" : "100%"} flexDirection={"column"} mt={isGreaterThanMd ? 0 : 3}>
                             <Flex>
                                 <Select name='colorp4' onChange={handleChangeSelected} placeholder='Color'>
                                     {colors4 && colors4.map((clr4, idx4) => (
@@ -141,7 +145,7 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
                                         bg: "#063D5F"
                                     }}
                                     mt={8}
-                                    w={"176px"} 
+                                    w={isGreaterThanMd ? "176px" : "100%"} 
                                     fontSize={"14px"} 
                                     fontWeight={500}
                                     onClick={() => filterObjShoppingCart()}
