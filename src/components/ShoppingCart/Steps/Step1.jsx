@@ -5,12 +5,16 @@ import {
     Button,
     Input,
     Textarea,
-    useDisclosure
+    useDisclosure,
+    useTheme,
+    useMediaQuery
 } from '@chakra-ui/react';
 import ModalPrintImage from '../../ModalPrintImage';
 
-const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, validateStep1, isLoadingStep1, handleSubmit, categoryPrintImg }) => {
+const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder, setLogo, logoInfo, setLogoInfo, categoryPrintImg }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const { breakpoints } = useTheme();
+    const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
     const handleChange = (e) => {
         setCreateOrder({
@@ -29,28 +33,28 @@ const Step1 = ({ showPreview, productsStore, step1, createOrder, setCreateOrder,
 
     return (
         <Flex mt={10} flexDirection={"column"} display={step1 ? "flex" : "none"}>
-            <Flex mb={3} zIndex={1}>
-                <Input name='name' onChange={handleChange} value={createOrder.name} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Nombre(s)' mr={5} />
-                <Input name='last_name' onChange={handleChange} value={createOrder.last_name} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Apellido' />
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mb={3} zIndex={1}>
+                <Input name='name' onChange={handleChange} value={createOrder.name} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Nombre(s)' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3}/>
+                <Input name='last_name' onChange={handleChange} value={createOrder.last_name} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Apellido' />
             </Flex>
-            <Flex mb={3} zIndex={1}>
-                <Input name='email' onChange={handleChange} value={createOrder.email} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Email' mr={5} />
-                <Input name='phone' onChange={handleChange} value={createOrder.phone} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Teléfono' />
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mb={3} zIndex={1}>
+                <Input name='email' onChange={handleChange} value={createOrder.email} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Email' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                <Input name='phone' onChange={handleChange} value={createOrder.phone} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Teléfono' />
             </Flex>
-            <Flex mb={3} zIndex={1}>
-                <Input name='state' onChange={handleChange} value={createOrder.state} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Estado' mr={5} />
-                <Input name='city' onChange={handleChange} value={createOrder.city} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Municipio' />
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mb={3} zIndex={1}>
+                <Input name='state' onChange={handleChange} value={createOrder.state} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Estado' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                <Input name='city' onChange={handleChange} value={createOrder.city} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Municipio' />
             </Flex>
-            <Flex mb={3} zIndex={1}>
-                <Input name='postal_code' onChange={handleChange} value={createOrder.postal_code} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Código postal' mr={5} />
-                <Input name='external_number' onChange={handleChange} value={createOrder.external_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Exterior' mr={2} />
-                <Input name='internal_number' onChange={handleChange} value={createOrder.internal_number} fontSize={"14px"} width={"152px"} height={"48px"} placeholder='No. Interior'  />
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mb={3} zIndex={1}>
+                <Input name='postal_code' onChange={handleChange} value={createOrder.postal_code} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Código postal' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                <Input name='external_number' onChange={handleChange} value={createOrder.external_number} fontSize={"14px"} width={isGreaterThanMd ? "152px" : "100%"} height={"48px"} placeholder='No. Exterior' mr={isGreaterThanMd ? 2 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                <Input name='internal_number' onChange={handleChange} value={createOrder.internal_number} fontSize={"14px"} width={isGreaterThanMd ? "152px" : "100%"} height={"48px"} placeholder='No. Interior'  />
             </Flex>
-            <Flex zIndex={1}>
-                <Input name='address' onChange={handleChange} value={createOrder.address} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Calle' mr={5} />
-                <Input name='max_delivery_date' onChange={handleChange} value={createOrder.max_delivery_date} fontSize={"14px"} width={"312px"} height={"48px"} placeholder='Fecha máxima de entrega' />
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} zIndex={1}>
+                <Input name='address' onChange={handleChange} value={createOrder.address} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Calle' mr={isGreaterThanMd ? 5 : 0} mb={isGreaterThanMd ? 0 : 3} />
+                <Input name='max_delivery_date' onChange={handleChange} value={createOrder.max_delivery_date} fontSize={"14px"} width={isGreaterThanMd ? "312px" : "100%"} height={"48px"} placeholder='Fecha máxima de entrega' />
             </Flex>
-            <Flex mt={10} mb={3} zIndex={1}>
+            <Flex flexDirection={isGreaterThanMd ? "row" : "column"} mt={10} mb={3} zIndex={1}>
                 <Flex flexDirection={"column"} justifyContent={"center"}>
                     <Text mb={2} fontFamily={"Montserrat, sans-serif"} fontSize={"14px"} fontWeight={500}>Anexe su logotipo Max. 20 Mb (Logotipo en formato .ai, .cdr o PDF)</Text>
                     <Input name='logo' type='file' accept='.ai, .cdr, .pdf' onChange={handleChangeFile} value={createOrder.logo} pl={0} border={"transparent"} placeholder='Seleccionar archivo' />
