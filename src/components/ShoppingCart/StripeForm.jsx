@@ -14,7 +14,7 @@ import { api } from '../../service';
 import { toast } from 'react-toastify';
 
 const API_SECRET_STRIPE = process.env.REACT_APP_STRIPE_SECRET_KEY;
-const StripeForm = ({ sumTotalOrder }) => {
+const StripeForm = ({ value, sumTotalOrder, checkPay, setCheckPay }) => {
     const stripe = useStripe();
     const elements = useElements();
 
@@ -49,6 +49,7 @@ const StripeForm = ({ sumTotalOrder }) => {
                 const { data, status } = response;
                 if (status === 200 || status === 201) {
                     window.open('/pago-completado', '_blank');
+                    setCheckPay(true);
                     toast.success("¡Tu pago se ha realizado correctamente!", {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });
@@ -66,13 +67,13 @@ const StripeForm = ({ sumTotalOrder }) => {
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit();}}>
+            handleSubmit();}}
+            style={{ border: !checkPay && value === "1" ? "1px solid red" : "transparent" , borderRadius: "10px" }}>
             <CardElement 
                 options={{
                     style: {
                         base: {
-                            fontSize: '16px',
-                            
+                            fontSize: '16px'
                         },
                     },
             }}/>
