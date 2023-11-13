@@ -35,7 +35,7 @@ import { toast } from 'react-toastify';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
+const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [codex, setCodex] = useState("");
@@ -57,6 +57,10 @@ const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingS
         }
         postDiscountCode(discountCode).then(res => {
             if (res.data) {
+                setCreateOrder({
+                    ...createOrder,
+                    discount_code: codex
+                })
                 toast.success("¡Tu código se ha aplicado correctamente!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
@@ -94,7 +98,8 @@ const Step2 = ({ step2, value, setValue, payPerStore, setPayPerStore, isLoadingS
                         <AccordionPanel pb={4}>
                             <Elements stripe={stripePromise} options={options}>
                                 <Flex flexDirection={"column"}>
-                                    <StripeForm />
+                                    <StripeForm 
+                                        sumTotalOrder={sumTotalOrder} />
                                 </Flex>
                             </Elements>
                         </AccordionPanel>

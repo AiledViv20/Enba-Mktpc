@@ -1,7 +1,6 @@
 import React from 'react';
 import { 
-    Flex, 
-    Stack, 
+    Flex,
     Text, 
     Link, 
     useMediaQuery, 
@@ -18,7 +17,7 @@ const FooterMb = () => {
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
     return (
-        <Flex display={isGreaterThanMd ? "none" : "flex"} flexDirection={"column"} borderTop={"1px solid #E3E3E3"}>
+        <Flex w={"100%"} display={isGreaterThanMd ? "none" : "flex"} flexDirection={"column"} borderTop={"1px solid #E3E3E3"}>
             <Flex justifyContent={"center"} mt={5}>
                 <Link mr={2} zIndex={1} href='https://www.linkedin.com/company/grupo-enba/about/' isExternal>
                     <img style={{ marginRight: "0.5rem" }} src={iconLk} width='40px' height='40px' alt='Linkedin'/>

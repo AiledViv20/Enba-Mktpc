@@ -38,7 +38,7 @@ const PopularCategoriesDkst = () => {
     const [loading, setLoading] = useState(false);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
-        take: 25,
+        take: 250,
         page: 0,
         color: "",
         temporality: "HALLOWEEN",
@@ -201,7 +201,7 @@ const PopularCategoriesDkst = () => {
             <Flex width={"75%"} flexDirection={"column"}>
                 <Flex pb={10}>
                     <OrderBy />
-                    <Flex w={"100%"} justifyContent={"end"}>
+                    <Flex zIndex={1} w={"100%"} justifyContent={"end"}>
                         {totalPages > 0 ? (
                             <ul className="pagination">
                                 {Array.from({ length: totalPages }, (_, i) => (
@@ -213,7 +213,7 @@ const PopularCategoriesDkst = () => {
                         ) : null}
                     </Flex>
                 </Flex>
-                <Grid templateColumns={currentProducts.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"} alignSelf={"center"}>
+                <Grid zIndex={1} templateColumns={currentProducts.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"} alignSelf={"center"}>
                     {currentProducts.length > 0 && !loading ? currentProducts.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(

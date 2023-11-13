@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, selectKits, selectTotalAmount, setProducts, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, selectKits, setProducts, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -25,7 +25,6 @@ import ListKitCard from '../../components/ShoppingCart/ListKitCard';
 const QuoteProductDkts = () => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
-    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
     
     const [createOrder, setCreateOrder] = useState({
@@ -145,13 +144,13 @@ const QuoteProductDkts = () => {
     }
 
     const calculateSend = () => {
-        if (totalAmountStore <= 3000) {
+        if (subTotalSum <= 3000) {
             setPriceSend(199);
             return 199;
-        } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
+        } else if (subTotalSum >= 3000 && subTotalSum <= 10000) {
             setPriceSend(99);
             return 99;
-        } else if (totalAmountStore > 10000) {
+        } else if (subTotalSum > 10000) {
             setPriceSend(0);
             return 0;
         }
@@ -159,8 +158,8 @@ const QuoteProductDkts = () => {
 
     /* useEffect(() => {
         calculateSend();
-        if (totalAmountStore > 0) {
-            setPriceIva(formatterValue((totalAmountStore * 0.16).toFixed(2))) 
+        if (subTotalSum > 0) {
+            setPriceIva(formatterValue((subTotalSum * 0.16).toFixed(2))) 
         } else {
             setPriceIva(1.45);
         }
@@ -358,6 +357,10 @@ const QuoteProductDkts = () => {
                     dispatch(
                         setKits({kits: []})
                     )
+                    setSubTotalSum(0);
+                    setPriceIva(1.45);
+                    setPriceSend(0);
+                    setSumTotalOrder(0);
                     dispatch(
                         setTotalAmount({totalAmount: 0})
                     )
@@ -378,7 +381,7 @@ const QuoteProductDkts = () => {
     }
 
     const validateMinShop = () => {
-        if (sumTotalOrder < 1) {
+        if (subTotalSum < 1) {
             return true;
         } 
         return false;
@@ -403,11 +406,11 @@ const QuoteProductDkts = () => {
                     setLogo={setLogo}
                     logoInfo={logoInfo}
                     setLogoInfo={setLogoInfo}
-                    validateStep1={validateStep1}
-                    isLoadingStep1={isLoadingStep1}
-                    handleSubmit={handleSubmit}
                     categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
+                    sumTotalOrder={sumTotalOrder}
+                    createOrder={createOrder}
+                    setCreateOrder={setCreateOrder}
                     step2={steps.step2}
                     value={value}
                     setValue={setValue}
