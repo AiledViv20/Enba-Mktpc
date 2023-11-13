@@ -116,11 +116,11 @@ const ModalPrintImage = ({ isOpen, onClose, category, product = null }) => {
     const ImageProduct = () => {
         if (category.includes("BOLÍGRAFO")) {
             return (
-                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} width={"20px"} height={"10px"} alt='logo'/>
+                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} boxSize='20px' objectFit='cover' alt='logo'/>
             )
         } else {
             return (
-                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} width={"126px"} height={"32px"} alt='logo'/>
+                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} boxSize='100px' height={"80px"} alt='logo'/>
             )
         }
     }

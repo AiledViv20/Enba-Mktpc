@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { selectTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Button
@@ -16,9 +14,7 @@ import { api } from '../../service';
 import { toast } from 'react-toastify';
 
 const API_SECRET_STRIPE = process.env.REACT_APP_STRIPE_SECRET_KEY;
-const StripeForm = () => {
-    const totalAmountStore = useSelector(selectTotalAmount);
-
+const StripeForm = ({ sumTotalOrder }) => {
     const stripe = useStripe();
     const elements = useElements();
 
@@ -40,7 +36,7 @@ const StripeForm = () => {
         } else {
             // Envía el ID del método de pago a tu servidor para completar la transacción
             try {
-                let amountCents = totalAmountStore * 100;
+                let amountCents = sumTotalOrder * 100;
                 amountCents = parseInt(amountCents);
                 const response = await api({
                     method: "post",

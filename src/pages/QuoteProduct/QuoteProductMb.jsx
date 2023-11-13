@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, selectKits, selectTotalAmount, setProducts, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, selectKits, setProducts, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -22,7 +22,6 @@ import { toast } from 'react-toastify';
 const QuoteProductMb = () => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
-    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
     
     const [createOrder, setCreateOrder] = useState({
@@ -53,6 +52,9 @@ const QuoteProductMb = () => {
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
     const [subTotalSum, setSubTotalSum] = useState(0);
     const [sumTotalOrder, setSumTotalOrder] = useState(0);
+    const [priceSend, setPriceSend] = useState(0);
+    const [priceIva, setPriceIva] = useState(1.45);
+
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -140,11 +142,11 @@ const QuoteProductMb = () => {
     }
 
     const calculateSend = () => {
-        if (totalAmountStore <= 3000) {
+        if (subTotalSum <= 3000) {
             return 199;
-        } else if (totalAmountStore >= 3000 && totalAmountStore <= 10000) {
+        } else if (subTotalSum >= 3000 && subTotalSum <= 10000) {
             return 99;
-        } else if (totalAmountStore > 10000) {
+        } else if (subTotalSum > 10000) {
             return 0;
         }
     }
@@ -155,14 +157,32 @@ const QuoteProductMb = () => {
 
     useEffect(() => {
         setProductsQuote(productsStore);
-        if (kitsStore.length > 0) {
-            setKits(productsStore);
-        }
-        if (totalAmountStore > 0) {
-            setSubTotalSum(totalAmountStore);
-            let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
-            sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
-            setSumTotalOrder(sumTempCalculate);
+        if (productsStore.length > 0 || kitsStore.length > 0) {
+            let sumP = 0;
+            let sumK = 0;
+            let sums = 0;
+            let sumsIv = 0;
+            let sumsSp = 0;
+            if (productsStore.length > 0) {
+                productsStore.forEach((elementP) => {
+                    sumP = elementP.total_price + sumP;
+                });
+            }
+            if (kitsStore.length > 0) {
+                kitsStore.forEach((elementK) => {
+                    sumK = elementK.sum_total_kit + sumK;
+                });
+            }
+            sums = sumP + sumK;
+            sumsIv = sums * 0.16;
+            sumsSp = calculateSend();
+            setSubTotalSum(sums);
+            setPriceIva(sumsIv);
+            setPriceSend(sumsSp);
+            setSumTotalOrder(sums + sumsIv + sumsSp);
+            dispatch(
+                setTotalAmount({totalAmount: subTotalSum})
+            )
         }
     }, []);
 
@@ -347,7 +367,7 @@ const QuoteProductMb = () => {
     }
 
     const validateMinShop = () => {
-        if (totalAmountStore < 1) {
+        if (subTotalSum < 1) {
             return true;
         } 
         return false;
