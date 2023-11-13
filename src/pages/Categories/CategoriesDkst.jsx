@@ -143,9 +143,9 @@ const CategoriesDkst = () => {
     return ( 
         <>
             <Grid
-                templateColumns='repeat(2, 1fr)'
+                templateColumns='repeat(5, 1fr)'
                 gap={4}> 
-                <GridItem>
+                <GridItem colSpan={{ base: 5, md: 2 }}>
                     <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                         {params_url.category ? params_url.category : capitalizeFirstLetter(inputSearch)}
                     </Text>
@@ -226,7 +226,7 @@ const CategoriesDkst = () => {
                         </Flex>
                     </Flex>
                 </GridItem>
-                <GridItem>
+                <GridItem colSpan={{ base: 5, md: 3 }}>
                     <Flex pb={10}>
                         <OrderBy />
                         <Flex w={"100%"} justifyContent={"end"}>
