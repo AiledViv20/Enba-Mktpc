@@ -97,14 +97,14 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
             return true;
         }
     }
-    
+
     return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
             <Text mb={10} fontSize={"16px"} fontWeight={700}>Seleccionar forma de pago</Text>
             {value === "1" && checkPay === false ?
                 <Alert status='info' mb={5}>
                     <AlertIcon />
-                    Debes colocar el número de tarjeta para realizar el cobro.
+                    Introduce el número de tu tarjeta para realizar el cobro.
                 </Alert>
                 : null
             }
