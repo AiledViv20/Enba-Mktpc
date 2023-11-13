@@ -12,7 +12,8 @@ import {
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon
+    AccordionIcon,
+    Button
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
@@ -79,6 +80,7 @@ const PopularCategoriesMb = () => {
 
     useEffect(() => {
         if (productsDefault.length > 0) {
+            setLoading(true);
             let filterProducts = productsDefault.filter((element) => element.stock !== "0");
             setProducts(filterProducts);
             if (products.length > 0) {
@@ -87,7 +89,8 @@ const PopularCategoriesMb = () => {
                 const currentProductsTemp = products.slice(startIndex, endIndex);
                 const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
-                setTotalPages(totalPagesTemp);
+                //setTotalPages(totalPagesTemp);
+                setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
                     setLoading(false);
                 }, 8000);
@@ -97,12 +100,14 @@ const PopularCategoriesMb = () => {
 
     useEffect(() => {
         if (products.length > 0) {
+            setLoading(true);
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const currentProductsTemp = products.slice(startIndex, endIndex);
             const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
-            setTotalPages(totalPagesTemp);
+            //setTotalPages(totalPagesTemp);
+            setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
                 setLoading(false);
             }, 8000);
@@ -211,14 +216,40 @@ const PopularCategoriesMb = () => {
             <Flex flexDirection={"column"}>
                 <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy />
-                    <Flex w={"100%"}>
-                        {totalPages > 0 ? (
+                    <Flex w={"100%"} justifyContent={"center"}>
+                        {totalPages.length > 0 ? (
                             <ul className="pagination">
-                                {Array.from({ length: totalPages }, (_, i) => (
+                                <li key={'back'}>
+                                    <Button 
+                                        onClick={() => handlePageChange(currentPage -1)}
+                                        isDisabled={currentPage === 1 ? true: false}
+                                        
+                                    >
+                                                {'<'} 
+                                    </Button>
+                                </li>
+                                {/*Array.from({ length: totalPages }, (_, i) => (
                                 <li key={i} className={i + 1 === currentPage ? "active" : ""}>
                                     <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
                                 </li>
-                                ))}
+                                ))*/}
+                                {
+                                    totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
+                                        return (
+                                            <li key={idx} className={item === currentPage ? "active" : ""}>
+                                                <button onClick={() => handlePageChange(item)}>{item}</button>
+                                            </li>
+                                        )
+                                    })
+                                }
+                                <li key={'next'}>
+                                    <Button 
+                                        onClick={() => handlePageChange(currentPage + 1)}
+                                        isDisabled={currentPage === totalPages.length}
+                                    > 
+                                        {'>'} 
+                                    </Button>
+                                </li>
                             </ul>
                         ) : null}
                     </Flex>
