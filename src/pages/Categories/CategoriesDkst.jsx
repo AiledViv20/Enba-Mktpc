@@ -8,7 +8,9 @@ import {
     Grid,
     Stack,
     Box,
-    GridItem
+    GridItem,
+    Button,
+    Container
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
@@ -31,7 +33,7 @@ const CategoriesDkst = () => {
     const itemsPerPage = 9;
     const [currentPage, setCurrentPage] = useState(1);
     const [currentProducts, setCurrentProducts] = useState([]);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState([]);
     const [products, setProducts] = useState([]);
     const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
@@ -98,7 +100,8 @@ const CategoriesDkst = () => {
                 const currentProductsTemp = products.slice(startIndex, endIndex);
                 const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
-                setTotalPages(totalPagesTemp);
+                //setTotalPages(totalPagesTemp);
+                setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
                     setLoading(false);
                 }, 8000);
@@ -113,7 +116,8 @@ const CategoriesDkst = () => {
             const currentProductsTemp = products.slice(startIndex, endIndex);
             const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
-            setTotalPages(totalPagesTemp);
+            //setTotalPages(totalPagesTemp);
+            setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
                 setLoading(false);
             }, 8000);
@@ -143,9 +147,9 @@ const CategoriesDkst = () => {
     return ( 
         <>
             <Grid
-                templateColumns={currentProducts.length <= 2 ? 'repeat(5, 1fr)' : "repeat(2, 1fr)"}
+                templateColumns={currentProducts.length <= 2 ? 'repeat(5, 1fr)' : "repeat(5, 1fr)"}
                 gap={4}> 
-                <GridItem>
+                <GridItem colSpan={2}>
                     <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                         {params_url.category ? params_url.category : capitalizeFirstLetter(inputSearch)}
                     </Text>
@@ -226,17 +230,43 @@ const CategoriesDkst = () => {
                         </Flex>
                     </Flex>
                 </GridItem>
-                <GridItem>
+                <GridItem colSpan={3}>
                     <Flex pb={10}>
                         <OrderBy />
                         <Flex w={"100%"} justifyContent={"end"}>
-                            {totalPages > 0 ? (
+                            {totalPages.length > 0 ? (
                                 <ul className="pagination">
-                                    {Array.from({ length: totalPages }, (_, i) => (
-                                    <li key={i} className={i + 1 === currentPage ? "active" : ""}>
-                                        <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
+                                    <li key={'back'}>
+                                        <Button 
+                                            onClick={() => handlePageChange(currentPage -1)}
+                                            isDisabled={currentPage === 1 ? true: false}
+                                            
+                                        >
+                                                 {'<'} 
+                                        </Button>
                                     </li>
-                                    ))}
+                                    {/*Array.from({ length: totalPages }, (_, i) => (
+                                        <li key={i} className={i + 1 === currentPage ? "active" : ""}>
+                                            <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
+                                        </li>
+                                    ))*/}
+                                    {
+                                        totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
+                                            return (
+                                                <li key={idx} className={item === currentPage ? "active" : ""}>
+                                                    <button onClick={() => handlePageChange(item)}>{item}</button>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                    <li key={'next'}>
+                                        <Button 
+                                            onClick={() => handlePageChange(currentPage + 1)}
+                                            isDisabled={currentPage === totalPages.length}
+                                        > 
+                                            {'>'} 
+                                        </Button>
+                                    </li>
                                 </ul>
                             ) : null}
                         </Flex>

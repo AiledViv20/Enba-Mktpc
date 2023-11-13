@@ -12,7 +12,8 @@ import {
     AccordionItem,
     AccordionButton,
     AccordionPanel,
-    AccordionIcon
+    AccordionIcon,
+    Button
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
@@ -35,7 +36,7 @@ const CategoriesMb = () => {
     const itemsPerPage = 9;
     const [currentPage, setCurrentPage] = useState(1);
     const [currentProducts, setCurrentProducts] = useState([]);
-    const [totalPages, setTotalPages] = useState(0);
+    const [totalPages, setTotalPages] = useState([]);
     const [products, setProducts] = useState([]);
     const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
@@ -102,7 +103,8 @@ const CategoriesMb = () => {
                 const currentProductsTemp = products.slice(startIndex, endIndex);
                 const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
-                setTotalPages(totalPagesTemp);
+                //setTotalPages(totalPagesTemp);
+                setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
                     setLoading(false);
                 }, 8000);
@@ -117,7 +119,8 @@ const CategoriesMb = () => {
             const currentProductsTemp = products.slice(startIndex, endIndex);
             const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
-            setTotalPages(totalPagesTemp);
+            //setTotalPages(totalPagesTemp);
+            setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
                 setLoading(false);
             }, 8000);
@@ -238,14 +241,41 @@ const CategoriesMb = () => {
             <Flex flexDirection={"column"}>
                 <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy />
-                    <Flex w={"100%"}>
-                        {totalPages > 0 ? (
+                    <Flex w={"100%"} justifyContent={"center"}>
+                        {totalPages.length > 0 ? (
                             <ul className="pagination">
-                                {Array.from({ length: totalPages }, (_, i) => (
+                                <li key={'back'}>
+                                    <Button 
+                                        onClick={() => handlePageChange(currentPage -1)}
+                                        isDisabled={currentPage === 1 ? true: false}
+                                        
+                                    >
+                                                {'<'} 
+                                    </Button>
+                                </li>
+                                {/*Array.from({ length: totalPages }, (_, i) => (
                                 <li key={i} className={i + 1 === currentPage ? "active" : ""}>
                                     <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
                                 </li>
-                                ))}
+                                ))*/}
+
+                                {
+                                    totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
+                                        return (
+                                            <li key={idx} className={item === currentPage ? "active" : ""}>
+                                                <button onClick={() => handlePageChange(item)}>{item}</button>
+                                            </li>
+                                        )
+                                    })
+                                }
+                                <li key={'next'}>
+                                    <Button 
+                                        onClick={() => handlePageChange(currentPage + 1)}
+                                        isDisabled={currentPage === totalPages.length}
+                                    > 
+                                        {'>'} 
+                                    </Button>
+                                </li>
                             </ul>
                         ) : null}
                     </Flex>

@@ -19,7 +19,7 @@ const Categories = (props) => {
 
     return ( 
         <>
-            <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 2%"} pb={20} position="relative">
+            <Box color={"#424242"} w="full" mx="auto" maxW="8xl" {...props} padding={"2rem 2%"} pb={20} position="relative">
                 <Flex display={isGreaterThanMd ? "flex" : "none"}>
                     <Text fontSize={"16px"} fontWeight={400} display={"flex"}>
                         <Text _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} mr={2}>{"Inicio /"}</Text>{`${params_url.category ? params_url.category : params_url.name}`}

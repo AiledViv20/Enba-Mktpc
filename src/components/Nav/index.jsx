@@ -48,8 +48,8 @@ export default function Nav() {
         px={{ base: 10 }}
         align={'center'}>
         <img style={{ zIndex: 1 }} onClick={() => window.location.href = "/"} src={logo} width='100px' height='56px' alt="logo" />
-        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'end' }}>
-          <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }} ml={20}>
+        <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'center' }}>
+          <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -109,8 +109,8 @@ const DesktopNav = () => {
   
   return (
     <Stack direction={'row'} spacing={4} alignItems='center'>
-      <Grid templateColumns='repeat(6, 1fr)' gap={2}>
-        <GridItem>
+      <Flex gap={14}>
+        <GridItem colSpan={1}>
           <ButtonCategories />
         </GridItem>
         {NAV_ITEMS.map((navItem) => (
@@ -152,7 +152,7 @@ const DesktopNav = () => {
             </Popover>
           </Box>
         ))}
-      </Grid>
+      </Flex>
     </Stack>
   );
 };
