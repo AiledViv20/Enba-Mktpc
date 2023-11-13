@@ -202,7 +202,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
                         isOpen={isOpen}
                         onClose={onClose}
                         category={data.name.toUpperCase()}
-                        product={images[2]} />
+                        product={previewImage} />
                 : null
             }
         </>
