@@ -120,7 +120,6 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                                 bg: '#24437E'
                             }}
                             icon={<FaPlus />}/>
-                        
                     </Flex>
                 </Flex>
             </Flex>

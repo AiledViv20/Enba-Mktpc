@@ -46,8 +46,7 @@ export default function Nav() {
         minH={'60px'}
         py={{ base: 6 }}
         px={{ base: 10 }}
-        align={'center'}
-        >
+        align={'center'}>
         <img style={{ zIndex: 1 }} onClick={() => window.location.href = "/"} src={logo} width='100px' height='56px' alt="logo" />
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'end' }}>
           <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }} ml={20}>

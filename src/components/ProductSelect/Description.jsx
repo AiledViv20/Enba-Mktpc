@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -207,7 +207,7 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
                         isOpen={isOpen}
                         onClose={onClose}
                         category={data.name.toUpperCase()}
-                        product={images[2]} />
+                        product={images[2] ? images[2] : images[1]} />
                 : null
             }
         </Flex>

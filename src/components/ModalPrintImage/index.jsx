@@ -120,7 +120,7 @@ const ModalPrintImage = ({ isOpen, onClose, category, product = null }) => {
             )
         } else {
             return (
-                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} alt='logo'/>
+                <Image src={selectedFile ? selectedFile : validateSelectLogoIcon()} width={"126px"} height={"32px"} alt='logo'/>
             )
         }
     }
