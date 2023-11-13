@@ -43,7 +43,7 @@ const PopularCategoriesMb = () => {
     const [loading, setLoading] = useState(false);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
-        take: 25,
+        take: 250,
         page: 0,
         color: "",
         temporality: "HALLOWEEN",

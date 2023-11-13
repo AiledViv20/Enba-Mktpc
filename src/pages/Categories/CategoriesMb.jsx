@@ -265,20 +265,20 @@ const CategoriesMb = () => {
                     {loading && currentProducts.length === 0 ?
                         <Stack direction="row" alignItems="center">
                             <Box textAlign="center" py={6} px={3}>
-                                <img src={logoGif} width={"400px"} height={"150px"} alt="Cargando" />
+                                <img src={logoGif} width={"100%"} height={"150px"} alt="Cargando" />
                             </Box>
                         </Stack>
                         : null
                     }
                     {!loading && currentProducts.length === 0 ? 
-                        <Flex w={"840px"} flexDirection={"column"}>
-                                <Flex justifyContent={"center"} mb={5}>
-                                <img src={iconNotFound} width={"102px"} height={"100px"} alt='icon'/>
+                        <Flex w={"100%"} flexDirection={"column"}>
+                            <Flex justifyContent={"center"} mb={5}>
+                                <img src={iconNotFound} width={"80px"} height={"80px"} alt='icon'/>
                             </Flex>
                             <Flex flexDirection={"column"} textAlign={"center"}>
-                                <Text lineHeight={1.2} fontSize={"25px"}>
+                                <Text lineHeight={1.2} fontSize={"16px"}>
                                     <Text as={"b"}>¡Lo sentimos!</Text><br />
-                                    No encontramos lo que estas buscando, intenta de nuevo
+                                    No encontramos lo que estas buscando,<br />intenta de nuevo
                                 </Text>
                             </Flex>
                         </Flex> : null
