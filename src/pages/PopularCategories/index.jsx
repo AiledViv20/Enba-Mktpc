@@ -67,7 +67,7 @@ const PopularCategories = ({ props }) => {
                             position="absolute">
                             <Flex flexDirection="column" alignItems={"center"} color={"#FFF"}>
                                 <Text textAlign={"center"} fontWeight={700} fontSize={isGreaterThanMd ? '39px' : "26px"}>
-                                    Halloween / Día de muertos
+                                    Buen fin
                                 </Text>
                             </Flex>
                         </Flex>

@@ -152,10 +152,6 @@ const QuoteProductMb = () => {
     }
 
     useEffect(() => {
-        calculateSend();
-    }, [subTotalSum]);
-
-    useEffect(() => {
         setProductsQuote(productsStore);
         if (productsStore.length > 0 || kitsStore.length > 0) {
             let sumP = 0;
@@ -347,6 +343,10 @@ const QuoteProductMb = () => {
                     dispatch(
                         setKits({kits: []})
                     )
+                    setSubTotalSum(0);
+                    setPriceIva(1.45);
+                    setPriceSend(0);
+                    setSumTotalOrder(0);
                     dispatch(
                         setTotalAmount({totalAmount: 0})
                     )
@@ -367,7 +367,7 @@ const QuoteProductMb = () => {
     }
 
     const validateMinShop = () => {
-        if (subTotalSum < 1) {
+        if (subTotalSum < 1500) {
             return true;
         } 
         return false;
@@ -394,6 +394,9 @@ const QuoteProductMb = () => {
                     setLogoInfo={setLogoInfo}
                     categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
+                    sumTotalOrder={sumTotalOrder}
+                    createOrder={createOrder}
+                    setCreateOrder={setCreateOrder}
                     step2={steps.step2}
                     value={value}
                     setValue={setValue}
