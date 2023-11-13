@@ -67,8 +67,7 @@ const StripeForm = ({ value, sumTotalOrder, checkPay, setCheckPay }) => {
     return (
         <form onSubmit={(e) => {
             e.preventDefault();
-            handleSubmit();}}
-            style={{ border: !checkPay && value === "1" ? "1px solid red" : "transparent" , borderRadius: "10px" }}>
+            handleSubmit();}}>
             <CardElement 
                 options={{
                     style: {

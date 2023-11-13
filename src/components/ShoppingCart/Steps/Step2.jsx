@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Image,
@@ -85,10 +85,11 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
     const validateStripeForm = () => {
         if (value === "1" || value === "2" || value === "3") {
             if (value === "1") {
-                if (checkPay) {
+                if (checkPay === false) {
+                    return true;
+                } else {
                     validateSteps();
                 }
-                return true;
             } else if (value !== "1") {
                 validateSteps();
             }
@@ -96,7 +97,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
             return true;
         }
     }
-
+    
     return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
             <Text mb={10} fontSize={"16px"} fontWeight={700}>Seleccionar forma de pago</Text>
