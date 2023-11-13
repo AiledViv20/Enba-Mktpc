@@ -18,18 +18,10 @@ const KitCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
         num: product.total_kits
     });
     const [newArray, setNewArray] = useState(null);
-    const [totalSumKitsSp, setTotalSumKitsSp] = useState(0);
-
-    useEffect(() => {
-        let sumKitInd = 0;
-        product.items.forEach((item) => {
-            sumKitInd = item.total_price + sumKitInd
-        });
-        setTotalSumKitsSp(sumKitInd);
-    }, []);
+    const [totalSumKitsSp, setTotalSumKitsSp] = useState(product ? product.sum_total_kit : 0);
 
     return ( 
-        <Flex bg={"#FFF"} border={"1px solid #E2E2E2"} mb={3} padding={3} borderRadius={"8px"}>
+        <Flex bg={"#FFF"} border={"1px solid #E2E2E2"} mb={3} padding={3} pl={5} pr={0} borderRadius={"8px"}>
             <Flex w={"100%"}>
                 <Flex w={"70%"} flexDirection={"column"} h={"100%"}>
                     <Flex w={"100%"} height={"100%"}>
@@ -41,7 +33,7 @@ const KitCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                 </Flex>
                 <Flex w={"30%"} flexDirection={"column"} h={"100%"}>
                     <Flex justifyContent={"center"} mb={2}>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(values.num * totalSumKitsSp)}</Text>
+                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(totalSumKitsSp)}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
                         <IconButton

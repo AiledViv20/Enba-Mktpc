@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectTotalAmount, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts } from '../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
@@ -24,7 +24,6 @@ import { toast } from 'react-toastify';
 
 const Description = ({ previewImage, setImg, images, data, colors, colorsProduct }) => {
     const productsStore = useSelector(selectProducts);
-    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -101,9 +100,6 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
                 setProducts({products: [
                     ...productsStore, product
                 ]})
-            );
-            dispatch(
-                setTotalAmount({totalAmount: totalAmountStore + calcTotalPrice})
             );
             toast.success("¡Se ha agregado correctamente el nuevo producto!", {
                 position: toast.POSITION.BOTTOM_RIGHT
@@ -211,7 +207,7 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
                         isOpen={isOpen}
                         onClose={onClose}
                         category={data.name.toUpperCase()}
-                        product={images[2]} />
+                        product={images[2] ? images[2] : images[1]} />
                 : null
             }
         </Flex>

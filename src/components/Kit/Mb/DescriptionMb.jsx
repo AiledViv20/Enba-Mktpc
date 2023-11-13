@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectKits, setKits, selectTotalAmount, setTotalAmount } from '../../../hooks/slices/counterSlice';
+import { selectKits, setKits } from '../../../hooks/slices/counterSlice';
 import { 
     Flex,
     Text,
-    Button,
     IconButton,
     Input
 } from '@chakra-ui/react';
@@ -18,7 +17,6 @@ import ButtonOpenModalKit from '../ButtonOpenModalKit';
 
 const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
     const kitsStore = useSelector(selectKits);
-    const totalAmountStore = useSelector(selectTotalAmount);
     const dispatch = useDispatch();
 
     const [price, setPrice] = useState(0);
@@ -58,7 +56,6 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
 
     const addKitShoppingCart = () => {
         let sumTotal = price * values.num;
-        sumTotal = sumTotal + totalAmountStore;
         const kitAdd = {
             discount_code: "4UAEPO55L",
             is_kit: true,
@@ -74,9 +71,6 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
         ];
         dispatch(
             setKits({kits: counterKits})
-        );
-        dispatch(
-            setTotalAmount({totalAmount: sumTotal})
         );
         toast.success("¡Se han agregado exitosamente los productos al kit!", {
             position: toast.POSITION.BOTTOM_RIGHT

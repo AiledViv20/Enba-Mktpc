@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, selectKits, setKits, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectKits, setKits } from '../../hooks/slices/counterSlice';
 import {
     Box,
     Flex,
@@ -90,7 +90,6 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
 }
 
 const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, props }) => {
-    const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
 
@@ -149,19 +148,6 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
         ];
         dispatch(
             setKits({kits: counterKits})
-        );
-        const counterProducts = [...productsStore, 
-            showKitIncludes[0], showKitIncludes[1], showKitIncludes[2], showKitIncludes[3]
-        ];
-        dispatch(
-            setProducts({products: counterProducts})
-        );
-        let sumTotalKits = 0;
-        counterProducts.forEach(element => {
-            sumTotalKits = sumTotalKits + element.total_price
-        });
-        dispatch(
-            setTotalAmount({totalAmount: sumTotalKits})
         );
         //Guardar en kit, en products y eliminar todo de kitsLits
         toast.success("¡Se han agregado exitosamente los productos al kit!", {

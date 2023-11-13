@@ -120,7 +120,7 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
                         {titleSection}
                     </Text>
                 </Flex>
-                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={-1} color={"accent.500"}>
+                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} color={"accent.500"}>
                     <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
                 </Flex>
                 <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={"absolute"}>

@@ -15,6 +15,7 @@ import Terms from "./pages/Tyc/Terms";
 import Privacy from "./pages/Tyc/Privacy";
 import PDFQuoteProducts from "./pages/PDFQuoteProducts";
 import PagoStripe from "./pages/PagoStripe";
+import CarritoMb from "./pages/CarritoMb";
 
 const SwitchRouter = () => {
     return (
@@ -36,6 +37,7 @@ const SwitchRouter = () => {
                 <Route path='/categoria/code/:name?' element={<Categories/>} />
                 <Route path='/producto/:product' element={<Product/>} />
                 <Route path='/productos/cotizar' element={<QuoteProduct/>} />
+                <Route path='/productos/carrito/cotizar' element={<CarritoMb/>} />
                 <Route path='/contacto' element={<Contacto/>} />
                 <Route path='/nosotros' element={<Nosotros />} />
                 <Route path='/proyectos-especiales' element={<ProyectosEspeciales />} />

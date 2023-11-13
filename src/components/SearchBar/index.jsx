@@ -68,7 +68,7 @@ const SearchBar = () => {
     }
 
     return ( 
-        <Flex zIndex={1} width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
+        <Flex width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
             <Flex width={isGreaterThanMd ? "30%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} ml={"12px"} borderRadius={"10px 0px 0px 10px"}>
                 <Menu isOpen={isOpen}>
                     {() => (
@@ -84,7 +84,7 @@ const SearchBar = () => {
                                 }}>
                                 {capitalizeFirstLetter(categoryLabel)}
                             </MenuButton>
-                                <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"800px"} p={0}>
+                                <MenuList maxHeight={"222px"} overflowY={"auto"} width={"800px"} p={0}>
                                 <Flex width={"100%"} h={"100%"}>
                                     <Flex width={"30%"} h={"100%"} flexDirection={"column"}>
                                         {categories && categories.map((e, idx) => (
@@ -104,7 +104,7 @@ const SearchBar = () => {
                                             </Flex>
                                         ))}
                                     </Flex>
-                                    <Flex width={"70%"} zIndex={1} pt={2} pl={3}>
+                                    <Flex width={"70%"} pt={2} pl={3}>
                                         <ListSubCategoriesMaster 
                                             closeMenu={closeMenu}
                                             selectedCategoryMaster={selectedCategoryMaster}
