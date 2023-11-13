@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Image,
@@ -15,7 +15,9 @@ import {
     Stack,
     Text,
     useTheme,
-    useMediaQuery
+    useMediaQuery,
+    AlertIcon,
+    Alert
 } from '@chakra-ui/react';
 import icon1 from '../../../assets/icons/quote/tarjeta-de-credito.svg';
 import icon2 from '../../../assets/icons/quote/pago-transferencia.svg';
@@ -41,6 +43,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
     const [codex, setCodex] = useState("");
     const [postDiscountCode] = usePostDiscountCodeMutation();
     const [isLoadingStep5, setIsLoadingStep5] = useState(false);
+    const [checkPay, setCheckPay] = useState(false);
 
     const appearance = {
         theme: "stripe",
@@ -79,11 +82,34 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
         })
     }
 
+    const validateStripeForm = () => {
+        if (value === "1" || value === "2" || value === "3") {
+            if (value === "1") {
+                if (checkPay === false) {
+                    return true;
+                } else {
+                    validateSteps();
+                }
+            } else if (value !== "1") {
+                validateSteps();
+            }
+        } else {
+            return true;
+        }
+    }
+
     return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
             <Text mb={10} fontSize={"16px"} fontWeight={700}>Seleccionar forma de pago</Text>
+            {value === "1" && checkPay === false ?
+                <Alert status='info' mb={5}>
+                    <AlertIcon />
+                    Introduce el número de tu tarjeta para realizar el cobro.
+                </Alert>
+                : null
+            }
             <RadioGroup onChange={setValue} value={value} zIndex={1}>
-                <Accordion allowMultiple>
+                <Accordion defaultIndex={value === "1" && checkPay === false ? [0] : [null]} allowMultiple>
                     <AccordionItem border={"transparent"} mb={5}>
                         <AccordionButton width={isGreaterThanMd ? "661px" : "100%"} height={"66px"} border={"1px solid #D9D9D9"} borderRadius={"10px"}>
                             <Box as="span" flex='1' textAlign='left' fontSize={"16px"} fontWeight={400}>
@@ -99,7 +125,10 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                             <Elements stripe={stripePromise} options={options}>
                                 <Flex flexDirection={"column"}>
                                     <StripeForm 
-                                        sumTotalOrder={sumTotalOrder} />
+                                        value={value}
+                                        sumTotalOrder={sumTotalOrder}
+                                        checkPay={checkPay}
+                                        setCheckPay={setCheckPay} />
                                 </Flex>
                             </Elements>
                         </AccordionPanel>
@@ -158,7 +187,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                     fontSize={"14px"} w={"174px"}
                     onClick={() => handleSubmitCreateOrder()}
                     isLoading={isLoadingStep2}
-                    isDisabled={validateSteps()}>Enviar</Button>
+                    isDisabled={validateStripeForm()}>Enviar</Button>
             </Flex>
         </Flex>
     );

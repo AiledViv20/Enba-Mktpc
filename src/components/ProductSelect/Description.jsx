@@ -207,7 +207,7 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
                         isOpen={isOpen}
                         onClose={onClose}
                         category={data.name.toUpperCase()}
-                        product={images[2] ? images[2] : images[1]} />
+                        product={previewImage} />
                 : null
             }
         </Flex>
