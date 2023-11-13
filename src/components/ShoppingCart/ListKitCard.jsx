@@ -4,16 +4,17 @@ import {
 } from '@chakra-ui/react';
 import KitCardSp from './KitCardSp';
 
-const ListKitCard = ({ data, subTotalSum, setSubTotalSum, setSumTotalOrder }) => {
+const ListKitCard = ({ data, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder }) => {
     
     return ( 
-        <Flex flexDirection={"column"} w={"100%"} pr={0}>
+        <Flex flexDirection={"column"} w={"100%"} pr={0} pt={5}>
             {data ? data.map((item, idx) => {
                 return (
                     <KitCardSp 
                         key={idx} 
                         product={item} 
-                        subTotalSum={subTotalSum}
+                        setPriceIva={setPriceIva}
+                        setPriceSend={setPriceSend}
                         setSubTotalSum={setSubTotalSum} 
                         setSumTotalOrder={setSumTotalOrder} />
                 )

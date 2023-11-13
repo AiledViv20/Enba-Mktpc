@@ -20,6 +20,7 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
     const dispatch = useDispatch();
 
     const [price, setPrice] = useState(0);
+    const [priceDefault, setPriceDefault] = useState(0);
     const [values, setValues] = useState({
         num: 0
     });
@@ -55,6 +56,11 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
     }
 
     const addKitShoppingCart = () => {
+        let sumTotalKitFinal = 0;
+        showKitIncludes.forEach((item) => {
+            sumTotalKitFinal = parseFloat(item?.items[0]?.retail_price) + sumTotalKitFinal
+        })
+        setPriceDefault(sumTotalKitFinal.toFixed(2));
         let sumTotal = price * values.num;
         const kitAdd = {
             discount_code: "4UAEPO55L",
@@ -62,6 +68,7 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
             sku_kit: kit?.sku,
             code_kit: kit?.code,
             name_kit: kit?.name,
+            sub_sum_total_kit: priceDefault,
             sum_total_kit: sumTotal,
             total_kits: values.num,
             items: showKitIncludes
