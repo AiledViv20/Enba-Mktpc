@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react';
 import ProductCardSp from './ProductCardSp';
 
-const ListProductCard = ({ data, subTotalSum, setSubTotalSum, setSumTotalOrder }) => {
+const ListProductCard = ({ data, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder }) => {
     
     return ( 
         <Flex flexDirection={"column"} w={"100%"} pr={0}>
@@ -13,7 +13,8 @@ const ListProductCard = ({ data, subTotalSum, setSubTotalSum, setSumTotalOrder }
                     <ProductCardSp 
                         key={idx} 
                         product={item} 
-                        subTotalSum={subTotalSum}
+                        setPriceIva={setPriceIva}
+                        setPriceSend={setPriceSend}
                         setSubTotalSum={setSubTotalSum} 
                         setSumTotalOrder={setSumTotalOrder} />
                 )

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectProducts, setProducts, setTotalAmount } from '../../hooks/slices/counterSlice';
+import { selectProducts, setProducts, selectKits, setTotalAmount } from '../../hooks/slices/counterSlice';
 import {
     Flex,
     Image,
@@ -11,8 +11,9 @@ import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
 
-const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
+const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder }) => {
     const productsStore = useSelector(selectProducts);
+    const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
     const [values, setValues] = useState({
         num: product.quantity
@@ -62,22 +63,36 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
 
     useEffect(() => {
         if (newArray) {
-            let sumTotalKit2 = 0;
-            newArray.forEach((item) => {
-                sumTotalKit2 = item.total_price + sumTotalKit2
-            })
-            //setSubTotalSum(sumTotalKit2);
-            let sumTempCalculate = (sumTotalKit2 * 0.16).toFixed(2);
-            sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend(sumTotalKit2) + sumTotalKit2;
-            //setSumTotalOrder(sumTempCalculate);
-            /* if (newArray.length > 0) {
+            let sumP = 0;
+            let sumK = 0;
+            let sums = 0;
+            let sumsIv = 0;
+            let sumsSp = 0;
+            if (newArray.length > 0) {
+                newArray.forEach((elementP) => {
+                    sumP = elementP.total_price + sumP;
+                });
+            }
+            if (kitsStore.length > 0) {
+                kitsStore.forEach((elementK) => {
+                    sumK = elementK.sum_total_kit + sumK;
+                });
+            }
+            sums = sumP + sumK;
+            sumsIv = sums * 0.16;
+            sumsSp = calculateSend(sums);
+            if (sums > 0) {
+                setPriceIva(sumsIv);
+                setPriceSend(sumsSp);
+                setSubTotalSum(sums);
+                setSumTotalOrder(sums + sumsIv + sumsSp);
                 dispatch(
                     setProducts({products: newArray })
                 );
                 dispatch(
-                    setTotalAmount({totalAmount: sumTempCalculate})
+                    setTotalAmount({totalAmount: sums + sumsIv + sumsSp})
                 );
-            } */
+            }
         }
     }, [newArray]);
 
@@ -107,8 +122,7 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                             boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                             color={"#383838"}
                             fontSize={"12px"}
-                            icon={<MinusIcon />}
-                            isDisabled/>
+                            icon={<MinusIcon />} />
                         <Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>
                         <IconButton
                             w={"10px"} h={"28px"}
@@ -120,8 +134,7 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                             _hover={{
                                 bg: '#24437E'
                             }}
-                            icon={<FaPlus />}
-                            isDisabled/>
+                            icon={<FaPlus />} />
                     </Flex>
                 </Flex>
             </Flex>

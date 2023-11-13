@@ -169,15 +169,6 @@ const QuoteProductDkts = () => {
         }
     }
 
-    /* useEffect(() => {
-        calculateSend();
-        if (subTotalSum > 0) {
-            setPriceIva(formatterValue((subTotalSum * 0.16).toFixed(2))) 
-        } else {
-            setPriceIva(1.45);
-        }
-    }, [subTotalSum]); */
-
     useEffect(() => {
         setProductsQuote(productsStore);
         if (productsStore.length > 0 || kitsStore.length > 0) {
@@ -470,13 +461,15 @@ const QuoteProductDkts = () => {
                         <Flex maxHeight={"200px"} overflowY={"auto"}>
                             <ListProductCard 
                                 data={productsStore} 
-                                subTotalSum={subTotalSum} 
+                                setPriceIva={setPriceIva}
+                                setPriceSend={setPriceSend} 
                                 setSubTotalSum={setSubTotalSum} 
                                 setSumTotalOrder={setSumTotalOrder} />
                         </Flex> : 
                         <ListProductCard 
                             data={productsStore}
-                            subTotalSum={subTotalSum}
+                            setPriceIva={setPriceIva}
+                            setPriceSend={setPriceSend}
                             setSubTotalSum={setSubTotalSum} 
                             setSumTotalOrder={setSumTotalOrder} />
                     }
@@ -484,13 +477,15 @@ const QuoteProductDkts = () => {
                         <Flex maxHeight={"200px"} overflowY={"auto"}>
                             <ListKitCard 
                                 data={kitsStore} 
-                                subTotalSum={subTotalSum} 
+                                setPriceIva={setPriceIva}
+                                setPriceSend={setPriceSend}
                                 setSubTotalSum={setSubTotalSum} 
                                 setSumTotalOrder={setSumTotalOrder} />
                         </Flex> : 
                         <ListKitCard 
-                            data={kitsStore}
-                            subTotalSum={subTotalSum}
+                            data={kitsStore} 
+                            setPriceIva={setPriceIva}
+                            setPriceSend={setPriceSend}
                             setSubTotalSum={setSubTotalSum} 
                             setSumTotalOrder={setSumTotalOrder} />
                     }
