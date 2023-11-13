@@ -42,6 +42,19 @@ const QuoteProductMb = () => {
         discount_code: "",
         items: []
     });
+    const [errorCreateOrder, setErrorCreateOrder] = useState({
+        name: false,
+        last_name: false,
+        email: false,
+        phone: false,
+        state: false,
+        city: false,
+        postal_code: false,
+        external_number: false,
+        address: false,
+        max_delivery_date: false,
+        comments: false
+    });
     const [sendOrder, setSendOrder] = useState({
         folio: "",
         discount: ""
@@ -232,7 +245,24 @@ const QuoteProductMb = () => {
         }
     }, [productsQuote]);
 
+    const validationStep1Inputs = () => {
+        setErrorCreateOrder({
+            name: createOrder.name !== "" ? false : true,
+            last_name: createOrder.last_name !== "" ? false : true,
+            email: createOrder.email !== "" ? false : true,
+            phone: createOrder.phone !== "" ? false : true,
+            state: createOrder.state !== "" ? false : true,
+            city: createOrder.city !== "" ? false : true,
+            postal_code: createOrder.postal_code !== "" ? false : true,
+            external_number: createOrder.external_number !== "" ? false : true,
+            address: createOrder.address !== "" ? false : true,
+            max_delivery_date: createOrder.max_delivery_date !== "" ? false : true,
+            comments: createOrder.comments !== "" ? false : true
+        });
+    }
+
     const handleSubmit = () => {
+        validationStep1Inputs();
         if (validateStep1()) {
             setIsLoadingStep1(true);
             let calculateOrder = {}
@@ -384,6 +414,7 @@ const QuoteProductMb = () => {
                     }
                 </Flex>
                 <Step1 
+                    errorCreateOrder={errorCreateOrder}
                     showPreview={productsQuote && productsQuote.length === 1 ? true : false}
                     productsStore={productsStore}
                     step1={steps.step1}
