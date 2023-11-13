@@ -7,7 +7,7 @@ import {
     Button,
     IconButton,
     Alert,
-    AlertIcon,
+    AlertIcon
 } from '@chakra-ui/react';
 import Step1 from '../../components/ShoppingCart/Steps/Step1';
 import Step2 from '../../components/ShoppingCart/Steps/Step2';
@@ -157,22 +157,43 @@ const QuoteProductDkts = () => {
         }
     }
 
-    useEffect(() => {
+    /* useEffect(() => {
         calculateSend();
         if (totalAmountStore > 0) {
             setPriceIva(formatterValue((totalAmountStore * 0.16).toFixed(2))) 
         } else {
             setPriceIva(1.45);
         }
-    }, [subTotalSum]);
+    }, [subTotalSum]); */
 
     useEffect(() => {
         setProductsQuote(productsStore);
-        if (totalAmountStore > 0) {
-            setSubTotalSum(totalAmountStore);
-            let sumTempCalculate = (totalAmountStore * 0.16).toFixed(2);
-            sumTempCalculate = parseFloat(sumTempCalculate) + calculateSend() + totalAmountStore;
-            setSumTotalOrder(sumTempCalculate);
+        if (productsStore.length > 0 || kitsStore.length > 0) {
+            let sumP = 0;
+            let sumK = 0;
+            let sums = 0;
+            let sumsIv = 0;
+            let sumsSp = 0;
+            if (productsStore.length > 0) {
+                productsStore.forEach((elementP) => {
+                    sumP = elementP.total_price + sumP;
+                });
+            }
+            if (kitsStore.length > 0) {
+                kitsStore.forEach((elementK) => {
+                    sumK = elementK.sum_total_kit + sumK;
+                });
+            }
+            sums = sumP + sumK;
+            sumsIv = sums * 0.16;
+            sumsSp = calculateSend();
+            setSubTotalSum(sums);
+            setPriceIva(sumsIv);
+            setPriceSend(sumsSp);
+            setSumTotalOrder(sums + sumsIv + sumsSp);
+            dispatch(
+                setTotalAmount({totalAmount: subTotalSum})
+            )
         }
     }, []);
 
@@ -357,7 +378,7 @@ const QuoteProductDkts = () => {
     }
 
     const validateMinShop = () => {
-        if (totalAmountStore < 1) {
+        if (sumTotalOrder < 1) {
             return true;
         } 
         return false;
@@ -452,7 +473,7 @@ const QuoteProductDkts = () => {
                             <Text fontSize={"16px"} fontWeight={400} color={"#828282"}>{"IVA (16%)"}</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"16px"} fontWeight={500}>{priceIva}</Text>
+                            <Text fontSize={"16px"} fontWeight={500}>{formatterValue(priceIva)}</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} borderBottomColor={"#E2E2E2"} pb={3}>

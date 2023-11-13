@@ -89,7 +89,7 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
             <Flex w={"70%"}>
                 <Flex w={"70%"} flexDirection={"column"} h={"100%"}>
                     <Flex w={"100%"} height={"100%"}>
-                        <Text lineHeight={1.2} w={"90%"} color={"#212121"} fontSize={"16px"} fontWeight={600}>{capitalizeFirstLetter(product.name)}</Text>
+                        <Text lineHeight={1.2} w={"90%"} color={"#212121"} fontSize={"16px"} fontWeight={600}>{capitalizeFirstLetter(product ? product.name : '')}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"}>
                         <Text color={"#828282"} fontSize={"16px"} fontWeight={400}>Cantidad:  {values.num}</Text>
@@ -97,7 +97,7 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                 </Flex>
                 <Flex w={"30%"} flexDirection={"column"} h={"100%"}>
                     <Flex>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(values.num * product.unit_price)}</Text>
+                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product ? product.total_price : 0)}</Text>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
                         <IconButton
@@ -107,7 +107,8 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                             boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                             color={"#383838"}
                             fontSize={"12px"}
-                            icon={<MinusIcon />}/>
+                            icon={<MinusIcon />}
+                            isDisabled/>
                         <Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>
                         <IconButton
                             w={"10px"} h={"28px"}
@@ -119,7 +120,8 @@ const ProductCardSp = ({ product, setSubTotalSum, setSumTotalOrder }) => {
                             _hover={{
                                 bg: '#24437E'
                             }}
-                            icon={<FaPlus />}/>
+                            icon={<FaPlus />}
+                            isDisabled/>
                     </Flex>
                 </Flex>
             </Flex>
