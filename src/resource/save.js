@@ -47,7 +47,7 @@ export const categoriesList =  [
                         category: "ANTIESTRÉS"
                     },
                     {
-                        category: "ARTÍCULOS MEDICOS"
+                        category: "ARTÍCULOS MÉDICOS"
                     },
                     {
                         category: "HIGIENE Y CUIDADO PERSONAL"
@@ -95,7 +95,7 @@ export const categoriesList =  [
                 master_category: "BBQ"
             },
             {
-                master_category: "DECORACION"
+                master_category: "DECORACIÓN"
             },
             {
                 master_category: "DESARMADORES"
@@ -109,10 +109,10 @@ export const categoriesList =  [
                 master_category: "SET DE HERRAMIENTAS Y MULTIFUNCIONALES"
             },
             {
-                master_category: "JARDINERIA"
+                master_category: "JARDINERÍA"
             },
             {
-                master_category: "LAMPARAS"
+                master_category: "LÁMPARAS"
             },
             {
                 master_category: "MASCOTAS"
@@ -185,10 +185,10 @@ export const categoriesList =  [
                         category: "FUNCIONES"
                     },
                     {
-                        category: "METALICOS"
+                        category: "METÁLICOS"
                     },
                     {
-                        category: "PLASTICO"
+                        category: "PLÁSTICO"
                     }
                 ],
                 master_category: "ESCRITURA"
@@ -291,7 +291,7 @@ export const categoriesList =  [
                         category: "ALCANCÍAS"
                     },
                     {
-                        category: "ARTICULOS ESCOLARES"
+                        category: "ARTÍCULOS ESCOLARES"
                     },
                     {
                         category: "JUGUETES"
@@ -310,7 +310,7 @@ export const categoriesList =  [
             {
                 categories: [
                     {
-                        category: "ARTICULOS PARA PLAYA"
+                        category: "ARTÍCULOS PARA PLAYA"
                     },
                     {
                         category: "COMPLEMENTOS DE EQUIPAJE"
@@ -372,7 +372,7 @@ export const categoriesList =  [
                 master_category: "MINI"
             },
             {
-                master_category: "PREVENCION"
+                master_category: "PREVENCIÓN"
             },
             {
                 master_category: "SEMANAL"

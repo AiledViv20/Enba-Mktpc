@@ -12,9 +12,9 @@ import { formatterValue } from '../resource/validate';
 
 import imgDefault from '../assets/images/productsT/none-product.png';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, color, search, isFromSearch = false}) => {
     const [img, setImg] = useState(null);
-    const image = product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : "");
+    const image = (!color || color === '') && (search ? search?.split(' ').length <= 2: 1) && isFromSearch ? (product?.product_images?.product_images?.length > 0 ? product?.product_images?.product_images[0] : "") : (product?.images?.product_images?.length > 0 ? product?.images?.product_images[0] : (product?.images?.vector_images?.length > 0 ? product?.images?.vector_images[0] : product?.images?.images_item?.length > 0 ? product?.images?.images_item[0] : ""));
     let price = product?.retail_price || product?.items[0]?.retail_price;
     price = parseFloat(price);
     price = price.toFixed(2);
@@ -63,7 +63,7 @@ const ProductCard = ({ product }) => {
                             {product.category.toLowerCase()}
                         </Text>
                         <Text fontSize="16px" fontWeight={500} color="#424242" lineHeight={"46px"} textTransform={"capitalize"}>
-                            {product.name.toLowerCase()}
+                            {(!color || color === '') && (search ? search?.split(' ').length <= 2: 1) && isFromSearch ? product?.product_name?.toLowerCase() : product.name.toLowerCase()}
                         </Text>
                     </Box>
                     <HStack justifyContent={"center"}>

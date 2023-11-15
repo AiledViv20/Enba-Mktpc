@@ -285,7 +285,7 @@ const CategoriesMb = () => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
                             return(
                                 <Flex key={idx}>
-                                    <ProductCard product={item} />
+                                    <ProductCard product={item} color={colorSelected} search={inputSearch} isFromSearch={true}/>
                                 </Flex>
                             )
                         }
