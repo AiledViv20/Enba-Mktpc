@@ -49,7 +49,7 @@ const ButtonCategories = () => {
                     _hover={{
                         cursor: "pointer"
                     }}>
-                    Categorias
+                    Categorías
                 </MenuButton>
                 <MenuList zIndex={1} maxHeight={"222px"} overflowY={"auto"} width={"900px"} p={0}>
                     <Flex width={"100%"} h={"100%"}>
