@@ -397,7 +397,7 @@ const QuoteProductMb = () => {
     }
 
     const validateMinShop = () => {
-        if (subTotalSum < 1500) {
+        if (sumTotalOrder < 1500) {
             return true;
         } 
         return false;

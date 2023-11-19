@@ -44,7 +44,7 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
 
     useEffect(() => {
         if (data) {
-            let unitRetailPrice = data.items[0]?.retail_price ? data.items[0]?.retail_price : 0;
+            let unitRetailPrice = data.items[0]?.wholesale_price ? data.items[0]?.wholesale_price : 0;
             setValues({
                 ...values,
                 unitPrice: parseFloat(unitRetailPrice).toFixed(2)
@@ -115,8 +115,8 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                 const product = {
                     sku: filterItem[0].sku,
                     code_item: filterItem[0].code,
-                    unit_price: parseFloat(filterItem[0].retail_price),
-                    total_price: total.toFixed(2) + (sumPrint * values.amount),
+                    unit_price: parseFloat(filterItem[0].wholesale_price),
+                    total_price: total,
                     quantity: values.amount,
                     name: data.name,
                     category: data.category,
@@ -143,8 +143,8 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
             const product = {
                 sku: filterItem[0].sku,
                 code_item: filterItem[0].code,
-                unit_price: parseFloat(filterItem[0].retail_price),
-                total_price: total.toFixed(2),
+                unit_price: parseFloat(filterItem[0].wholesale_price),
+                total_price: total,
                 quantity: values.amount,
                 name: data.name,
                 category: data.category,

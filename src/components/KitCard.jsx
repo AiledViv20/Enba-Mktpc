@@ -22,8 +22,8 @@ const KitCard = ({ product }) => {
         product.products.forEach((element, idx) => {
             let min_price = 9999999
             element.prices.map((e) => {
-                if (e.retail_price < min_price) {
-                    min_price = e.retail_price
+                if (e.wholesale_price < min_price) {
+                    min_price = e.wholesale_price
                 }
             })
             if(min_price !== 9999999) {

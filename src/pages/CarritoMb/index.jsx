@@ -78,7 +78,7 @@ const CarritoMb = ({ props }) => {
     }, [products, kits]);
 
     const validateMinShop = () => {
-        if (subTotalSum < 1500) {
+        if (sumTotalOrder < 1500) {
             return true;
         } 
         return false;
@@ -94,7 +94,8 @@ const CarritoMb = ({ props }) => {
                             return (
                                 <GridItem key={idx} w='100%' pl={2} pr={2}>
                                     <ProductsMb 
-                                        products={products}
+                                        setSumIva={setSumIva}
+                                        setSumShopping={setSumShopping}
                                         product={item}
                                         setSubTotalSum={setSubTotalSum}
                                         setSumTotalOrder={setSumTotalOrder}

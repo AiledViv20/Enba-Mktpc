@@ -52,7 +52,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
     useEffect(() => {
         const prices = []
         data.items.map((item)=>{
-            prices.push(item.retail_price)
+            prices.push(item.wholesale_price)
         })
         setPrice(Math.min(...prices));
     },[colors])
@@ -61,7 +61,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
         setSelectColor(color);
         const item = data.items.filter((item)=>item.sku === sku)[0]
         setItemSelected(item)
-        setPrice(item.retail_price);
+        setPrice(item.wholesale_price);
     }
 
     useEffect(() => {
@@ -88,7 +88,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
             const product = {
                 sku: filterItem[0].sku,
                 code_item: filterItem[0].code,
-                unit_price: parseFloat(filterItem[0].retail_price),
+                unit_price: parseFloat(filterItem[0].wholesale_price),
                 total_price: parseFloat(calcTotalPrice),
                 quantity: values.num,
                 name: data.name,

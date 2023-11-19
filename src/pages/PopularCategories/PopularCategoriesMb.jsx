@@ -20,7 +20,7 @@ import { colors_complement, colors } from '../../resource';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from '../../components/filters/OrderBy';
-import { useGetSearchTemporalityQuery } from '../../hooks/enbaapi';
+import { useGetSearchTemporalityQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import { CardFilterContext } from '../../context';
@@ -47,11 +47,10 @@ const PopularCategoriesMb = () => {
         take: 250,
         page: 0,
         color: "",
-        temporality: "HALLOWEEN",
         name: "",
         order: "ASC"
     });
-    const {data, isLoading, error} = useGetSearchTemporalityQuery(params);
+    const {data, isLoading, error} = useGetSearchQuery(params);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -256,7 +255,7 @@ const PopularCategoriesMb = () => {
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
                     {currentProducts.length > 0 && !loading ? currentProducts.map((item, idx) => {
-                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.wholesale_price ) {
                             return(
                                 <Flex key={idx}>
                                     <ProductCard product={item} />

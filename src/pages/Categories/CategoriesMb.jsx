@@ -282,7 +282,7 @@ const CategoriesMb = () => {
                 </Flex>
                 <Grid templateColumns={"repeat(1, 1fr)"} alignSelf={"center"}>
                     {currentProducts.length > 0 ? currentProducts.map((item, idx) => {
-                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                        if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.wholesale_price ) {
                             return(
                                 <Flex key={idx}>
                                     <ProductCard product={item} color={colorSelected} search={inputSearch} isFromSearch={true}/>

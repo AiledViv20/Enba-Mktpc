@@ -100,7 +100,6 @@ const CategoriesDkst = () => {
                 const currentProductsTemp = products.slice(startIndex, endIndex);
                 const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
-                //setTotalPages(totalPagesTemp);
                 setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
                     setLoading(false);
@@ -116,7 +115,6 @@ const CategoriesDkst = () => {
             const currentProductsTemp = products.slice(startIndex, endIndex);
             const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
-            //setTotalPages(totalPagesTemp);
             setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
                 setLoading(false);
@@ -232,7 +230,9 @@ const CategoriesDkst = () => {
                 </GridItem>
                 <GridItem colSpan={3}>
                     <Flex pb={10}>
-                        <OrderBy />
+                        <OrderBy 
+                            products={products}
+                            setProducts={setProducts} />
                         <Flex w={"100%"} justifyContent={"end"}>
                             {totalPages.length > 0 ? (
                                 <ul className="pagination">
@@ -245,11 +245,6 @@ const CategoriesDkst = () => {
                                                  {'<'} 
                                         </Button>
                                     </li>
-                                    {/*Array.from({ length: totalPages }, (_, i) => (
-                                        <li key={i} className={i + 1 === currentPage ? "active" : ""}>
-                                            <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
-                                        </li>
-                                    ))*/}
                                     {
                                         totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
                                             return (
@@ -273,7 +268,7 @@ const CategoriesDkst = () => {
                     </Flex>
                     <Grid templateColumns={currentProducts.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}>
                         {currentProducts.length > 0 ? currentProducts.map((item, idx) => {
-                            if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.retail_price ) {
+                            if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.wholesale_price ) {
                                 return(
                                     <GridItem key={idx}>
                                         <ProductCard product={item} color={colorSelected} search={inputSearch} isFromSearch={true}/>
@@ -307,7 +302,9 @@ const CategoriesDkst = () => {
                     </Grid>
                     {currentProducts.length > 0 && !isLoading ? 
                         <Flex mt={10}>
-                            <OrderBy />
+                            <OrderBy 
+                                products={products}
+                                setProducts={setProducts} />
                         </Flex>
                     : null}
                 </GridItem>

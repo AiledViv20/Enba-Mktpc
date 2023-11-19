@@ -54,6 +54,27 @@
     justify-content: center;
 }
 
+.grid-price {
+    margin-top: 2rem;
+    padding-right: 12rem;
+    display: flex;
+    justify-content: end;
+}
+
+.grid-price-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.grid-price span {
+    font-weight: 600;
+}
+
+.grid-price p {
+    margin-bottom: 10px;
+}
+
+
 .grid-alert {
     display: flex;
     margin-top: 5rem;
@@ -116,5 +137,139 @@ td {
 
 .grid-footer a {
     text-decoration: underline;
+    color: #2D70A7;
+}
+
+@media (max-width: 1121px) {
+    .container {
+        display: none;
+    }
+}
+
+@media (min-width: 1122px) {
+    .container-mb {
+        display: none;
+    }
+}
+
+.container-mb {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100vh;
+}
+
+.grid-header-mb {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.grid-item-header-mb {
+    justify-self: center;
+}
+
+.contact-links-mb {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+.email-mb {
+    display: flex;
+    justify-content: center;
+}
+
+.phone-mb {
+    display: flex;
+    justify-content: center;
+}
+
+.address-mb {
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.grid-table-mb {
+    margin-top: 2rem;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.grid-cards-mb {
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+}
+
+.card-mb {
+    border: 1px solid #D9D9D9;
+    padding: 5px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2fr;
+    grid-template-rows: 1fr;
+    grid-template-areas:
+        "img_card data_card"
+    ;
+}
+
+.card-mb .img_card {
+    grid-area: img_card;
+}
+
+.card-mb .data_card {
+    padding-top: 5px;
+    grid-area: data_card;
+    line-height: 1.2;
+    text-align: end;
+}
+
+.product-quantity {
+    font-size: 14px;
+    color: #828282;
+}
+
+.data_card p {
+    font-weight: 600;
+}
+
+.grid-price-mb {
+    display: flex;
+    margin-top: 2rem;
+    padding-left: 20px;
+}
+
+.grid-price-list-mb {
+    line-height: 1.2;
+}
+
+.grid-price-list-mb span {
+    font-weight: 600;
+}
+
+.grid-alert-mb {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    background-color: #BEE4F6;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.alert-mb {
+    display: flex;
+    text-align: center;
+}
+
+.content-footer-mb {
+    padding: 5px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.content-footer-mb a {
     color: #2D70A7;
 }

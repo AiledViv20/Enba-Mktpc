@@ -402,7 +402,7 @@ const QuoteProductDkts = () => {
     }
 
     const validateMinShop = () => {
-        if (subTotalSum < 1500) {
+        if (sumTotalOrder < 1500) {
             return true;
         } 
         return false;
@@ -410,8 +410,8 @@ const QuoteProductDkts = () => {
 
     return ( 
         <>
-            <Flex w={"50%"} flexDirection={"column"}>
-                <Flex>
+            <Flex w={steps.step1 || steps.step2 ? "50%" : "100%"} flexDirection={"column"}>
+                <Flex justifyContent={steps.step1 || steps.step2 ? "initial" : "center"}>
                     {steps.step3 ?
                         <Text fontSize={"24px"} fontWeight={700}>Gracias, has realizado tu pedido</Text>
                         : 
@@ -452,7 +452,7 @@ const QuoteProductDkts = () => {
                     step5={steps.step5}
                     sendOrder={sendOrder} />
             </Flex>
-            <Flex w={"50%"} pl={20} >
+            <Flex display={steps.step1 || steps.step2 ? "flex" : "none"} w={"50%"} pl={20}>
                 <Flex w={"100%"} height={"fit-content"} bg={"#F8F8F8"} border={"1px solid #E2E2E2"} borderRadius={"8px"} p={5} flexDirection={"column"}>
                     <Flex mb={8}>
                         <Text fontSize={"20px"} as={"b"}>Mi orden</Text>

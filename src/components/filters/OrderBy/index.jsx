@@ -1,19 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useState } from 'react';
 import { 
     Flex, 
     Select, 
     Text
 } from '@chakra-ui/react';
-import { CardFilterContext } from '../../../context';
-import { actions } from '../../../context/actions';
 
-const OrderBy = () => {
-    const { state, dispatch } = useContext(CardFilterContext);
+const OrderBy = ({ products, setProducts }) => {
+    const [order, setOrder] = useState({
+        subOrder: ''
+    });
 
     const handleChange = (e) => {
-        dispatch({
-            type: actions.orderCards,
-            payload: e.target.value
+        setOrder({
+            subOrder: e.target.value
         });
     };
 
@@ -25,7 +24,7 @@ const OrderBy = () => {
                 _hover={{ cursor: 'pointer' }} 
                 fontSize={"14px"} 
                 onChange={handleChange}
-                value={state.order}>
+                value={order.subOrder}>
                 <option value='ASC'>Menor a mayor precio</option>
                 <option value='DESC'>Mayor a menor precio</option>
             </Select>

@@ -41,7 +41,7 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
             let newModificate = {
                 ...filterModificate,
                 quantity: values.num,
-                total_price: values.num * product.unit_price
+                total_price: product.total_price
             }
             newListFilter = [
                 ...newListFilter,

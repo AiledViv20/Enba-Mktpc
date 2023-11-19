@@ -37,7 +37,7 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
         if (values.num === 0) {
             let sumTotalKit = 0;
             showKitIncludes.forEach((item) => {
-                sumTotalKit = parseFloat(item?.items[0]?.retail_price) + sumTotalKit
+                sumTotalKit = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKit
             })
             setPrice(sumTotalKit.toFixed(2));
         }
@@ -60,7 +60,7 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
     const addKitShoppingCart = () => {
         let sumTotalKitFinal = 0;
         showKitIncludes.forEach((item) => {
-            sumTotalKitFinal = parseFloat(item?.items[0]?.retail_price) + sumTotalKitFinal
+            sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
         })
         setPriceDefault(sumTotalKitFinal.toFixed(2));
         let sumTotal = price * values.num;
