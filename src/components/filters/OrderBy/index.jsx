@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     Flex, 
     Select, 
     Text
 } from '@chakra-ui/react';
 
-const OrderBy = ({ products, setProducts }) => {
+const OrderBy = ({ setLoading, currentProducts, setCurrentProducts }) => {
     const [order, setOrder] = useState({
         subOrder: ''
     });
@@ -15,6 +15,20 @@ const OrderBy = ({ products, setProducts }) => {
             subOrder: e.target.value
         });
     };
+
+    useEffect(() => {
+        setLoading(true);
+        if (currentProducts) {
+            let sortedData = [];
+            if (order.subOrder === "ASC") {
+                sortedData = currentProducts.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+            } else {
+                sortedData = currentProducts.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+            }
+            setCurrentProducts(sortedData);
+            setLoading(false);
+        }
+    }, [order]);
 
     return ( 
         <Flex flexDirection={"column"} pl={10}>

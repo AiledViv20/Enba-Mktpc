@@ -230,9 +230,10 @@ const CategoriesDkst = () => {
                 </GridItem>
                 <GridItem colSpan={3}>
                     <Flex pb={10}>
-                        <OrderBy 
-                            products={products}
-                            setProducts={setProducts} />
+                        <OrderBy
+                            setLoading={setLoading}
+                            currentProducts={currentProducts}
+                            setCurrentProducts={setCurrentProducts} />
                         <Flex w={"100%"} justifyContent={"end"}>
                             {totalPages.length > 0 ? (
                                 <ul className="pagination">
@@ -302,9 +303,10 @@ const CategoriesDkst = () => {
                     </Grid>
                     {currentProducts.length > 0 && !isLoading ? 
                         <Flex mt={10}>
-                            <OrderBy 
-                                products={products}
-                                setProducts={setProducts} />
+                            <OrderBy
+                                setLoading={setLoading}
+                                currentProducts={currentProducts}
+                                setCurrentProducts={setCurrentProducts} />
                         </Flex>
                     : null}
                 </GridItem>
