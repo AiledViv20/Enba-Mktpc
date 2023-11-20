@@ -10,14 +10,13 @@ import {
     Box,
     GridItem,
     Button,
-    Container
 } from '@chakra-ui/react';
 import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-import OrderBy from '../../components/filters/OrderBy';
+import OrderBy from './OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
@@ -52,6 +51,23 @@ const CategoriesDkst = () => {
         order: state.order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+    const [order, setOrder] = useState({
+        subOrder: 'ASC'
+    });
+
+    useEffect(() => {
+        setLoading(true);
+        if (products.length > 0) {
+            let sortedData = [];
+            if (order.subOrder === "ASC") {
+                sortedData = products.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+            } else {
+                sortedData = products.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+            }
+            setProducts(sortedData);
+            setLoading(false);
+        }
+    }, [order]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -232,8 +248,10 @@ const CategoriesDkst = () => {
                     <Flex pb={10}>
                         <OrderBy
                             setLoading={setLoading}
-                            currentProducts={currentProducts}
-                            setCurrentProducts={setCurrentProducts} />
+                            products={products}
+                            setProducts={setProducts}
+                            order={order}
+                            setOrder={setOrder} />
                         <Flex w={"100%"} justifyContent={"end"}>
                             {totalPages.length > 0 ? (
                                 <ul className="pagination">
@@ -305,8 +323,10 @@ const CategoriesDkst = () => {
                         <Flex mt={10}>
                             <OrderBy
                                 setLoading={setLoading}
-                                currentProducts={currentProducts}
-                                setCurrentProducts={setCurrentProducts} />
+                                products={products}
+                                setProducts={setProducts}
+                                order={order}
+                                setOrder={setOrder} />
                         </Flex>
                     : null}
                 </GridItem>

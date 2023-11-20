@@ -14,7 +14,7 @@ import { SearchIcon } from '@chakra-ui/icons';
 import { colors_complement, colors } from '../../resource';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-import OrderBy from '../../components/filters/OrderBy';
+import OrderBy from './OrderBy';
 import { useGetSearchTemporalityQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 

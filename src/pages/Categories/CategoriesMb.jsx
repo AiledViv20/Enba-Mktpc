@@ -20,7 +20,7 @@ import { colors_complement, colors } from '../../resource';
 import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
-import OrderBy from '../../components/filters/OrderBy';
+import OrderBy from './OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
@@ -55,6 +55,23 @@ const CategoriesMb = () => {
         order: state.order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+    const [order, setOrder] = useState({
+        subOrder: 'ASC'
+    });
+
+    useEffect(() => {
+        setLoading(true);
+        if (products.length > 0) {
+            let sortedData = [];
+            if (order.subOrder === "ASC") {
+                sortedData = products.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+            } else {
+                sortedData = products.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+            }
+            setProducts(sortedData);
+            setLoading(false);
+        }
+    }, [order]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -240,8 +257,10 @@ const CategoriesMb = () => {
                 <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy
                         setLoading={setLoading}
-                        currentProducts={currentProducts}
-                        setCurrentProducts={setCurrentProducts} />
+                        products={products}
+                        setProducts={setProducts}
+                        order={order}
+                        setOrder={setOrder} />
                     <Flex w={"100%"} justifyContent={"center"}>
                         {totalPages.length > 0 ? (
                             <ul className="pagination">
