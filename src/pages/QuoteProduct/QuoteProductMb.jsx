@@ -65,9 +65,6 @@ const QuoteProductMb = () => {
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
     const [subTotalSum, setSubTotalSum] = useState(0);
     const [sumTotalOrder, setSumTotalOrder] = useState(0);
-    const [priceSend, setPriceSend] = useState(0);
-    const [priceIva, setPriceIva] = useState(1.45);
-
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -186,8 +183,6 @@ const QuoteProductMb = () => {
             sumsIv = sums * 0.16;
             sumsSp = calculateSend();
             setSubTotalSum(sums);
-            setPriceIva(sumsIv);
-            setPriceSend(sumsSp);
             setSumTotalOrder(sums + sumsIv + sumsSp);
             dispatch(
                 setTotalAmount({totalAmount: subTotalSum})
@@ -374,8 +369,6 @@ const QuoteProductMb = () => {
                         setKits({kits: []})
                     )
                     setSubTotalSum(0);
-                    setPriceIva(1.45);
-                    setPriceSend(0);
                     setSumTotalOrder(0);
                     dispatch(
                         setTotalAmount({totalAmount: 0})

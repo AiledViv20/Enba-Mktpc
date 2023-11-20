@@ -20,7 +20,7 @@ import { colors_complement, colors } from '../../resource';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchTemporalityQuery, useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
@@ -225,9 +225,8 @@ const PopularCategoriesMb = () => {
             <Flex flexDirection={"column"}>
                 <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy
-                        setLoading={setLoading}
-                        currentProducts={currentProducts}
-                        setCurrentProducts={setCurrentProducts} />
+                        order={order}
+                        setOrder={setOrder} />
                     <Flex w={"100%"} justifyContent={"center"}>
                         {totalPages.length > 0 ? (
                             <ul className="pagination">

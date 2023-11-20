@@ -15,7 +15,7 @@ import { colors_complement, colors } from '../../resource';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchTemporalityQuery, useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
