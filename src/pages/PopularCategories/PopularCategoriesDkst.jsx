@@ -204,7 +204,10 @@ const PopularCategoriesDkst = () => {
             </Flex>
             <Flex width={"75%"} flexDirection={"column"}>
                 <Flex pb={10}>
-                    <OrderBy />
+                    <OrderBy
+                        setLoading={setLoading}
+                        currentProducts={currentProducts}
+                        setCurrentProducts={setCurrentProducts} />
                     <Flex zIndex={1} w={"100%"} justifyContent={"end"}>
                         {totalPages.length > 0 ? (
                             <ul className="pagination">
@@ -279,7 +282,10 @@ const PopularCategoriesDkst = () => {
                 </Grid>
                 {currentProducts.length > 0 && !isLoading ? 
                     <Flex mt={10}>
-                        <OrderBy />
+                        <OrderBy
+                            setLoading={setLoading}
+                            currentProducts={currentProducts}
+                            setCurrentProducts={setCurrentProducts} />
                     </Flex>
                 : null}
             </Flex>

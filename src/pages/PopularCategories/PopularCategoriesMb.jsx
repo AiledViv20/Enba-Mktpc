@@ -88,7 +88,6 @@ const PopularCategoriesMb = () => {
                 const currentProductsTemp = products.slice(startIndex, endIndex);
                 const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
-                //setTotalPages(totalPagesTemp);
                 setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
                     setLoading(false);
@@ -105,7 +104,6 @@ const PopularCategoriesMb = () => {
             const currentProductsTemp = products.slice(startIndex, endIndex);
             const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
-            //setTotalPages(totalPagesTemp);
             setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
                 setLoading(false);
@@ -214,7 +212,10 @@ const PopularCategoriesMb = () => {
             </Flex>
             <Flex flexDirection={"column"}>
                 <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
-                    <OrderBy />
+                    <OrderBy
+                        setLoading={setLoading}
+                        currentProducts={currentProducts}
+                        setCurrentProducts={setCurrentProducts} />
                     <Flex w={"100%"} justifyContent={"center"}>
                         {totalPages.length > 0 ? (
                             <ul className="pagination">
@@ -227,11 +228,6 @@ const PopularCategoriesMb = () => {
                                                 {'<'} 
                                     </Button>
                                 </li>
-                                {/*Array.from({ length: totalPages }, (_, i) => (
-                                <li key={i} className={i + 1 === currentPage ? "active" : ""}>
-                                    <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
-                                </li>
-                                ))*/}
                                 {
                                     totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
                                         return (

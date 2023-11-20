@@ -24,7 +24,7 @@ const TablePrice = ({ pdt }) => {
                 </Thead>
                 <Tbody>
                     <Tr>
-                        <Td border={"1px solid #D9D9D9"}>$00.00 - $15,000.00</Td>
+                        <Td border={"1px solid #D9D9D9"}>$0.00 - $15,000.00</Td>
                         <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.wholesale_price)}</Td>
                     </Tr>
                     <Tr>
