@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex, 
     Box, 
@@ -23,8 +23,6 @@ import OrderBy from './OrderBy';
 import { useGetSearchTemporalityQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
-import { CardFilterContext } from '../../context';
-
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
@@ -37,20 +35,34 @@ const PopularCategoriesMb = () => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
     const [products, setProducts] = useState([]);
-    const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.name);
     const [loading, setLoading] = useState(false);
+    const [order, setOrder] = useState('ASC');
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
         take: 250,
         page: 0,
         color: "",
         name: "",
-        order: "ASC"
+        order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+
+    useEffect(() => {
+        setLoading(true);
+        if (products.length > 0) {
+            let sortedData = [];
+            if (order === "ASC") {
+                sortedData = [...products].sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+            } else {
+                sortedData = [...products].sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+            }
+            setProducts(sortedData);
+            setLoading(false);
+        }
+    }, [order]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -129,7 +141,7 @@ const PopularCategoriesMb = () => {
             }
             setLoading(false);
         }
-    },[colorSelected, state]);
+    },[colorSelected]);
 
     return ( 
         <>

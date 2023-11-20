@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Text,
@@ -18,8 +18,6 @@ import OrderBy from './OrderBy';
 import { useGetSearchTemporalityQuery, useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
-import { CardFilterContext } from '../../context';
-
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
@@ -32,20 +30,34 @@ const PopularCategoriesDkst = () => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [totalPages, setTotalPages] = useState(0);
     const [products, setProducts] = useState([]);
-    const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.name);
     const [loading, setLoading] = useState(false);
+    const [order, setOrder] = useState('ASC');
     const [changeFirstValue, setChangeFirstValue] = useState(true);
     const [params, setParams] = useState({
         take: 250,
         page: 0,
         color: "",
         name: "",
-        order: "ASC"
+        order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+
+    useEffect(() => {
+        setLoading(true);
+        if (products.length > 0) {
+            let sortedData = [];
+            if (order === "ASC") {
+                sortedData = [...products].sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+            } else {
+                sortedData = [...products].sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+            }
+            setProducts(sortedData);
+            setLoading(false);
+        }
+    }, [order]);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -83,7 +95,6 @@ const PopularCategoriesDkst = () => {
                 const currentProductsTemp = products.slice(startIndex, endIndex);
                 const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
-                //setTotalPages(totalPagesTemp);
                 setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
                     setLoading(false);
@@ -100,7 +111,6 @@ const PopularCategoriesDkst = () => {
             const currentProductsTemp = products.slice(startIndex, endIndex);
             const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
-            //setTotalPages(totalPagesTemp);
             setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
                 setLoading(false);
@@ -126,7 +136,7 @@ const PopularCategoriesDkst = () => {
             }
             setLoading(false);
         }
-    },[colorSelected, state]);
+    },[colorSelected]);
 
     return ( 
         <>
@@ -205,9 +215,8 @@ const PopularCategoriesDkst = () => {
             <Flex width={"75%"} flexDirection={"column"}>
                 <Flex pb={10}>
                     <OrderBy
-                        setLoading={setLoading}
-                        currentProducts={currentProducts}
-                        setCurrentProducts={setCurrentProducts} />
+                        order={order}
+                        setOrder={setOrder} />
                     <Flex zIndex={1} w={"100%"} justifyContent={"end"}>
                         {totalPages.length > 0 ? (
                             <ul className="pagination">
@@ -215,16 +224,10 @@ const PopularCategoriesDkst = () => {
                                     <Button 
                                         onClick={() => handlePageChange(currentPage -1)}
                                         isDisabled={currentPage === 1 ? true: false}
-                                        
                                     >
-                                                {'<'} 
+                                    {'<'} 
                                     </Button>
                                 </li>
-                                {/*Array.from({ length: totalPages }, (_, i) => (
-                                <li key={i} className={i + 1 === currentPage ? "active" : ""}>
-                                    <button onClick={() => handlePageChange(i + 1)}>{i + 1}</button>
-                                </li>
-                                ))*/}
                                 {
                                     totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
                                         return (
@@ -283,9 +286,8 @@ const PopularCategoriesDkst = () => {
                 {currentProducts.length > 0 && !isLoading ? 
                     <Flex mt={10}>
                         <OrderBy
-                            setLoading={setLoading}
-                            currentProducts={currentProducts}
-                            setCurrentProducts={setCurrentProducts} />
+                            order={order}
+                            setOrder={setOrder} />
                     </Flex>
                 : null}
             </Flex>

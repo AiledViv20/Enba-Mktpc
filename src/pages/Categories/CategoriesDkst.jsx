@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Text,
@@ -20,8 +20,6 @@ import OrderBy from './OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
-import { CardFilterContext } from '../../context';
-
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
@@ -34,7 +32,6 @@ const CategoriesDkst = () => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [totalPages, setTotalPages] = useState([]);
     const [products, setProducts] = useState([]);
-    const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.name);
@@ -42,27 +39,25 @@ const CategoriesDkst = () => {
     const [filterList, setFilterList] = useState(null);
     const [loading, setLoading] = useState(true);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
+    const [order, setOrder] = useState('ASC');
     const [params, setParams] = useState({
         take: 250,
         page: 0,
         color: colorSelected,
         category: param_category ? param_category : "",
         name: inputSearch ? inputSearch : "",
-        order: state.order
+        order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
-    const [order, setOrder] = useState({
-        subOrder: 'ASC'
-    });
 
     useEffect(() => {
         setLoading(true);
         if (products.length > 0) {
             let sortedData = [];
-            if (order.subOrder === "ASC") {
-                sortedData = products.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+            if (order === "ASC") {
+                sortedData = [...products].sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
             } else {
-                sortedData = products.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+                sortedData = [...products].sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
             }
             setProducts(sortedData);
             setLoading(false);
@@ -136,7 +131,7 @@ const CategoriesDkst = () => {
                 setLoading(false);
             }, 8000);
         }
-    }, [products]);
+    }, [products, loading]);
 
     useEffect(() => {
         if (productsDefault.length > 0) {
@@ -156,7 +151,7 @@ const CategoriesDkst = () => {
             }
             setLoading(false);
         }
-    },[colorSelected, state]);
+    },[colorSelected]);
 
     return ( 
         <>
@@ -247,9 +242,6 @@ const CategoriesDkst = () => {
                 <GridItem colSpan={3}>
                     <Flex pb={10}>
                         <OrderBy
-                            setLoading={setLoading}
-                            products={products}
-                            setProducts={setProducts}
                             order={order}
                             setOrder={setOrder} />
                         <Flex w={"100%"} justifyContent={"end"}>
@@ -261,7 +253,7 @@ const CategoriesDkst = () => {
                                             isDisabled={currentPage === 1 ? true: false}
                                             
                                         >
-                                                 {'<'} 
+                                            {'<'} 
                                         </Button>
                                     </li>
                                     {
@@ -322,9 +314,6 @@ const CategoriesDkst = () => {
                     {currentProducts.length > 0 && !isLoading ? 
                         <Flex mt={10}>
                             <OrderBy
-                                setLoading={setLoading}
-                                products={products}
-                                setProducts={setProducts}
                                 order={order}
                                 setOrder={setOrder} />
                         </Flex>

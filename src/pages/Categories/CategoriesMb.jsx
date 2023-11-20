@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { 
     Flex, 
     Box, 
@@ -24,8 +24,6 @@ import OrderBy from './OrderBy';
 import { useGetSearchQuery } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
-import { CardFilterContext } from '../../context';
-
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
@@ -38,7 +36,6 @@ const CategoriesMb = () => {
     const [currentProducts, setCurrentProducts] = useState([]);
     const [totalPages, setTotalPages] = useState([]);
     const [products, setProducts] = useState([]);
-    const { state } = useContext(CardFilterContext);
     const [productsDefault, setProductsDefault] = useState([]);
     const [colorSelected, setColorSelected] = useState("");
     const [inputSearch, setInputSearch] = useState(params_url.name);
@@ -46,29 +43,32 @@ const CategoriesMb = () => {
     const [filterList, setFilterList] = useState(null);
     const [loading, setLoading] = useState(true);
     const [changeFirstValue, setChangeFirstValue] = useState(true);
+    const [order, setOrder] = useState('ASC');
     const [params, setParams] = useState({
         take: 250,
         page: 0,
         color: colorSelected,
         category: param_category ? param_category : "",
         name: inputSearch ? inputSearch : "",
-        order: state.order
+        order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
-    const [order, setOrder] = useState({
-        subOrder: 'ASC'
-    });
+    
 
     useEffect(() => {
         setLoading(true);
         if (products.length > 0) {
             let sortedData = [];
-            if (order.subOrder === "ASC") {
+            console.log(order);
+            if (order === "ASC") {
+                console.log(order)
                 sortedData = products.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
             } else {
                 sortedData = products.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+                console.log(order)
             }
             setProducts(sortedData);
+            console.log(products)
             setLoading(false);
         }
     }, [order]);
@@ -160,7 +160,7 @@ const CategoriesMb = () => {
             }
             setLoading(false);
         }
-    },[colorSelected, state]);
+    },[colorSelected]);
 
     return ( 
         <>
@@ -256,9 +256,6 @@ const CategoriesMb = () => {
             <Flex flexDirection={"column"}>
                 <Flex pt={5} pb={10} zIndex={1} flexDirection={"column"}>
                     <OrderBy
-                        setLoading={setLoading}
-                        products={products}
-                        setProducts={setProducts}
                         order={order}
                         setOrder={setOrder} />
                     <Flex w={"100%"} justifyContent={"center"}>
