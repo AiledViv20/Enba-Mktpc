@@ -38,10 +38,12 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
             let filterModificate = productsStore.filter(item => item.sku === product.sku);
             filterModificate = filterModificate[0];
             let newListFilter = filterDataNotModificate;
+            let sumPrint = values.num * filterModificate?.printing?.price;
+            let sumProduct = values.num * filterModificate.unit_price;
             let newModificate = {
                 ...filterModificate,
                 quantity: values.num,
-                total_price: product.total_price
+                total_price: sumProduct + sumPrint
             }
             newListFilter = [
                 ...newListFilter,
