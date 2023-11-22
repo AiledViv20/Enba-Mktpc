@@ -92,43 +92,43 @@ export const categoriesTemplate = [
     {
         id: 1,
         url: ctg1,
-        url_reditect: "CILINDRO",
+        url_reditect: "BEBIDAS",
         title: "Bebidas"
     },
     {
         id: 2,
         url: ctg2,
-        url_reditect: "BELLEZA",
+        url_reditect: "BIENESTAR",
         title: "Bienestar"
     },
     {
         id: 3,
         url: ctg3,
-        url_reditect: "HERRAMIENTAS",
+        url_reditect: "HOGAR Y HERRAMIENTAS",
         title: "Hogar y herramientas"
     },
     {
         id: 4,
         url: ctg4,
-        url_reditect: "ESCRITORIO",
+        url_reditect: "OFICINA Y TECNOLOGIA",
         title: "Oficina y tecnología"
     },
     {
         id: 5,
         url: ctg5,
-        url_reditect: "PLAYERAS",
+        url_reditect: "TEXTILES",
         title: "Textiles"
     },
     {
         id: 6,
         url: ctg6,
-        url_reditect: "JUGUETES",
+        url_reditect: "TIEMPO LIBRE",
         title: "Tiempo libre"
     },
     {
         id: 7,
         url: ctg7,
-        url_reditect: "DECORACION",
+        url_reditect: "MARCAS",
         title: "Marcas"
     }
 ];

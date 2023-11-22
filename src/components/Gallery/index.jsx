@@ -140,13 +140,14 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
                         <Flex justifyContent={"center"}>
                             <Carousel current={current}>
                                 { slides.map((slide, idx) => (
-                                    <Flex justifyContent={"center"}>
-                                        <Image
-                                            key={idx}
-                                            boxSize={isGreaterThanMd ? '534px' : "225px"}
-                                            objectFit='cover'
-                                            src={slide.imgUrl}
-                                            alt='img' />
+                                    <Flex justifyContent={"center"} key={idx}>
+                                        <Flex 
+                                            w={isGreaterThanMd ? '534px' : "225px"}
+                                            h={isGreaterThanMd ? '534px' : "225px"}
+                                            backgroundImage={`url(${slide.imgUrl})`}
+                                            backgroundSize="cover"
+                                            backgroundPosition="center center"
+                                            backgroundRepeat="no-repeat"></Flex>
                                     </Flex>
                                 ))}
                             </Carousel>
