@@ -29,6 +29,20 @@ export const enbaApi = createApi({
             providesTags: (result, error, arg) =>
                 result ? [{ type: "search" }] : [],
         }),
+        getSearchM: build.mutation({
+          query: (body) => {
+              return {
+                url: `inventory/search`,
+                method: 'POST',
+                body: JSON.stringify(body),
+                headers:{
+                  'Content-Type': 'application/json'
+                }
+              };
+            },
+          providesTags: (result, error, arg) =>
+              result ? [{ type: "search" }] : [],
+      }),
         getSearchTemporality: build.query({
           query: (body) => {
               return {
@@ -111,6 +125,16 @@ export const enbaApi = createApi({
             providesTags: (result, error, arg) =>
               result ? [{ type: "search", id: arg }] : [],
         }),
+        getFavoritesM: build.mutation({
+          query: () => {
+            return {
+              url: `inventory/favorites`,
+              method: "GET",
+            };
+          },
+          providesTags: (result, error, arg) =>
+            result ? [{ type: "search", id: arg }] : [],
+      }),
         getKits: build.query({
             query: (body) => {
                 return {
@@ -236,5 +260,7 @@ export const {
     usePostProofMutation,
     usePostDiscountCodeMutation,
     usePostTransformImageMutation,
+    useGetFavoritesMMutation,
+    useGetSearchMMutation,
     util: {getRunningQueriesThunk},
 } = enbaApi
