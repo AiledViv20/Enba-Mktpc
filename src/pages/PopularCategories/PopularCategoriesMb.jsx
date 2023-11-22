@@ -20,7 +20,7 @@ import { colors_complement, colors } from '../../resource';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchTemporalityMMutation } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
@@ -45,10 +45,36 @@ const PopularCategoriesMb = () => {
         take: 250,
         page: 0,
         color: "",
+        temporality: "NAVIDAD",
         name: "",
         order: order
     });
-    const {data, isLoading, error} = useGetSearchQuery(params);
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [getSearchTemporality] = useGetSearchTemporalityMMutation();
+
+    useEffect(() => {
+        setParams({
+            take: 250,
+            page: 0,
+            color: colorSelected,
+            temporality: "NAVIDAD",
+            name: "",
+            order: order
+        })
+    },[colorSelected]);
+
+    useEffect(() => {
+        setIsLoading(true)
+        setData(null)
+        getSearchTemporality(params)
+        .unwrap()
+        .then((data) => {
+            setData(data);
+            setChangeFirstValue(true)
+            setIsLoading(false)
+        })
+    },[params])
 
     useEffect(() => {
         setLoading(true);
@@ -122,26 +148,6 @@ const PopularCategoriesMb = () => {
             }, 8000);
         }
     }, [products]);
-
-    useEffect(() => {
-        if (productsDefault.length > 0) {
-            setLoading(true);
-            if (colorSelected !== "") {
-                let filterProductsByColor = productsDefault.filter((element) => {
-                    if (element.color.includes(colorSelected)) {
-                        return element;
-                    }
-                });
-                filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
-                if (filterProductsByColor.length > 0) {
-                    setProducts(filterProductsByColor);
-                } else {
-                    setCurrentProducts([]);
-                }
-            }
-            setLoading(false);
-        }
-    },[colorSelected]);
 
     return ( 
         <>

@@ -9,8 +9,7 @@ import {
     Flex,
     IconButton,
     useTheme,
-    useMediaQuery,
-    Image
+    useMediaQuery
 } from '@chakra-ui/react';
 
 import { galleryList } from '../../resource/validate';
