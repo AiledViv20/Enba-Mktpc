@@ -53,17 +53,22 @@ const CategoriesMb = () => {
         order: order
     });
     const {data, isLoading, error} = useGetSearchQuery(params);
+    
 
     useEffect(() => {
         setLoading(true);
         if (products.length > 0) {
             let sortedData = [];
+            console.log(order);
             if (order === "ASC") {
-                sortedData = [...products].sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+                console.log(order)
+                sortedData = products.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
             } else {
-                sortedData = [...products].sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+                sortedData = products.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
+                console.log(order)
             }
             setProducts(sortedData);
+            console.log(products)
             setLoading(false);
         }
     }, [order]);
