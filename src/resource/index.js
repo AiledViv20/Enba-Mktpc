@@ -125,14 +125,13 @@ export const categoriesTemplate = [
         url_reditect: "TIEMPO LIBRE",
         title: "Tiempo libre"
     },
-];
-
-/**{
+    {
         id: 7,
         url: ctg7,
-        url_reditect: "OTRAS",
-        title: "Otras"
-    } */
+        url_reditect: "MARCAS",
+        title: "Marcas"
+    }
+];
 
 export const listSearchCategories = [
     {

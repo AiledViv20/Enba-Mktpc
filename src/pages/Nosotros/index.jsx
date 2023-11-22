@@ -51,7 +51,7 @@ const Nosotros = ({ props }) => {
                     </Flex>
                 </Flex>
                 <Flex w={"100%"} fontWeight={400} color={"#000"} fontSize={"18px"} flexDirection={"column"} pt={10}>
-                    <Text mb={3} textAlign={"center"} fontSize={isGreaterThanMd ? "32px" : "26px"} as={"b"}>SOMOS UNA EMPRESA 100% MÉXICANA</Text>
+                    <Text mb={3} textAlign={"center"} fontSize={isGreaterThanMd ? "32px" : "26px"} as={"b"}>SOMOS UNA EMPRESA 100% MEXICANA</Text>
                     <Text mb={10} lineHeight={1.2} textAlign={"center"}>Nos especializamos en innovación y desarrollo de nuevos<br />productos para facilitar tu día a día.</Text>
                     <Text mb={5} lineHeight={1.2} textAlign={"center"}>En Grupo Enba somos una empresa líder en la industria de artículos promocionales desde 1992, dedicados a la innovación constante<br />mediante un servicio al cliente de primer nivel.</Text>
                     <Text mb={5} lineHeight={1.2} textAlign={"center"}>

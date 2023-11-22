@@ -49,7 +49,7 @@ const PopularCategories = ({ props }) => {
                 <Box w="full" mx="auto" maxW="3x1" {...props} padding={"0px 5%"} pb={20} position="relative">
                     <Flex
                         w="100%"
-                        h="354px"
+                        h="454px"
                         backgroundImage={`url(${banner})`}
                         backgroundSize="cover"
                         backgroundPosition="center center"
