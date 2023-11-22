@@ -21,7 +21,7 @@ import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchQuery, useGetSearchMMutation } from '../../hooks/enbaapi';
+import { useGetSearchMMutation } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
@@ -54,7 +54,6 @@ const CategoriesMb = () => {
     });
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    //const {data, isLoading, error} = useGetSearchQuery(params);
     const [getSearch] = useGetSearchMMutation();
     
     useEffect(() => {
@@ -84,16 +83,12 @@ const CategoriesMb = () => {
         setLoading(true);
         if (products.length > 0) {
             let sortedData = [];
-            console.log(order);
             if (order === "ASC") {
-                console.log(order)
-                sortedData = products.sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
+                sortedData = [...products].sort((a, b) => parseFloat(a.wholesale_price) - parseFloat(b.wholesale_price));
             } else {
-                sortedData = products.sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
-                console.log(order)
+                sortedData = [...products].sort((a, b) => parseFloat(b.wholesale_price) - parseFloat(a.wholesale_price));
             }
             setProducts(sortedData);
-            console.log(products)
             setLoading(false);
         }
     }, [order]);
