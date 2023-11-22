@@ -60,6 +60,15 @@ const Contacto = ({ props }) => {
         <>
             <Box color={"#424242"} w="full" mx="auto" maxW="3x1" {...props} padding={"2rem 5%"} pb={20} position="relative">
                 <Flex
+                    width={"100%"} pt={5} pb={8}
+                    justifyContent={"center"}>
+                    <Flex flexDirection="column" alignItems={"center"}>
+                        <Text color={"accent.500"} textAlign={"center"} fontWeight={700} fontSize={'39px'}>
+                            Contáctanos
+                        </Text>
+                    </Flex>
+                </Flex>
+                <Flex
                     w="100%"
                     h="354px"
                     backgroundImage={`url(${banner})`}
@@ -72,18 +81,6 @@ const Contacto = ({ props }) => {
                     color={"#FFFFFF"}
                     borderRadius="20px">
                     <Flex borderRadius="20px" height='100%' w='100%' backgroundColor={"#0000004e"}></Flex>
-                    <Flex
-                        height="100vh"
-                        width={"100%"}
-                        top={"40"}
-                        justifyContent={"center"}
-                        position="absolute">
-                        <Flex flexDirection="column" alignItems={"center"}>
-                            <Text textAlign={"center"} fontWeight={700} fontSize={'39px'}>
-                                Contáctanos
-                            </Text>
-                        </Flex>
-                    </Flex>
                 </Flex>
                 <Flex w="100%" justifyContent={"center"} pt={isGreaterThanMd ? 20 : 10}>
                     <form

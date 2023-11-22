@@ -51,7 +51,6 @@ const CategoriesDkst = () => {
     });
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
-    //const {data, isLoading, error} = useGetSearchQuery(params);
     const [getSearch] = useGetSearchMMutation();
 
     useEffect(() => {
@@ -162,26 +161,6 @@ const CategoriesDkst = () => {
             }, 8000);
         }
     }, [products, loading]);
-
-    /*useEffect(() => {
-        if (productsDefault.length > 0) {
-            setLoading(true);
-            if (colorSelected !== "") {
-                let filterProductsByColor = productsDefault.filter((element) => {
-                    if (element.color.includes(colorSelected)) {
-                        return element;
-                    }
-                });
-                filterProductsByColor = filterProductsByColor.filter((element) => element.stock !== "0");
-                if (filterProductsByColor.length > 0) {
-                    setProducts(filterProductsByColor);
-                } else {
-                    setCurrentProducts([]);
-                }
-            }
-            setLoading(false);
-        }
-    },[colorSelected]);*/
 
     return ( 
         <>
