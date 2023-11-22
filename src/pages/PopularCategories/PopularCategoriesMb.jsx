@@ -240,7 +240,7 @@ const PopularCategoriesMb = () => {
                                     </Button>
                                 </li>
                                 {
-                                    totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
+                                    totalPages.slice(((currentPage >= totalPages.length - 1) && (currentPage !== 1) ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
                                         return (
                                             <li key={idx} className={item === currentPage ? "active" : ""}>
                                                 <button onClick={() => handlePageChange(item)}>{item}</button>

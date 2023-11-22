@@ -21,7 +21,7 @@ import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchQuery, useGetSearchMMutation } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
@@ -52,8 +52,33 @@ const CategoriesMb = () => {
         name: inputSearch ? inputSearch : "",
         order: order
     });
-    const {data, isLoading, error} = useGetSearchQuery(params);
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    //const {data, isLoading, error} = useGetSearchQuery(params);
+    const [getSearch] = useGetSearchMMutation();
     
+    useEffect(() => {
+        setParams({
+            take: 250,
+            page: 0,
+            color: colorSelected,
+            category: param_category ? param_category : "",
+            name: inputSearch ? inputSearch : "",
+            order: order
+        })
+    },[colorSelected, param_category, inputSearch, order]);
+
+    useEffect(() => {
+        setIsLoading(true)
+        setData(null)
+        getSearch(params)
+        .unwrap()
+        .then((data) => {
+            setData(data);
+            setChangeFirstValue(true)
+            setIsLoading(false)
+        })
+    },[params])
 
     useEffect(() => {
         setLoading(true);
@@ -91,7 +116,7 @@ const CategoriesMb = () => {
 
     useEffect(() => {
         setLoading(true);
-        if (products.length > 0) {
+        if (products?.length > 0) {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const currentProductsTemp = products.slice(startIndex, endIndex);
@@ -105,20 +130,23 @@ const CategoriesMb = () => {
     useEffect(() => {
         if (data && changeFirstValue) {
             setProducts(data);
+            setCurrentPage(1);
+            setCurrentProducts([])
+            setTotalPages([1])
             setProductsDefault(data);
             setChangeFirstValue(false);
         }
     },[data]);
 
     useEffect(() => {
-        if (productsDefault.length > 0) {
+        if (productsDefault?.length > 0) {
             let filterProducts = productsDefault.filter((element) => element.stock !== "0");
             setProducts(filterProducts);
-            if (products.length > 0) {
+            if (products?.length > 0) {
                 const startIndex = (currentPage - 1) * itemsPerPage;
                 const endIndex = startIndex + itemsPerPage;
                 const currentProductsTemp = products.slice(startIndex, endIndex);
-                const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+                const totalPagesTemp = Math.ceil(products?.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
                 setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
@@ -129,11 +157,11 @@ const CategoriesMb = () => {
     }, [productsDefault]);
 
     useEffect(() => {
-        if (products.length > 0) {
+        if (products?.length > 0) {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const currentProductsTemp = products.slice(startIndex, endIndex);
-            const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+            const totalPagesTemp = Math.ceil(products?.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
             setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
@@ -142,7 +170,7 @@ const CategoriesMb = () => {
         }
     }, [products]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (productsDefault.length > 0) {
             setLoading(true);
             if (colorSelected !== "") {
@@ -160,7 +188,7 @@ const CategoriesMb = () => {
             }
             setLoading(false);
         }
-    },[colorSelected]);
+    },[colorSelected]);*/
 
     return ( 
         <>
@@ -271,7 +299,7 @@ const CategoriesMb = () => {
                                     </Button>
                                 </li>
                                 {
-                                    totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
+                                    totalPages.slice(((currentPage >= totalPages.length - 1) && (currentPage !== 1) ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
                                         return (
                                             <li key={idx} className={item === currentPage ? "active" : ""}>
                                                 <button onClick={() => handlePageChange(item)}>{item}</button>

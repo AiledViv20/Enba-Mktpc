@@ -17,13 +17,14 @@ import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchQuery } from '../../hooks/enbaapi';
+import { useGetSearchQuery, useGetSearchMMutation } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
 import './styled.css';
+import { color } from 'framer-motion';
 
 const CategoriesDkst = () => {
     const params_url = useParams();
@@ -48,7 +49,33 @@ const CategoriesDkst = () => {
         name: inputSearch ? inputSearch : "",
         order: order
     });
-    const {data, isLoading, error} = useGetSearchQuery(params);
+    const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    //const {data, isLoading, error} = useGetSearchQuery(params);
+    const [getSearch] = useGetSearchMMutation();
+
+    useEffect(() => {
+        setParams({
+            take: 250,
+            page: 0,
+            color: colorSelected,
+            category: param_category ? param_category : "",
+            name: inputSearch ? inputSearch : "",
+            order: order
+        })
+    },[colorSelected, param_category, inputSearch, order]);
+
+    useEffect(() => {
+        setIsLoading(true)
+        setData(null)
+        getSearch(params)
+        .unwrap()
+        .then((data) => {
+            setData(data);
+            setChangeFirstValue(true)
+            setIsLoading(false)
+        })
+    },[params])
 
     useEffect(() => {
         setLoading(true);
@@ -96,20 +123,23 @@ const CategoriesDkst = () => {
     useEffect(() => {
         if (data && changeFirstValue) {
             setProducts(data);
+            setCurrentPage(1);
+            setCurrentProducts([])
+            setTotalPages([1])
             setProductsDefault(data);
             setChangeFirstValue(false);
         }
     },[data]);
 
     useEffect(() => {
-        if (productsDefault.length > 0) {
+        if (productsDefault?.length > 0) {
             let filterProducts = productsDefault.filter((element) => element.stock !== "0");
             setProducts(filterProducts);
-            if (products.length > 0) {
+            if (products?.length > 0) {
                 const startIndex = (currentPage - 1) * itemsPerPage;
                 const endIndex = startIndex + itemsPerPage;
                 const currentProductsTemp = products.slice(startIndex, endIndex);
-                const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+                const totalPagesTemp = Math.ceil(products?.length / itemsPerPage);
                 setCurrentProducts(currentProductsTemp);
                 setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
                 setTimeout(() => {
@@ -120,11 +150,11 @@ const CategoriesDkst = () => {
     }, [productsDefault]);
 
     useEffect(() => {
-        if (products.length > 0) {
+        if (products?.length > 0) {
             const startIndex = (currentPage - 1) * itemsPerPage;
             const endIndex = startIndex + itemsPerPage;
             const currentProductsTemp = products.slice(startIndex, endIndex);
-            const totalPagesTemp = Math.ceil(products.length / itemsPerPage);
+            const totalPagesTemp = Math.ceil(products?.length / itemsPerPage);
             setCurrentProducts(currentProductsTemp);
             setTotalPages(Array.from({ length: totalPagesTemp }, (_, i) => (i + 1)))
             setTimeout(() => {
@@ -133,7 +163,7 @@ const CategoriesDkst = () => {
         }
     }, [products, loading]);
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (productsDefault.length > 0) {
             setLoading(true);
             if (colorSelected !== "") {
@@ -151,12 +181,12 @@ const CategoriesDkst = () => {
             }
             setLoading(false);
         }
-    },[colorSelected]);
+    },[colorSelected]);*/
 
     return ( 
         <>
             <Grid
-                templateColumns={currentProducts.length <= 2 ? 'repeat(5, 1fr)' : "repeat(5, 1fr)"}
+                templateColumns={currentProducts?.length <= 2 ? 'repeat(5, 1fr)' : "repeat(5, 1fr)"}
                 gap={4}> 
                 <GridItem colSpan={2}>
                     <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
@@ -257,7 +287,7 @@ const CategoriesDkst = () => {
                                         </Button>
                                     </li>
                                     {
-                                        totalPages.slice((currentPage >= totalPages.length - 1 ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
+                                        totalPages.slice(((currentPage >= totalPages.length - 1) && (currentPage !== 1) ? currentPage - 2 : currentPage - 1 ), currentPage + 2).map((item, idx) => {
                                             return (
                                                 <li key={idx} className={item === currentPage ? "active" : ""}>
                                                     <button onClick={() => handlePageChange(item)}>{item}</button>
@@ -278,7 +308,7 @@ const CategoriesDkst = () => {
                         </Flex>
                     </Flex>
                     <Grid templateColumns={currentProducts.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}>
-                        {currentProducts.length > 0 ? currentProducts.map((item, idx) => {
+                        {currentProducts?.length > 0 ? currentProducts.map((item, idx) => {
                             if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.wholesale_price ) {
                                 return(
                                     <GridItem key={idx}>
