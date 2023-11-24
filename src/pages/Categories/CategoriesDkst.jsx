@@ -165,8 +165,10 @@ const CategoriesDkst = () => {
     return ( 
         <>
             <Grid
-                templateColumns={currentProducts?.length <= 2 ? 'repeat(5, 1fr)' : "repeat(5, 1fr)"}
-                gap={4}> 
+                templateColumns={'repeat(6, 1fr)'}
+                gap={4}
+                minW={'100%'}
+            >
                 <GridItem colSpan={2}>
                     <Text fontSize={"16px"} fontWeight={700} lineHeight={1.2}>
                         {params_url.category ? params_url.category : capitalizeFirstLetter(inputSearch)}
@@ -248,7 +250,7 @@ const CategoriesDkst = () => {
                         </Flex>
                     </Flex>
                 </GridItem>
-                <GridItem colSpan={3}>
+                <GridItem colSpan={4}>
                     <Flex pb={10}>
                         <OrderBy
                             order={order}
@@ -286,7 +288,7 @@ const CategoriesDkst = () => {
                             ) : null}
                         </Flex>
                     </Flex>
-                    <Grid templateColumns={currentProducts.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"}>
+                    <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(2, 1fr)", xl: "repeat(2, 1fr)", '2xl': "repeat(3, 1fr)"}} gap={6} justifyItems={"center"} zIndex={1} alignSelf={"center"}>
                         {currentProducts?.length > 0 ? currentProducts.map((item, idx) => {
                             if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.wholesale_price ) {
                                 return(

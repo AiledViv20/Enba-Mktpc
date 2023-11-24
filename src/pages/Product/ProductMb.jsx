@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Text,
+    Stack,
+    Skeleton
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
 
@@ -85,30 +87,42 @@ const ProductMb = () => {
 
     return (
         <>
-            <Flex flexDirection={"column"} width={"100%"}>
-                {
-                    product && (
-                        <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
-                            <MiniatureMb data={product} images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                            <DescriptionMb 
-                                previewImage={img}
-                                setImg={setImg}
-                                images={images} 
-                                data={product} 
-                                colors={colors}
-                                colorsProduct={colorsProduct} />
-                        </Flex>
-                    )
-                }
-                {
-                    product && (
-                        <CharacteristicsMb 
-                            data={product} 
-                            colorsProduct={colorsProduct}
-                            previewImage={img} />
-                    )
-                }
-            </Flex>
+            {
+                (isLoading || !product) ? (
+                    <Stack>
+                        <Skeleton height='200px' />
+                        <Skeleton height='200px' />
+                        <Skeleton height='200px' />
+                        <Skeleton height='200px' />
+                    </Stack>
+                ):
+                (
+                    <Flex flexDirection={"column"} width={"100%"}>
+                        {
+                            product && (
+                                <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
+                                    <MiniatureMb data={product} images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                                    <DescriptionMb 
+                                        previewImage={img}
+                                        setImg={setImg}
+                                        images={images} 
+                                        data={product} 
+                                        colors={colors}
+                                        colorsProduct={colorsProduct} />
+                                </Flex>
+                            )
+                        }
+                        {
+                            product && (
+                                <CharacteristicsMb 
+                                    data={product} 
+                                    colorsProduct={colorsProduct}
+                                    previewImage={img} />
+                            )
+                        }
+                    </Flex>
+                )
+            }
         </>
     );
 }

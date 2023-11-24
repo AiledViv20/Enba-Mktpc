@@ -146,7 +146,7 @@ const PopularCategoriesDkst = () => {
 
     return ( 
         <>
-            <Flex width={"25%"} flexDirection={"column"}>
+            <Flex width={"30%"} flexDirection={"column"}>
                 <InputGroup border={"transparent"} mt={8}>
                     <Input h={"57px"} focusBorderColor="#B9B9B9" fontSize={"12px"} fontWeight={400} bg={"#EFEFEF"} color={"#383838"}
                         placeholder='Buscar productos' border={"1px solid #B9B9B9"} borderRadius={"29px"}
@@ -218,7 +218,7 @@ const PopularCategoriesDkst = () => {
                     </Flex>
                 </Flex>
             </Flex>
-            <Flex width={"75%"} flexDirection={"column"}>
+            <Flex width={"70%"} flexDirection={"column"}>
                 <Flex pb={10}>
                     <OrderBy
                         order={order}
@@ -255,7 +255,7 @@ const PopularCategoriesDkst = () => {
                         ) : null}
                     </Flex>
                 </Flex>
-                <Grid zIndex={1} templateColumns={currentProducts.length > 0 ? "repeat(3, 1fr)" : "repeat(1, 1fr)"} alignSelf={"center"}>
+                <Grid templateColumns={{ base: "repeat(1, 1fr)", md: "repeat(2, 1fr)", lg: "repeat(2, 1fr)", xl: "repeat(2, 1fr)", '2xl': "repeat(3, 1fr)"}} gap={6} justifyItems={"center"} zIndex={1} alignSelf={"center"}>
                     {currentProducts.length > 0 && !loading ? currentProducts.map((item, idx) => {
                         if((item?.items?.length > 0 && (item?.images?.product_images?.length > 0 || item?.images?.vector_images?.length > 0)) || item?.wholesale_price ) {
                             return(
