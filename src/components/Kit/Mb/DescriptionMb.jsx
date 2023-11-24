@@ -15,11 +15,10 @@ import { toast } from 'react-toastify';
 
 import ButtonOpenModalKit from '../ButtonOpenModalKit';
 
-const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
+const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
     const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
 
-    const [price, setPrice] = useState(0);
     const [priceDefault, setPriceDefault] = useState(0);
     const [values, setValues] = useState({
         num: 0
@@ -30,16 +29,6 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
             num: nums < 0 ? 0 : nums
         }) 
     }
-
-    useEffect(() => {
-        if (values.num === 0) {
-            let sumTotalKit = 0;
-            showKitIncludes.forEach((item) => {
-                sumTotalKit = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKit
-            })
-            setPrice(sumTotalKit.toFixed(2));
-        }
-    }, [values]);
 
     const handleChange = (e) => {
         setValues({
@@ -60,6 +49,8 @@ const Description = ({ kit, showKitIncludes, setShowKitIncludes }) => {
         showKitIncludes.forEach((item) => {
             sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
         })
+        let discountKit = sumTotalKitFinal * 0.05;
+        sumTotalKitFinal = sumTotalKitFinal  - discountKit;
         setPriceDefault(sumTotalKitFinal.toFixed(2));
         let sumTotal = price * values.num;
         const kitAdd = {
