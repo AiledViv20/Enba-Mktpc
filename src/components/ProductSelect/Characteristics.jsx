@@ -218,10 +218,6 @@ const Characteristics = ({ data, colorsProduct, previewImage }) => {
                     }
                     let sumTotalProduct = values.amount * values.unitPrice + (temp2 * values.amount);
                     setTotal(sumTotalProduct);
-                } else {
-                    toast.error("¡Para productos con personalización, el mínimo de compra debe ser de 50 piezas!", {
-                        position: toast.POSITION.BOTTOM_RIGHT
-                    });
                 }
             } else {
                 let sumTotalProduct = values.amount * values.unitPrice;

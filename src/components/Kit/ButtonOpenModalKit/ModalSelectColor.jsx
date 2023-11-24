@@ -16,6 +16,8 @@ import {
 } from '@chakra-ui/react';
 import { capitalizeFirstLetter } from '../../../resource/validate';
 
+import { toast } from 'react-toastify';
+
 const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes, addKitShoppingCart }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -45,21 +47,38 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
         })
     }
 
+    const filterSkuSelectColor = (itemKit, color) => {
+        let skuFilterData = "";
+        let filterData = showKitIncludes[itemKit].items.filter(itemx => itemx.color === color);
+        if (filterData.length > 0) {
+            skuFilterData = filterData[0].sku
+        }
+        console.log(filterData)
+        return skuFilterData;
+    }
+
     const filterObjShoppingCart = () => {
         setLoading(true);
         const listColors = [values.colorp1, values.colorp2, values.colorp3, values.colorp4];
         const selectsOptionsColorKit = showKitIncludes.map((item, idx) => {
             return {
                 ...item,
-                color: listColors[idx]
+                color: listColors[idx],
+                sku: filterSkuSelectColor(idx, listColors[idx])
             }
         })
-        setShowKitIncludes(selectsOptionsColorKit);
-        setTimeout(() => {
-            setLoading(false);
-            addKitShoppingCart();
-            onClose();
-        }, 1000);
+        if (selectsOptionsColorKit.length > 0) {
+            setShowKitIncludes(selectsOptionsColorKit);
+            setTimeout(() => {
+                setLoading(false);
+                addKitShoppingCart();
+                onClose();
+            }, 1000);
+        } else {
+            toast.error("¡Oops! Algo salió mal, vuelve a interntarlo nuevamente", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        }
     }
 
     const renderOptionColors = (product) => {

@@ -98,7 +98,9 @@ const QuoteProductMb = () => {
     const [value, setValue] = useState(null);
     const [payPerStore, setPayPerStore] = useState('1');
     const [productsQuote, setProductsQuote] = useState([]);
+    const [kitsQuote, setKitsQuote] = useState([]);
     const [itemsCalculate, setItemsCalculate] = useState([]);
+    const [itemsKitsCalculate, setItemsKitsCalculate] = useState([]);
 
     const changeStepQuote = (numStep) => {
         switch (numStep) {
@@ -163,6 +165,7 @@ const QuoteProductMb = () => {
 
     useEffect(() => {
         setProductsQuote(productsStore);
+        setKitsQuote(kitsStore);
         if (productsStore.length > 0 || kitsStore.length > 0) {
             let sumP = 0;
             let sumK = 0;
@@ -240,6 +243,47 @@ const QuoteProductMb = () => {
         }
     }, [productsQuote]);
 
+    const filterItemKit = (elementKit) => {
+        let newListElmKits = [];
+        if (elementKit) {
+            elementKit.items.forEach(xsKit => {
+                newListElmKits = [
+                    ...newListElmKits, {
+                        name: xsKit.name,
+                        sku_item: xsKit.sku,
+                        code_item: xsKit.code_item,
+                        unit_price: xsKit.unit_price,
+                        total_price: xsKit.total_price,
+                        quantity: 1,
+                        image: xsKit.image
+                    }
+                ]
+            })
+        }
+        return newListElmKits;
+    }
+
+    useEffect(() => {
+        if (kitsQuote && kitsQuote.length > 0) {
+            let newListItemsKits = [];
+            kitsQuote.forEach(element => {
+                newListItemsKits = [
+                    ...newListItemsKits, {
+                        sku_kit: element.sku_kit,
+                        code_kit: element.code_kit,
+                        total_kits: element.total_kits,
+                        printing:{
+                            type: "",
+                            price: 0
+                        },
+                        items: filterItemKit(element)
+                    }
+                ]
+            })
+            setItemsKitsCalculate(newListItemsKits);
+        }
+    }, [kitsQuote]);
+
     const validationStep1Inputs = () => {
         setErrorCreateOrder({
             name: createOrder.name !== "" ? false : true,
@@ -264,20 +308,13 @@ const QuoteProductMb = () => {
             if (kitsStore.length > 0) {
                 calculateOrder = {
                     discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
-                    is_kit: "true",
-                    sku_kit: kitsStore[0].sku_kit ? kitsStore[0].sku_kit : null,
-                    code_kit: kitsStore[0].code_kit ? kitsStore[0].code_kit : null,
-                    total_kits: kitsStore.length > 0 ? kitsStore.length : null,
                     items: itemsCalculate,
+                    kits: itemsKitsCalculate,
                     printing: productsQuote[0].printing
                 }
             } else {
                 calculateOrder = {
-                    is_kit: null,
-                    sku_kit: null,
-                    code_kit: null,
-                    total_kits: null,
-                    discount_code: null,
+                    discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     items: itemsCalculate,
                     printing: productsQuote[0].printing
                 }
@@ -344,12 +381,9 @@ const QuoteProductMb = () => {
         formData.append("pay_method", typePayMethod(value));
         formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : null);
         formData.append("discount_code", createOrder.discount_code !== "" ? createOrder.discount_code : null);
-        formData.append("is_kit", kitsStore[0]?.sku_kit ? "true" : null);
-        formData.append("sku_kit", kitsStore[0]?.sku_kit ? kitsStore[0].sku_kit : null);
-        formData.append("code_kit", kitsStore[0]?.code_kit ? kitsStore[0].code_kit : null);
-        formData.append("total_kits", kitsStore.length > 0 ? kitsStore.length : null);
-        formData.append("items", JSON.stringify(itemsCalculate));
+        formData.append("kits", JSON.stringify(itemsKitsCalculate));
         formData.append("printing", JSON.stringify(productsQuote[0].printing));
+        formData.append("items", JSON.stringify(itemsCalculate));
         postCreateOrder(formData).then(res => {
             if (res.data) {
                 toast.success("¡Tus orden de compra fue creada correctamente!", {
