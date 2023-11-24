@@ -22,6 +22,7 @@ const InfoKitMb = () => {
         sku: params_url.product
     }
     const { data: kit, isKitLoading, kitError } = useGetKitQuery({ name: params.sku});
+    const [price, setPrice] = useState(0);
     const [showKitIncludes, setShowKitIncludes] = useState([]);
     const [showAddOthersKits, setShowAddOthersKits] = useState([]);
 
@@ -73,6 +74,13 @@ const InfoKitMb = () => {
 
     useEffect(() => {
         if (showKitIncludes.length > 0) {
+            let sumTotalKit = 0;
+            showKitIncludes.forEach((item) => {
+                sumTotalKit = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKit
+            })
+            let discountKit = sumTotalKit * 0.05;
+            sumTotalKit = sumTotalKit - discountKit;
+            setPrice(sumTotalKit.toFixed(2));
             let filterDataIncludesKits = [];
             showKitIncludes.forEach((item) => {
                 if (item.items.length > 0) {
@@ -119,6 +127,7 @@ const InfoKitMb = () => {
                                         <MiniatureMb images={showKitIncludes} setIdx={setIdx} idx={idx} />
                                         <DescriptionMb 
                                             kit={kit}
+                                            price={price}
                                             showKitIncludes={showKitIncludes}
                                             setShowKitIncludes={setShowKitIncludes} />
                                     </Flex>
