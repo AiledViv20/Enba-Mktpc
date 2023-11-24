@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-    Flex
+    Flex, 
+    Stack, 
+    Skeleton
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import Miniature from './Miniature';
@@ -96,41 +98,57 @@ const InfoKit = () => {
     return (
         <>
             {
-                product && (
-                    <Flex p={10} justifyContent={"space-between"}>
-                        <Miniature images={showKitIncludes} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                        <Flex pl={10} width={"442px"} height={"442px"}>
-                            <ZoomImage src={img} alt={'image product'} />
+                (isKitLoading || !product) ? (
+                    <Stack p={10} justifyContent={"space-between"}>
+                        <Flex gap={2}>
+                            <Skeleton height={"500px"} width={"10%"} />
+                            <Skeleton height={"500px"} width={"55%"} />
+                            <Skeleton height={"500px"} width={"35%"} />
                         </Flex>
-                        <Description 
-                            kit={kit}
-                            showKitIncludes={showKitIncludes}
-                            setShowKitIncludes={setShowKitIncludes} />
-                    </Flex>
-                )
-            }
-            {
-                product && (
-                    <DescriptionKit 
-                        showKitIncludes={showKitIncludes} />
-                )
-            }
-            {
-                showKitIncludes.length > 0 && (
-                    <KitIncludes 
-                        titleSection={"Tu kit incluye:"}
-                        showKitIncludes={showKitIncludes}
-                        setShowKitIncludes={setShowKitIncludes}
-                        kit={kit} />
-                )
-            }
-            {
-                showAddOthersKits.length > 0 && (
-                    <AddProductsKit 
-                        titleSection={"Agrega otros productos a tu kit"}
-                        data={showAddOthersKits}
-                        showKitIncludes={showKitIncludes}
-                        setShowKitIncludes={setShowKitIncludes} />
+                        <Skeleton height={"300px"} width={"100%"} />
+                        <Skeleton height={"300px"} width={"100%"} />
+                    </Stack>
+                ):(
+                    <>
+                        {
+                            product && (
+                                <Flex p={10} justifyContent={"space-between"}>
+                                    <Miniature images={showKitIncludes} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                                    <Flex pl={10} width={"442px"} height={"442px"}>
+                                        <ZoomImage src={img} alt={'image product'} />
+                                    </Flex>
+                                    <Description 
+                                        kit={kit}
+                                        showKitIncludes={showKitIncludes}
+                                        setShowKitIncludes={setShowKitIncludes} />
+                                </Flex>
+                            )
+                        }
+                        {
+                            product && (
+                                <DescriptionKit 
+                                    showKitIncludes={showKitIncludes} />
+                            )
+                        }
+                        {
+                            showKitIncludes.length > 0 && (
+                                <KitIncludes 
+                                    titleSection={"Tu kit incluye:"}
+                                    showKitIncludes={showKitIncludes}
+                                    setShowKitIncludes={setShowKitIncludes}
+                                    kit={kit} />
+                            )
+                        }
+                        {
+                            showAddOthersKits.length > 0 && (
+                                <AddProductsKit 
+                                    titleSection={"Agrega otros productos a tu kit"}
+                                    data={showAddOthersKits}
+                                    showKitIncludes={showKitIncludes}
+                                    setShowKitIncludes={setShowKitIncludes} />
+                            )
+                        }
+                    </>
                 )
             }
         </>

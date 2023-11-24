@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { 
     Flex,
-    Text
+    Text,
+    Stack,
+    Skeleton
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
 import Miniature from '../../components/ProductSelect/Miniature';
@@ -85,28 +87,45 @@ const ProductDkst = () => {
                 </Text>
             </Flex>
             {
-                product && (
-                    <Flex p={10} justifyContent={"space-between"}>
-                        <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                        <Flex pl={10} width={"442px"} height={"442px"}>
-                            <ZoomImage src={img} alt={'image product'} />
+                (isLoading || !product) ? (
+                    <Stack p={10} justifyContent={"space-between"}>
+                        <Flex gap={2}>
+                            <Skeleton height={"500px"} width={"10%"} />
+                            <Skeleton height={"500px"} width={"55%"} />
+                            <Skeleton height={"500px"} width={"35%"} />
                         </Flex>
-                        <Description
-                            previewImage={img}
-                            setImg={setImg}
-                            images={images} 
-                            data={product} 
-                            colors={colors}
-                            colorsProduct={colorsProduct} />
-                    </Flex>
-                )
-            }
-            {
-                product && (
-                    <Characteristics 
-                        data={product} 
-                        colorsProduct={colorsProduct}
-                        previewImage={img} />
+                        <Skeleton height={"300px"} width={"100%"} />
+                        <Skeleton height={"300px"} width={"100%"} />
+                    </Stack>
+                ) : (
+                    <>
+                    {
+                        product && (
+                            <Flex p={10} justifyContent={"space-between"}>
+                                <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                                <Flex pl={10} width={"442px"} height={"442px"}>
+                                    <ZoomImage src={img} alt={'image product'} />
+                                </Flex>
+                                <Description
+                                    previewImage={img}
+                                    setImg={setImg}
+                                    images={images} 
+                                    data={product} 
+                                    colors={colors}
+                                    colorsProduct={colorsProduct} />
+                            </Flex>
+                        )
+                    }
+                    {
+                        product && (
+                            <Characteristics 
+                                data={product} 
+                                colorsProduct={colorsProduct}
+                                previewImage={img} />
+                        )
+                    }
+
+                    </>
                 )
             }
         </>

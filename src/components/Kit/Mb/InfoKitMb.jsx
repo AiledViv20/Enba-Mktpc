@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { 
     Flex,
-    Text
+    Text, 
+    Stack, 
+    Skeleton
 } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import DescriptionMb from './DescriptionMb';
@@ -94,50 +96,62 @@ const InfoKitMb = () => {
 
     return ( 
         <>
-            <Flex flexDirection={"column"} width={"100%"}>
-                <Flex>
-                    <Text fontSize={"26px"} lineHeight={1.2} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
-                </Flex>
-                <Flex mt={10} mb={2} fontSize={"14px"} fontWeight={400} color={"#424242"} flexDirection={"column"}>
-                    <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{kit?.sku}</Text>
-                    <Text mt={2} lineHeight={1.2}><Text as={"b"}>Categoría:</Text>{" "}{kit?.category.toUpperCase()}</Text>
-                </Flex>
-                {
-                    product && (
-                        <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
-                            <MiniatureMb images={showKitIncludes} setIdx={setIdx} idx={idx} />
-                            <DescriptionMb 
-                                kit={kit}
-                                showKitIncludes={showKitIncludes}
-                                setShowKitIncludes={setShowKitIncludes} />
+            {
+                (isKitLoading || !product) ? (
+                        <Stack>
+                            <Skeleton height="200px" w='100%'/>
+                            <Skeleton height="200px" w='100%'/>
+                            <Skeleton height="200px" w='100%'/>
+                        </Stack>
+                ):(
+                    <>
+                        <Flex flexDirection={"column"} width={"100%"}>
+                            <Flex>
+                                <Text fontSize={"26px"} lineHeight={1.2} fontWeight={600} color={"accent.500"}>{params_url.product ? params_url.product : ""}</Text>
+                            </Flex>
+                            <Flex mt={10} mb={2} fontSize={"14px"} fontWeight={400} color={"#424242"} flexDirection={"column"}>
+                                <Text mr={10}><Text as={"b"}>SKU:</Text>{" "}{kit?.sku}</Text>
+                                <Text mt={2} lineHeight={1.2}><Text as={"b"}>Categoría:</Text>{" "}{kit?.category.toUpperCase()}</Text>
+                            </Flex>
+                            {
+                                product && (
+                                    <Flex mt={5} justifyContent={"center"} flexDirection={"column"}>
+                                        <MiniatureMb images={showKitIncludes} setIdx={setIdx} idx={idx} />
+                                        <DescriptionMb 
+                                            kit={kit}
+                                            showKitIncludes={showKitIncludes}
+                                            setShowKitIncludes={setShowKitIncludes} />
+                                    </Flex>
+                                )
+                            }
+                            {
+                                product && (
+                                    <DescriptionKitMb 
+                                        showKitIncludes={showKitIncludes} />
+                                )
+                            }
+                            {
+                                showKitIncludes.length > 0 && (
+                                    <KitIncludesMb 
+                                        titleSection={"Tu kit incluye:"}
+                                        showKitIncludes={showKitIncludes}
+                                        setShowKitIncludes={setShowKitIncludes}
+                                        kit={kit}/>
+                                )
+                            }
+                            {
+                                showAddOthersKits.length > 0 && (
+                                    <AddProductsKitMb 
+                                        titleSection={"Agrega otros productos a tu kit"}
+                                        data={showAddOthersKits}
+                                        showKitIncludes={showKitIncludes}
+                                        setShowKitIncludes={setShowKitIncludes} />
+                                )
+                            }
                         </Flex>
-                    )
-                }
-                {
-                    product && (
-                        <DescriptionKitMb 
-                            showKitIncludes={showKitIncludes} />
-                    )
-                }
-                {
-                    showKitIncludes.length > 0 && (
-                        <KitIncludesMb 
-                            titleSection={"Tu kit incluye:"}
-                            showKitIncludes={showKitIncludes}
-                            setShowKitIncludes={setShowKitIncludes}
-                            kit={kit}/>
-                    )
-                }
-                {
-                    showAddOthersKits.length > 0 && (
-                        <AddProductsKitMb 
-                            titleSection={"Agrega otros productos a tu kit"}
-                            data={showAddOthersKits}
-                            showKitIncludes={showKitIncludes}
-                            setShowKitIncludes={setShowKitIncludes} />
-                    )
-                }
-            </Flex>
+                    </>
+                )
+            }
         </>
     );
 }

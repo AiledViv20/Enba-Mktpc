@@ -25,7 +25,7 @@ const Categories = (props) => {
                         <Text _hover={{ cursor: "pointer" }} onClick={() => window.location.href = "/"} mr={2}>{"Inicio /"}</Text>{`${params_url.category ? params_url.category : params_url.name}`}
                     </Text>
                 </Flex>
-                <Flex display={isGreaterThanMd ? "flex" : "none"} width={"100%"} mt={10}>
+                <Flex display={isGreaterThanMd ? "flex" : "none"} width={"100%"} mt={10} justifyContent={"center"}>
                     <CategoriesDkst />
                 </Flex>
                 <Flex flexDirection={"column"} display={isGreaterThanMd ? "none" : "flex"} width={"100%"}>
