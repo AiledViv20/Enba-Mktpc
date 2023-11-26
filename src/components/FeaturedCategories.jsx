@@ -18,6 +18,8 @@ import logoGif from '../assets/icons/logo.gif';
 const CardsRenderer = (categories, status) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+    const [isGreaterThanLg] = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+    const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
 
     if (categories.length === 0 && status === "loaded") {
         return (
@@ -28,7 +30,7 @@ const CardsRenderer = (categories, status) => {
             </Stack>
         );
     } else if (categories.length > 0 && status === "loaded") {
-        if (!isGreaterThanMd) {
+        if (!isGreaterThanMd && !isGreaterThanLg && !isGreaterThanXL) {
             return <CategoryCard category={categories[0]} />;
         }
         return categories.map((element) => (
@@ -72,28 +74,40 @@ const CardsRenderer = (categories, status) => {
 const FeaturedCategories = ({ titleSection, data, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+    const [isGreaterThanLg] = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+    const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loaded');//loading, loaded
 
     useEffect(() => {
         if (data) {
-            if (isGreaterThanMd) {
+            if (isGreaterThanXL) {
                 setProducts(data.slice(page * 4, (page + 1) * 4));
                 setStatus('loaded');
+            } else if (isGreaterThanLg) {
+                setProducts(data.slice(page * 3, (page + 1) * 3));
+                setStatus('loaded');
+            } else if (isGreaterThanMd) {
+                setProducts(data.slice(page * 2, (page + 1) * 2));
+                setStatus('loaded');
             } else {
-                setProducts(data.slice(page * 1, (page + 1) * 4));
+                setProducts(data.slice(page * 1, (page + 1) * 1));
                 setStatus('loaded');
             }
         }
-    },[data])
+    },[data, isGreaterThanMd])
 
     useEffect(() => {
         if(data){
-            if (isGreaterThanMd) {
+            if (isGreaterThanXL) {
                 setProducts(data.slice(page * 4, (page + 1) * 4)); 
+            } else if (isGreaterThanLg) {
+                setProducts(data.slice(page * 3, (page + 1) * 3)); 
+            } else if (isGreaterThanMd) {
+                setProducts(data.slice(page * 2, (page + 1) * 2)); 
             } else {
-                setProducts(data.slice(page * 1, (page + 1) * 4)); 
+                setProducts(data.slice(page * 1, (page + 1) * 1)); 
             }
         }
     },[page])

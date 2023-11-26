@@ -75,6 +75,8 @@ const CardsRenderer = (products, status) => {
 export const KitsProduct = ({ titleSection, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+    const [isGreaterThanLg] = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+    const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
@@ -129,11 +131,17 @@ export const KitsProduct = ({ titleSection, props }) => {
 
     useEffect(() => {
         if (kits) {
-            if (isGreaterThanMd) {
+            if (isGreaterThanXL) {
                 setProducts(kits.slice(page * 4, (page + 1) * 4));
                 setStatus('loaded');
+            } else if (isGreaterThanLg) {
+                setProducts(kits.slice(page * 3, (page + 1) * 3));
+                setStatus('loaded');
+            } else if (isGreaterThanMd) {
+                setProducts(kits.slice(page * 2, (page + 1) * 2));
+                setStatus('loaded');
             } else {
-                setProducts(kits.slice(page * 1, (page + 1) * 4));
+                setProducts(kits.slice(page * 1, (page + 1) * 1));
                 setStatus('loaded');
             }
         }
@@ -141,10 +149,14 @@ export const KitsProduct = ({ titleSection, props }) => {
 
     useEffect(() => {
         if(kits){
-            if (isGreaterThanMd) {
+            if (isGreaterThanXL) {
                 setProducts(kits.slice(page * 4, (page + 1) * 4));   
+            } else if (isGreaterThanLg) {
+                setProducts(kits.slice(page * 3, (page + 1) * 3));   
+            } else if (isGreaterThanMd) {
+                setProducts(kits.slice(page * 2, (page + 1) * 2));   
             } else {
-                setProducts(kits.slice(page * 1, (page + 1) * 4));   
+                setProducts(kits.slice(page * 1, (page + 1) * 1));   
             }
         }
     },[page])
@@ -170,9 +182,9 @@ export const KitsProduct = ({ titleSection, props }) => {
                         {titleSection}
                     </Text>
                 </Flex>
-                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={1} color={"accent.500"}>
+                {/*<Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={1} color={"accent.500"}>
                     <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
-                </Flex>
+                </Flex>*/}
                 <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={isGreaterThanMd ? "relative" : "absolute"}>
                     <IconButton
                         icon={<ChevronLeftIcon color={"#888888"} />}
@@ -241,7 +253,7 @@ export const KitsProduct = ({ titleSection, props }) => {
                             onClick={() => setPage(page + 1)}
                             position="relative"
                             left={{ base: "-6", md: 0 }}
-                            isDisabled={products.length < 4 ? true : false}
+                            isDisabled={products.length < (isGreaterThanXL ? 4 : (isGreaterThanLg ? 3 : (isGreaterThanMd ? 2 : 1))) ? true : false}
                             bg="#E2E2E2"
                             zIndex="2"
                             aria-label={`Mostrar productos página: ${page + 1}`}
