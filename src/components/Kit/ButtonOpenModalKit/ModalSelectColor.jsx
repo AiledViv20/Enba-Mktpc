@@ -32,7 +32,7 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
     const [colors2, setColors2] = useState([]);
     const [colors3, setColors3] = useState([]);
     const [colors4, setColors4] = useState([]);
-    const [valuesTypeColor, setValues] = useState({
+    const [valuesTypeColor, setValuesTypeColor] = useState({
         colorp1: "",
         colorp2: "",
         colorp3: "",
@@ -47,8 +47,8 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
     }
 
     const handleChangeSelected = (e) => {
-        setValues({
-            ...values,
+        setValuesTypeColor({
+            ...valuesTypeColor,
             [e.target.name]: e.target.value
         })
     }
@@ -56,7 +56,6 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
     const addKitShoppingCart = (newListOptionsColorKit) => {
         setLoading(true);
         if (newListOptionsColorKit.length > 0) {
-            console.log(newListOptionsColorKit);
             let sumTotalKitFinal = 0;
             newListOptionsColorKit.forEach((item) => {
                 sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
@@ -78,9 +77,9 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
             const counterKits = [...kitsStore, 
                 kitAdd
             ];
-            /* dispatch(
+            dispatch(
                 setKits({kits: counterKits})
-            ); */
+            );
             toast.success("¡Se han agregado exitosamente los productos al kit!", {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
@@ -110,7 +109,6 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
         if (filterData.length > 0) {
             skuFilterData = filterData[0].sku
         }
-        console.log(filterData);
         return skuFilterData;
     }
 
@@ -126,9 +124,8 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
             }
         })
         if (selectsOptionsColorKit.length > 0) {
-            console.log(selectsOptionsColorKit);
-            //setShowKitIncludes(selectsOptionsColorKit);
-            //addKitShoppingCart(selectsOptionsColorKit);
+            setShowKitIncludes(selectsOptionsColorKit);
+            addKitShoppingCart(selectsOptionsColorKit);
         } 
     }
 

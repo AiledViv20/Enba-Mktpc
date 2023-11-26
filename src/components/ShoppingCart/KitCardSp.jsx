@@ -36,20 +36,6 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                 setKits({kits: filterProductsShopping })
             );
         } else {
-            /*let filterDataNotModificate = kitsStore.filter(item => item.sku_kit !== product.sku_kit);
-            let filterModificate = kitsStore.filter(item => item.sku_kit === product.sku_kit);
-            filterModificate = filterModificate[0];
-            let newListFilter = filterDataNotModificate;
-            let newModificate = {
-                ...filterModificate,
-                total_kits: values.num,
-                sum_total_kit: values.num * product.sub_sum_total_kit
-            }
-            newListFilter = [
-                ...newListFilter,
-                newModificate
-            ];
-            setNewArray(newListFilter);*/
             let products_ = [...kitsStore]
             let filterModificate = {...products_[idx]};
             filterModificate['total_kits'] = values.num;
@@ -150,7 +136,6 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                             fontSize={"12px"}
                             mb={2}
                             icon={<MinusIcon />} />
-                        {/*<Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>*/}
                         <Input 
                             ml={2} 
                             mr={2}

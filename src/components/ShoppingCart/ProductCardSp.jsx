@@ -36,22 +36,6 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                 setProducts({products: filterProductsShopping })
             );
         } else {
-            /*let filterDataNotModificate = productsStore.filter(item => item.sku !== product.sku);
-            let filterModificate = productsStore.filter(item => item.sku === product.sku);
-            filterModificate = filterModificate[0];
-            let newListFilter = filterDataNotModificate;
-            let sumPrint = values.num * filterModificate?.printing?.price;
-            let sumProduct = values.num * filterModificate.unit_price;
-            let newModificate = {
-                ...filterModificate,
-                quantity: values.num,
-                total_price: sumProduct + sumPrint
-            }
-            newListFilter = [
-                ...newListFilter,
-                newModificate
-            ];
-            setNewArray(newListFilter);*/
             let products_ = [...productsStore]
             let filterModificate = {...products_[idx]};
             let sumPrint = values.num * filterModificate?.printing?.price;
@@ -59,7 +43,6 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
             filterModificate['quantity'] = values.num;
             filterModificate['total_price'] = sumProduct + sumPrint;
             products_[idx] = filterModificate;
-            console.log(products_);
             setNewArray(products_);
             dispatch(
                 setProducts({products: products_ })
@@ -143,7 +126,6 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                             color={"#383838"}
                             fontSize={"12px"}
                             icon={<MinusIcon />} />
-                        {/*<Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>*/}
                         <Input 
                             ml={2} 
                             mr={2}
