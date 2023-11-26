@@ -127,6 +127,11 @@ const SearchBar = () => {
                     }} 
                     value={keySearch}
                     onChange={e => setKeySearch(e.target.value)}
+                    onKeyPress={e => {
+                        if (e.key === 'Enter') {
+                            searchMkt();
+                        }
+                    }}
                 />
             </Flex>
             <Flex alignItems={"center"}>

@@ -113,6 +113,9 @@ const CarritoMb = ({ props }) => {
                                     <KitsMb 
                                         kits={kits}
                                         kit={item}
+                                        idx={idx}
+                                        setSumIva={setSumIva}
+                                        setSumShopping={setSumShopping}
                                         setSubTotalSum={setSubTotalSum}
                                         setSumTotalOrder={setSumTotalOrder}
                                     />
