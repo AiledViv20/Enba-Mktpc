@@ -5,13 +5,15 @@ import {
     Flex,
     Image,
     Text,
-    IconButton
+    IconButton,
+    Input
 } from "@chakra-ui/react";
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
+import {DeleteIcon} from '@chakra-ui/icons';
 
-const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder }) => {
+const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder, idx }) => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                 setKits({kits: filterProductsShopping })
             );
         } else {
-            let filterDataNotModificate = kitsStore.filter(item => item.sku_kit !== product.sku_kit);
+            /*let filterDataNotModificate = kitsStore.filter(item => item.sku_kit !== product.sku_kit);
             let filterModificate = kitsStore.filter(item => item.sku_kit === product.sku_kit);
             filterModificate = filterModificate[0];
             let newListFilter = filterDataNotModificate;
@@ -47,7 +49,31 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                 ...newListFilter,
                 newModificate
             ];
-            setNewArray(newListFilter);
+            setNewArray(newListFilter);*/
+            let products_ = [...kitsStore]
+            let filterModificate = {...products_[idx]};
+            filterModificate['total_kits'] = values.num;
+            filterModificate['sum_total_kit'] = values.num * (product?.sub_sum_total_kit ? product?.sub_sum_total_kit : 0);
+            let items = [...filterModificate?.items];
+            let price = 0;
+            items?.map((item, idx) => {
+                const item_ = {...item}
+                if(item_){
+                    item_['quantity'] = values.num;
+                    item_['total_price'] = values.num * item?.unit_price;
+                    price += item_?.unit_price
+                }
+                items[idx] = item_;
+            })
+            filterModificate['items'] = items;
+            filterModificate['unit_price_kit'] = price;
+            filterModificate['sub_sum_total_kit'] = price;
+            filterModificate['sum_total_kit'] = values.num * price;
+            products_[idx] = filterModificate;
+            setNewArray(products_);
+            dispatch(
+                setKits({kits: products_ })
+            );
         }
     }, [values]);
 
@@ -75,7 +101,7 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
             }
             if (newArray.length > 0) {
                 newArray.forEach((elementK) => {
-                    sumK = elementK.sub_sum_total_kit + sumK;
+                    sumK = elementK.sum_total_kit + sumK;
                 });
             }
             sums = sumP + sumK;
@@ -108,8 +134,11 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                     </Flex>
                 </Flex>
                 <Flex w={"30%"} flexDirection={"column"} h={"100%"}>
-                    <Flex justifyContent={"center"} mb={2}>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.sum_total_kit)}</Text>
+                    <Flex justifyContent={"center"} mb={2} alignSelf={'center'}>
+                        <Flex gap={6}>
+                            <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.sum_total_kit? product.sum_total_kit : 0)}</Text>
+                            <DeleteIcon onClick={() => changeNumProducts(0)} color='red' cursor={"pointer"} _hover={{color: 'red.500'}}/>
+                        </Flex>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
                         <IconButton
@@ -119,8 +148,23 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                             onClick={() => changeNumProducts(values.num - 1)}
                             color={"#383838"}
                             fontSize={"12px"}
+                            mb={2}
                             icon={<MinusIcon />} />
-                        <Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>
+                        {/*<Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>*/}
+                        <Input 
+                            ml={2} 
+                            mr={2}
+                            color={"#828282"} 
+                            fontSize={"16px"} 
+                            fontWeight={400}
+                            value={values.num}
+                            type='number'
+                            maxW={'50px'}
+                            min={0}
+                            onChange={(e)=>{
+                                e.target.value !== "" && changeNumProducts(Number(e.target.value))
+                            }}
+                        />
                         <IconButton
                             w={"10px"} h={"28px"}
                             bg='#31508C'
@@ -128,6 +172,7 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                             onClick={() => changeNumProducts(values.num + 1)}
                             color={"#FFF"}
                             fontSize={"12px"}
+                            mb={2}
                             _hover={{
                                 bg: '#24437E'
                             }}

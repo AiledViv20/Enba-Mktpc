@@ -74,7 +74,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
 
     const validateData = () => {
         if (itemSelected.stock !== "0") {
-            if (selectColor && values.num !== 0) {
+            if (selectColor && values.num !== 0 && values.num <= itemSelected.stock) {
                 return false;
             }
         }

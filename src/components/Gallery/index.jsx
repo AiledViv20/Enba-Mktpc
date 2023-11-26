@@ -105,7 +105,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
     return (
         <Modal isOpen={isOpen} onClose={onClose} size={isGreaterThanMd ? '2xl' : 'xs'}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent position={{base: 'fixed', md: 'fixed'}}>
                 <ModalHeader></ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

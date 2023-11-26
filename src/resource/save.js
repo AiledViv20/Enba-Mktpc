@@ -19,10 +19,10 @@ export const categoriesList =  [
                         category: "VIDRIO"
                     },
                     {
-                        category: "METÁLICOS"
+                        category: "CILINDROS METÁLICOS"
                     },
                     {
-                        category: "PLÁSTICOS"
+                        category: "CILINDROS PLÁSTICOS"
                     }
                 ],
                 master_category: "CILINDROS"
@@ -84,11 +84,6 @@ export const categoriesList =  [
                 master_category: "ACCESORIOS DE COCINA"
             },
             {
-                categories: [
-                    {
-                        category: "BAR"
-                    }
-                ],
                 master_category: "BAR"
             },
             {
@@ -182,13 +177,13 @@ export const categoriesList =  [
             {
                 categories: [
                     {
-                        category: "FUNCIONES"
+                        category: "BOLÍGRAFOS FUNCIONES"
                     },
                     {
-                        category: "METÁLICOS"
+                        category: "BOLÍGRAFOS METÁLICOS"
                     },
                     {
-                        category: "PLÁSTICO"
+                        category: "BOLÍGRAFOS PLÁSTICO"
                     }
                 ],
                 master_category: "ESCRITURA"

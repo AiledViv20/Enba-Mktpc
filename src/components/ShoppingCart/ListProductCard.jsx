@@ -12,6 +12,7 @@ const ListProductCard = ({ data, setPriceIva, setPriceSend, setSubTotalSum, setS
                 return (
                     <ProductCardSp 
                         key={idx} 
+                        idx={idx}
                         product={item} 
                         setPriceIva={setPriceIva}
                         setPriceSend={setPriceSend}

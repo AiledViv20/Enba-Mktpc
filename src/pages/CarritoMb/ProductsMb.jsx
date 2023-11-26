@@ -5,11 +5,13 @@ import {
     Flex,
     Text,
     Image,
-    IconButton
+    IconButton,
+    Input
 } from '@chakra-ui/react';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import { capitalizeFirstLetter, formatterValue } from '../../resource/validate';
+import { DeleteIcon } from '@chakra-ui/icons';
 
 const ProductsMb = ({ product, setSumIva, setSumShopping, setSubTotalSum, setSumTotalOrder }) => {
     const productsStore = useSelector(selectProducts);
@@ -110,10 +112,11 @@ const ProductsMb = ({ product, setSumIva, setSumShopping, setSubTotalSum, setSum
                         <Text color={"#212121"} fontSize={"xs"}>Num: {product ? product.quantity : 0}</Text>
                     </Flex>
                     <Flex w={"70%"} flexDirection={"column"} justifyContent={"end"} alignItems={"end"}>
-                        <Flex>
+                        <Flex gap={6} alignSelf={"auto"} placeItems={'baseline'}>
                             <Text pt={3} color={"#212121"} fontWeight={500} fontSize={"md"}>{formatterValue(product ? product.total_price : 0)}</Text>
+                            <DeleteIcon onClick={() => changeNumProducts(0)} color='red' cursor={"pointer"} _hover={{color: 'red.500'}}/>
                         </Flex>
-                        <Flex pt={3}>
+                        <Flex pt={3} alignItems={'center'}>
                             <IconButton
                                 w={"10px"} h={"28px"}
                                 bg={"#D0D0D2"}
@@ -122,7 +125,22 @@ const ProductsMb = ({ product, setSumIva, setSumShopping, setSubTotalSum, setSum
                                 color={"#383838"}
                                 fontSize={"12px"}
                                 icon={<MinusIcon />} />
-                            <Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>
+                            
+                            {/*<Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>*/}
+                            <Input 
+                                ml={2} 
+                                mr={2}
+                                color={"#828282"} 
+                                fontSize={"16px"} 
+                                fontWeight={400}
+                                value={values.num}
+                                type='number'
+                                min={0}
+                                maxW={'50px'}
+                                onChange={(e)=>{
+                                    e.target.value !== "" && changeNumProducts(Number(e.target.value))
+                                }}
+                            />
                             <IconButton
                                 w={"10px"} h={"28px"}
                                 bg='#31508C'

@@ -5,13 +5,15 @@ import {
     Flex,
     Image,
     Text,
-    IconButton
+    IconButton,
+    Input
 } from "@chakra-ui/react";
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 import { formatterValue, capitalizeFirstLetter } from '../../resource/validate';
+import {DeleteIcon} from '@chakra-ui/icons';
 
-const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder }) => {
+const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumTotalOrder, idx }) => {
     const productsStore = useSelector(selectProducts);
     const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
@@ -34,7 +36,7 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                 setProducts({products: filterProductsShopping })
             );
         } else {
-            let filterDataNotModificate = productsStore.filter(item => item.sku !== product.sku);
+            /*let filterDataNotModificate = productsStore.filter(item => item.sku !== product.sku);
             let filterModificate = productsStore.filter(item => item.sku === product.sku);
             filterModificate = filterModificate[0];
             let newListFilter = filterDataNotModificate;
@@ -49,7 +51,19 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                 ...newListFilter,
                 newModificate
             ];
-            setNewArray(newListFilter);
+            setNewArray(newListFilter);*/
+            let products_ = [...productsStore]
+            let filterModificate = {...products_[idx]};
+            let sumPrint = values.num * filterModificate?.printing?.price;
+            let sumProduct = values.num * filterModificate.unit_price;
+            filterModificate['quantity'] = values.num;
+            filterModificate['total_price'] = sumProduct + sumPrint;
+            products_[idx] = filterModificate;
+            console.log(products_);
+            setNewArray(products_);
+            dispatch(
+                setProducts({products: products_ })
+            );
         }
     }, [values]);
 
@@ -113,25 +127,43 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                     </Flex>
                 </Flex>
                 <Flex w={"30%"} flexDirection={"column"} h={"100%"}>
-                    <Flex>
-                        <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product ? product.total_price : 0)}</Text>
+                    <Flex alignSelf={'center'}>
+                        <Flex gap={6}>
+                            <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product ? product.total_price : 0)}</Text>
+                            <DeleteIcon onClick={() => changeNumProducts(0)} color='red' cursor={"pointer"} _hover={{color: 'red.500'}}/>
+                        </Flex>
                     </Flex>
                     <Flex alignItems={"end"} h={"100%"} justifyContent={"center"}>
                         <IconButton
                             w={"10px"} h={"28px"}
                             bg={"#D0D0D2"}
+                            mb={2} 
                             onClick={() => changeNumProducts(values.num - 1)}
                             boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                             color={"#383838"}
                             fontSize={"12px"}
                             icon={<MinusIcon />} />
-                        <Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>
+                        {/*<Text ml={2} mr={2} mb={2} color={"#828282"} fontSize={"16px"} fontWeight={400}>{values.num}</Text>*/}
+                        <Input 
+                            ml={2} 
+                            mr={2}
+                            color={"#828282"} 
+                            fontSize={"16px"} 
+                            fontWeight={400}
+                            value={values.num}
+                            type='number'
+                            min={0}
+                            onChange={(e)=>{
+                                e.target.value !== "" && changeNumProducts(Number(e.target.value))
+                            }}
+                        />
                         <IconButton
                             w={"10px"} h={"28px"}
                             bg='#31508C'
                             onClick={() => changeNumProducts(values.num + 1)}
                             boxShadow={"rgb(221, 221, 221) 0px 4px 8px 0px"}
                             color={"#FFF"}
+                            mb={2} 
                             fontSize={"12px"}
                             _hover={{
                                 bg: '#24437E'

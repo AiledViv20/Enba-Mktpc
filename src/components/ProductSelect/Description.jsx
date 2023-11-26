@@ -72,7 +72,7 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
 
     const validateData = () => {
         if (itemSelected.stock !== "0") {
-            if (selectColor && values.num !== 0) {
+            if (selectColor && values.num !== 0 && values.num <= itemSelected.stock) {
                 return false;
             }
         }
@@ -175,7 +175,9 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
                     <Input 
                         name='num' type='number' m={"0px 1rem"}
                         onChange={handleChange} value={values.num} fontWeight={500} fontSize={"16px"} 
-                        width={"80px"} height={"40px"} />
+                        width={"80px"} height={"40px"} 
+                        max={itemSelected.stock}
+                        />
                     <IconButton
                         w={"37px"} h={"37px"}
                         bg='#31508C'
