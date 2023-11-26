@@ -326,6 +326,7 @@ const QuoteProductDkts = () => {
                 calculateOrder = {
                     discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     items: itemsCalculate,
+                    kits: [],
                     printing: productsQuote[0].printing
                 }
             }
@@ -436,7 +437,7 @@ const QuoteProductDkts = () => {
     }
 
     const validateMinShop = () => {
-        if (sumTotalOrder < 1500) {
+        if (sumTotalOrder < 10) {
             return true;
         } 
         return false;

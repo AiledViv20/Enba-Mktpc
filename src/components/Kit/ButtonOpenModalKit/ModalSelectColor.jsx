@@ -47,13 +47,21 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
         })
     }
 
+    const filterCodeSelectColor = (itemKit, color) => {
+        let codeFilterData = "";
+        let filterData = showKitIncludes[itemKit].items.filter(itemx => itemx.color === color);
+        if (filterData.length > 0) {
+            codeFilterData = filterData[0].code
+        }
+        return codeFilterData;
+    }
+
     const filterSkuSelectColor = (itemKit, color) => {
         let skuFilterData = "";
         let filterData = showKitIncludes[itemKit].items.filter(itemx => itemx.color === color);
         if (filterData.length > 0) {
             skuFilterData = filterData[0].sku
         }
-        console.log(filterData)
         return skuFilterData;
     }
 
@@ -64,11 +72,15 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
             return {
                 ...item,
                 color: listColors[idx],
-                sku: filterSkuSelectColor(idx, listColors[idx])
+                sku: filterSkuSelectColor(idx, listColors[idx]),
+                code_item: filterCodeSelectColor(idx, listColors[idx]),
+                code: filterCodeSelectColor(idx, listColors[idx])
             }
         })
         if (selectsOptionsColorKit.length > 0) {
+            console.log(selectsOptionsColorKit)
             setShowKitIncludes(selectsOptionsColorKit);
+            
             setTimeout(() => {
                 setLoading(false);
                 addKitShoppingCart();

@@ -19,7 +19,6 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
     const kitsStore = useSelector(selectKits);
     const dispatch = useDispatch();
 
-    const [priceDefault, setPriceDefault] = useState(0);
     const [values, setValues] = useState({
         num: 0
     });
@@ -51,7 +50,6 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
         })
         let discountKit = sumTotalKitFinal * 0.05;
         sumTotalKitFinal = sumTotalKitFinal  - discountKit;
-        setPriceDefault(sumTotalKitFinal.toFixed(2));
         let sumTotal = price * values.num;
         const kitAdd = {
             discount_code: "4UAEPO55L",
@@ -59,7 +57,7 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
             sku_kit: kit?.sku,
             code_kit: kit?.code,
             name_kit: kit?.name,
-            sub_sum_total_kit: priceDefault,
+            sub_sum_total_kit: sumTotalKitFinal.toFixed(2),
             sum_total_kit: sumTotal,
             total_kits: values.num,
             items: showKitIncludes

@@ -78,7 +78,7 @@ const CarritoMb = ({ props }) => {
     }, [products, kits]);
 
     const validateMinShop = () => {
-        if (sumTotalOrder < 1500) {
+        if (sumTotalOrder < 10) {
             return true;
         } 
         return false;
