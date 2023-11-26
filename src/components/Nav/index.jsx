@@ -36,6 +36,7 @@ export default function Nav() {
   const { isOpen, onToggle } = useDisclosure();
   const { breakpoints } = useTheme();
   const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+  const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
   
   return (
     <Box>
@@ -49,7 +50,7 @@ export default function Nav() {
         align={'center'}>
         <img style={{ zIndex: 1 }} onClick={() => window.location.href = "/"} src={logo} width='100px' height='56px' alt="logo" />
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'center' }}>
-          <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'flex' }}>
+          <Flex zIndex={1} display={{ base: 'none', md: 'none', lg: 'none', xl: 'flex' }}>
             <DesktopNav />
           </Flex>
         </Flex>
@@ -60,7 +61,7 @@ export default function Nav() {
           direction={'row'}>
           <ButtonShoppingCart />
           <Button
-            display={isGreaterThanMd ? "flex" : "none"}
+            display={isGreaterThanXL ? "flex" : "none"}
             zIndex={1}
             width={"104px"}
             height={"37px"}
@@ -83,7 +84,7 @@ export default function Nav() {
         <Flex
           flex={{ base: 0.5, md: 'auto' }}
           justifyContent={"end"}
-          display={{ base: 'flex', lg: 'none' }}>
+          display={{ base: 'flex', xl: 'none' }}>
           <IconButton
             onClick={onToggle}
             zIndex={1}
@@ -196,7 +197,7 @@ const MobileNav = () => {
     <Stack
       bg={useColorModeValue('white', 'gray.800')}
       p={4}
-      display={{ lg: 'none' }}>
+      display={{ xl: 'none' }}>
       {NAV_ITEMS.map((navItem) => (
         <MobileNavItem key={navItem.label} {...navItem} />
       ))}

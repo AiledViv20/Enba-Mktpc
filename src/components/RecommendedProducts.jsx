@@ -73,17 +73,25 @@ const CardsRenderer = (products, status) => {
 export const RecommendedProducts = ({ titleSection, data, props }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+    const [isGreaterThanLg] = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+    const [isGreaterThanXL] = useMediaQuery(`(min-width: ${breakpoints.xl})`);
     const [page, setPage] = useState(0);
     const [products, setProducts] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
 
     useEffect(() => {
         if (data) {
-            if (isGreaterThanMd) {
+            if (isGreaterThanXL) {
                 setProducts(data.slice(page * 4, (page + 1) * 4));
                 setStatus('loaded');
+            } else if (isGreaterThanLg) {
+                setProducts(data.slice(page * 3, (page + 1) * 3));
+                setStatus('loaded');
+            } else if (isGreaterThanMd) {
+                setProducts(data.slice(page * 2, (page + 1) * 2));
+                setStatus('loaded');
             } else {
-                setProducts(data.slice(page * 1, (page + 1) * 4));
+                setProducts(data.slice(page * 1, (page + 1) * 1));
                 setStatus('loaded');
             }
         }
@@ -91,10 +99,16 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
 
     useEffect(() => {
         if(data){
-            if (isGreaterThanMd) {
+            if (isGreaterThanXL) {
                 setProducts(data.slice(page * 4, (page + 1) * 4)); 
+            }
+            else if (isGreaterThanLg) {
+                setProducts(data.slice(page * 3, (page + 1) * 3)); 
+            }
+            else if (isGreaterThanMd) {
+                setProducts(data.slice(page * 2, (page + 1) * 2)); 
             } else {
-                setProducts(data.slice(page * 1, (page + 1) * 4)); 
+                setProducts(data.slice(page * 1, (page + 1) * 1)); 
             }
         }
     },[page])
@@ -120,9 +134,9 @@ export const RecommendedProducts = ({ titleSection, data, props }) => {
                         {titleSection}
                     </Text>
                 </Flex>
-                <Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} color={"accent.500"}>
+                {/*<Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} color={"accent.500"}>
                     <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
-                </Flex>
+                </Flex>*/}
                 <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={"absolute"}>
                     <IconButton
                         icon={<ChevronLeftIcon color={"#888888"} />}
