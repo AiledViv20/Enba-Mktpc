@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectKits, setKits } from '../../../hooks/slices/counterSlice';
 import {
     Modal,
     ModalOverlay,
@@ -18,15 +20,19 @@ import { capitalizeFirstLetter } from '../../../resource/validate';
 
 import { toast } from 'react-toastify';
 
-const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes, addKitShoppingCart }) => {
+const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setShowKitIncludes, values }) => {
     const { breakpoints } = useTheme();
+
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
+    const kitsStore = useSelector(selectKits);
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState(false);
     const [colors1, setColors1] = useState([]);
     const [colors2, setColors2] = useState([]);
     const [colors3, setColors3] = useState([]);
     const [colors4, setColors4] = useState([]);
-    const [values, setValues] = useState({
+    const [valuesTypeColor, setValues] = useState({
         colorp1: "",
         colorp2: "",
         colorp3: "",
@@ -34,7 +40,7 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
     });
 
     const validateValues = () => {
-        if (values.colorp1 !== "" && values.colorp2 !== "" && values.colorp3 !== "" && values.colorp4 !== "") {
+        if (valuesTypeColor.colorp1 !== "" && valuesTypeColor.colorp2 !== "" && valuesTypeColor.colorp3 !== "" && valuesTypeColor.colorp4 !== "") {
             return false;
         }
         return true;
@@ -45,6 +51,48 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
             ...values,
             [e.target.name]: e.target.value
         })
+    }
+
+    const addKitShoppingCart = (newListOptionsColorKit) => {
+        setLoading(true);
+        if (newListOptionsColorKit.length > 0) {
+            console.log(newListOptionsColorKit);
+            let sumTotalKitFinal = 0;
+            newListOptionsColorKit.forEach((item) => {
+                sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
+            })
+            let discountKit = sumTotalKitFinal * 0.05;
+            sumTotalKitFinal = sumTotalKitFinal  - discountKit;
+            let sumTotal = price * values.num;
+            const kitAdd = {
+                discount_code: "",
+                is_kit: true,
+                sku_kit: kit?.sku,
+                code_kit: kit?.code,
+                name_kit: kit?.name,
+                sub_sum_total_kit: sumTotalKitFinal.toFixed(2),
+                sum_total_kit: sumTotal,
+                total_kits: values.num,
+                items: newListOptionsColorKit
+            }
+            const counterKits = [...kitsStore, 
+                kitAdd
+            ];
+            /* dispatch(
+                setKits({kits: counterKits})
+            ); */
+            toast.success("¡Se han agregado exitosamente los productos al kit!", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            setTimeout(() => {
+                setLoading(false);
+                onClose();
+            }, 2000);
+        } else {
+            toast.error("¡Oops! Algo salió mal, vuelve a interntarlo nuevamente", {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+        }
     }
 
     const filterCodeSelectColor = (itemKit, color) => {
@@ -62,12 +110,12 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
         if (filterData.length > 0) {
             skuFilterData = filterData[0].sku
         }
+        console.log(filterData);
         return skuFilterData;
     }
 
     const filterObjShoppingCart = () => {
-        setLoading(true);
-        const listColors = [values.colorp1, values.colorp2, values.colorp3, values.colorp4];
+        const listColors = [valuesTypeColor.colorp1, valuesTypeColor.colorp2, valuesTypeColor.colorp3, valuesTypeColor.colorp4];
         const selectsOptionsColorKit = showKitIncludes.map((item, idx) => {
             return {
                 ...item,
@@ -78,19 +126,10 @@ const ModalSelectColor = ({ isOpen, onClose, showKitIncludes, setShowKitIncludes
             }
         })
         if (selectsOptionsColorKit.length > 0) {
-            console.log(selectsOptionsColorKit)
-            setShowKitIncludes(selectsOptionsColorKit);
-            
-            setTimeout(() => {
-                setLoading(false);
-                addKitShoppingCart();
-                onClose();
-            }, 1000);
-        } else {
-            toast.error("¡Oops! Algo salió mal, vuelve a interntarlo nuevamente", {
-                position: toast.POSITION.BOTTOM_RIGHT
-            });
-        }
+            console.log(selectsOptionsColorKit);
+            //setShowKitIncludes(selectsOptionsColorKit);
+            //addKitShoppingCart(selectsOptionsColorKit);
+        } 
     }
 
     const renderOptionColors = (product) => {

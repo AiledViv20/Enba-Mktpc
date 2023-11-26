@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectKits, setKits } from '../../hooks/slices/counterSlice';
+import React, { useState } from 'react';
 import { 
     Flex,
     Text,
@@ -11,15 +9,11 @@ import { formatterValue } from '../../resource/validate';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
 
-import { toast } from 'react-toastify';
-
 import { useParams } from 'react-router-dom';
 import ButtonOpenModalKit from './ButtonOpenModalKit';
 
 const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
     const params_url = useParams();
-    const kitsStore = useSelector(selectKits);
-    const dispatch = useDispatch();
 
     const [values, setValues] = useState({
         num: 0
@@ -45,36 +39,6 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
         return true;
     }
 
-    const addKitShoppingCart = () => {
-        let sumTotalKitFinal = 0;
-        showKitIncludes.forEach((item) => {
-            sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
-        })
-        let discountKit = sumTotalKitFinal * 0.05;
-        sumTotalKitFinal = sumTotalKitFinal  - discountKit;
-        let sumTotal = price * values.num;
-        const kitAdd = {
-            discount_code: "4UAEPO55L",
-            is_kit: true,
-            sku_kit: kit?.sku,
-            code_kit: kit?.code,
-            name_kit: kit?.name,
-            sub_sum_total_kit: sumTotalKitFinal.toFixed(2),
-            sum_total_kit: sumTotal,
-            total_kits: values.num,
-            items: showKitIncludes
-        }
-        const counterKits = [...kitsStore, 
-            kitAdd
-        ];
-        dispatch(
-            setKits({kits: counterKits})
-        );
-        toast.success("¡Se han agregado exitosamente los productos al kit!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
-    }
-
     return ( 
         <Flex flexDirection={"column"}>
             <Flex>
@@ -95,10 +59,12 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
             <Flex mt={10}>
                 <Flex>
                     <ButtonOpenModalKit 
+                        kit={kit}
+                        price={price}
                         validateData={validateData}
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes}
-                        addKitShoppingCart={addKitShoppingCart} />
+                        values={values} />
                 </Flex>
                 <Flex ml={10} alignItems={"center"}>
                     <IconButton
