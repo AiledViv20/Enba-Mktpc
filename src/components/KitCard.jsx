@@ -43,6 +43,8 @@ const KitCard = ({ product }) => {
         min_prices.map((e) => {
             total += parseFloat(e)
         })
+        let discountAmount = total * 0.05;
+        total = total - discountAmount;
         setPrice(total.toFixed(2));
         
     },[product])

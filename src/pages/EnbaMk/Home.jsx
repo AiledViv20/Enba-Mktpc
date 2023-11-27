@@ -18,19 +18,15 @@ import img2 from '../../assets/images/fondo/bg2.png';
 import img1Mb from '../../assets/images/fondo/bg1-mb.png';
 import img2Mb from '../../assets/images/fondo/bg2-mb.png';
 
-import { useGetFavoritesQuery, useGetFavoritesMMutation } from '../../hooks/enbaapi';
+import { useGetFavoritesMMutation } from '../../hooks/enbaapi';
 
 const Home = () => {
   const { breakpoints } = useTheme();
   const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const [productsData, setProductsData] = useState(null);
-  //const { data: products, isLoading: isProductsLoading, error: productsError } = useGetFavoritesQuery();
   const [getFavorites] = useGetFavoritesMMutation();
 
   useEffect(() => {
-      /*if(products){
-          setProductsData(products);
-      }*/
       getFavorites()
       .unwrap()
       .then((data) => {

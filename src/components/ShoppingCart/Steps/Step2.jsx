@@ -125,9 +125,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                             <Elements stripe={stripePromise} options={options}>
                                 <Flex flexDirection={"column"}>
                                     <StripeForm 
-                                        value={value}
                                         sumTotalOrder={sumTotalOrder}
-                                        checkPay={checkPay}
                                         setCheckPay={setCheckPay} />
                                 </Flex>
                             </Elements>

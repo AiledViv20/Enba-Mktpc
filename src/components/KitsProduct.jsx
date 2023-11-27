@@ -7,8 +7,7 @@ import {
     Stack,
     Skeleton,
     useTheme,
-    useMediaQuery,
-    Link
+    useMediaQuery
 } from "@chakra-ui/react";
 import KitCard from './KitCard';
 
@@ -182,9 +181,6 @@ export const KitsProduct = ({ titleSection, props }) => {
                         {titleSection}
                     </Text>
                 </Flex>
-                {/*<Flex pl={isGreaterThanMd ? 0 : 2} w={isGreaterThanMd ? "50%" : "100%"} justifyContent={isGreaterThanMd ? "end" : "initial"} zIndex={1} color={"accent.500"}>
-                    <Link fontSize={isGreaterThanMd ? "18px" : "14px"} textDecoration={"revert"} href='/categoria/Todas'>Ver más</Link>
-                </Flex>*/}
                 <Flex display={isGreaterThanMd ? "none" : "flex"} direction="row" alignItems="center" position={isGreaterThanMd ? "relative" : "absolute"}>
                     <IconButton
                         icon={<ChevronLeftIcon color={"#888888"} />}

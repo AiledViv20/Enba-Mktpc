@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { 
     Flex,
-    Button
+    Button,
+    Spinner
 } from '@chakra-ui/react';
 import {
     CardElement,
@@ -14,14 +15,15 @@ import { api } from '../../service';
 import { toast } from 'react-toastify';
 
 const API_SECRET_STRIPE = process.env.REACT_APP_STRIPE_SECRET_KEY;
-const StripeForm = ({ value, sumTotalOrder, checkPay, setCheckPay }) => {
+const StripeForm = ({ sumTotalOrder, setCheckPay }) => {
     const stripe = useStripe();
     const elements = useElements();
+    const [loading, setLoading] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState(null);
 
     const handleSubmit = async () => {
-      
+        setLoading(true);
         if (!stripe || !elements) {
           return;
         }
@@ -50,6 +52,7 @@ const StripeForm = ({ value, sumTotalOrder, checkPay, setCheckPay }) => {
                 if (status === 200 || status === 201) {
                     window.open('/pago-completado', '_blank');
                     setCheckPay(true);
+                    setLoading(false);
                     toast.success("¡Tu pago se ha realizado correctamente!", {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });
@@ -78,8 +81,12 @@ const StripeForm = ({ value, sumTotalOrder, checkPay, setCheckPay }) => {
             }}/>
             <Flex mt={3} justifyContent={"end"}>
                 <Button width={"208px"} _hover={{ bg: "#063D5F"}} fontWeight={600} fontSize={"14px"}
-                    type="submit" disabled={!stripe || !elements}>
-                    Pagar
+                    type="submit" isDisabled={loading}>
+                    {loading ? 
+                        <Spinner />
+                    : 
+                        <p>Pagar</p>
+                    }
                 </Button>
                 {errorMessage && <div>{errorMessage}</div>}
             </Flex>
