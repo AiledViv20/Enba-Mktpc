@@ -245,7 +245,8 @@ const QuoteProductDkts = () => {
                         unit_price: element.unit_price,
                         total_price: element.total_price,
                         quantity: element.quantity,
-                        image: element.image
+                        image: element.image,
+                        printing: element.printing
                     }
                 ]
             })
@@ -265,7 +266,8 @@ const QuoteProductDkts = () => {
                         unit_price: xsKit.unit_price,
                         total_price: xsKit.total_price,
                         quantity: 1,
-                        image: xsKit.image
+                        image: xsKit.image,
+                        printing: xsKit.printing
                     }
                 ]
             })
@@ -282,10 +284,6 @@ const QuoteProductDkts = () => {
                         sku_kit: element.sku_kit,
                         code_kit: element.code_kit,
                         total_kits: element.total_kits,
-                        printing:{
-                            type: "",
-                            price: 0
-                        },
                         items: filterItemKit(element)
                     }
                 ]
@@ -319,15 +317,13 @@ const QuoteProductDkts = () => {
                 calculateOrder = {
                     discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     items: itemsCalculate,
-                    kits: itemsKitsCalculate,
-                    printing: productsQuote[0].printing
+                    kits: itemsKitsCalculate
                 }
             } else {
                 calculateOrder = {
                     discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     items: itemsCalculate,
-                    kits: [],
-                    printing: productsQuote[0].printing
+                    kits: []
                 }
             }
             postCalculateOrder(calculateOrder).then(res => {
@@ -393,7 +389,6 @@ const QuoteProductDkts = () => {
         formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : null);
         formData.append("discount_code", createOrder.discount_code !== "" ? createOrder.discount_code : null);
         formData.append("kits", JSON.stringify(itemsKitsCalculate));
-        formData.append("printing", JSON.stringify(productsQuote[0].printing));
         formData.append("items", JSON.stringify(itemsCalculate));
         postCreateOrder(formData).then(res => {
             if (res.data) {

@@ -156,7 +156,8 @@ const CharacteristicsMb = ({ data, colorsProduct, previewImage }) => {
                 category: data.category,
                 color: selectedColor.toUpperCase(),
                 image: previewImage,
-                productsPreview: filterItem
+                productsPreview: filterItem,
+                printing: { type: "", price:  0 }
             }
             dispatch(
                 setProducts({products: [

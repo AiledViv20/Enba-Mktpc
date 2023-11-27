@@ -120,7 +120,8 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
                 color: listColors[idx],
                 sku: filterSkuSelectColor(idx, listColors[idx]),
                 code_item: filterCodeSelectColor(idx, listColors[idx]),
-                code: filterCodeSelectColor(idx, listColors[idx])
+                code: filterCodeSelectColor(idx, listColors[idx]),
+                printing: { type: "", price:  0 }
             }
         })
         if (selectsOptionsColorKit.length > 0) {

@@ -96,7 +96,7 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
                 color: selectColor.toUpperCase(),
                 image: previewImage,
                 productsPreview: filterItem,
-                printing: { type: "ninguno", price:  0 }
+                printing: { type: "", price:  0 }
             }
             dispatch(
                 setProducts({products: [

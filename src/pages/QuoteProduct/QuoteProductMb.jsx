@@ -235,7 +235,8 @@ const QuoteProductMb = () => {
                         unit_price: element.unit_price,
                         total_price: element.total_price,
                         quantity: element.quantity,
-                        image: element.image
+                        image: element.image,
+                        printing: element.printing
                     }
                 ]
             })
@@ -255,7 +256,8 @@ const QuoteProductMb = () => {
                         unit_price: xsKit.unit_price,
                         total_price: xsKit.total_price,
                         quantity: 1,
-                        image: xsKit.image
+                        image: xsKit.image,
+                        printing: xsKit.printing
                     }
                 ]
             })
