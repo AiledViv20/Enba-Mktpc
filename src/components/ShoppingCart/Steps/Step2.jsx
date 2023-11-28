@@ -134,7 +134,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
         if (value === "3") {
             sendRequestOxxo();
         } else {
-            //handleSubmitCreateOrder()
+            handleSubmitCreateOrder()
         }
     }
 
