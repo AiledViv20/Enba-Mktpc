@@ -46,7 +46,7 @@ app.post('/api-stripe/crear-sesion-oxxo', async (req, res) => {
                 price_data: {
                     currency: 'mxn',
                     product_data: {
-                        name: 'Porta notas azalai', // Reemplaza con el nombre de tu producto
+                        name: 'Productos Enba Marketplace',
                     },
                     unit_amount: amount_total,
                 },
@@ -57,6 +57,7 @@ app.post('/api-stripe/crear-sesion-oxxo', async (req, res) => {
             cancel_url: `https://enba.mx/cotizar`,
         });
         // Responde con el estado del pago
+        console.log(session)
         res.json({ success: true, checkout_url: session.url });
     } catch (error) {
         console.error(error);

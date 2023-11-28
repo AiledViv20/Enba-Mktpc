@@ -116,9 +116,13 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
             });
             const { data, status } = response;
             if (status === 200 || status === 201) {
+                window.open(data.checkout_url, "_blank");
                 toast.success("¡Tu pago se ha solicitado correctamente!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
+                setTimeout(() => {
+                    handleSubmitCreateOrder();
+                }, 1000);
             } else {
                 toast.error("¡Oops! Algo ha salido mal al solicitar el pago", {
                     position: toast.POSITION.BOTTOM_RIGHT
