@@ -117,7 +117,7 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
                     sku: item.items.length > 0 ? item.items[0].sku : "",
                     code_item: item.items.length > 0 ? item.items[0].code : "",
                     unit_price: parseFloat(item.items[0].wholesale_price),
-                    total_price: parseFloat(item.items[0].wholesale_price),
+                    total_price: parseFloat(item.total_price),
                     quantity: 1,
                     name: item.name,
                     category: item.category,

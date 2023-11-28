@@ -16,8 +16,6 @@ import { toast } from 'react-toastify';
 import ButtonOpenModalKit from '../ButtonOpenModalKit';
 
 const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
-    const kitsStore = useSelector(selectKits);
-    const dispatch = useDispatch();
 
     const [values, setValues] = useState({
         num: 0
@@ -41,36 +39,6 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
             return false;
         }
         return true;
-    }
-
-    const addKitShoppingCart = () => {
-        let sumTotalKitFinal = 0;
-        showKitIncludes.forEach((item) => {
-            sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
-        })
-        let discountKit = sumTotalKitFinal * 0.05;
-        sumTotalKitFinal = sumTotalKitFinal  - discountKit;
-        let sumTotal = price * values.num;
-        const kitAdd = {
-            discount_code: "4UAEPO55L",
-            is_kit: true,
-            sku_kit: kit?.sku,
-            code_kit: kit?.code,
-            name_kit: kit?.name,
-            sub_sum_total_kit: sumTotalKitFinal.toFixed(2),
-            sum_total_kit: sumTotal,
-            total_kits: values.num,
-            items: showKitIncludes
-        }
-        const counterKits = [...kitsStore, 
-            kitAdd
-        ];
-        dispatch(
-            setKits({kits: counterKits})
-        );
-        toast.success("¡Se han agregado exitosamente los productos al kit!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
     }
 
     return ( 
@@ -111,10 +79,11 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
                 </Flex>
                 <Flex justifyContent={"center"} mt={5}>
                     <ButtonOpenModalKit 
+                        kit={kit}
                         validateData={validateData}
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes}
-                        addKitShoppingCart={addKitShoppingCart} />
+                        values={values} />
                 </Flex>
             </Flex>
         </Flex>

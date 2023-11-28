@@ -20,7 +20,7 @@ import { capitalizeFirstLetter } from '../../../resource/validate';
 
 import { toast } from 'react-toastify';
 
-const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setShowKitIncludes, values }) => {
+const ModalSelectColor = ({ isOpen, onClose, kit, showKitIncludes, setShowKitIncludes, values }) => {
     const { breakpoints } = useTheme();
 
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -58,11 +58,9 @@ const ModalSelectColor = ({ isOpen, onClose, kit, price, showKitIncludes, setSho
         if (newListOptionsColorKit.length > 0) {
             let sumTotalKitFinal = 0;
             newListOptionsColorKit.forEach((item) => {
-                sumTotalKitFinal = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKitFinal
+                sumTotalKitFinal = item.total_price + sumTotalKitFinal
             })
-            let discountKit = sumTotalKitFinal * 0.05;
-            sumTotalKitFinal = sumTotalKitFinal  - discountKit;
-            let sumTotal = price * values.num;
+            let sumTotal = sumTotalKitFinal * values.num;
             const kitAdd = {
                 discount_code: "",
                 is_kit: true,

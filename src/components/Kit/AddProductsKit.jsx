@@ -3,15 +3,12 @@ import {
     Box,
     Flex,
     Text,
-    IconButton,
     Stack,
     Skeleton,
     useTheme,
     useMediaQuery
 } from "@chakra-ui/react";
 import AddKitCard from './AddKitCard';
-
-import { ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
 
 import logoGif from '../../assets/icons/logo.gif';
 

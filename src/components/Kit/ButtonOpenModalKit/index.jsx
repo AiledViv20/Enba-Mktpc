@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react';
 import ModalSelectColor from './ModalSelectColor';
 
-const ButtonOpenModalKit = ({ kit, price, validateData, showKitIncludes, setShowKitIncludes, values }) => {
+const ButtonOpenModalKit = ({ kit, validateData, showKitIncludes, setShowKitIncludes, values }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -26,7 +26,6 @@ const ButtonOpenModalKit = ({ kit, price, validateData, showKitIncludes, setShow
                     isOpen={isOpen} 
                     onClose={onClose}
                     kit={kit}
-                    price={price}
                     showKitIncludes={showKitIncludes}
                     setShowKitIncludes={setShowKitIncludes}
                     values={values} />

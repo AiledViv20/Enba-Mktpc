@@ -60,7 +60,6 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
                 <Flex>
                     <ButtonOpenModalKit 
                         kit={kit}
-                        price={price}
                         validateData={validateData}
                         showKitIncludes={showKitIncludes}
                         setShowKitIncludes={setShowKitIncludes}

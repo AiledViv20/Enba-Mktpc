@@ -18,7 +18,7 @@ const AddKitCard = ({ product, showKitIncludes, setShowKitIncludes }) => {
     const [price, setPrice] = useState(0);
 
     useEffect(() => {
-        let total = product.items[0]?.wholesale_price;
+        let total = product.total_price;
         total = parseFloat(total);
         setPrice(total.toFixed(2))
     },[product]);
@@ -38,7 +38,7 @@ const AddKitCard = ({ product, showKitIncludes, setShowKitIncludes }) => {
                 sku: product.items[0]?.sku,
                 code_item: product.items[0]?.code,
                 unit_price: parseFloat(product.items[0]?.wholesale_price),
-                total_price: parseFloat(product.items[0]?.wholesale_price),
+                total_price: parseFloat(product.total_price),
                 quantity: 1,
                 name: product.name,
                 category: product.category,

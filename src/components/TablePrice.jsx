@@ -25,11 +25,11 @@ const TablePrice = ({ pdt }) => {
                 <Tbody>
                     <Tr>
                         <Td border={"1px solid #D9D9D9"}>$0.00 - $15,000.00</Td>
-                        <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.wholesale_price)}</Td>
+                        <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.retail_price)}</Td>
                     </Tr>
                     <Tr>
                         <Td border={"1px solid #D9D9D9"}>$15,001.00 ó <span style={{ fontWeight: 700, fontSize: "20px" }}>+</span></Td>
-                        <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.retail_price)}</Td>
+                        <Td border={"1px solid #D9D9D9"}>{formatterValue(pdt.items[0]?.wholesale_price)}</Td>
                     </Tr>
                 </Tbody>    
             </Table>
