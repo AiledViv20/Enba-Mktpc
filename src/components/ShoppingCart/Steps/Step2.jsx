@@ -32,12 +32,16 @@ import {
 } from '@stripe/react-stripe-js';
 import StripeForm from '../StripeForm';
 
+import { api } from '../../../service';
+
 import { usePostDiscountCodeMutation } from '../../../hooks/enbaapi';
 import { toast } from 'react-toastify';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
+const API_SECRET_STRIPE = process.env.REACT_APP_STRIPE_SECRET_KEY;
+
+const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, setIsLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [codex, setCodex] = useState("");
@@ -98,6 +102,42 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
         }
     }
 
+    const sendRequestOxxo = async () => {
+        try {
+            let amountCents = sumTotalOrder * 100;
+            amountCents = parseInt(amountCents);
+            const response = await api({
+                method: "post",
+                url: "/api-stripe/crear-sesion-oxxo",
+                data: { amount_total: amountCents },
+                headers: {
+                    'Authorization': `Bearer ${API_SECRET_STRIPE}`
+                }
+            });
+            const { data, status } = response;
+            if (status === 200 || status === 201) {
+                toast.success("¡Tu pago se ha solicitado correctamente!", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            } else {
+                toast.error("¡Oops! Algo ha salido mal al solicitar el pago", {
+                    position: toast.POSITION.BOTTOM_RIGHT
+                });
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+        }
+    }
+
+    const sendRequestCreateOrder = () => {
+        setIsLoadingStep2(true);
+        if (value === "3") {
+            sendRequestOxxo();
+        } else {
+            //handleSubmitCreateOrder()
+        }
+    }
+
     return (
         <Flex mt={10} flexDirection={"column"} display={step2 ? "flex" : "none"}>
             <Text mb={10} fontSize={"16px"} fontWeight={700}>Seleccionar forma de pago</Text>
@@ -142,7 +182,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                             </Box>
                         </AccordionButton>
                     </AccordionItem>
-                    {/* <AccordionItem border={"transparent"} mb={5}>
+                    <AccordionItem border={"transparent"} mb={5}>
                         <AccordionButton width={isGreaterThanMd ? "661px" : "100%"} height={"66px"} border={"1px solid #D9D9D9"} borderRadius={"10px"}>
                             <Box as="span" flex='1' textAlign='left' fontSize={"16px"} fontWeight={400}>
                                 <Radio value='3' mr={3}>
@@ -161,7 +201,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                                 </Stack>
                             </RadioGroup>
                         </AccordionPanel>
-                    </AccordionItem> */}
+                    </AccordionItem>
                 </Accordion>
             </RadioGroup>
             <Flex mt={4} zIndex={1} flexDirection={isGreaterThanMd ? "row" : "column"}>
@@ -183,7 +223,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                 <Button 
                     _hover={{ bg: "#063D5F"}} fontWeight={600} 
                     fontSize={"14px"} w={"174px"}
-                    onClick={() => handleSubmitCreateOrder()}
+                    onClick={() => sendRequestCreateOrder()}
                     isLoading={isLoadingStep2}
                     isDisabled={validateStripeForm()}>Enviar</Button>
             </Flex>

@@ -368,8 +368,9 @@ const QuoteProductDkts = () => {
         }
     }
 
+
+
     const handleSubmitCreateOrder = () => {
-        setIsLoadingStep2(true);
         const formData = new FormData();
         formData.append("user", JSON.stringify({
             name: createOrder.name,
@@ -469,6 +470,7 @@ const QuoteProductDkts = () => {
                     payPerStore={payPerStore}
                     setPayPerStore={setPayPerStore}
                     isLoadingStep2={isLoadingStep2}
+                    setIsLoadingStep2={setIsLoadingStep2}
                     handleSubmitCreateOrder={handleSubmitCreateOrder}
                     validateSteps={validateSteps} />
                 <Step3 
