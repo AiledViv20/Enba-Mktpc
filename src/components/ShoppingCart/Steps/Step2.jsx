@@ -124,11 +124,13 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                     handleSubmitCreateOrder();
                 }, 1000);
             } else {
+                setIsLoadingStep2(false);
                 toast.error("¡Oops! Algo ha salido mal al solicitar el pago", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
             }
         } catch (error) {
+            setIsLoadingStep2(false);
             console.error('Error en la solicitud:', error);
         }
     }
@@ -186,7 +188,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                             </Box>
                         </AccordionButton>
                     </AccordionItem>
-                    <AccordionItem border={"transparent"} mb={5}>
+                    {/* <AccordionItem border={"transparent"} mb={5}>
                         <AccordionButton width={isGreaterThanMd ? "661px" : "100%"} height={"66px"} border={"1px solid #D9D9D9"} borderRadius={"10px"}>
                             <Box as="span" flex='1' textAlign='left' fontSize={"16px"} fontWeight={400}>
                                 <Radio value='3' mr={3}>
@@ -205,7 +207,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                                 </Stack>
                             </RadioGroup>
                         </AccordionPanel>
-                    </AccordionItem>
+                    </AccordionItem> */}
                 </Accordion>
             </RadioGroup>
             <Flex mt={4} zIndex={1} flexDirection={isGreaterThanMd ? "row" : "column"}>

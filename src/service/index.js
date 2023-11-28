@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const api = ({ data, method, url, responseType }) => {
     return axios({
-        baseURL: "http://localhost:3001/",
+        baseURL: "https://enba.mx/",
         data,
         method,
         url,
