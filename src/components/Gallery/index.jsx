@@ -111,7 +111,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
                 <ModalBody>
                     <Flex justifyContent={"center"} pt={5} pb={5} position={"relative"}>
                         <Flex
-                            display={isGreaterThanMd ? "flex" : "none"}
+                            //display={isGreaterThanMd ? "flex" : "none"}
                             justifyContent="flex-start"
                             alignItems="center"
                             position="absolute"
@@ -152,7 +152,7 @@ const Gallery = ({ isOpen, onClose, selectGallery }) => {
                             </Carousel>
                         </Flex>
                         <Flex
-                            display={isGreaterThanMd ? "flex" : "none"}
+                            //display={isGreaterThanMd ? "flex" : "none"}
                             justifyContent="flex-end"
                             alignItems="center"
                             position="absolute"

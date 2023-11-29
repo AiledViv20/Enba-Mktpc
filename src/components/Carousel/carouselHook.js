@@ -18,8 +18,8 @@ export const useCarousel = (length) => {
     onSwiping: (e) => swipingHandler(e, dispatch),
     onSwipedLeft: (e) => swipeHandler(e, dispatch, length, 1),
     onSwipedRight: (e) => swipeHandler(e, dispatch, length, -1),
-    trackMouse: true,
-    trackTouch: true
+    trackMouse: false,
+    trackTouch: false
   });
   
   useEffect(() => {
