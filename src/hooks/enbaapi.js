@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://localhost:4005/',
+        baseUrl: 'https://api.enba.mx/',
         // baseUrl: 'http://localhost:4005/',
     }),
     tagTypes: [
@@ -229,7 +229,7 @@ export const enbaApi = createApi({
         postStripeSendPayment: build.mutation({
           query: (body) => {
               return {
-                  url: `process-payment`,
+                  url: `pays/process-payment`,
                   method: 'POST',
                   body: body
               };
@@ -238,7 +238,7 @@ export const enbaApi = createApi({
         postStripeSendPaymentOxxo: build.mutation({
           query: (body) => {
               return {
-                  url: `process-payment-oxxo`,
+                  url: `pays/process-payment-oxxo`,
                   method: 'POST',
                   body: body
               };
