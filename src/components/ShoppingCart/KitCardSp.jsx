@@ -35,6 +35,8 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
             dispatch(
                 setKits({kits: filterProductsShopping })
             );
+            setNewArray(filterProductsShopping);
+            calculateCount();
         } else {
             let products_ = [...kitsStore]
             let filterModificate = {...products_[idx]};
@@ -74,6 +76,10 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
     }
 
     useEffect(() => {
+        calculateCount();
+    }, [newArray]);
+
+    const calculateCount = () => {
         if (newArray) {
             let sumP = 0;
             let sumK = 0;
@@ -104,9 +110,20 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                 dispatch(
                     setTotalAmount({totalAmount: sums + sumsIv + sumsSp})
                 );
+            }else{
+                setPriceIva(0);
+                setPriceSend(0);
+                setSubTotalSum(0);
+                setSumTotalOrder(0);
+                dispatch(
+                    setKits({kits: newArray })
+                );
+                dispatch(
+                    setTotalAmount({totalAmount: 0})
+                );
             }
         }
-    }, [newArray]);
+    }
 
     return ( 
         <Flex bg={"#FFF"} border={"1px solid #E2E2E2"} mb={3} padding={3} pl={5} pr={0} borderRadius={"8px"}>

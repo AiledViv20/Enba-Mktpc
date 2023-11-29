@@ -13,6 +13,7 @@ import { useGetProductQuery } from '../../hooks/enbaapi';
 import MiniatureMb from '../../components/ProductSelect/Mb/MiniatureMb';
 import DescriptionMb from '../../components/ProductSelect/Mb/DescriptionMb';
 import CharacteristicsMb from '../../components/ProductSelect/Mb/CharacteristicsMb';
+import imgDefault from '../../assets/images/productsT/none-product.png';
 
 const ProductMb = () => {
     const params_url = useParams();
@@ -39,7 +40,7 @@ const ProductMb = () => {
             if(data?.images?.vector_images[0])
                 images_.push(data?.images?.vector_images[0]);
             data.items.map((item)=>{
-                images_.push(...item.images.images_item)
+                images_.push(...item?.images?.images_item ? (Object.keys(item?.images?.images_item).length > 0 ? item?.images?.images_item : []) : [])
                 colors_.push({sku: item.sku, color: item.color})
             })
             setColors(colors_);
@@ -72,18 +73,25 @@ const ProductMb = () => {
         if (colors_ar.length > 0 && changeFirst) {
             const imgPreviewColor = colors_ar.slice(0, 1);
             const filterProductColors = product?.items.filter(item => item.color === imgPreviewColor[0].color);
-            const imgUrl = filterProductColors[0].images?.images_item[0];
+            const imgUrl = filterProductColors[0].images?.images_item[0] ;
             setImg(imgUrl);
             setChangeFirst(false);
         }
         setColorsProduct(colors_ar);
     },[colors]);
 
-    /* useEffect(() => {
-        if(images){
-            setImg(images[idx]);
+    useEffect(() => {
+        if (!img){
+            if(images?.length > 0){
+                setImg(images[0]);
+                setIdx(0);
+            }else{
+                setImg(imgDefault);
+                setIdx(0);
+            }
+            
         }
-    },[idx]) */
+    },[img])
 
     return (
         <>
