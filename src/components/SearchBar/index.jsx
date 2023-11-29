@@ -64,7 +64,12 @@ const SearchBar = () => {
         } else if (selectedCategory !== "Todas" && keySearch !== "") {
             searchKeyboard = `/${selectedCategory}/${keySearch}`;
         }
-        window.location.href = `/categoria${searchKeyboard}`;
+        if(searchKeyboard !== ""){
+            window.location.href = `/categoria${searchKeyboard}`;
+        }else{
+            window.location.href = "/categoria/Todas";
+        }
+            
     }
 
     return ( 
