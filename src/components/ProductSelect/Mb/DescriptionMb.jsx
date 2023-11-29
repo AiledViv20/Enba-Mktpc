@@ -10,7 +10,9 @@ import {
     Input,
     useDisclosure,
     Alert,
-    AlertIcon
+    AlertIcon,
+    Grid,
+    GridItem
 } from '@chakra-ui/react';
 
 import { selectProducts, setProducts } from '../../../hooks/slices/counterSlice';
@@ -113,25 +115,29 @@ const DescriptionMb = ({ previewImage, setImg, images, data, colors, colorsProdu
         <>
             <Flex fontSize={"14px"} fontWeight={400} color={"#424242"} alignItems={"center"}>
                 <Text as={"b"}>Colores:</Text>
-                <Flex
+                <Grid
                     w="100%"
-                    pl={2}>
+                    pl={2}
+                    templateColumns={"repeat(5, 1fr)"}
+                >
                     {colorsProduct.map((item, index) => (
-                        <Tooltip key={`color-${index}`} hasArrow label={item.color} bg='gray.300' color='black'>
-                            <Text
-                                marginRight={"1px"}
-                                cursor="pointer"
-                                fontSize={"50px"}
-                                color={item.color === "BLANCO" ? "#F4F4F4" :  item.hex}
-                                onClick={() => {
-                                    handleChangeSelected(item.color, item.sku)
-                                }}
-                            >
-                                &#9679;
-                            </Text>
-                        </Tooltip>
+                        <GridItem key={`color-${index}`} >
+                            <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
+                                <Text
+                                    marginRight={"1px"}
+                                    cursor="pointer"
+                                    fontSize={"50px"}
+                                    color={item.color === "BLANCO" ? "#F4F4F4" :  item.hex}
+                                    onClick={() => {
+                                        handleChangeSelected(item.color, item.sku)
+                                    }}
+                                >
+                                    &#9679;
+                                </Text>
+                            </Tooltip>
+                        </GridItem>
                     ))}
-                </Flex>
+                </Grid>
             </Flex>
             <Flex mt={5} flexDirection={"column"}>
                 {selectColor ?

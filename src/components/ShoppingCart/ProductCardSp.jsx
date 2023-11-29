@@ -35,6 +35,8 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
             dispatch(
                 setProducts({products: filterProductsShopping })
             );
+            setNewArray(filterProductsShopping);
+            calculateCount();
         } else {
             let products_ = [...productsStore]
             let filterModificate = {...products_[idx]};
@@ -61,6 +63,10 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
     }
 
     useEffect(() => {
+        calculateCount();
+    }, [newArray]);
+
+    const calculateCount = () => {
         if (newArray) {
             let sumP = 0;
             let sumK = 0;
@@ -91,9 +97,20 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                 dispatch(
                     setTotalAmount({totalAmount: sums + sumsIv + sumsSp})
                 );
+            }else{
+                setPriceIva(0);
+                setPriceSend(0);
+                setSubTotalSum(0);
+                setSumTotalOrder(0);
+                dispatch(
+                    setProducts({products: newArray })
+                );
+                dispatch(
+                    setTotalAmount({totalAmount: 0})
+                );
             }
         }
-    }, [newArray]);
+    }
 
     return ( 
         <Flex bg={"#FFF"} border={"1px solid #E2E2E2"} mb={3} padding={3} borderRadius={"8px"}>
@@ -132,6 +149,7 @@ const ProductCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, set
                             color={"#828282"} 
                             fontSize={"16px"} 
                             fontWeight={400}
+                            minW={'50px'}
                             value={values.num}
                             type='number'
                             min={0}

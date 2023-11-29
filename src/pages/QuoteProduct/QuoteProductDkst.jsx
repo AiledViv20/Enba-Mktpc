@@ -69,7 +69,7 @@ const QuoteProductDkts = () => {
     const [subTotalSum, setSubTotalSum] = useState(0);
     const [sumTotalOrder, setSumTotalOrder] = useState(0);
     const [priceSend, setPriceSend] = useState(0);
-    const [priceIva, setPriceIva] = useState(1.45);
+    const [priceIva, setPriceIva] = useState(0);
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -410,7 +410,7 @@ const QuoteProductDkts = () => {
                         setKits({kits: []})
                     )
                     setSubTotalSum(0);
-                    setPriceIva(1.45);
+                    setPriceIva(0);
                     setPriceSend(0);
                     setSumTotalOrder(0);
                     dispatch(

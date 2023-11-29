@@ -14,6 +14,7 @@ import { useGetProductQuery } from '../../hooks/enbaapi';
 import ZoomImage from '../../components/ProductSelect/ZoomImage';
 
 import Characteristics from '../../components/ProductSelect/Characteristics';
+import imgDefault from '../../assets/images/productsT/none-product.png';
 
 const ProductDkst = () => {
     const params_url = useParams();
@@ -39,8 +40,8 @@ const ProductDkst = () => {
             if(data?.images?.vector_images[0])
                 images_.push(data?.images?.vector_images[0]);
             data.items.map((item)=>{
-                images_.push(...item.images.images_item)
-                colors_.push({sku: item.sku, color: item.color})
+                images_.push(...item?.images?.images_item ? (Object.keys(item?.images?.images_item).length > 0 ? item?.images?.images_item : []) : [])
+                colors_.push({sku: item?.sku, color: item?.color})
             })
             setColors(colors_);
             setImages(images_);
@@ -78,6 +79,19 @@ const ProductDkst = () => {
         }
         setColorsProduct(colors_ar);
     },[colors]);
+
+    useEffect(() => {
+        if (!img){
+            if(images?.length > 0){
+                setImg(images[0]);
+                setIdx(0);
+            }else{
+                setImg(imgDefault);
+                setIdx(0);
+            }
+            
+        }
+    },[img])
 
     return ( 
         <>

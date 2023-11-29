@@ -11,7 +11,9 @@ import {
     Input,
     useDisclosure,
     Alert,
-    AlertIcon
+    AlertIcon,
+    Grid,
+    GridItem,
 } from '@chakra-ui/react';
 import { MinusIcon } from '@chakra-ui/icons';
 import { FaPlus } from "react-icons/fa";
@@ -118,25 +120,29 @@ const Description = ({ previewImage, setImg, images, data, colors, colorsProduct
             </Flex>
             <Flex fontSize={"14px"} fontWeight={400} color={"#424242"} alignItems={"center"}>
                 <Text as={"b"}>Colores:</Text>
-                <Flex
+                <Grid
                     w="100%"
-                    pl={2}>
+                    pl={2}
+                    templateColumns={{base: "repeat(2, 1fr)", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl: "repeat(7, 1fr)"}}
+                >
                     {colorsProduct.map((item, index) => (
-                        <Tooltip key={`color-${index}`} hasArrow label={item.color} bg='gray.300' color='black'>
-                            <Text
-                                marginRight={"1px"}
-                                cursor="pointer"
-                                fontSize={"50px"}
-                                color={item.color === "BLANCO" ? "#F4F4F4" :  item.hex}
-                                onClick={() => {
-                                    handleChangeSelected(item.color, item.sku)
-                                }}
-                            >
-                                &#9679;
-                            </Text>
-                        </Tooltip>
+                        <GridItem key={`color-${index}`} > 
+                            <Tooltip hasArrow label={item.color} bg='gray.300' color='black'>
+                                <Text
+                                    marginRight={"1px"}
+                                    cursor="pointer"
+                                    fontSize={"50px"}
+                                    color={item.color === "BLANCO" ? "#F4F4F4" :  item.hex}
+                                    onClick={() => {
+                                        handleChangeSelected(item.color, item.sku)
+                                    }}
+                                >
+                                    &#9679;
+                                </Text>
+                            </Tooltip>
+                        </GridItem>
                     ))}
-                </Flex>
+                </Grid>
             </Flex>
             <Flex mt={5} flexDirection={"column"}>
                 {selectColor ?
