@@ -10,17 +10,18 @@ import {
     useElements
 } from '@stripe/react-stripe-js';
 import './styled.css';
-import { api } from '../../service';
+import { usePostStripeSendPaymentMutation } from '../../hooks/enbaapi';
 
 import { toast } from 'react-toastify';
 
-const API_SECRET_STRIPE = process.env.REACT_APP_STRIPE_SECRET_KEY;
 const StripeForm = ({ sumTotalOrder, setCheckPay }) => {
     const stripe = useStripe();
     const elements = useElements();
     const [loading, setLoading] = useState(false);
 
     const [errorMessage, setErrorMessage] = useState(null);
+
+    const [postStripeSendPayment] = usePostStripeSendPaymentMutation();
 
     const handleSubmit = async () => {
         setLoading(true);
@@ -36,20 +37,12 @@ const StripeForm = ({ sumTotalOrder, setCheckPay }) => {
         if (error) {
           console.error(error);
         } else {
+            let amountCents = sumTotalOrder * 100;
+            amountCents = parseInt(amountCents);
+            const sendStripeData = { payment_method_id: paymentMethod.id, amount_total: amountCents };
             // Envía el ID del método de pago a tu servidor para completar la transacción
-            try {
-                let amountCents = sumTotalOrder * 100;
-                amountCents = parseInt(amountCents);
-                const response = await api({
-                    method: "post",
-                    url: "/api-stripe/procesar-pago",
-                    data: { payment_method_id: paymentMethod.id, amount_total: amountCents },
-                    headers: {
-                        'Authorization': `Bearer ${API_SECRET_STRIPE}`
-                    }
-                });
-                const { data, status } = response;
-                if (status === 200 || status === 201) {
+            postStripeSendPayment(sendStripeData).then(res => {
+                if (res.data) {
                     window.open('/pago-completado', '_blank');
                     setCheckPay(true);
                     setLoading(false);
@@ -61,9 +54,9 @@ const StripeForm = ({ sumTotalOrder, setCheckPay }) => {
                         position: toast.POSITION.BOTTOM_RIGHT
                     });
                 }
-            } catch (error) {
+            }).catch(err => {
                 console.error('Error en la solicitud:', error);
-            }
+            })
         }
     };
 

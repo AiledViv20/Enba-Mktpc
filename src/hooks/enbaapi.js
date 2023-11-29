@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const enbaApi = createApi({
     reducerPath: 'enbaApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'https://api.enba.mx/',
+        baseUrl: 'http://localhost:4005/',
         // baseUrl: 'http://localhost:4005/',
     }),
     tagTypes: [
@@ -226,6 +226,24 @@ export const enbaApi = createApi({
               };
           },
         }),
+        postStripeSendPayment: build.mutation({
+          query: (body) => {
+              return {
+                  url: `process-payment`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
+        postStripeSendPaymentOxxo: build.mutation({
+          query: (body) => {
+              return {
+                  url: `process-payment-oxxo`,
+                  method: 'POST',
+                  body: body
+              };
+          },
+        }),
         postProof: build.mutation({
           query: (folio, body) => {
               return {
@@ -272,6 +290,8 @@ export const {
     usePostCalculateOrderMutation,
     usePostCreateOrderMutation,
     usePostCreateInvoiceMutation,
+    usePostStripeSendPaymentMutation,
+    usePostStripeSendPaymentOxxoMutation,
     usePostProofMutation,
     usePostDiscountCodeMutation,
     usePostTransformImageMutation,
