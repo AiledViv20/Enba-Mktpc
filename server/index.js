@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
 });
 
 app.post('/api-stripe/procesar-pago', async (req, res) => {
-    const { amount_total } = req.body;
+    const { payment_method_id, amount_total } = req.body;
 
     try {
         // Crea un pago o suscripción en Stripe usando payment_method_id
