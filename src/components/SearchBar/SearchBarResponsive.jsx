@@ -70,7 +70,7 @@ const SearchBarResponsive = () => {
             <Flex width={"1%"} bg={"#EFEFEF"} margin={"10px 0px"}>
                 <Flex margin={"5px 0px"} border={"1px solid #838383"}></Flex>
             </Flex>
-            <Flex width={isGreaterThanMd ? "59%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} mr={"12px"} borderRadius={"0px 10px 10px 0px"}>
+            <Flex width={isGreaterThanMd ? "59%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} mr={"2px"} borderRadius={"0px 10px 10px 0px"}>
                 <Input focusBorderColor="transparent" fontSize={"12px"} border={"transparent"} width={"100%"} height={"100%"} 
                     placeholder='Buscar productos'
                     _placeholder={{
@@ -85,7 +85,7 @@ const SearchBarResponsive = () => {
                     }}
                 />
             </Flex>
-            <Flex alignItems={"center"}>
+            <Flex alignItems={"center"} mx={'4px'}>
                 <IconButton borderRadius={"full"} size='xs' 
                     _hover={{
                         bg: "#063D5F"
