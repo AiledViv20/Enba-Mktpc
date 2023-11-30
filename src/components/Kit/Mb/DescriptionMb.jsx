@@ -78,7 +78,8 @@ const Description = ({ kit, price, showKitIncludes, setShowKitIncludes }) => {
                         icon={<FaPlus />}/>
                 </Flex>
                 <Flex justifyContent={"center"} mt={5}>
-                    <ButtonOpenModalKit 
+                    <ButtonOpenModalKit
+                        title={"Agregar al carrito"}
                         kit={kit}
                         validateData={validateData}
                         showKitIncludes={showKitIncludes}

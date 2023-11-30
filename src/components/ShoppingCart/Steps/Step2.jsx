@@ -48,8 +48,6 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
     const [isLoadingStep5, setIsLoadingStep5] = useState(false);
     const [checkPay, setCheckPay] = useState(false);
 
-    
-
     const appearance = {
         theme: "stripe",
     };
@@ -64,7 +62,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
             code: codex
         }
         postDiscountCode(discountCode).then(res => {
-            if (res.data) {
+            if (res.data.length > 0) {
                 setCreateOrder({
                     ...createOrder,
                     discount_code: codex
@@ -73,7 +71,7 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
             } else {
-                toast.error("¡Algo salió mal!", {
+                toast.warning("¡El código de descuento no es válido, intenta nuevamente!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
             }

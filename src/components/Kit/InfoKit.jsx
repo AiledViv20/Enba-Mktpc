@@ -52,34 +52,21 @@ const InfoKit = () => {
 
     useEffect(() => {
         if (showAddOthersKits.length > 0) {
-            let sumKitprProduct1 = 0;
-            let sumDiscountKitprProduct1 = 0;
-            let sumTotalKit1 = 0;
-            showAddOthersKits.forEach((item) => {
-                sumTotalKit1 = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKit1
-            })
-            let discountKit1 = sumTotalKit1 * 0.05;
-            sumTotalKit1 = sumTotalKit1 - discountKit1;
             let filterDataOthersKits = [];
             showAddOthersKits.forEach((item) => {
                 if (item.items.length > 0) {
-                    sumKitprProduct1 = parseFloat(item.items.length > 0 ? item.items[0].wholesale_price : 0);
-                    sumDiscountKitprProduct1 = sumKitprProduct1 * 0.05;
-                    sumKitprProduct1 = sumKitprProduct1 - sumDiscountKitprProduct1;
                     filterDataOthersKits.push({
                         ...item,
                         sku: item.sku ? item.sku : "",
                         code_item: item.code ? item.code : "",
                         unit_price: parseFloat(item.items.length > 0 ? item.items[0].wholesale_price : 0),
-                        total_price: sumKitprProduct1,
+                        total_price: parseFloat(item.items.length > 0 ? item.items[0].wholesale_price : 0),
                         quantity: 1,
                         name: item.name,
                         category: item.category,
                         color: "All Kit",
                         image: item.images?.product_images[0]
                     });
-                    sumKitprProduct1 = 0;
-                    sumDiscountKitprProduct1 = 0;
                 }
             })
             setShowAddOthersKits(filterDataOthersKits);
@@ -88,35 +75,27 @@ const InfoKit = () => {
 
     useEffect(() => {
         if (showKitIncludes.length > 0) {
-            let sumKitprProduct = 0;
-            let sumDiscountKitprProduct = 0;
             let sumTotalKit = 0;
             showKitIncludes.forEach((item) => {
                 sumTotalKit = parseFloat(item?.items[0]?.wholesale_price) + sumTotalKit
             })
-            let discountKit = sumTotalKit * 0.05;
-            sumTotalKit = sumTotalKit - discountKit;
+            sumTotalKit = sumTotalKit;
             setPrice(sumTotalKit.toFixed(2));
             let filterDataIncludesKits = [];
             showKitIncludes.forEach((item) => {
                 if (item.items.length > 0) {
-                    sumKitprProduct = parseFloat(item.items.length > 0 ? item.items[0].wholesale_price : 0);
-                    sumDiscountKitprProduct = sumKitprProduct * 0.05;
-                    sumKitprProduct = sumKitprProduct - sumDiscountKitprProduct;
                     filterDataIncludesKits.push({
                         ...item,
                         sku: item.sku ? item.sku : "",
                         code_item: item.code ? item.code : "",
                         unit_price: parseFloat(item.items.length > 0 ? item.items[0].wholesale_price : 0),
-                        total_price: sumKitprProduct,
+                        total_price: parseFloat(item.items.length > 0 ? item.items[0].wholesale_price : 0),
                         quantity: 1,
                         name: item.name,
                         category: item.category,
                         color: "All Kit",
                         image: item.images?.product_images[0]
-                    }); 
-                    sumKitprProduct = 0;
-                    sumDiscountKitprProduct = 0;
+                    });
                 }
             })
             setShowKitIncludes(filterDataIncludesKits);

@@ -73,7 +73,7 @@ const SearchBar = () => {
     }
 
     return ( 
-        <Flex width={isGreaterThanMd ? "764px" : "310px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
+        <Flex width={isGreaterThanMd ? "764px" : "320px"} height={"54px"} bg={"#FFF"} borderRadius={"0px 10px 10px 10px"}>
             <Flex width={isGreaterThanMd ? "30%" : "50%"} bg={"#EFEFEF"} margin={"10px 0px"} ml={"12px"} borderRadius={"10px 0px 0px 10px"}>
                 <Menu isOpen={isOpen}>
                     {() => (

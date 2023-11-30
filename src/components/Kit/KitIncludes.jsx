@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { selectKits, setKits } from '../../hooks/slices/counterSlice';
 import {
     Box,
     Flex,
@@ -9,7 +7,6 @@ import {
     Skeleton,
     useTheme,
     useMediaQuery,
-    Button,
     IconButton,
     useDisclosure
 } from "@chakra-ui/react";
@@ -22,6 +19,7 @@ import logoGif from '../../assets/icons/logo.gif';
 import ModalTrashProduct from './ModalTrashProduct';
 
 import { toast } from 'react-toastify';
+import ButtonOpenModalKit from './ButtonOpenModalKit';
 
 const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedProductTrash, limitTrash, setLimitTrash) => {
     const { breakpoints } = useTheme();
@@ -90,9 +88,6 @@ const CardsRenderer = (products, status, isSelectedProductTrash, setIsSelectedPr
 }
 
 const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, props }) => {
-    const kitsStore = useSelector(selectKits);
-    const dispatch = useDispatch();
-
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [page, setPage] = useState(0);
@@ -102,6 +97,10 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
     const [isSelectedProductTrash, setIsSelectedProductTrash] = useState([]);
     const [productsIncludes, setProductsIncludes] = useState([]);
     const [status, setStatus] = useState('loading');//loading, loaded
+
+    const [values, setValues] = useState({
+        num: 1
+    });
 
     useEffect(() => {
         if (showKitIncludes) {
@@ -133,28 +132,6 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
         }
     },[page]);
 
-    const addListProductsKits = () => {
-        const kitAdd = {
-            discount_code: "4UAEPO55L",
-            is_kit: true,
-            sku_kit: kit?.sku,
-            code_kit: kit?.code,
-            name_kit: kit?.name,
-            total_kits: 1,
-            items: showKitIncludes
-        }
-        const counterKits = [...kitsStore, 
-            kitAdd
-        ];
-        dispatch(
-            setKits({kits: counterKits})
-        );
-        //Guardar en kit, en products y eliminar todo de kitsLits
-        toast.success("¡Se han agregado exitosamente los productos al kit!", {
-            position: toast.POSITION.BOTTOM_RIGHT
-        });
-    }
-
     const modalTrashProductAction = () => {
         onOpen();
     }
@@ -179,6 +156,13 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
             trashProductAction();
         }
     }, [confirmTrash])
+
+    const validateData = () => {
+        if (showKitIncludes.length === 4 && isSelectedProductTrash.length === 0) {
+            return false;
+        }
+        return true;
+    }
 
     return ( 
         <Box
@@ -219,12 +203,13 @@ const KitIncludes = ({ titleSection, showKitIncludes, setShowKitIncludes, kit, p
                     </Flex>
                 </Box>
                 <Flex mt={"2rem"}>
-                    <Button  type='button'
-                    _hover={{
-                        bg: "#063D5F"
-                    }}
-                    onClick={() => addListProductsKits()}
-                    isDisabled={showKitIncludes.length === 4 && isSelectedProductTrash.length === 0 ? false : true}>Agregar kit</Button>
+                    <ButtonOpenModalKit 
+                        title={"Agregar kit"}
+                        kit={kit}
+                        validateData={validateData}
+                        showKitIncludes={showKitIncludes}
+                        setShowKitIncludes={setShowKitIncludes}
+                        values={values} />
                 </Flex>
             </Flex>
             {isOpen ?

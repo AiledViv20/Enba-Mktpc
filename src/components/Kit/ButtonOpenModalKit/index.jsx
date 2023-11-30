@@ -5,9 +5,9 @@ import {
     useTheme,
     useMediaQuery
 } from '@chakra-ui/react';
-import ModalSelectColor from './ModalSelectColor';
+import ModalSelectColor from '../ModalSelectColor';
 
-const ButtonOpenModalKit = ({ kit, validateData, showKitIncludes, setShowKitIncludes, values }) => {
+const ButtonOpenModalKit = ({ title, kit, validateData, showKitIncludes, setShowKitIncludes, values }) => {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -19,7 +19,8 @@ const ButtonOpenModalKit = ({ kit, validateData, showKitIncludes, setShowKitIncl
                     bg: "#063D5F"
                 }}
                 onClick={() => onOpen()}
-                isDisabled={validateData()}>Agregar al carrito
+                isDisabled={validateData()}>
+                {title}
             </Button>
             {isOpen ?
                 <ModalSelectColor
