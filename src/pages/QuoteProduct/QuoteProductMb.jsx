@@ -155,12 +155,15 @@ const QuoteProductMb = () => {
         setNum(numStep);
     }
 
-    const calculateSend = () => {
-        if (subTotalSum <= 3000) {
+    const calculateSend = (sums) => {
+        if (sums <= 3000) {
+            setPriceSend(199);
             return 199;
-        } else if (subTotalSum >= 3000 && subTotalSum <= 10000) {
+        } else if (sums >= 3000 && sums <= 10000) {
+            setPriceSend(99);
             return 99;
-        } else if (subTotalSum > 10000) {
+        } else if (sums > 10000) {
+            setPriceSend(0);
             return 0;
         }
     }
@@ -456,6 +459,8 @@ const QuoteProductMb = () => {
                     setLogoInfo={setLogoInfo}
                     categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
+                    createOrder={createOrder}
+                    setCreateOrder={setCreateOrder}
                     subTotalSum={subTotalSum}
                     setSubTotalSum={setSubTotalSum}
                     sumTotalOrder={sumTotalOrder}

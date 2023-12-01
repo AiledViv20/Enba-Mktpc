@@ -190,7 +190,6 @@ const QuoteProductDkts = () => {
                 });
             }
             const sums = sumP + sumK;
-            console.log(sums)
             sumsIv = sums * 0.16;
             sumsSp = calculateSend(sums);
             setSubTotalSum(sums);
@@ -461,6 +460,8 @@ const QuoteProductDkts = () => {
                     setLogoInfo={setLogoInfo}
                     categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
+                    createOrder={createOrder}
+                    setCreateOrder={setCreateOrder}
                     subTotalSum={subTotalSum}
                     setSubTotalSum={setSubTotalSum}
                     sumTotalOrder={sumTotalOrder}

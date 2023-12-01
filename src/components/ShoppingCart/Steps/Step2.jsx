@@ -39,7 +39,7 @@ import { toast } from 'react-toastify';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const Step2 = ({ subTotalSum, setSubTotalSum, sumTotalOrder, setSumTotalOrder, setPriceSend, setPriceIva, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, setIsLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
+const Step2 = ({ createOrder, setCreateOrder, subTotalSum, setSubTotalSum, sumTotalOrder, setSumTotalOrder, setPriceSend, setPriceIva, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, setIsLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [codex, setCodex] = useState("");
@@ -56,18 +56,43 @@ const Step2 = ({ subTotalSum, setSubTotalSum, sumTotalOrder, setSumTotalOrder, s
         appearance,
     };
 
+    const calculateSend = (sums) => {
+        if (sums <= 3000) {
+            return 199;
+        } else if (sums >= 3000 && sums <= 10000) {
+            return 99;
+        } else if (sums > 10000) {
+            return 0;
+        }
+    }
+
     const handleSubmit = () => {
         setIsLoadingStep5(true);
         let discountCode = {
             code: codex
         }
         postDiscountCode(discountCode).then(res => {
+            let sum_subTotal = 0;
+            let sum_discountCode = 0;
+            let sumsIv1 = 0;
+            let sumsSp1 = 0;
+            let sum_total = 0;
             if (res.data.length > 0) {
-                console.log(res.data)
-                /* setCreateOrder({
+                sum_subTotal = subTotalSum;
+                sum_discountCode = parseInt(res?.data?.discount_percentage);
+                sum_discountCode = sum_discountCode / 100;
+                sum_subTotal = subTotalSum - sum_discountCode;
+                sumsIv1 = sum_subTotal * 0.16;
+                sumsSp1 = calculateSend(sum_subTotal);
+                sum_total = sum_subTotal + sumsIv1 + sumsSp1;
+                setSubTotalSum(sum_subTotal);
+                setPriceIva(sumsIv1);
+                setPriceSend(sumsSp1);
+                setSumTotalOrder(sum_total);
+                setCreateOrder({
                     ...createOrder,
                     discount_code: codex
-                }) */
+                })
                 toast.success("¡Tu código se ha aplicado correctamente!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
