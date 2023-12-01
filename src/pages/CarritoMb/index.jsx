@@ -61,7 +61,7 @@ const CarritoMb = ({ props }) => {
             }
             if (kits.length > 0) {
                 kits.forEach((elementK) => {
-                    sumK = elementK.sum_total_kit + sumK;
+                    sumK = elementK.sum_discount_kit + sumK;
                 });
             }
             sums = sumP + sumK;

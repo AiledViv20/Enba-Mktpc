@@ -158,14 +158,14 @@ const QuoteProductDkts = () => {
         setNum(numStep);
     }
 
-    const calculateSend = () => {
-        if (subTotalSum <= 3000) {
+    const calculateSend = (sums) => {
+        if (sums <= 3000) {
             setPriceSend(199);
             return 199;
-        } else if (subTotalSum >= 3000 && subTotalSum <= 10000) {
+        } else if (sums >= 3000 && sums <= 10000) {
             setPriceSend(99);
             return 99;
-        } else if (subTotalSum > 10000) {
+        } else if (sums > 10000) {
             setPriceSend(0);
             return 0;
         }
@@ -177,7 +177,6 @@ const QuoteProductDkts = () => {
         if (productsStore.length > 0 || kitsStore.length > 0) {
             let sumP = 0;
             let sumK = 0;
-            let sums = 0;
             let sumsIv = 0;
             let sumsSp = 0;
             if (productsStore.length > 0) {
@@ -187,18 +186,19 @@ const QuoteProductDkts = () => {
             }
             if (kitsStore.length > 0) {
                 kitsStore.forEach((elementK) => {
-                    sumK = elementK.sum_total_kit + sumK;
+                    sumK = elementK.sum_discount_kit + sumK;
                 });
             }
-            sums = sumP + sumK;
+            const sums = sumP + sumK;
+            console.log(sums)
             sumsIv = sums * 0.16;
-            sumsSp = calculateSend();
+            sumsSp = calculateSend(sums);
             setSubTotalSum(sums);
             setPriceIva(sumsIv);
             setPriceSend(sumsSp);
             setSumTotalOrder(sums + sumsIv + sumsSp);
             dispatch(
-                setTotalAmount({totalAmount: subTotalSum})
+                setTotalAmount({totalAmount: sums})
             )
         }
     }, []);
@@ -461,9 +461,12 @@ const QuoteProductDkts = () => {
                     setLogoInfo={setLogoInfo}
                     categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
+                    subTotalSum={subTotalSum}
+                    setSubTotalSum={setSubTotalSum}
                     sumTotalOrder={sumTotalOrder}
-                    createOrder={createOrder}
-                    setCreateOrder={setCreateOrder}
+                    setSumTotalOrder={setSumTotalOrder}
+                    setPriceSend={setPriceSend}
+                    setPriceIva={setPriceIva}
                     step2={steps.step2}
                     value={value}
                     setValue={setValue}
@@ -526,7 +529,7 @@ const QuoteProductDkts = () => {
                             <Text fontSize={"20px"} fontWeight={600}>Subtotal</Text>
                         </Flex>
                         <Flex w={"50%"} justifyContent={"end"}>
-                            <Text fontSize={"20px"} fontWeight={600}>{formatterValue(subTotalSum)}</Text>
+                            <Text fontSize={"20px"} fontWeight={600}>{formatterValue(subTotalSum ? subTotalSum : 0)}</Text>
                         </Flex>
                     </Flex>
                     <Flex mt={5} w={"100%"} border={"1px solid"} borderColor={"transparent"} pb={3}>

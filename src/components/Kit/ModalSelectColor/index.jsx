@@ -61,6 +61,9 @@ const ModalSelectColor = ({ isOpen, onClose, kit, showKitIncludes, setShowKitInc
                 sumTotalKitFinal = item.total_price + sumTotalKitFinal
             })
             let sumTotal = sumTotalKitFinal * values.num;
+            let discountSumTotal = sumTotalKitFinal * 0.05;
+            discountSumTotal = discountSumTotal * values.num;
+            sumTotal = sumTotal - discountSumTotal;
             const kitAdd = {
                 discount_code: "",
                 is_kit: true,
@@ -68,7 +71,8 @@ const ModalSelectColor = ({ isOpen, onClose, kit, showKitIncludes, setShowKitInc
                 code_kit: kit?.code,
                 name_kit: kit?.name,
                 sub_sum_total_kit: sumTotalKitFinal.toFixed(2),
-                sum_total_kit: sumTotal,
+                sum_total_kit: sumTotalKitFinal.toFixed(2),
+                sum_discount_kit: sumTotal,
                 total_kits: values.num,
                 items: newListOptionsColorKit
             }

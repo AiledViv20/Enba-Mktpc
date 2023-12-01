@@ -65,6 +65,8 @@ const QuoteProductMb = () => {
     const [isLoadingStep2, setIsLoadingStep2] = useState(false);
     const [subTotalSum, setSubTotalSum] = useState(0);
     const [sumTotalOrder, setSumTotalOrder] = useState(0);
+    const [priceSend, setPriceSend] = useState(0);
+    const [priceIva, setPriceIva] = useState(0);
 
     const [postCalculateOrder] = usePostCalculateOrderMutation();
     const [postCreateOrder] = usePostCreateOrderMutation();
@@ -179,7 +181,7 @@ const QuoteProductMb = () => {
             }
             if (kitsStore.length > 0) {
                 kitsStore.forEach((elementK) => {
-                    sumK = elementK.sum_total_kit + sumK;
+                    sumK = elementK.sum_discount_kit + sumK;
                 });
             }
             sums = sumP + sumK;
@@ -454,9 +456,12 @@ const QuoteProductMb = () => {
                     setLogoInfo={setLogoInfo}
                     categoryPrintImg={productsStore && productsStore.length > 0 ? productsStore[0]?.name : ""} />
                 <Step2 
+                    subTotalSum={subTotalSum}
+                    setSubTotalSum={setSubTotalSum}
                     sumTotalOrder={sumTotalOrder}
-                    createOrder={createOrder}
-                    setCreateOrder={setCreateOrder}
+                    setSumTotalOrder={setSumTotalOrder}
+                    setPriceSend={setPriceSend}
+                    setPriceIva={setPriceIva}
                     step2={steps.step2}
                     value={value}
                     setValue={setValue}

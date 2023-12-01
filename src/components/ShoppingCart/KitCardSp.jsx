@@ -139,7 +139,7 @@ const KitCardSp = ({ product, setPriceIva, setPriceSend, setSubTotalSum, setSumT
                 <Flex w={"30%"} flexDirection={"column"} h={"100%"}>
                     <Flex justifyContent={"center"} mb={2} alignSelf={'center'}>
                         <Flex gap={6}>
-                            <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.sum_total_kit? product.sum_total_kit : 0)}</Text>
+                            <Text color={"#212121"} fontSize={"16px"} fontWeight={600}>{formatterValue(product.sum_discount_kit? product.sum_discount_kit : 0)}</Text>
                             <DeleteIcon onClick={() => changeNumProducts(0)} color='red' cursor={"pointer"} _hover={{color: 'red.500'}}/>
                         </Flex>
                     </Flex>

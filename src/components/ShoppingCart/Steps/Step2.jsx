@@ -39,7 +39,7 @@ import { toast } from 'react-toastify';
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY);
 
-const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, setIsLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
+const Step2 = ({ subTotalSum, setSubTotalSum, sumTotalOrder, setSumTotalOrder, setPriceSend, setPriceIva, step2, value, setValue, payPerStore, setPayPerStore, isLoadingStep2, setIsLoadingStep2, handleSubmitCreateOrder, validateSteps }) => {
     const { breakpoints } = useTheme();
     const [isGreaterThanMd] = useMediaQuery(`(min-width: ${breakpoints.md})`);
     const [codex, setCodex] = useState("");
@@ -63,10 +63,11 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
         }
         postDiscountCode(discountCode).then(res => {
             if (res.data.length > 0) {
-                setCreateOrder({
+                console.log(res.data)
+                /* setCreateOrder({
                     ...createOrder,
                     discount_code: codex
-                })
+                }) */
                 toast.success("¡Tu código se ha aplicado correctamente!", {
                     position: toast.POSITION.BOTTOM_RIGHT
                 });
@@ -194,7 +195,6 @@ const Step2 = ({ sumTotalOrder, createOrder, setCreateOrder, step2, value, setVa
                             <RadioGroup onChange={setPayPerStore} value={payPerStore}>
                                 <Stack direction='column'>
                                     <Radio value='1'><Image src={icon5} alt='oxxo' mr={3}/></Radio>
-                                    <Radio value='2'><Image src={icon6} alt='seven' mr={3}/></Radio>
                                 </Stack>
                             </RadioGroup>
                         </AccordionPanel>
