@@ -17,14 +17,13 @@ import { categoriesList } from '../../resource/save';
 import { capitalizeFirstLetter } from '../../resource/validate';
 import ProductCard from '../../components/ProductCard';
 import OrderBy from './OrderBy';
-import { useGetSearchQuery, useGetSearchMMutation } from '../../hooks/enbaapi';
+import { useGetSearchMMutation } from '../../hooks/enbaapi';
 import { useParams } from 'react-router-dom';
 
 import logoGif from '../../assets/icons/logo.gif';
 import iconNotFound from '../../assets/icons/iconNotFound.svg';
 
 import './styled.css';
-import { color } from 'framer-motion';
 
 const CategoriesDkst = () => {
     const params_url = useParams();
