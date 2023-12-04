@@ -3,7 +3,7 @@ import {
     Flex,
     Text,
     Stack,
-    Skeleton
+    Spinner
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
 import Miniature from '../../components/ProductSelect/Miniature';
@@ -14,7 +14,7 @@ import { useGetProductQuery } from '../../hooks/enbaapi';
 import ZoomImage from '../../components/ProductSelect/ZoomImage';
 
 import Characteristics from '../../components/ProductSelect/Characteristics';
-import imgDefault from '../../assets/images/productsT/none-product.png';
+import imgDefault from '../../assets/images/productsT/none-product-white.png';
 
 const ProductDkst = () => {
     const params_url = useParams();
@@ -103,13 +103,7 @@ const ProductDkst = () => {
             {
                 (isLoading || !product) ? (
                     <Stack p={10} justifyContent={"space-between"}>
-                        <Flex gap={2}>
-                            <Skeleton height={"500px"} width={"10%"} />
-                            <Skeleton height={"500px"} width={"55%"} />
-                            <Skeleton height={"500px"} width={"35%"} />
-                        </Flex>
-                        <Skeleton height={"300px"} width={"100%"} />
-                        <Skeleton height={"300px"} width={"100%"} />
+                        <Spinner size='xl' />
                     </Stack>
                 ) : (
                     <>

@@ -13,7 +13,7 @@ import { useGetProductQuery } from '../../hooks/enbaapi';
 import MiniatureMb from '../../components/ProductSelect/Mb/MiniatureMb';
 import DescriptionMb from '../../components/ProductSelect/Mb/DescriptionMb';
 import CharacteristicsMb from '../../components/ProductSelect/Mb/CharacteristicsMb';
-import imgDefault from '../../assets/images/productsT/none-product.png';
+import imgDefault from '../../assets/images/productsT/none-product-white.png';
 
 const ProductMb = () => {
     const params_url = useParams();
