@@ -323,7 +323,8 @@ const QuoteProductMb = () => {
                 calculateOrder = {
                     discount_code: createOrder.discount_code !== "" ? createOrder.discount_code : null,
                     items: itemsCalculate,
-                    printing: productsQuote[0].printing
+                    printing: productsQuote[0].printing,
+                    kits: []
                 }
             }
             postCalculateOrder(calculateOrder).then(res => {
@@ -389,7 +390,6 @@ const QuoteProductMb = () => {
         formData.append("pay_details", value === "3" ? typePayMethodDetails(payPerStore) : null);
         formData.append("discount_code", createOrder.discount_code !== "" ? createOrder.discount_code : null);
         formData.append("kits", JSON.stringify(itemsKitsCalculate));
-        formData.append("printing", JSON.stringify(productsQuote[0].printing));
         formData.append("items", JSON.stringify(itemsCalculate));
         postCreateOrder(formData).then(res => {
             if (res.data) {
@@ -410,6 +410,8 @@ const QuoteProductMb = () => {
                         setKits({kits: []})
                     )
                     setSubTotalSum(0);
+                    setPriceIva(0);
+                    setPriceSend(0);
                     setSumTotalOrder(0);
                     dispatch(
                         setTotalAmount({totalAmount: 0})
@@ -431,7 +433,7 @@ const QuoteProductMb = () => {
     }
 
     const validateMinShop = () => {
-        if (sumTotalOrder < 10) {
+        if (sumTotalOrder < 1500) {
             return true;
         } 
         return false;
@@ -473,6 +475,7 @@ const QuoteProductMb = () => {
                     payPerStore={payPerStore}
                     setPayPerStore={setPayPerStore}
                     isLoadingStep2={isLoadingStep2}
+                    setIsLoadingStep2={setIsLoadingStep2}
                     handleSubmitCreateOrder={handleSubmitCreateOrder}
                     validateSteps={validateSteps} />
                 <Step3 

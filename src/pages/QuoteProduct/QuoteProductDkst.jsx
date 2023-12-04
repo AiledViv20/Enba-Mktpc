@@ -432,7 +432,7 @@ const QuoteProductDkts = () => {
     }
 
     const validateMinShop = () => {
-        if (sumTotalOrder < 10) {
+        if (sumTotalOrder < 1500) {
             return true;
         } 
         return false;

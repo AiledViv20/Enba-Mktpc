@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { 
     Flex,
-    Text,
-    Stack,
-    Skeleton
+    Spinner
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
 
@@ -97,12 +95,9 @@ const ProductMb = () => {
         <>
             {
                 (isLoading || !product) ? (
-                    <Stack>
-                        <Skeleton height='200px' />
-                        <Skeleton height='200px' />
-                        <Skeleton height='200px' />
-                        <Skeleton height='200px' />
-                    </Stack>
+                    <Flex width={"100%"} justifyContent={"center"}>
+                        <Spinner size='xl' color='#064A73'/>
+                    </Flex>
                 ):
                 (
                     <Flex flexDirection={"column"} width={"100%"}>

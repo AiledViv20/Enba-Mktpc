@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { 
     Flex,
     Text,
-    Stack,
     Spinner
 } from '@chakra-ui/react';
 import { colors_dict } from '../../resource';
@@ -102,37 +101,36 @@ const ProductDkst = () => {
             </Flex>
             {
                 (isLoading || !product) ? (
-                    <Stack p={10} justifyContent={"space-between"}>
-                        <Spinner size='xl' />
-                    </Stack>
+                    <Flex width={"100%"} justifyContent={"center"}>
+                        <Spinner size='xl' color='#064A73'/>
+                    </Flex>
                 ) : (
                     <>
-                    {
-                        product && (
-                            <Flex p={10} justifyContent={"space-between"}>
-                                <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
-                                <Flex pl={10} width={"442px"} height={"442px"}>
-                                    <ZoomImage src={img} alt={'image product'} />
+                        {
+                            product && (
+                                <Flex p={10} justifyContent={"space-between"}>
+                                    <Miniature images={images} setImg={setImg} setIdx={setIdx} idx={idx}/>
+                                    <Flex pl={10} width={"442px"} height={"442px"}>
+                                        <ZoomImage src={img} alt={'image product'} />
+                                    </Flex>
+                                    <Description
+                                        previewImage={img}
+                                        setImg={setImg}
+                                        images={images} 
+                                        data={product} 
+                                        colors={colors}
+                                        colorsProduct={colorsProduct} />
                                 </Flex>
-                                <Description
-                                    previewImage={img}
-                                    setImg={setImg}
-                                    images={images} 
+                            )
+                        }
+                        {
+                            product && (
+                                <Characteristics 
                                     data={product} 
-                                    colors={colors}
-                                    colorsProduct={colorsProduct} />
-                            </Flex>
-                        )
-                    }
-                    {
-                        product && (
-                            <Characteristics 
-                                data={product} 
-                                colorsProduct={colorsProduct}
-                                previewImage={img} />
-                        )
-                    }
-
+                                    colorsProduct={colorsProduct}
+                                    previewImage={img} />
+                            )
+                        }
                     </>
                 )
             }
